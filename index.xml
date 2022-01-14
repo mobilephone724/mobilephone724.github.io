@@ -3,9 +3,19 @@
         <title>mobilephone724</title>
         <link>https://mobilephone724.github.io/</link>
         <description>About LoveIt Theme</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 14 Jan 2022 12:02:42 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 14 Jan 2022 23:43:08 &#43;0800</lastBuildDate>
             <atom:link href="https://mobilephone724.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Alice and Bob how to know whose number is bigger without giving away their own&#39;s</title>
+    <link>https://mobilephone724.github.io/howtoknowwhoseisbigger/</link>
+    <pubDate>Fri, 14 Jan 2022 23:43:08 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mobilephone724.github.io/howtoknowwhoseisbigger/</guid>
+    <description><![CDATA[Definiteness： Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &lt; j$ in the end(aside from their own values)
+Solution: Let $M$ be the set of all $N$-bit nonnegative integers
+Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$
+ Alice generates a public key from $Q_N$, called $E_a$, and the inverse function of $E_a$ is $D_a$ Bob picks a random value $x \in M$, compute $k = E_a(x)$, then send $k - j$ to Alice Alice computes $y_u=D_a(k - j + u)$ for $u = 1,2,\dots,9$ Alice generates a random prime $p$ of $N/2$-bit, and computes $z_u=y_u(\mod p)$ for all $u$.]]></description>
+</item><item>
     <title>APUE/Chapter3: file and I/O</title>
     <link>https://mobilephone724.github.io/chapter3/</link>
     <pubDate>Fri, 14 Jan 2022 12:02:42 &#43;0800</pubDate>
