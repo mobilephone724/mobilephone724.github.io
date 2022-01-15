@@ -3,9 +3,23 @@
         <title>mobilephone724</title>
         <link>https://mobilephone724.github.io/</link>
         <description>About LoveIt Theme</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 14 Jan 2022 23:43:08 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 15 Jan 2022 13:11:41 &#43;0800</lastBuildDate>
             <atom:link href="https://mobilephone724.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>ReadMe(写在前面)</title>
+    <link>https://mobilephone724.github.io/writeinfront/</link>
+    <pubDate>Sat, 15 Jan 2022 12:31:46 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mobilephone724.github.io/writeinfront/</guid>
+    <description><![CDATA[Why does the blog is written in English(为什么使用英文写博客)?  I don&rsquo;t know how to translate many professional terms into Chinese, and people may be more familiar with the terms in English rather than Chinese.(我不知道如何使用中文去表述很多专业名词，而且人们应该更熟悉英文表述) Most content published on the blog is about technology in computer science, I believe there is no barrier for relavant people to read the blog in English(博客中大多数内容和计算机技术相关，相关人员应该没有阅读英语的障碍) So English can&rsquo;t be avoided and swith input method between Chinese and English isn&rsquo;t convenient（写英文无法避免而且中英文输入法切换并不方便） It&rsquo;s a good way to practice English(这也是个练习英文的好方式) If anything isn&rsquo;t described clearly or wrong, please contact me ASAP.]]></description>
+</item><item>
+    <title>更多的博客</title>
+    <link>https://mobilephone724.github.io/moreblogs/</link>
+    <pubDate>Sat, 15 Jan 2022 13:11:41 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mobilephone724.github.io/moreblogs/</guid>
+    <description><![CDATA[zty的博客 介绍：无敌的学委，保研巨佬]]></description>
+</item><item>
     <title>Alice and Bob how to know whose number is bigger without giving away their own&#39;s</title>
     <link>https://mobilephone724.github.io/howtoknowwhoseisbigger/</link>
     <pubDate>Fri, 14 Jan 2022 23:43:08 &#43;0800</pubDate>

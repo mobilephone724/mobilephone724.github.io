@@ -5,43 +5,37 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Alice and Bob how to know whose number is bigger without giving away their own&#39;s - mobilephone724</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="Alice and Bob how to know whose number is bigger without giving away their own&#39;s" />
-<meta property="og:description" content="Definiteness： Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &lt; j$ in the end(aside from their own values)
-Solution: Let $M$ be the set of all $N$-bit nonnegative integers
-Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$
- Alice generates a public key from $Q_N$, called $E_a$, and the inverse function of $E_a$ is $D_a$ Bob picks a random value $x \in M$, compute $k = E_a(x)$, then send $k - j$ to Alice Alice computes $y_u=D_a(k - j &#43; u)$ for $u = 1,2,\dots,9$ Alice generates a random prime $p$ of $N/2$-bit, and computes $z_u=y_u(\mod p)$ for all $u$." />
+        <title>ReadMe(写在前面) - mobilephone724</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="ReadMe(写在前面)" />
+<meta property="og:description" content="Why does the blog is written in English(为什么使用英文写博客)?  I don&rsquo;t know how to translate many professional terms into Chinese, and people may be more familiar with the terms in English rather than Chinese.(我不知道如何使用中文去表述很多专业名词，而且人们应该更熟悉英文表述) Most content published on the blog is about technology in computer science, I believe there is no barrier for relavant people to read the blog in English(博客中大多数内容和计算机技术相关，相关人员应该没有阅读英语的障碍) So English can&rsquo;t be avoided and swith input method between Chinese and English isn&rsquo;t convenient（写英文无法避免而且中英文输入法切换并不方便） It&rsquo;s a good way to practice English(这也是个练习英文的好方式) If anything isn&rsquo;t described clearly or wrong, please contact me ASAP." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://mobilephone724.github.io/howtoknowwhoseisbigger/" />
+<meta property="og:url" content="https://mobilephone724.github.io/writeinfront/" />
 <meta property="og:image" content="https://mobilephone724.github.io/logo.png"/>
-<meta property="article:published_time" content="2022-01-14T23:43:08+08:00" />
-<meta property="article:modified_time" content="2022-01-14T23:47:49+08:00" />
+<meta property="article:published_time" content="2022-01-15T12:31:46+08:00" />
+<meta property="article:modified_time" content="2022-01-15T13:16:15+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://mobilephone724.github.io/logo.png"/>
 
-<meta name="twitter:title" content="Alice and Bob how to know whose number is bigger without giving away their own&#39;s"/>
-<meta name="twitter:description" content="Definiteness： Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &lt; j$ in the end(aside from their own values)
-Solution: Let $M$ be the set of all $N$-bit nonnegative integers
-Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$
- Alice generates a public key from $Q_N$, called $E_a$, and the inverse function of $E_a$ is $D_a$ Bob picks a random value $x \in M$, compute $k = E_a(x)$, then send $k - j$ to Alice Alice computes $y_u=D_a(k - j &#43; u)$ for $u = 1,2,\dots,9$ Alice generates a random prime $p$ of $N/2$-bit, and computes $z_u=y_u(\mod p)$ for all $u$."/>
+<meta name="twitter:title" content="ReadMe(写在前面)"/>
+<meta name="twitter:description" content="Why does the blog is written in English(为什么使用英文写博客)?  I don&rsquo;t know how to translate many professional terms into Chinese, and people may be more familiar with the terms in English rather than Chinese.(我不知道如何使用中文去表述很多专业名词，而且人们应该更熟悉英文表述) Most content published on the blog is about technology in computer science, I believe there is no barrier for relavant people to read the blog in English(博客中大多数内容和计算机技术相关，相关人员应该没有阅读英语的障碍) So English can&rsquo;t be avoided and swith input method between Chinese and English isn&rsquo;t convenient（写英文无法避免而且中英文输入法切换并不方便） It&rsquo;s a good way to practice English(这也是个练习英文的好方式) If anything isn&rsquo;t described clearly or wrong, please contact me ASAP."/>
 <meta name="application-name" content="LoveIt">
 <meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://mobilephone724.github.io/howtoknowwhoseisbigger/" /><link rel="prev" href="https://mobilephone724.github.io/chapter3/" /><link rel="next" href="https://mobilephone724.github.io/moreblogs/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://mobilephone724.github.io/writeinfront/" /><link rel="prev" href="https://mobilephone724.github.io/moreblogs/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Alice and Bob how to know whose number is bigger without giving away their own's",
+        "headline": "ReadMe(写在前面)",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/mobilephone724.github.io\/howtoknowwhoseisbigger\/"
+            "@id": "https:\/\/mobilephone724.github.io\/writeinfront\/"
         },"image": [{
                             "@type": "ImageObject",
                             "url": "https:\/\/mobilephone724.github.io\/images\/Apple-Devices-Preview.png",
                             "width":  3200 ,
                             "height":  2048 
-                        }],"genre": "posts","keywords": "Zero—Knowledge Proof","wordcount":  180 ,
-        "url": "https:\/\/mobilephone724.github.io\/howtoknowwhoseisbigger\/","datePublished": "2022-01-14T23:43:08+08:00","dateModified": "2022-01-14T23:47:49+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                        }],"genre": "posts","wordcount":  121 ,
+        "url": "https:\/\/mobilephone724.github.io\/writeinfront\/","datePublished": "2022-01-15T12:31:46+08:00","dateModified": "2022-01-15T13:16:15+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": {
                     "@type": "ImageObject",
@@ -120,9 +114,9 @@ Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">Contents</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">Alice and Bob how to know whose number is bigger without giving away their own&#39;s</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-category">included in <a href="/categories/cryptology/"><i class="far fa-folder fa-fw"></i>cryptology</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-14">2022-01-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;180 words&nbsp;
+        </div><article class="page single"><h1 class="single-title animated flipInX">ReadMe(写在前面)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-15">2022-01-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;121 words&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;One minute&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -131,52 +125,66 @@ Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#definiteness">Definiteness：</a></li>
-    <li><a href="#solution">Solution:</a></li>
+    <li>
+      <ul>
+        <li><a href="#why-does-the-blog-is-written-in-english为什么使用英文写博客">Why does the blog is written in English(为什么使用英文写博客)?</a></li>
+        <li><a href="#how-to-contact-me如何联系我">How to contact me(如何联系我)?</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="definiteness">Definiteness：</h2>
-<p>Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &lt; j$ in the end(aside from their own values)</p>
-<h2 id="solution">Solution:</h2>
-<p>Let $M$ be the set of all $N$-bit nonnegative integers</p>
-<p>Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$</p>
+            </div><div class="content" id="content"><h3 id="why-does-the-blog-is-written-in-english为什么使用英文写博客">Why does the blog is written in English(为什么使用英文写博客)?</h3>
 <ol>
-<li>Alice generates a public key from $Q_N$, called $E_a$, and the inverse function of $E_a$ is $D_a$</li>
-<li>Bob picks a random value $x \in M$, compute $k = E_a(x)$, then send $k - j$ to Alice</li>
-<li>Alice computes $y_u=D_a(k - j + u)$ for $u = 1,2,\dots,9$</li>
-<li>Alice generates a random prime $p$ of $N/2$-bit, and computes $z_u=y_u(\mod p)$ for all $u$.</li>
-<li>Alice repeats step 4 until all $z_u$ differ by at least 2 in the $\mod p$ sense</li>
-<li>Alice sends the $p$ and $z_1,z_2,\dots,z_i,z_{i+1}+1,\dots,z_{9} +1$ (all in $\mod p$ sense)to Bob</li>
-<li>Bob looks at the $j$-th value(not counting p) sent from Alice, and decides that $i\geq j$ if it is equal to $x \mod p$, or $i&lt;j$ otherwise</li>
+<li>I don&rsquo;t know how to translate many professional terms into Chinese, and people may be more familiar with the terms in English rather than Chinese.(我不知道如何使用中文去表述很多专业名词，而且人们应该更熟悉英文表述)</li>
+<li>Most content published on the blog is about technology in computer science, I believe there is no barrier for relavant people to read the blog in English(博客中大多数内容和计算机技术相关，相关人员应该没有阅读英语的障碍)</li>
+<li>So English can&rsquo;t be avoided and swith input method between Chinese and English isn&rsquo;t convenient（写英文无法避免而且中英文输入法切换并不方便）</li>
+<li>It&rsquo;s a good way to practice English(这也是个练习英文的好方式)</li>
+<li>If anything isn&rsquo;t described clearly or wrong, please contact me ASAP. I will modify it.(如果有什么没有描述清除或者有错误，请尽快联系我，我会修改)</li>
+</ol>
+<h3 id="how-to-contact-me如何联系我">How to contact me(如何联系我)?</h3>
+<ol>
+<li><a href="mailto:1263485219@qq.com">1263485219@qq.com</a> for mail</li>
+<li><a href="https://github.com/mobilephone724">https://github.com/mobilephone724</a> for github</li>
+<li><code>1263485219</code> for QQ(or TIM)</li>
+<li><code>abc1263485219</code> for Wechat QR code is below
+<figure><a class="lightgallery" href="/writeinfront/pic/wechatQRCode.jpg" title="wechatQRCode" data-thumbnail="/writeinfront/pic/wechatQRCode.jpg" data-sub-html="<h2>wechatQRCode-微信二维码</h2><p>wechatQRCode</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="pic/wechatQRCode.jpg"
+            data-srcset="/writeinfront/pic/wechatQRCode.jpg, pic/wechatQRCode.jpg 1.5x, /writeinfront/pic/wechatQRCode.jpg 2x"
+            data-sizes="auto"
+            alt="/writeinfront/pic/wechatQRCode.jpg" />
+    </a><figcaption class="image-caption">wechatQRCode-微信二维码</figcaption>
+    </figure></li>
 </ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2022-01-14&nbsp;<a class="git-hash" href="https://github.com/mobilephone724/mobilephone724.github.io/commit/b24545f19ab6b781cf1d3a62de645c70eeb55422" target="_blank" title="commit by mobilephone724(1263485219@qq.com) b24545f19ab6b781cf1d3a62de645c70eeb55422: add Zero—Knowledge Proof">
-                                    <i class="fas fa-hashtag fa-fw"></i>b24545f</a></span>
+                <span>Updated on 2022-01-15&nbsp;<a class="git-hash" href="https://github.com/mobilephone724/mobilephone724.github.io/commit/deafef34b405791216ce66e772ae2e66f81155cb" target="_blank" title="commit by mobilephone724(1263485219@qq.com) deafef34b405791216ce66e772ae2e66f81155cb: add readme">
+                                    <i class="fas fa-hashtag fa-fw"></i>deafef3</a></span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
-                            <a class="link-to-markdown" href="/howtoknowwhoseisbigger/index.md" target="_blank">Read Markdown</a>
+                            <a class="link-to-markdown" href="/writeinfront/index.md" target="_blank">Read Markdown</a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://mobilephone724.github.io/howtoknowwhoseisbigger/" data-title="Alice and Bob how to know whose number is bigger without giving away their own&#39;s"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://mobilephone724.github.io/howtoknowwhoseisbigger/" data-title="Alice and Bob how to know whose number is bigger without giving away their own&#39;s"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://mobilephone724.github.io/howtoknowwhoseisbigger/" data-title="Alice and Bob how to know whose number is bigger without giving away their own&#39;s"><i class="fab fa-weibo fa-fw"></i></a></span>
+                <span><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://mobilephone724.github.io/writeinfront/" data-title="ReadMe(写在前面)"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://mobilephone724.github.io/writeinfront/" data-title="ReadMe(写在前面)"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://mobilephone724.github.io/writeinfront/" data-title="ReadMe(写在前面)"><i class="fab fa-weibo fa-fw"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/zeroknowledge-proof/">Zero—Knowledge Proof</a></section>
+        <section class="post-tags"></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/chapter3/" class="prev" rel="prev" title="APUE/Chapter3: file and I/O"><i class="fas fa-angle-left fa-fw"></i>APUE/Chapter3: file and I/O</a>
-            <a href="/moreblogs/" class="next" rel="next" title="更多的博客">更多的博客<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/moreblogs/" class="prev" rel="prev" title="更多的博客"><i class="fas fa-angle-left fa-fw"></i>更多的博客</a></div>
 </div>
 <div id="comments"><div id="utterances"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
