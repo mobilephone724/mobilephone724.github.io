@@ -76,6 +76,9 @@ hugo server #in directory quickstart
 
 open website at `http://localhost:1313/` to see your blog
 
+
+## show your blog on github page
+The following action will help pushing your blog on github
 ### create a github account
 
 It may be quite easy for you do so. Suppose your github user name is `hugoAuthor`
