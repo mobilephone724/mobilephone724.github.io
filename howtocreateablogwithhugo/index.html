@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Create a blog with Hugo on Github - mobilephone724</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="Create a blog with Hugo on Github" />
+<meta property="og:description" content="write ahead my blog code would help you create your own blog https://github.com/mobilephone724/hugoBlog/
+create a blog on local Quick Start | Hugo (gohugo.io)
+install hugo Install Hugo | Hugo (gohugo.io)
+It seems installation on windows is a little harder. The following actions are based on linux
+create a new site 1  hugo new site quickstart  The above will create a new Hugo site in a folder named quickstart." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mobilephone724.github.io/howtocreateablogwithhugo/" />
+<meta property="og:image" content="https://mobilephone724.github.io/logo.png"/>
+<meta property="article:published_time" content="2022-01-17T22:41:38+08:00" />
+<meta property="article:modified_time" content="2022-01-17T22:53:08+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://mobilephone724.github.io/logo.png"/>
+
+<meta name="twitter:title" content="Create a blog with Hugo on Github"/>
+<meta name="twitter:description" content="write ahead my blog code would help you create your own blog https://github.com/mobilephone724/hugoBlog/
+create a blog on local Quick Start | Hugo (gohugo.io)
+install hugo Install Hugo | Hugo (gohugo.io)
+It seems installation on windows is a little harder. The following actions are based on linux
+create a new site 1  hugo new site quickstart  The above will create a new Hugo site in a folder named quickstart."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://mobilephone724.github.io/howtocreateablogwithhugo/" /><link rel="prev" href="https://mobilephone724.github.io/howtoknowwhoseisbigger/" /><link rel="next" href="https://mobilephone724.github.io/moreblogs/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Create a blog with Hugo on Github",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/mobilephone724.github.io\/howtocreateablogwithhugo\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/mobilephone724.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "hugo","wordcount":  483 ,
+        "url": "https:\/\/mobilephone724.github.io\/howtocreateablogwithhugo\/","datePublished": "2022-01-17T22:41:38+08:00","dateModified": "2022-01-17T22:53:08+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/mobilephone724.github.io\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "mobilephone724"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="mobilephone724"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>mobilephone724</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/categories/documentation/"> Docs </a><a class="menu-item" href="https://github.com/dillonzq/LoveIt" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="mobilephone724"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>mobilephone724</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/categories/documentation/" title="">Docs</a><a class="menu-item" href="https://github.com/dillonzq/LoveIt" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Create a blog with Hugo on Github</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-category">included in <a href="/categories/blog/"><i class="far fa-folder fa-fw"></i>blog</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-17">2022-01-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;483 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#write-ahead">write ahead</a></li>
+    <li><a href="#create-a-blog-on-local">create a blog on local</a>
+      <ul>
+        <li><a href="#install-hugo">install hugo</a></li>
+        <li><a href="#create-a-new-site">create a new site</a></li>
+        <li><a href="#choose-a-theme">choose a theme</a></li>
+        <li><a href="#create-your-first-post">create your first post</a></li>
+        <li><a href="#create-a-github-account">create a github account</a></li>
+        <li><a href="#create-a-repo">create a repo</a></li>
+        <li><a href="#push-your-blog-to-github-page">push your blog to github page</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="write-ahead">write ahead</h2>
+<p>my blog code would help you create your own blog <a href="https://github.com/mobilephone724/hugoBlog/">https://github.com/mobilephone724/hugoBlog/</a></p>
+<h2 id="create-a-blog-on-local">create a blog on local</h2>
+<p><a href="https://gohugo.io/getting-started/quick-start/" target="_blank" rel="noopener noreffer">Quick Start | Hugo (gohugo.io)</a></p>
+<h3 id="install-hugo">install hugo</h3>
+<p><a href="https://gohugo.io/getting-started/installing" target="_blank" rel="noopener noreffer">Install Hugo | Hugo (gohugo.io)</a></p>
+<p>It seems installation on windows is a little harder. The following actions are based on <strong>linux</strong></p>
+<h3 id="create-a-new-site">create a new site</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">hugo new site quickstart
+</code></pre></td></tr></table>
+</div>
+</div><p>The above will create a new Hugo site in a folder named <code>quickstart</code>.</p>
+<h3 id="choose-a-theme">choose a theme</h3>
+<p>I have tried many themes, and in the end, <code>LoveIt</code> is what I love best. So I use it to create my blogs.</p>
+<p>Install it as follow</p>
+<p><a href="https://hugoloveit.com/theme-documentation-basics/" target="_blank" rel="noopener noreffer">Theme Documentation - Basics - LoveIt (hugoloveit.com)</a></p>
+<p>and configure <code> config.toml</code> as what you want. If you can&rsquo;t understand it completely right now, just copy all in <code>quickstart/themes/LoveIt/exampleSite</code> to <code>quickstart</code>.</p>
+<p>some notifications:</p>
+<ol>
+<li>The line <code>themesDir = &quot;../..&quot;</code> must be removed or hugo can&rsquo;t get right the right path of the theme</li>
+<li>you can remove <code>about</code>  directory in <code>content</code> because something in it prevents me from publishing my blog on <code>github</code> and I don&rsquo;t need the function with <code>about</code>. So I just removed it</li>
+</ol>
+<h3 id="create-your-first-post">create your first post</h3>
+<p>I don&rsquo;t like the way on <a href="https://gohugo.io/getting-started/quick-start/" target="_blank" rel="noopener noreffer">Quick Start | Hugo (gohugo.io)</a> to create a post, for inserting pictures can be undesirable. The best way for me now it as follows</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nb">cd</span> content/posts
+mkdir my_first_post
+<span class="nb">cd</span> my_first_post
+mkdir pic 		<span class="c1"># create a directory to store pictures.</span>
+touch index.md 	<span class="c1"># a markdown file in which you write a blog</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>The advantage is that the <code>path</code> of pictures is like <code>pic/picture.png</code>. It is very similar to the way to write in <code>typora</code></p>
+<p>notice that you can use multi-level directories like</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">ubuntu@VM-4-13-ubuntu:~/quickstart/content/posts$ tree .
+.
+├── APUE
+│   └── chapter3
+│       ├── index.md
+│       └── pic
+│           ├── file.png
+│           ├── Screenshot-2021-05-04-19-58-12.png
+│           ├── Screenshot-2021-05-04-20-40-06.png
+│           └── Screenshot-2021-05-05-09-34-21.png
+</code></pre></td></tr></table>
+</div>
+</div><p>then write something to <code>index.md</code>(If you don&rsquo;t know what to write, copy a post in my blogs)</p>
+<p>and now see your blog on website</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">hugo server #in directory quickstart
+</code></pre></td></tr></table>
+</div>
+</div><p>open website at <code>http://localhost:1313/</code> to see your blog</p>
+<h3 id="create-a-github-account">create a github account</h3>
+<p>It may be quite easy for you do so. Suppose your github user name is <code>hugoAuthor</code></p>
+<h3 id="create-a-repo">create a repo</h3>
+<p>The repo&rsquo;s name must be like <code>hugoAuthor.github.io</code> and visibility must be <code>public</code></p>
+<h3 id="push-your-blog-to-github-page">push your blog to github page</h3>
+<p>in <code>quickstart</code> directory</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">hugo
+</code></pre></td></tr></table>
+</div>
+</div><p>This command will create a directory named <code>public</code> in which is what all we need to show our blog.</p>
+<p>What we&rsquo;ll do following is push  content in <code>public</code> to the repo you just created.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cd public
+git init
+git add .
+git commit -m &#34;first commit&#34;
+git remote add origin https://github.com/hugoAuthor/hugoAuthor.github.io.git
+git push origin master
+</code></pre></td></tr></table>
+</div>
+</div><p>Open the website of your repo then wait until you see <code>active</code> on <code>Environments</code></p>
+<p><figure><a class="lightgallery" href="/howtocreateablogwithhugo/pic/image-20220117224010950.png" title="image-20220117224010950" data-thumbnail="/howtocreateablogwithhugo/pic/image-20220117224010950.png" data-sub-html="<h2>environments</h2><p>image-20220117224010950</p>">
+        <img
+            class="lazyload"
+            src="/svg/loading.min.svg"
+            data-src="pic/image-20220117224010950.png"
+            data-srcset="/howtocreateablogwithhugo/pic/image-20220117224010950.png, pic/image-20220117224010950.png 1.5x, /howtocreateablogwithhugo/pic/image-20220117224010950.png 2x"
+            data-sizes="auto"
+            alt="/howtocreateablogwithhugo/pic/image-20220117224010950.png" />
+    </a><figcaption class="image-caption">environments</figcaption>
+    </figure></p>
+<p>Now you can see your blog on  <code>hugoAuthor.github.io</code></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-01-17</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/howtocreateablogwithhugo/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://mobilephone724.github.io/howtocreateablogwithhugo/" data-title="Create a blog with Hugo on Github"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://mobilephone724.github.io/howtocreateablogwithhugo/" data-title="Create a blog with Hugo on Github"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://mobilephone724.github.io/howtocreateablogwithhugo/" data-title="Create a blog with Hugo on Github"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/hugo/">hugo</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/howtoknowwhoseisbigger/" class="prev" rel="prev" title="Alice and Bob how to know whose number is bigger without giving away their own&#39;s"><i class="fas fa-angle-left fa-fw"></i>Alice and Bob how to know whose number is bigger without giving away their own&#39;s</a>
+            <a href="/moreblogs/" class="next" rel="next" title="更多的博客">更多的博客<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"mobilephone724/hugoTalk"}},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

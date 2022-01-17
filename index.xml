@@ -3,7 +3,7 @@
         <title>mobilephone724</title>
         <link>https://mobilephone724.github.io/</link>
         <description>About LoveIt Theme</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 15 Jan 2022 13:11:41 &#43;0800</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 17 Jan 2022 22:41:38 &#43;0800</lastBuildDate>
             <atom:link href="https://mobilephone724.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>ReadMe(写在前面)</title>
@@ -19,6 +19,17 @@
     <author>Author</author>
     <guid>https://mobilephone724.github.io/moreblogs/</guid>
     <description><![CDATA[zty的博客 介绍：无敌的学委，保研巨佬]]></description>
+</item><item>
+    <title>Create a blog with Hugo on Github</title>
+    <link>https://mobilephone724.github.io/howtocreateablogwithhugo/</link>
+    <pubDate>Mon, 17 Jan 2022 22:41:38 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mobilephone724.github.io/howtocreateablogwithhugo/</guid>
+    <description><![CDATA[write ahead my blog code would help you create your own blog https://github.com/mobilephone724/hugoBlog/
+create a blog on local Quick Start | Hugo (gohugo.io)
+install hugo Install Hugo | Hugo (gohugo.io)
+It seems installation on windows is a little harder. The following actions are based on linux
+create a new site 1  hugo new site quickstart  The above will create a new Hugo site in a folder named quickstart.]]></description>
 </item><item>
     <title>Alice and Bob how to know whose number is bigger without giving away their own&#39;s</title>
     <link>https://mobilephone724.github.io/howtoknowwhoseisbigger/</link>
