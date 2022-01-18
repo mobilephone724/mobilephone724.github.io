@@ -15,7 +15,7 @@ create a new site 1  hugo new site quickstart  The above will create a new Hugo
 <meta property="og:url" content="https://mobilephone724.github.io/howtocreateablogwithhugo/" />
 <meta property="og:image" content="https://mobilephone724.github.io/logo.png"/>
 <meta property="article:published_time" content="2022-01-17T22:41:38+08:00" />
-<meta property="article:modified_time" content="2022-01-17T22:57:10+08:00" />
+<meta property="article:modified_time" content="2022-01-18T20:31:37+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://mobilephone724.github.io/logo.png"/>
 
@@ -42,8 +42,8 @@ create a new site 1  hugo new site quickstart  The above will create a new Hugo
                             "url": "https:\/\/mobilephone724.github.io\/images\/Apple-Devices-Preview.png",
                             "width":  3200 ,
                             "height":  2048 
-                        }],"genre": "posts","keywords": "hugo","wordcount":  499 ,
-        "url": "https:\/\/mobilephone724.github.io\/howtocreateablogwithhugo\/","datePublished": "2022-01-17T22:41:38+08:00","dateModified": "2022-01-17T22:57:10+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+                        }],"genre": "posts","keywords": "hugo","wordcount":  1485 ,
+        "url": "https:\/\/mobilephone724.github.io\/howtocreateablogwithhugo\/","datePublished": "2022-01-17T22:41:38+08:00","dateModified": "2022-01-18T20:31:37+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": {
                     "@type": "ImageObject",
@@ -124,8 +124,8 @@ create a new site 1  hugo new site quickstart  The above will create a new Hugo
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Create a blog with Hugo on Github</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-category">included in <a href="/categories/blog/"><i class="far fa-folder fa-fw"></i>blog</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-17">2022-01-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;499 words&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;3 minutes&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-17">2022-01-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;1485 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;7 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>Contents</span>
@@ -149,6 +149,12 @@ create a new site 1  hugo new site quickstart  The above will create a new Hugo
         <li><a href="#push-your-blog-to-github-page">push your blog to github page</a></li>
       </ul>
     </li>
+    <li><a href="#more-details">more details</a>
+      <ul>
+        <li><a href="#post-head">post head</a></li>
+        <li><a href="#add-comment-area">add comment area</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="write-ahead">write ahead</h2>
@@ -167,18 +173,477 @@ create a new site 1  hugo new site quickstart  The above will create a new Hugo
 <pre class="chroma"><code class="language-bash" data-lang="bash">hugo new site quickstart
 </code></pre></td></tr></table>
 </div>
-</div><p>The above will create a new Hugo site in a folder named <code>quickstart</code>.</p>
+</div><p>The above will create a new Hugo site in a folder named <code>quickstart</code>. Enter the folder <code>quickstart</code> which is seemed as the <strong>root directory</strong></p>
 <h3 id="choose-a-theme">choose a theme</h3>
 <p>I have tried many themes, and in the end, <code>LoveIt</code> is what I love best. So I use it to create my blogs.</p>
-<p>Install it as follow</p>
-<p><a href="https://hugoloveit.com/theme-documentation-basics/" target="_blank" rel="noopener noreffer">Theme Documentation - Basics - LoveIt (hugoloveit.com)</a></p>
-<p>and configure <code> config.toml</code> as what you want. If you can&rsquo;t understand it completely right now, just copy all in <code>quickstart/themes/LoveIt/exampleSite</code> to <code>quickstart</code>.</p>
-<p>some notifications:</p>
+<p>Create an empty git repository(quickstart) and make this repository(LoveIt) a submodule of your site directory:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">git init
+git submodule add https://github.com/dillonzq/LoveIt.git themes/LoveIt
+</code></pre></td></tr></table>
+</div>
+</div><p>and configure <code> config.toml</code> as what you want. If you can&rsquo;t understand it completely right now, just copy it.</p>
+<p>copy everything from <code>themes/LoveIt/exampleSite</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-bash" data-lang="bash">cp -r themes/LoveIt/exampleSite/* .
+</code></pre></td></tr></table>
+</div>
+</div><p>then</p>
 <ol>
-<li>The line <code>themesDir = &quot;../..&quot;</code> must be removed or hugo can&rsquo;t get right the right path of the theme</li>
-<li>you can remove <code>about</code>  directory in <code>content</code> because something in it prevents me from publishing my blog on <code>github</code> and I don&rsquo;t need the function with <code>about</code>. So I just removed it</li>
+<li>configure <code> config.toml</code> as what you want. If you can&rsquo;t understand it completely right now, just copy it.</li>
 </ol>
-<h3 id="create-your-first-post">create your first post</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span><span class="lnt">134
+</span><span class="lnt">135
+</span><span class="lnt">136
+</span><span class="lnt">137
+</span><span class="lnt">138
+</span><span class="lnt">139
+</span><span class="lnt">140
+</span><span class="lnt">141
+</span><span class="lnt">142
+</span><span class="lnt">143
+</span><span class="lnt">144
+</span><span class="lnt">145
+</span><span class="lnt">146
+</span><span class="lnt">147
+</span><span class="lnt">148
+</span><span class="lnt">149
+</span><span class="lnt">150
+</span><span class="lnt">151
+</span><span class="lnt">152
+</span><span class="lnt">153
+</span><span class="lnt">154
+</span><span class="lnt">155
+</span><span class="lnt">156
+</span><span class="lnt">157
+</span><span class="lnt">158
+</span><span class="lnt">159
+</span><span class="lnt">160
+</span><span class="lnt">161
+</span><span class="lnt">162
+</span><span class="lnt">163
+</span><span class="lnt">164
+</span><span class="lnt">165
+</span><span class="lnt">166
+</span><span class="lnt">167
+</span><span class="lnt">168
+</span><span class="lnt">169
+</span><span class="lnt">170
+</span><span class="lnt">171
+</span><span class="lnt">172
+</span><span class="lnt">173
+</span><span class="lnt">174
+</span><span class="lnt">175
+</span><span class="lnt">176
+</span><span class="lnt">177
+</span><span class="lnt">178
+</span><span class="lnt">179
+</span><span class="lnt">180
+</span><span class="lnt">181
+</span><span class="lnt">182
+</span><span class="lnt">183
+</span><span class="lnt">184
+</span><span class="lnt">185
+</span><span class="lnt">186
+</span><span class="lnt">187
+</span><span class="lnt">188
+</span><span class="lnt">189
+</span><span class="lnt">190
+</span><span class="lnt">191
+</span><span class="lnt">192
+</span><span class="lnt">193
+</span><span class="lnt">194
+</span><span class="lnt">195
+</span><span class="lnt">196
+</span><span class="lnt">197
+</span><span class="lnt">198
+</span><span class="lnt">199
+</span><span class="lnt">200
+</span><span class="lnt">201
+</span><span class="lnt">202
+</span><span class="lnt">203
+</span><span class="lnt">204
+</span><span class="lnt">205
+</span><span class="lnt">206
+</span><span class="lnt">207
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">baseURL = &#34;http://example.org/&#34;
+languageCode = &#34;en-us&#34;
+title = &#34;My New Hugo Site&#34;
+theme = &#34;LoveIt&#34;
+enableRobotsTXT = true
+enableEmoji = true
+
+[languages]
+  [languages.en]
+  weight = 1
+  languageCode = &#34;en&#34;
+  languageName = &#34;English&#34;
+  paginate = 12
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = &#34;posts&#34;
+        name = &#34;Posts&#34;
+        url = &#34;/posts/&#34;
+        title = &#34;&#34;
+        weight = 1
+      [[languages.en.menu.main]]
+        identifier = &#34;tags&#34;
+        pre = &#34;&#34;
+        post = &#34;&#34;
+        name = &#34;Tags&#34;
+        url = &#34;/tags/&#34;
+        title = &#34;&#34;
+        weight = 2
+      [[languages.en.menu.main]]
+        identifier = &#34;categories&#34;
+        pre = &#34;&#34;
+        post = &#34;&#34;
+        name = &#34;Categories&#34;
+        url = &#34;/categories/&#34;
+        title = &#34;&#34;
+        weight = 3
+      [[languages.en.menu.main]]
+        identifier = &#34;documentation&#34;
+        pre = &#34;&#34;
+        post = &#34;&#34;
+        name = &#34;Docs&#34;
+        url = &#34;/categories/documentation/&#34;
+        title = &#34;&#34;
+        weight = 4
+      [[languages.en.menu.main]]
+        identifier = &#34;github&#34;
+        pre = &#34;&lt;i class=&#39;fab fa-github fa-fw&#39;&gt;&lt;/i&gt;&#34;
+        post = &#34;&#34;
+        name = &#34;&#34;
+        url = &#34;https://github.com/dillonzq/LoveIt&#34;
+        title = &#34;GitHub&#34;
+        weight = 5
+    [languages.en.params]
+      description = &#34;About LoveIt Theme&#34;
+      keywords = [&#34;Theme&#34;, &#34;Hugo&#34;]
+      [languages.en.params.app]
+        title = &#34;LoveIt&#34;
+        noFavicon = false
+        svgFavicon = &#34;&#34;
+        themeColor = &#34;#ffffff&#34;
+        iconColor = &#34;#5bbad5&#34;
+        tileColor = &#34;#da532c&#34;
+      [languages.en.params.search]
+        enable = true
+        type = &#34;algolia&#34;
+        contentLength = 4000
+        placeholder = &#34;&#34;
+        maxResultLength = 10
+        snippetLength = 30
+        highlightTag = &#34;em&#34;
+        absoluteURL = false
+        [languages.en.params.search.algolia]
+          index = &#34;index.en&#34;
+          appID = &#34;PASDMWALPK&#34;
+          searchKey = &#34;b42948e51daaa93df92381c8e2ac0f93&#34;
+      [languages.en.params.home]
+        rss = 10
+        [languages.en.params.home.profile]
+          enable = true
+          gravatarEmail = &#34;&#34;
+          avatarURL = &#34;/images/avatar.png&#34;
+          title = &#34;hugoAuthor&#34;
+          subtitle = &#34;something to share&#34;
+          typeit = true
+          social = true
+          disclaimer = &#34;&#34;
+        [languages.en.params.home.posts]
+          enable = true
+          paginate = 6
+      [languages.en.params.social]
+        GitHub = &#34;hugoAuthor&#34;
+
+[params]
+
+  version = &#34;0.2.X&#34;
+  defaultTheme = &#34;light&#34;
+  dateFormat = &#34;2006-01-02&#34;
+  images = [&#34;/logo.png&#34;]
+  [params.header]
+    desktopMode = &#34;fixed&#34;
+    mobileMode = &#34;auto&#34;
+  [params.header.title]
+    name = &#34;hugoAuthor&#34;
+    pre = &#34;&lt;i class=&#39;far fa-kiss-wink-heart fa-fw&#39;&gt;&lt;/i&gt;&#34;
+    typeit = false
+
+  [params.footer]
+    enable = true
+    custom = &#39;&#39;
+    hugo = false
+    copyright = true
+    author = true
+    since = 2022
+    license= &#39;&lt;a rel=&#34;license external nofollow noopener noreffer&#34; href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC 4.0&lt;/a&gt;&#39;
+  [params.section]
+    paginate = 20
+    dateFormat = &#34;01-02&#34;
+    rss = 10
+  [params.list]
+    paginate = 20
+    dateFormat = &#34;01-02&#34;
+    rss = 10
+  [params.page]
+    hiddenFromHomePage = false
+    hiddenFromSearch = false
+    twemoji = false
+    lightgallery = false
+    ruby = true
+    fraction = true
+    fontawesome = true
+    linkToMarkdown = true
+    rssFullText = false
+    [params.page.toc]
+      enable = true
+      keepStatic = false
+      auto = true
+    [params.page.code]
+      copy = true
+      maxShownLines = 10
+    [params.page.math]
+      enable = true
+      blockLeftDelimiter = &#34;&#34;
+      blockRightDelimiter = &#34;&#34;
+      inlineLeftDelimiter = &#34;&#34;
+      inlineRightDelimiter = &#34;&#34;
+      copyTex = true
+      mhchem = true
+    [params.page.mapbox]
+      accessToken = &#34;pk.eyJ1IjoiZGlsbG9uenEiLCJhIjoiY2s2czd2M2x3MDA0NjNmcGxmcjVrZmc2cyJ9.aSjv2BNuZUfARvxRYjSVZQ&#34;
+      lightStyle = &#34;mapbox://styles/mapbox/light-v10?optimize=true&#34;
+      darkStyle = &#34;mapbox://styles/mapbox/dark-v10?optimize=true&#34;
+      navigation = true
+      geolocate = true
+      scale = true
+      fullscreen = true
+    [params.page.share]
+      enable = true
+    [params.page.comment]
+      enable = true
+      [params.page.comment.utterances]
+        enable = false
+        repo = &#34;&#34;
+        issueTerm = &#34;pathname&#34;
+        label = &#34;&#34;
+        lightTheme = &#34;github-light&#34;
+        darkTheme = &#34;github-dark&#34;
+    [params.seo]
+      image = &#34;/images/Apple-Devices-Preview.png&#34;
+      thumbnailUrl = &#34;/images/screenshot.png&#34;
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = false
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      definitionList = true
+      footnote = true
+      linkify = true
+      strikethrough = true
+      table = true
+      taskList = true
+      typographer = true
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 6
+
+[mediaTypes]
+  [mediaTypes.&#34;text/plain&#34;]
+    suffixes = [&#34;md&#34;]
+
+[outputFormats.MarkDown]
+  mediaType = &#34;text/plain&#34;
+  isPlainText = true
+  isHTML = false
+
+[outputs]
+  home = [&#34;HTML&#34;, &#34;RSS&#34;, &#34;JSON&#34;]
+  page = [&#34;HTML&#34;, &#34;MarkDown&#34;]
+  section = [&#34;HTML&#34;, &#34;RSS&#34;]
+  taxonomy = [&#34;HTML&#34;, &#34;RSS&#34;]
+  taxonomyTerm = [&#34;HTML&#34;]
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>remove  <code>content/about</code> because it may lead to that github can&rsquo;t show your page</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">rm -r content/about/
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>remove anything in <code>content/posts</code>, and next section will help you write your own post</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">rm -r content/posts/*
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="create-your-first-post">create your first post</h3>
 <p>I don&rsquo;t like the way on <a href="https://gohugo.io/getting-started/quick-start/" target="_blank" rel="noopener noreffer">Quick Start | Hugo (gohugo.io)</a> to create a post, for inserting pictures can be undesirable. The best way for me now it as follows</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -193,7 +658,7 @@ create a new site 1  hugo new site quickstart  The above will create a new Hugo
 mkdir my_first_post
 <span class="nb">cd</span> my_first_post
 mkdir pic 		<span class="c1"># create a directory to store pictures.</span>
-touch index.md 	<span class="c1"># a markdown file in which you write a blog</span>
+touch index.md
 </code></pre></td></tr></table>
 </div>
 </div><p>The advantage is that the <code>path</code> of pictures is like <code>pic/picture.png</code>. It is very similar to the way to write in <code>typora</code></p>
@@ -224,7 +689,58 @@ touch index.md 	<span class="c1"># a markdown file in which you write a blog</sp
 │           └── Screenshot-2021-05-05-09-34-21.png
 </code></pre></td></tr></table>
 </div>
-</div><p>then write something to <code>index.md</code>(If you don&rsquo;t know what to write, copy a post in my blogs)</p>
+</div><p>then write something to <code>index.md</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-markdown" data-lang="markdown">---
+weight: 3
+title: &#34;my first post&#34;
+author: &#34;hugoAuthor&#34;
+tags: [&#34;hugo&#34;,&#34;LoveIt&#34;]
+categories: [&#34;blog&#34;]
+toc:
+  enable: true
+  auto: true
+date: 2022-01-14T23:43:08+08:00
+publishDate: 2022-01-14T23:43:08+08:00
+---
+
+<span class="gh"># add a chapter
+</span><span class="gh"></span>
+some content
+
+![<span class="nt">pic</span>](<span class="na">pic/avatar.png</span>)
+</code></pre></td></tr></table>
+</div>
+</div><p>and save this picture to <code>content/posts/my_first_post</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="pic/avatar.png"
+        data-srcset="/howtocreateablogwithhugo/pic/avatar.png, pic/avatar.png 1.5x, /howtocreateablogwithhugo/pic/avatar.png 2x"
+        data-sizes="auto"
+        alt="/howtocreateablogwithhugo/pic/avatar.png"
+        title="pic" /></p>
 <p>and now see your blog on website</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -272,23 +788,69 @@ git push origin master
 </code></pre></td></tr></table>
 </div>
 </div><p>Open the website of your repo then wait until you see <code>active</code> on <code>Environments</code></p>
-<p><figure><a class="lightgallery" href="/howtocreateablogwithhugo/pic/image-20220117224010950.png" title="image-20220117224010950" data-thumbnail="/howtocreateablogwithhugo/pic/image-20220117224010950.png" data-sub-html="<h2>environments</h2><p>image-20220117224010950</p>">
-        <img
-            class="lazyload"
-            src="/svg/loading.min.svg"
-            data-src="pic/image-20220117224010950.png"
-            data-srcset="/howtocreateablogwithhugo/pic/image-20220117224010950.png, pic/image-20220117224010950.png 1.5x, /howtocreateablogwithhugo/pic/image-20220117224010950.png 2x"
-            data-sizes="auto"
-            alt="/howtocreateablogwithhugo/pic/image-20220117224010950.png" />
-    </a><figcaption class="image-caption">environments</figcaption>
-    </figure></p>
+<p><img src="pic/image-20220117224010950.png" alt="image-20220117224010950" style="zoom:150%;" /></p>
 <p>Now you can see your blog on  <code>hugoAuthor.github.io</code></p>
+<h2 id="more-details">more details</h2>
+<h3 id="post-head">post head</h3>
+<p>The head I use is like</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">---
+weight: 3
+title: &#34;your first post&#34;
+author: &#34;hugoAuthor&#34;
+tags: [&#34;hugo&#34;,&#34;LoveIt&#34;]
+categories: [&#34;blog&#34;]
+toc:
+  enable: true
+  auto: true
+date: 2022-01-14T23:43:08+08:00
+publishDate: 2022-01-14T23:43:08+08:00
+---
+</code></pre></td></tr></table>
+</div>
+</div><p><code>weight: 3</code> means the weight of this post. The smaller the weight is, the position of this post is higher in homepage. For example, if you need a post to always be at top of homepage, you can use <code>weight: 1</code> in that post.</p>
+<p><code>tags: [&quot;hugo&quot;,&quot;LoveIt&quot;]</code> , <code>categories: [&quot;blog&quot;]</code> add tags and categories of this post, you can see all tags and categories at the top-right corner</p>
+<p><img src="pic/Screenshot-2022-01-18-201318.png" alt="Screenshot-2022-01-18-201318" style="zoom:200%;" /></p>
+<p><code>toc:</code> add table of contents</p>
+<p>To write date conveniently, use the script</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">date +<span class="s1">&#39;%Y-%m-%dT%H:%M:%S+08:00&#39;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="add-comment-area">add comment area</h3>
+<ol>
+<li>create an empty public repo in github, named as hugoTalk</li>
+<li>open <a href="https://github.com/apps/utterances" target="_blank" rel="noopener noreffer">utterances app</a> ,click install</li>
+<li>config utterances at <a href="https://github.com/apps/utterances">https://github.com/apps/utterances</a></li>
+<li>modify <code>config.toml</code> at <code>[params.page.comment.utterances]</code>, enable it and copy your hugoTalk url to <code>repo</code></li>
+<li>publish your blog and you will see the comment area.</li>
+</ol>
+<p><a href="https://cloud.tencent.com/developer/article/1834230" target="_blank" rel="noopener noreffer">this blog may help you do so</a></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2022-01-17&nbsp;<a class="git-hash" href="https://github.com/mobilephone724/mobilephone724.github.io/commit/215cec9bca3e376bf8dca4417625ddcfefb4fb98" target="_blank" title="commit by mobilephone724(1263485219@qq.com) 215cec9bca3e376bf8dca4417625ddcfefb4fb98:  fix titile">
-                                    <i class="fas fa-hashtag fa-fw"></i>215cec9</a></span>
+                <span>Updated on 2022-01-18&nbsp;<a class="git-hash" href="https://github.com/mobilephone724/mobilephone724.github.io/commit/2e6088b1ec2d47e9c28f9b74d76f952e6a322e1e" target="_blank" title="commit by mobilephone724(1263485219@qq.com) 2e6088b1ec2d47e9c28f9b74d76f952e6a322e1e: finish create hugo blog">
+                                    <i class="fas fa-hashtag fa-fw"></i>2e6088b</a></span>
             </div>
             <div class="post-info-license"></div>
         </div>
