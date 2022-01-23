@@ -11,7 +11,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://mobilephone724.github.io/" />
 <meta property="og:image" content="https://mobilephone724.github.io/logo.png"/>
-<meta property="og:updated_time" content="2022-01-17T22:41:38+08:00" />
+<meta property="og:updated_time" content="2022-01-23T11:36:54+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://mobilephone724.github.io/logo.png"/>
 
@@ -115,6 +115,16 @@
         <a href="/moreblogs/">更多的博客</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-01-15">2022-01-15</time></span></div><div class="content">zty的博客 介绍：无敌的学委，保研巨佬</div><div class="post-footer">
         <a href="/moreblogs/">Read More</a></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/sys-thesis%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">sys-thesis v0.5踩坑记录</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-01-23">2022-01-23</time></span>&nbsp;<span class="post-category">included in <a href="/categories/blog/"><i class="far fa-folder fa-fw"></i>blog</a></span></div><div class="content">使用的发行版为0.5, 使用环境为ubuntu
+卸载旧版本latex 1 2 3 4 5 6  sudo rm -rf /usr/local/texlive/*sudo rm -rf /usr/local/share/texmfsudo rm -rf /var/lib/texmfsudo rm -rf /etc/texmfsudo apt remove tex-common --purgefind -L /usr/local/bin/ -lname /usr/local/texlive/*/bin/* | sudo xargs rm  安装新版本latex 下载late镜像
+加载镜像文件(注意，我的mnt目录下没有挂在其他东西)
+1  sudo mount -o loop texlive.iso /mnt  启动安装程序
+1 2  cd /mnt sudo ./install-tl  卸载镜像文件
+1 2  cd /sudo umount /mnt  设置环境变量 在~/.</div><div class="post-footer">
+        <a href="/sys-thesis%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/hugo/">hugo</a></div></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/howtocreateablogwithhugo/">Create a blog with Hugo on Github</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-01-17">2022-01-17</time></span>&nbsp;<span class="post-category">included in <a href="/categories/blog/"><i class="far fa-folder fa-fw"></i>blog</a></span></div><div class="content">write ahead my blog code would help you create your own blog https://github.com/mobilephone724/hugoBlog/

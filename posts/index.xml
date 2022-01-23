@@ -3,7 +3,7 @@
         <title>All Posts - mobilephone724</title>
         <link>https://mobilephone724.github.io/posts/</link>
         <description>All Posts | mobilephone724</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Mon, 17 Jan 2022 22:41:38 &#43;0800</lastBuildDate><atom:link href="https://mobilephone724.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 23 Jan 2022 11:36:54 &#43;0800</lastBuildDate><atom:link href="https://mobilephone724.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>ReadMe(写在前面)</title>
     <link>https://mobilephone724.github.io/writeinfront/</link>
     <pubDate>Sat, 15 Jan 2022 12:31:46 &#43;0800</pubDate>
@@ -17,6 +17,18 @@
     <author>Author</author>
     <guid>https://mobilephone724.github.io/moreblogs/</guid>
     <description><![CDATA[zty的博客 介绍：无敌的学委，保研巨佬]]></description>
+</item><item>
+    <title>sys-thesis v0.5踩坑记录</title>
+    <link>https://mobilephone724.github.io/sys-thesis%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/</link>
+    <pubDate>Sun, 23 Jan 2022 11:36:54 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mobilephone724.github.io/sys-thesis%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95/</guid>
+    <description><![CDATA[使用的发行版为0.5, 使用环境为ubuntu
+卸载旧版本latex 1 2 3 4 5 6  sudo rm -rf /usr/local/texlive/*sudo rm -rf /usr/local/share/texmfsudo rm -rf /var/lib/texmfsudo rm -rf /etc/texmfsudo apt remove tex-common --purgefind -L /usr/local/bin/ -lname /usr/local/texlive/*/bin/* | sudo xargs rm  安装新版本latex 下载late镜像
+加载镜像文件(注意，我的mnt目录下没有挂在其他东西)
+1  sudo mount -o loop texlive.iso /mnt  启动安装程序
+1 2  cd /mnt sudo ./install-tl  卸载镜像文件
+1 2  cd /sudo umount /mnt  设置环境变量 在~/.]]></description>
 </item><item>
     <title>Create a blog with Hugo on Github</title>
     <link>https://mobilephone724.github.io/howtocreateablogwithhugo/</link>
