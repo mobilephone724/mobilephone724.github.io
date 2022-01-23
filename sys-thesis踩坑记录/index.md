@@ -77,6 +77,6 @@ rm -Rf adobefonts
 [应该是bibtex的原因](https://ctan.math.illinois.edu/biblio/bibtex/contrib/gbt7714/gbt7714.pdf)
 
 <img src="pic/image-20220123113427702.png" alt="image-20220123113427702" style="zoom:200%;" />
-使用19版本除了参考文献无法显示除外，`\autoref`也无法正常使用，但是更新到2021版本就无该问题。
+使用19版本除了参考文献无法显示外，`\autoref`也无法正常使用，但是更新到2021版本就无该问题。
 
 ### Dockerfile中下载的texlive应该也不是新版！编译出错
