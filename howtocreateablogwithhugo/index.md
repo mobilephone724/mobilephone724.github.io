@@ -21,11 +21,11 @@ It seems installation on windows is a little harder. The following actions are b
 hugo new site quickstart
 ```
 
-The above will create a new Hugo site in a folder named `quickstart`. Enter the folder `quickstart` which is seemed as the **root directory**
+The above will create a new Hugo site in a folder named `quickstart`. Enter the folder `quickstart` which will be treated as the **root directory**
 
 ### choose a theme
 
-I have tried many themes, and in the end, `LoveIt` is what I love best. So I use it to create my blogs.
+I have tried many themes, and in the end, `LoveIt` is my favorite. So I use it to create my blogs.
 
 Create an empty git repository(quickstart) and make this repository(LoveIt) a submodule of your site directory:
 
@@ -262,6 +262,7 @@ rm -r content/about/
 ```
 rm -r content/posts/*
 ``` 
+
 ### create your first post
 
 I don't like the way on [Quick Start | Hugo (gohugo.io)](https://gohugo.io/getting-started/quick-start/) to create a post, for inserting pictures can be undesirable. The best way for me now it as follows
@@ -337,6 +338,8 @@ It may be quite easy for you do so. Suppose your github user name is `hugoAuthor
 ### create a repo
 
 The repo's name must be like `hugoAuthor.github.io` and visibility must be `public`
+
+find `baseURL = "http://example.org/"` in, config.toml, modify the value to your github website like `baseURL = "https://hugoAuthor.github.io/"`
 
 ### push your blog to github page
 
