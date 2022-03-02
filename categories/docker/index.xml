@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>docker - Category - mobilephone724</title>
+        <link>https://mobilephone724.github.io/categories/docker/</link>
+        <description>docker - Category - mobilephone724</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Fri, 14 Jan 2022 23:43:08 &#43;0800</lastBuildDate><atom:link href="https://mobilephone724.github.io/categories/docker/" rel="self" type="application/rss+xml" /><item>
+    <title>something to using docker</title>
+    <link>https://mobilephone724.github.io/somethingtousingdocker/</link>
+    <pubDate>Fri, 14 Jan 2022 23:43:08 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mobilephone724.github.io/somethingtousingdocker/</guid>
+    <description><![CDATA[set proxy It&rsquo;s annoying that you can&rsquo;t download third-party libraries from github because of network when using linux os docker image to develop. So using proxy in docker is necessary.
+This is the official website to use proxy in docker
+Below is one of the ways if you have root&rsquo; permission
+1 2  sudo mkdir -p /etc/systemd/system/docker.service.d sudo touch /etc/systemd/system/docker.service.d/proxy.conf   add the below content to proxy.conf
+1  sudo touch /etc/systemd/system/docker.]]></description>
+</item></channel>
+</rss>
