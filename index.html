@@ -11,7 +11,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://mobilephone724.github.io/" />
 <meta property="og:image" content="https://mobilephone724.github.io/logo.png"/>
-<meta property="og:updated_time" content="2022-03-02T22:44:12+08:00" />
+<meta property="og:updated_time" content="2022-03-05T09:41:11+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://mobilephone724.github.io/logo.png"/>
 
@@ -116,6 +116,14 @@
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-01-15">2022-01-15</time></span></div><div class="content">zty的博客 介绍：无敌的学委，保研巨佬</div><div class="post-footer">
         <a href="/moreblogs/">Read More</a></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/cublasdgemmtutor/">basic of cublasDgemm</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-05">2022-03-05</time></span>&nbsp;<span class="post-category">included in <a href="/categories/cuda/"><i class="far fa-folder fa-fw"></i>cuda</a></span></div><div class="content">concept cublasDgemm is a convenient function in cublas to compute the product of two matrix, while letter 'D' in cublasDgemm means double.
+Before reading this post, basic cuda functions like cudaMalloc are what you are supposed to know.
+basic use Definition of this function
+1 2 3 4 5 6 7 8  cublasStatus_t cublasDgemm(cublasHandle_t handle, cublasOperation_t transa, cublasOperation_t transb, int m, int n, int k, const double *alpha, const double *A, int lda, const double *B, int ldb, const double *beta, double *C, int ldc)    Basic information of parameters is show in this page.</div><div class="post-footer">
+        <a href="/cublasdgemmtutor/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/cublasdgemm/">cublasDgemm</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/somethingtousingdocker/">something to using docker</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-03-02">2022-03-02</time></span>&nbsp;<span class="post-category">included in <a href="/categories/docker/"><i class="far fa-folder fa-fw"></i>docker</a></span></div><div class="content">set proxy It&rsquo;s annoying that you can&rsquo;t download third-party libraries from github because of network when using linux os docker image to develop. So using proxy in docker is necessary.
 This is the official website to use proxy in docker
@@ -143,14 +151,6 @@ It seems installation on windows is a little harder. The following actions are b
 create a new site 1  hugo new site quickstart  The above will create a new Hugo site in a folder named quickstart.</div><div class="post-footer">
         <a href="/howtocreateablogwithhugo/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/hugo/">hugo</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/howtoknowwhoseisbigger/">Alice and Bob how to know whose number is bigger without giving away their own&#39;s</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-01-14">2022-01-14</time></span>&nbsp;<span class="post-category">included in <a href="/categories/cryptology/"><i class="far fa-folder fa-fw"></i>cryptology</a></span></div><div class="content">Definiteness： Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &lt; j$ in the end(aside from their own values)
-Solution: Let $M$ be the set of all $N$-bit nonnegative integers
-Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$
- Alice generates a public key from $Q_N$, called $E_a$, and the inverse function of $E_a$ is $D_a$ Bob picks a random value $x \in M$, compute $k = E_a(x)$, then send $k - j$ to Alice Alice computes $y_u=D_a(k - j + u)$ for $u = 1,2,\dots,9$ Alice generates a random prime $p$ of $N/2$-bit, and computes $z_u=y_u(\mod p)$ for all $u$.</div><div class="post-footer">
-        <a href="/howtoknowwhoseisbigger/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/zeroknowledge-proof/">Zero—Knowledge Proof</a></div></div>
 </article><ul class="pagination"><li class="page-item active">
                     <span class="page-link">
                         <a href="/">1</a>

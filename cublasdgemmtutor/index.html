@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>basic of cublasDgemm - mobilephone724</title><meta name="Description" content="About LoveIt Theme"><meta property="og:title" content="basic of cublasDgemm" />
+<meta property="og:description" content="concept cublasDgemm is a convenient function in cublas to compute the product of two matrix, while letter &#39;D&#39; in cublasDgemm means double.
+Before reading this post, basic cuda functions like cudaMalloc are what you are supposed to know.
+basic use Definition of this function
+1 2 3 4 5 6 7 8  cublasStatus_t cublasDgemm(cublasHandle_t handle, cublasOperation_t transa, cublasOperation_t transb, int m, int n, int k, const double *alpha, const double *A, int lda, const double *B, int ldb, const double *beta, double *C, int ldc)    Basic information of parameters is show in this page." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mobilephone724.github.io/cublasdgemmtutor/" />
+<meta property="og:image" content="https://mobilephone724.github.io/logo.png"/>
+<meta property="article:published_time" content="2022-03-05T09:41:11+08:00" />
+<meta property="article:modified_time" content="2022-03-05T10:52:51+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://mobilephone724.github.io/logo.png"/>
+
+<meta name="twitter:title" content="basic of cublasDgemm"/>
+<meta name="twitter:description" content="concept cublasDgemm is a convenient function in cublas to compute the product of two matrix, while letter &#39;D&#39; in cublasDgemm means double.
+Before reading this post, basic cuda functions like cudaMalloc are what you are supposed to know.
+basic use Definition of this function
+1 2 3 4 5 6 7 8  cublasStatus_t cublasDgemm(cublasHandle_t handle, cublasOperation_t transa, cublasOperation_t transb, int m, int n, int k, const double *alpha, const double *A, int lda, const double *B, int ldb, const double *beta, double *C, int ldc)    Basic information of parameters is show in this page."/>
+<meta name="application-name" content="LoveIt">
+<meta name="apple-mobile-web-app-title" content="LoveIt"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://mobilephone724.github.io/cublasdgemmtutor/" /><link rel="prev" href="https://mobilephone724.github.io/somethingtousingdocker/" /><link rel="next" href="https://mobilephone724.github.io/moreblogs/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "basic of cublasDgemm",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/mobilephone724.github.io\/cublasdgemmtutor\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/mobilephone724.github.io\/images\/Apple-Devices-Preview.png",
+                            "width":  3200 ,
+                            "height":  2048 
+                        }],"genre": "posts","keywords": "cublasDgemm","wordcount":  728 ,
+        "url": "https:\/\/mobilephone724.github.io\/cublasdgemmtutor\/","datePublished": "2022-03-05T09:41:11+08:00","dateModified": "2022-03-05T10:52:51+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": {
+                    "@type": "ImageObject",
+                    "url": "https:\/\/mobilephone724.github.io\/images\/avatar.png",
+                    "width":  528 ,
+                    "height":  560 
+                }},"author": {
+                "@type": "Person",
+                "name": "mobilephone724"
+            },"description": ""
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="mobilephone724"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>mobilephone724</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/categories/documentation/"> Docs </a><a class="menu-item" href="https://github.com/mobilephone724" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="mobilephone724"><span class="header-title-pre"><i class='far fa-kiss-wink-heart fa-fw'></i></span>mobilephone724</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/categories/documentation/" title="">Docs</a><a class="menu-item" href="https://github.com/mobilephone724" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">basic of cublasDgemm</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-category">included in <a href="/categories/cuda/"><i class="far fa-folder fa-fw"></i>cuda</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-05">2022-03-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;728 words&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"></div>
+            </div><div class="content" id="content"><h2 id="concept">concept</h2>
+
+<p><code>cublasDgemm</code> is a convenient function in cublas to compute the product of two matrix, while letter 'D' in <code>cublasDgemm</code> means <code>double</code>.</p>
+
+<p>Before reading this post, basic cuda functions like <code>cudaMalloc</code> are what you are supposed to know.</p>
+
+<h2 id="basic-use">basic use</h2>
+
+<p>Definition of this function</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">cublasStatus_t</span> <span class="n">cublasDgemm</span><span class="p">(</span><span class="n">cublasHandle_t</span> <span class="n">handle</span><span class="p">,</span>
+                           <span class="n">cublasOperation_t</span> <span class="n">transa</span><span class="p">,</span> <span class="n">cublasOperation_t</span> <span class="n">transb</span><span class="p">,</span>
+                           <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">,</span>
+                           <span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">alpha</span><span class="p">,</span>
+                           <span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">A</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lda</span><span class="p">,</span>
+                           <span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">B</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ldb</span><span class="p">,</span>
+                           <span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">beta</span><span class="p">,</span>
+                           <span class="kt">double</span> <span class="o">*</span><span class="n">C</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ldc</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p><a href="https://docs.nvidia.com/cuda/cublas/index.html">Basic information of parameters is show in this page</a>. Simply put, $C = \alpha A \times B + \beta C $ .But it may remains confused for fresher. Below is an simple example.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="cm">/* A is matrix in gpu memory looks like
+</span><span class="cm"> * 1 2 3
+</span><span class="cm"> * 4 5 6
+</span><span class="cm"> * 7 8 9
+</span><span class="cm"> * and ptr_A is a pointer to A
+</span><span class="cm"> *
+</span><span class="cm"> * B is matrix in gpu memory looks like
+</span><span class="cm"> * 1 2
+</span><span class="cm"> * 3 4
+</span><span class="cm"> * 5 6
+</span><span class="cm"> * and ptr_A is a pointer to A
+</span><span class="cm"> *
+</span><span class="cm"> * While memory is one-dimensional while matrix is two-dimensional, I 
+</span><span class="cm"> * suggeset that all matrix in gpu memory are stored in column major for 
+</span><span class="cm"> * convevient use of cublas. In this case, A in memory is like 
+</span><span class="cm"> * [1, 4, 7, 2, 5, 8, 3, 6, 9].
+</span><span class="cm"> * C is a matrix to store the product of A * B
+</span><span class="cm"> */</span>
+
+<span class="c1">//get handle and stat of this function
+</span><span class="c1"></span><span class="n">cublasHandle_t</span> <span class="n">handle</span><span class="p">;</span>
+<span class="n">cublasStatus_t</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">cublasCreate</span><span class="p">(</span><span class="o">&amp;</span><span class="n">handle</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">stat</span> <span class="o">!=</span> <span class="n">CUBLAS_STATUS_SUCCESS</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;CUBLAS initialization failed</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+	<span class="k">return</span> <span class="n">EXIT_FAILURE</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">//setting alpha and cuda
+</span><span class="c1"></span><span class="kt">double</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+<span class="n">stat</span> <span class="o">=</span> <span class="n">cublasDgemm</span><span class="p">(</span>	<span class="n">handle</span><span class="p">,</span> 
+					<span class="n">CUBLAS_OP_N</span><span class="p">,</span>	<span class="c1">// we use matrix A instead of A^T
+</span><span class="c1"></span>					<span class="n">CUBLAS_OP_N</span><span class="p">,</span>	<span class="c1">// we use matrix B instead of B^T
+</span><span class="c1"></span>					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the row of A 
+</span><span class="c1"></span>					<span class="mi">2</span><span class="p">,</span>				<span class="c1">// the col of B
+</span><span class="c1"></span>					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the row of B(ro col of A)
+</span><span class="c1"></span>					<span class="o">&amp;</span><span class="n">alpha</span><span class="p">,</span>
+					<span class="n">devPtrA</span><span class="p">,</span>
+					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the leading dimension of A
+</span><span class="c1"></span>					<span class="n">devPtrB</span><span class="p">,</span>
+					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the leading dimension of B
+</span><span class="c1"></span>					<span class="o">&amp;</span><span class="n">beta</span><span class="p">,</span>
+					<span class="n">devPtrC</span><span class="p">,</span>
+					<span class="mi">3</span><span class="p">);</span>				<span class="c1">// the leading dimension of C
+</span><span class="c1"></span><span class="cm">/*
+</span><span class="cm"> * if we want to compute C = A^T * B
+</span><span class="cm"> */</span>
+<span class="n">stat</span> <span class="o">=</span> <span class="n">cublasDgemm</span><span class="p">(</span>	<span class="n">handle</span><span class="p">,</span> 
+					<span class="n">CUBLAS_OP_T</span><span class="p">,</span>	<span class="c1">// we use matrix A^T instead of A
+</span><span class="c1"></span>					<span class="n">CUBLAS_OP_N</span><span class="p">,</span>	<span class="c1">// we use matrix A instead of B^T
+</span><span class="c1"></span>					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the row of A^T
+</span><span class="c1"></span>					<span class="mi">2</span><span class="p">,</span>				<span class="c1">// the col of B
+</span><span class="c1"></span>					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the row of B(or col of A^T)
+</span><span class="c1"></span>					<span class="o">&amp;</span><span class="n">alpha</span><span class="p">,</span>
+					<span class="n">devPtrA</span><span class="p">,</span>
+					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the leading dimension of A^T. 
+</span><span class="c1"></span>									<span class="c1">// So whether or not A or A^T, the leading dimension 
+</span><span class="c1"></span>									<span class="c1">// of A or A^T is the row of A, decided when A is 
+</span><span class="c1"></span>									<span class="c1">// initialized in memory
+</span><span class="c1"></span>					<span class="n">devPtrB</span><span class="p">,</span>
+					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the leading dimension of B
+</span><span class="c1"></span>					<span class="o">&amp;</span><span class="n">beta</span><span class="p">,</span>
+					<span class="n">devPtrC</span><span class="p">,</span>
+					<span class="mi">3</span><span class="p">);</span>				<span class="c1">// the leading dimension of C
+</span><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="n">stat</span> <span class="o">!=</span> <span class="n">CUBLAS_STATUS_SUCCESS</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;cublasSgemm failed</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+	<span class="k">return</span> <span class="n">EXIT_FAILURE</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<p>An obvious question is what is <code>leading dimension</code> for we have know the column and row of A and B, no more information is need to finish this computation.</p>
+
+<p>My understanding of leading dimension is the <code>offest</code> to get the element in next column at the same row. An implement to compute the product of submatrix. below is an example. <code>A</code> and <code>B</code> are the same matrix in the previous example.</p>
+
+<p>And what we want to compute is $A[0:1][0:1] \times B[1:2][0:1]$.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="n">stat</span> <span class="o">=</span> <span class="n">cublasDgemm</span><span class="p">(</span>	<span class="n">handle</span><span class="p">,</span> 
+					<span class="n">CUBLAS_OP_N</span><span class="p">,</span>	<span class="c1">// we use matrix A[0:1][0:1] instead of A[0:1][0:1]^T
+</span><span class="c1"></span>					<span class="n">CUBLAS_OP_N</span><span class="p">,</span>	<span class="c1">// we use matrix B[1:2][0:1] instead of B[1:2][0:1]^T
+</span><span class="c1"></span>					<span class="mi">2</span><span class="p">,</span>				<span class="c1">// the row of A[0:1][0:1]
+</span><span class="c1"></span>					<span class="mi">2</span><span class="p">,</span>				<span class="c1">// the col of B[1:2][0:1]
+</span><span class="c1"></span>					<span class="mi">2</span><span class="p">,</span>				<span class="c1">// the row of A[0:1][0:1](or col of B[1:2][0:1])
+</span><span class="c1"></span>					<span class="o">&amp;</span><span class="n">alpha</span><span class="p">,</span>
+					<span class="n">devPtrA</span><span class="p">,</span>		<span class="c1">// pointer to A[0][0]
+</span><span class="c1"></span>					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the offset of A[0][0] to A[0][1] is 3 of double size
+</span><span class="c1"></span>					<span class="n">devPtrB</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>	<span class="c1">// pointer to B[1][0]
+</span><span class="c1"></span>					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the offset of B[1][0] to B[1][1] is 3 of double size
+</span><span class="c1"></span>					<span class="o">&amp;</span><span class="n">beta</span><span class="p">,</span>
+					<span class="n">devPtrC</span><span class="p">,</span>
+					<span class="mi">2</span><span class="p">);</span>				<span class="c1">// the leading dimension of C
+</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>So it's the use of leading dimension which makes matrix production more flexible</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2022-03-05&nbsp;<a class="git-hash" href="https://github.com/mobilephone724/mobilephone724.github.io/commit/a9b2cb8f59d115c31ff1f9345deb3f8966a8f4d5" target="_blank" title="commit by mobilephone724(1263485219@qq.com) a9b2cb8f59d115c31ff1f9345deb3f8966a8f4d5: cuda">
+                                    <i class="fas fa-hashtag fa-fw"></i>a9b2cb8</a></span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/cublasdgemmtutor/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="https://mobilephone724.github.io/cublasdgemmtutor/" data-title="basic of cublasDgemm"><i class="fab fa-hacker-news fa-fw"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="https://mobilephone724.github.io/cublasdgemmtutor/" data-title="basic of cublasDgemm"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@2.14.0/icons/line.svg"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="https://mobilephone724.github.io/cublasdgemmtutor/" data-title="basic of cublasDgemm"><i class="fab fa-weibo fa-fw"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/cublasdgemm/">cublasDgemm</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/somethingtousingdocker/" class="prev" rel="prev" title="something to using docker"><i class="fas fa-angle-left fa-fw"></i>something to using docker</a>
+            <a href="/moreblogs/" class="next" rel="next" title="更多的博客">更多的博客<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments"><div id="utterances"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://utteranc.es/">Utterances</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.2.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lightgallery.js@1.2.0/dist/js/lightgallery.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-thumbnail.js@1.2.0/dist/lg-thumbnail.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lg-zoom.js@1.2.0/dist/lg-zoom.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":10},"comment":{"utterances":{"darkTheme":"github-dark","issueTerm":"pathname","label":"","lightTheme":"github-light","repo":"mobilephone724/hugoTalk"}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"No results found","snippetLength":30,"type":"algolia"}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

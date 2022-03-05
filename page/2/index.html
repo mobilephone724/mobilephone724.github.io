@@ -11,7 +11,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://mobilephone724.github.io/" />
 <meta property="og:image" content="https://mobilephone724.github.io/logo.png"/>
-<meta property="og:updated_time" content="2022-03-02T22:44:12+08:00" />
+<meta property="og:updated_time" content="2022-03-05T09:41:11+08:00" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://mobilephone724.github.io/logo.png"/>
 
@@ -108,6 +108,14 @@
         alt="/images/avatar.png"
         title="/images/avatar.png" /></a></div><h1 class="home-title">mobilephone724's Blog</h1><h2 class="home-subtitle"><div id="id-1" class="typeit"></div></h2><div class="links"><a href="https://github.com/mobilephone724" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github-alt fa-fw"></i></a><a href="mailto:1263485219@qq.com" title="Email" rel=" me"><i class="far fa-envelope fa-fw"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/howtoknowwhoseisbigger/">Alice and Bob how to know whose number is bigger without giving away their own&#39;s</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-01-14">2022-01-14</time></span>&nbsp;<span class="post-category">included in <a href="/categories/cryptology/"><i class="far fa-folder fa-fw"></i>cryptology</a></span></div><div class="content">Definiteness： Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &lt; j$ in the end(aside from their own values)
+Solution: Let $M$ be the set of all $N$-bit nonnegative integers
+Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$
+ Alice generates a public key from $Q_N$, called $E_a$, and the inverse function of $E_a$ is $D_a$ Bob picks a random value $x \in M$, compute $k = E_a(x)$, then send $k - j$ to Alice Alice computes $y_u=D_a(k - j + u)$ for $u = 1,2,\dots,9$ Alice generates a random prime $p$ of $N/2$-bit, and computes $z_u=y_u(\mod p)$ for all $u$.</div><div class="post-footer">
+        <a href="/howtoknowwhoseisbigger/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/zeroknowledge-proof/">Zero—Knowledge Proof</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/chapter3/">APUE/Chapter3: file and I/O</a>
     </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>mobilephone724</a></span>&nbsp;<span class="post-publish">published on <time datetime="2022-01-14">2022-01-14</time></span>&nbsp;<span class="post-category">included in <a href="/categories/apue/"><i class="far fa-folder fa-fw"></i>APUE</a></span></div><div class="content">The functions described in this chapter are often referred to as unbuffered I/O(which each read or write invokes a system call in the kernel), in contrast to the standard I/O routines
 File Descriptors  To the kernel, all open files are referred to by file descriptors. A file descriptor is a non-negative integer. When we open an existing file or create a new file, the kernel returns a file descriptor to the process.</div><div class="post-footer">
