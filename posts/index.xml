@@ -3,7 +3,7 @@
         <title>All Posts - mobilephone724</title>
         <link>https://mobilephone724.github.io/posts/</link>
         <description>All Posts | mobilephone724</description>
-        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 05 Mar 2022 09:41:11 &#43;0800</lastBuildDate><atom:link href="https://mobilephone724.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 23 Apr 2022 21:12:49 &#43;0800</lastBuildDate><atom:link href="https://mobilephone724.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>ReadMe(写在前面)</title>
     <link>https://mobilephone724.github.io/writeinfront/</link>
     <pubDate>Sat, 15 Jan 2022 12:31:46 &#43;0800</pubDate>
@@ -17,6 +17,21 @@
     <author>Author</author>
     <guid>https://mobilephone724.github.io/moreblogs/</guid>
     <description><![CDATA[zty的博客 介绍：无敌的学委，保研巨佬]]></description>
+</item><item>
+    <title>Principles_Of_Economic_chap1: Ten Principle of Economic</title>
+    <link>https://mobilephone724.github.io/chap1/</link>
+    <pubDate>Sat, 23 Apr 2022 21:12:49 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mobilephone724.github.io/chap1/</guid>
+    <description><![CDATA[how people make decisions people face trade-offs  Efficiency： the property of society getting the most it can from its scare resources Equality: the property of distributing economic prosperity uniformly among the members of society  the cost of something is what you give up to get it  opportunity cost: whatever must be given up to obtain some item, such materials and time which means how much you can earn during this time.]]></description>
+</item><item>
+    <title>Basic Knowledge of Database Log</title>
+    <link>https://mobilephone724.github.io/logbase/</link>
+    <pubDate>Thu, 31 Mar 2022 11:01:15 &#43;0800</pubDate>
+    <author>Author</author>
+    <guid>https://mobilephone724.github.io/logbase/</guid>
+    <description><![CDATA[Primitive Operation if Transactions There are three address spaces that transaction interact in important ways:
+ The space of disk blocks holding the database elements. The memory address space managed by buffer manager. The local address space of the transaction.  To describe a transaction, we need some operation notions:(X below is a database element while t is a local varible, and we suppose a database element is no larger than a single block)]]></description>
 </item><item>
     <title>basic of cublasDgemm</title>
     <link>https://mobilephone724.github.io/cublasdgemmtutor/</link>
