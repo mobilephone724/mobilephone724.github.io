@@ -1,0 +1,56 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hextra – postgresql transaction</title>
+    <link>https://mobilephone724.github.io/database/pg_xact/</link>
+    <description>Recent content in postgresql transaction on Hextra</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    
+	  <atom:link href="https://mobilephone724.github.io/database/pg_xact/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>slru related</title>
+      <link>https://mobilephone724.github.io/database/pg_xact/slru/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mobilephone724.github.io/database/pg_xact/slru/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;概述&lt;span class=&#34;absolute -mt-20&#34; id=&#34;概述&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e6%a6%82%e8%bf%b0&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;该章节记录以slru为buffer实现的模块&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;slru&lt;/code&gt; 描述如何通过&lt;code&gt;lru&lt;/code&gt;的方式实现一个简易且适合特定场景的buffer pool manager&lt;/li&gt;
+&lt;/ul&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>WAL(write ahead log)</title>
+      <link>https://mobilephone724.github.io/database/pg_xact/wal/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mobilephone724.github.io/database/pg_xact/wal/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;整理一些WAL相关的内容&lt;span class=&#34;absolute -mt-20&#34; id=&#34;整理一些wal相关的内容&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e6%95%b4%e7%90%86%e4%b8%80%e4%ba%9bwal%e7%9b%b8%e5%85%b3%e7%9a%84%e5%86%85%e5%ae%b9&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;希望通过理解WAL，理解进一步理解 事务、缓存、存储、复制等模块。&lt;/p&gt;
+&lt;h2&gt;TODO 汇总&lt;span class=&#34;absolute -mt-20&#34; id=&#34;todo-汇总&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#todo-%e6%b1%87%e6%80%bb&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; source manager 用来干什么？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;等内容写完了再整理该页面&lt;span class=&#34;absolute -mt-20&#34; id=&#34;等内容写完了再整理该页面&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e7%ad%89%e5%86%85%e5%ae%b9%e5%86%99%e5%ae%8c%e4%ba%86%e5%86%8d%e6%95%b4%e7%90%86%e8%af%a5%e9%a1%b5%e9%9d%a2&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+      </description>
+    </item>
+    
+  </channel>
+</rss>
