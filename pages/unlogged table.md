@@ -1,2 +1,0 @@
-- Data written to unlogged tables is **not written to the write-ahead log** which makes them considerably **faster** than ordinary tables. However, they are **not crash-safe**: an unlogged **table is automatically truncated** after a crash or unclean shutdown. The contents of an unlogged table are also **not replicated to standby servers**. Any indexes created on an unlogged table are automatically unlogged as well.
-- If this is specified, any sequences created together with the unlogged table (for identity or serial columns) are also created as unlogged.
