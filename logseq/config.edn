@@ -111,7 +111,7 @@
  ;;  - `:four-spaces` as four spaces
  ;;  - `:two-spaces` as two spaces
  ;;  - `:tab` as a tab character (default)
- ;; :export/bullet-indentation :tab
+ :export/bullet-indentation :two-spaces
 
  ;; Publish all pages within the Graph
  ;; Regardless of whether individual pages have been marked as public.
@@ -413,4 +413,4 @@
  ;;      ;use Percent-encoding for other invalid characters
  :file/name-format :triple-lowbar
  :ui/show-brackets? false
- :editor/preferred-pasting-file? true}
+ :editor/preferred-pasting-file? false}
