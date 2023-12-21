@@ -1,4 +1,4 @@
-# wal record
+# wal record #wal
   - high level glance
     id:: 65831e78-968c-418d-a401-f9a4afdd1587
     - ![wal-record-structure.png](../assets/wal-record-structure.png)
@@ -15,4 +15,3 @@
     - `block number`: page offset
     - `forknumber`: type -- that is #vm, #fsm or main data
   - See [[wal-insert]] for how the unique id is record
-  - ![image.png](../assets/image_1703092860842_0.png)

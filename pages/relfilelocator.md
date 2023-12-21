@@ -18,6 +18,6 @@
   - `FSM_FORKNUM` : free space manager file
   - `VISIBILITYMAP_FORKNUM` : VISIBILITYMAP file
   - `INIT_FORKNUM` : for  [unlogged table](https://www.postgresql.org/docs/current/sql-createtable.html#SQL-CREATETABLE-UNLOGGED)
-    - {{embed [[unlogged table]]}}
+    - {{embed [[unlogged-table]]}}
   -
 -

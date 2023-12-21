@@ -1,5 +1,5 @@
 - ![🖼 wal-record-structure.png](../assets/wal-record-structure.png)
-- ## XLogRegisterBuffer
+- ## XLogRegisterBuffer #wal
   - just to record a buffer
   - ```
     XLogRegisterBuffer
@@ -36,10 +36,10 @@
     XLogRegisterBufData
       regbuf = &registered_buffers[block_id];
       rdata = &rdatas[num_rdatas++];
-
+    
       rdata->data = data;
       rdata->len = len;
-
+    
       regbuf->rdata_tail->next = rdata;
       regbuf->rdata_tail = rdata;
       regbuf->rdata_len += len;
