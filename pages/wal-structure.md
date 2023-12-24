@@ -1,6 +1,4 @@
-tag:: WAL
-
-- # wal record
+# wal record
   - high level glance
     id:: 65831e78-968c-418d-a401-f9a4afdd1587
     - ![wal-record-structure.png](../assets/wal-record-structure.png)
