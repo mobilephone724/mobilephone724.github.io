@@ -1,77 +1,73 @@
 - 本文主要为`SLRU`本身的结构解读。 #SLRU_IMPLEMENT
-- ### 简述
-  
-  + slru用来干什么？
-    + slru是一个简单的buffer管理模块，simple slru
-  + 有了buffer pool manager，为什么还要slru？
-    + bpm管理通用的page，比如heap，vm等
-    + slru最大的特点就是lru，非常适合处理xid这样，递增的信息。
-  + 下面的代码分析基于pg15
-- ### 存储结构
-  
-  与bpm不同，通过slru管理的page，其文件大小固定，一个文件有32个page，一个page有8KB，故一个文件最大为256K。
-  
-  与WAL不同，WAL文件的大小在创建时就已经确定为16M，与WAL文件重用保持一致，而slru的文件，先在内存中产生相应的page，再会去落盘。
-  
-  ```C
-  #define SLRU_PAGES_PER_SEGMENT	32
-  ```
-- ####  内存slru
-- ##### 全局 buffer 数组
-  
-  ```C
-  typedef struct SlruSharedData
-  {
-  LWLock	   *ControlLock;
-  
-  /* Number of buffers managed by this SLRU structure */
-  int			num_slots;
-  
-  /*
-  * Arrays holding info for each buffer slot.  Page number is undefined
-  * when status is EMPTY, as is page_lru_count.
-  */
-  char	  **page_buffer;
-  SlruPageStatus *page_status;
-  bool	   *page_dirty;
-  int		   *page_number;
-  int		   *page_lru_count;
-  LWLockPadded *buffer_locks;
-  
-    XLogRecPtr *group_lsn;
-  int			lsn_groups_per_page;
-  
-  /*----------
-  * We mark a page "most recently used" by setting
-  *		page_lru_count[slotno] = ++cur_lru_count;
-  * The oldest page is therefore the one with the highest value of
-  *		cur_lru_count - page_lru_count[slotno]
-  * The counts will eventually wrap around, but this calculation still
-  * works as long as no page's age exceeds INT_MAX counts.
-  *----------
-  */
-  int			cur_lru_count;
-  } SlruSharedData;
-  ```
-  
-  从内存结构上看，是一个数组，每个元素代表一个page。同时，记录这些page的使用次数。
-  
-  ```C
-  page_lru_count[slotno] = ++cur_lru_count;
-  ```
-  
-  同时每个page，都有状态标识，以在刷脏时，确定脏页。实际上这里没有脏页这个选项，因为只有 `valid` 状态的页才有可能是脏页，有包含关系。故在`SlruSharedData` 中使用 `page_dirty` 进行单独标识。
-  
-  ```C
-  typedef enum
-  {
-  SLRU_PAGE_EMPTY,			/* buffer is not in use */
-  SLRU_PAGE_READ_IN_PROGRESS, /* page is being read in */
-  SLRU_PAGE_VALID,			/* page is valid and not being written */
-  SLRU_PAGE_WRITE_IN_PROGRESS /* page is being written out */
-  } SlruPageStatus;
-  ```
-  关于为什么需要记录LSN信息 `group_lsn`：这与 `WAL` 设计有关。对于 `WAL` 而言，无论是同步提交或是异步提交，都需要在对应的 `buffer page` 落盘前落盘,所以 `slru` 也需要满足这样的规则。同时，可能是为了节约内存（节约的内存实在有限），或是减少`WAL flush`的调用次数以增加 `IO` 效率，`slru`的实现中并不记录每个`buffer page`的 `LSN`，而是记录一组 `page` 的 `LSN`，在刷下一个 `page` 前，需要把一组 `page` 中最大的 `LSN` 前的 `WAL` 落盘。而这样的“一组”的长度，就为`lsn_groups_per_page`
+- ## 简述
+  - slru用来干什么？
+    - slru是一个简单的buffer管理模块，simple slru
+  - 有了buffer pool manager，为什么还要slru？
+    - bpm管理通用的page，比如heap，vm等
+  - slru最大的特点就是lru，非常适合处理xid这样，递增的信息。
+  - 下面的代码分析基于pg15
+- ## 存储结构
+  - 与bpm不同，通过slru管理的page，其文件大小固定，一个文件有32个page，一个page有8KB，故一个文件最大为256K。
+  - 与WAL不同，WAL文件的大小在创建时就已经确定为16M，与WAL文件重用保持一致，而slru的文件，先在内存中产生相应的page，再会去落盘。
+  - ```C
+    #define SLRU_PAGES_PER_SEGMENT	32
+    ```
+- ##  内存slru
+  - 全局 buffer 数组
+    ```C
+    typedef struct SlruSharedData
+    {
+    LWLock	   *ControlLock;
+    
+    /* Number of buffers managed by this SLRU structure */
+    int			num_slots;
+    
+    /*
+    * Arrays holding info for each buffer slot.  Page number is undefined
+    * when status is EMPTY, as is page_lru_count.
+    */
+    char	  **page_buffer;
+    SlruPageStatus *page_status;
+    bool	   *page_dirty;
+    int		   *page_number;
+    int		   *page_lru_count;
+    LWLockPadded *buffer_locks;
+    
+      XLogRecPtr *group_lsn;
+    int			lsn_groups_per_page;
+    
+    /*----------
+    * We mark a page "most recently used" by setting
+    *		page_lru_count[slotno] = ++cur_lru_count;
+    * The oldest page is therefore the one with the highest value of
+    *		cur_lru_count - page_lru_count[slotno]
+    * The counts will eventually wrap around, but this calculation still
+    * works as long as no page's age exceeds INT_MAX counts.
+    *----------
+    */
+    int			cur_lru_count;
+    } SlruSharedData;
+    ```
+  -
+  - 从内存结构上看，是一个数组，每个元素代表一个page。同时，记录这些page的使用次数。
+    - ```C
+      page_lru_count[slotno] = ++cur_lru_count;
+      ```
+  - 同时每个page，都有状态标识，以在刷脏时，确定脏页。实际上这里没有脏页这个选项，因为只有 `valid` 状态的页才有可能是脏页，有包含关系。故在`SlruSharedData` 中使用 `page_dirty` 进行单独标识。
+    - ```C
+      typedef enum
+      {
+      SLRU_PAGE_EMPTY,			/* buffer is not in use */
+      SLRU_PAGE_READ_IN_PROGRESS, /* page is being read in */
+      SLRU_PAGE_VALID,			/* page is valid and not being written */
+      SLRU_PAGE_WRITE_IN_PROGRESS /* page is being written out */
+      } SlruPageStatus;
+      ```
+  - group-lsn:
+    id:: 6589991b-a89e-4b6f-991a-3e75cbc6538b
+    - 关于为什么需要记录LSN信息 `group_lsn`：这与 `WAL` 设计有关。对于 `WAL` 而言，无论是同步提交或是异步提交，都需要在对应的 `buffer page` 落盘前落盘,所以 `slru` 也需要满足这样的规则。同时，可能是为了节约内存（节约的内存实在有限），或是减少`WAL flush`的调用次数以增加 `IO` 效率，`slru`的实现中并不记录每个`buffer page`的 `LSN`，而是记录一组 `page` 的 `LSN`，在刷下一个 `page` 前，需要把一组 `page` 中最大的 `LSN` 前的 `WAL` 落盘。而这样的“一组”的长度，就为`lsn_groups_per_page`
+  -
+  -
 - ##### 各个进程私有的pointer
   
   ```C
