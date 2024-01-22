@@ -1,10 +1,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hextra – database</title>
+    <title>Hextra – Database</title>
     <link>https://mobilephone724.github.io/categories/database/</link>
-    <description>Recent content in database on Hextra</description>
+    <description>Recent content in Database on Hextra</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
+    <language>zh-CN</language>
     <lastBuildDate>Mon, 14 Aug 2023 21:46:24 +0800</lastBuildDate>
     
 	  <atom:link href="https://mobilephone724.github.io/categories/database/index.xml" rel="self" type="application/rss+xml" />
@@ -16,72 +16,15 @@
     
     
     <item>
-      <title>Phantoms Predicate Lock</title>
-      <link>https://mobilephone724.github.io/database/predicate_lock/</link>
-      <pubDate>Mon, 21 Nov 2022 22:01:56 +0800</pubDate>
-      
-      <guid>https://mobilephone724.github.io/database/predicate_lock/</guid>
-      <description>
-        
-        
-        &lt;h1&gt;Intro&lt;/h1&gt;&lt;h2&gt;Phantoms&lt;span class=&#34;absolute -mt-20&#34; id=&#34;phantoms&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#phantoms&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The idea comes from which is an object, the table or its each tuple. The former
-is unacceptable. But the latter, when tupples appear or disappear from a table,
-select statements can conflict with the change, which is called the phantoms.&lt;/p&gt;
-&lt;h2&gt;Predicate Lock&lt;span class=&#34;absolute -mt-20&#34; id=&#34;predicate-lock&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#predicate-lock&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Although predicate lock is too expensive, it&amp;rsquo;s a good way to think about things.&lt;/p&gt;
-&lt;p&gt;predicate lock can be writen like&lt;/p&gt;
-&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;pre&gt;&lt;code id=&#34;code-block-0&#34;&gt;&amp;lt;tid, [slock|xlock], predicate&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
-    &lt;button
-      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
-      title=&#34;Copy code&#34;
-      data-clipboard-target=&#34;#code-block-0&#34;
-    &gt;
-      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
-      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
-    &lt;/button&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;Two predicate locks are compatible iff&lt;/p&gt;
-&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;pre&gt;&lt;code id=&#34;code-block-1&#34;&gt;tid1 = tid2 (a transaction can&amp;#39;t conflict with itself), or
-both are slock (no changes makes no conflict ), or
-predicate1 and predicate2 can&amp;#39;t be satisfied at the same time&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
-    &lt;button
-      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
-      title=&#34;Copy code&#34;
-      data-clipboard-target=&#34;#code-block-1&#34;
-    &gt;
-      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
-      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
-    &lt;/button&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;When applying the lock system, use two structure, a granted set and a waiting list.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Each time a tx requries a predicate lock, the system compares the lock with each
-other in the granted set and waiting list. If the predicate lock is compatibal, add it
-to granted set, otherwise to waiting list.&lt;/li&gt;
-&lt;li&gt;Each time a tx ends, remove all its predicated lock from both the granted set and
-the waiting list. And grant each predicate lock in the waiting list if it&amp;rsquo;s compatible now,
-until reach the end of the list or encouter an incompatible predicate lock.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h1&gt;The problem with predicate locks&lt;/h1&gt;&lt;ol&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-      </description>
-    </item>
-    
-    <item>
       <title>Read Google F1</title>
-      <link>https://mobilephone724.github.io/database/read-google-f1/</link>
+      <link>https://mobilephone724.github.io/computer_science/google-f1/</link>
       <pubDate>Mon, 14 Aug 2023 21:46:24 +0800</pubDate>
       
-      <guid>https://mobilephone724.github.io/database/read-google-f1/</guid>
+      <guid>https://mobilephone724.github.io/computer_science/google-f1/</guid>
       <description>
         
         
-        &lt;h2&gt;Abstract&lt;span class=&#34;absolute -mt-20&#34; id=&#34;abstract&#34;&gt;&lt;/span&gt;
+        &lt;h2&gt;Abstract&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;abstract&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#abstract&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;a protocol for schema evolution in a globally distributed database management system with &lt;strong&gt;shared data&lt;/strong&gt;, &lt;strong&gt;stateless servers&lt;/strong&gt;, and &lt;strong&gt;no global membership&lt;/strong&gt;.
 &lt;ul&gt;
@@ -90,12 +33,12 @@ until reach the end of the list or encouter an incompatible predicate lock.&lt;/
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2&gt;INTRODUCTION&lt;span class=&#34;absolute -mt-20&#34; id=&#34;introduction&#34;&gt;&lt;/span&gt;
+&lt;h2&gt;INTRODUCTION&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;introduction&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#introduction&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;Schema evolution:  the ability to change a database’s definition without the loss of data&lt;/li&gt;
 &lt;li&gt;F1 is built on top of Spanner, a globally distributed &lt;strong&gt;KV&lt;/strong&gt; data store&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;Main feature&lt;span class=&#34;absolute -mt-20&#34; id=&#34;main-feature&#34;&gt;&lt;/span&gt;
+&lt;h3&gt;Main feature&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;main-feature&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#main-feature&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The main features of F1 that impact schema changes are:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Massively distributed:
@@ -129,7 +72,7 @@ until reach the end of the list or encouter an incompatible predicate lock.&lt;/
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;image-20230814210030515.png&#34; alt=&#34;image-20230814210030515&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/google-f1-arch.2024_02_12_1707671860.png&#34; alt=&#34;image-20230814210030515&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;several constraints on the schema change process:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Full data availability:
@@ -155,7 +98,7 @@ until reach the end of the list or encouter an incompatible predicate lock.&lt;/
 &lt;li&gt;Because the schema change must have minimal impact on user transactions, we allow transactions to &lt;strong&gt;span an arbitrary number of schema changes&lt;/strong&gt;, although we do not automatically rewrite queries to conform to the schema in use&lt;/li&gt;
 &lt;li&gt;Applying schema changes asynchronously on individual F1 servers means that &lt;strong&gt;multiple versions of the schema may be in use simultaneously&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;An example&lt;span class=&#34;absolute -mt-20&#34; id=&#34;an-example&#34;&gt;&lt;/span&gt;
+&lt;h3&gt;An example&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;an-example&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#an-example&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;Consider a schema change from schema &lt;code&gt;S1&lt;/code&gt; to schema &lt;code&gt;S2&lt;/code&gt; that adds index &lt;code&gt;I&lt;/code&gt; on table &lt;code&gt;R&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;Assume two different servers, &lt;code&gt;M1&lt;/code&gt; and &lt;code&gt;M2&lt;/code&gt;, execute the following sequence of operations:
@@ -176,13 +119,13 @@ until reach the end of the list or encouter an incompatible predicate lock.&lt;/
 &lt;blockquote&gt;
 &lt;p&gt;does not require &lt;strong&gt;global membership&lt;/strong&gt;, &lt;strong&gt;implicit or explicit synchronization&lt;/strong&gt; between nodes, or the need to &lt;strong&gt;retain old schema versions&lt;/strong&gt; once a schema change is complete&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2&gt;BackGround&lt;span class=&#34;absolute -mt-20&#34; id=&#34;background&#34;&gt;&lt;/span&gt;
+&lt;h2&gt;BackGround&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;background&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#background&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In this section, we:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;separate the &lt;strong&gt;interface provided by the key–value store&lt;/strong&gt; from its implementation&lt;/li&gt;
 &lt;li&gt;show how we &lt;strong&gt;map traditional relational database features into this unique setting&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;Key-value store&lt;span class=&#34;absolute -mt-20&#34; id=&#34;key-value-store&#34;&gt;&lt;/span&gt;
+&lt;h3&gt;Key-value store&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;key-value-store&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#key-value-store&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;F1 assumes the key–value store supports three operations
 &lt;ul&gt;
@@ -203,7 +146,7 @@ until reach the end of the list or encouter an incompatible predicate lock.&lt;/
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;Relational schema&lt;span class=&#34;absolute -mt-20&#34; id=&#34;relational-schema&#34;&gt;&lt;/span&gt;
+&lt;h3&gt;Relational schema&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;relational-schema&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#relational-schema&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;An F1 &lt;strong&gt;schema&lt;/strong&gt; is a set of table definitions that enable F1 to &lt;em&gt;interpret the database located in the key–value store&lt;/em&gt;&lt;/li&gt;
 &lt;li&gt;Each table definition has:
@@ -221,7 +164,7 @@ until reach the end of the list or encouter an incompatible predicate lock.&lt;/
 &lt;li&gt;A subset of columns in a table forms the primary key of the table&lt;/li&gt;
 &lt;li&gt;We call a column &lt;strong&gt;required&lt;/strong&gt; if its value must be present in every row. All primary-key columns are implicitly required, while non-key columns may be either required or &lt;strong&gt;optional&lt;/strong&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;Row representation&lt;span class=&#34;absolute -mt-20&#34; id=&#34;row-representation&#34;&gt;&lt;/span&gt;
+&lt;h3&gt;Row representation&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;row-representation&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#row-representation&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
 &lt;li&gt;
 &lt;p&gt;one pair for each non-primary-key column&lt;/p&gt;
@@ -238,8 +181,8 @@ until reach the end of the list or encouter an incompatible predicate lock.&lt;/
 &lt;p&gt;Although this appears to needlessly repeat all primary key values in the key for each column value, in practice, &lt;strong&gt;F1’s physical storage format eliminates this redundancy&lt;/strong&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;Pasted%20image%2020230815213806.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; /&gt;
-&lt;img src=&#34;Pasted%20image%2020230815213818.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/google-f1-relational-representation.2024_02_12_1707672029.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; /&gt;
+&lt;img src=&#34;https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/google-f1-kv-representation.2024_02_12_1707672075.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;A secondary index
 &lt;ul&gt;
@@ -262,7 +205,7 @@ until reach the end of the list or encouter an incompatible predicate lock.&lt;/
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;Relational operations&lt;span class=&#34;absolute -mt-20&#34; id=&#34;relational-operations&#34;&gt;&lt;/span&gt;
+&lt;h3&gt;Relational operations&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;relational-operations&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#relational-operations&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;F1 supports a set of standard relational operations:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;$insert(R,vk_r,vc_r)$ inserts row &lt;em&gt;r&lt;/em&gt; to table &lt;em&gt;R&lt;/em&gt; with primary key values $vk_r$ and non-key column values $vc_r$. Insert fails if a row with the same primary key values already exists in table R.&lt;/li&gt;

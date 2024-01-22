@@ -1,0 +1,18 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hextra – HOT(Heap Only Tuple)</title>
+    <link>https://mobilephone724.github.io/postgresql/index-in-pg/heap-only-tuple/</link>
+    <description>Recent content in HOT(Heap Only Tuple) on Hextra</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    
+	  <atom:link href="https://mobilephone724.github.io/postgresql/index-in-pg/heap-only-tuple/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+  </channel>
+</rss>
