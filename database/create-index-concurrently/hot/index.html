@@ -689,18 +689,18 @@ No need to generate a new index entry to represent the new tuple. Old versions o
 </blockquote>
 <div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-1"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="nf">heap_page_prune</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">(</span><span class="n">offnum</span> <span class="o">=</span> <span class="n">FirstOffsetNumber</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">		 	 <span class="n">offnum</span> <span class="o">&lt;=</span> <span class="n">maxoff</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="n">offnum</span> <span class="o">=</span> <span class="n">FirstOffsetNumber</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">offnum</span> <span class="o">&lt;=</span> <span class="n">maxoff</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">       <span class="n">offnum</span> <span class="o">=</span> <span class="nf">OffsetNumberNext</span><span class="p">(</span><span class="n">offnum</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  	<span class="nf">heap_prune_chain</span><span class="p">(</span><span class="o">&amp;</span><span class="n">prstate</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">heap_prune_chain</span><span class="p">(</span><span class="o">&amp;</span><span class="n">prstate</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">prstate</span><span class="p">.</span><span class="n">nredirected</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">prstate</span><span class="p">.</span><span class="n">ndead</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">prstate</span><span class="p">.</span><span class="n">nunused</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">heap_page_prune_execute</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">		 
+</span></span><span class="line"><span class="cl">     
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
     <button
       class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
@@ -718,21 +718,21 @@ No need to generate a new index entry to represent the new tuple. Old versions o
 </blockquote>
 <div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-2"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="nf">heap_prune_chain</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="cm">/* while not end of the chain */</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">(;;)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">lp</span> <span class="o">=</span> <span class="nf">PageGetItemId</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">offnum</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="cm">/* Unused item obviously isn&#39;t part of the chain */</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nf">ItemIdIsUsed</span><span class="p">(</span><span class="n">lp</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">			
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="nf">ItemIdIsRedirected</span><span class="p">(</span><span class="n">lp</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="cm">/* while not end of the chain */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(;;)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lp</span> <span class="o">=</span> <span class="nf">PageGetItemId</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">offnum</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* Unused item obviously isn&#39;t part of the chain */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nf">ItemIdIsUsed</span><span class="p">(</span><span class="n">lp</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">      <span class="k">break</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nf">ItemIdIsRedirected</span><span class="p">(</span><span class="n">lp</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="n">nchain</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">				<span class="k">break</span><span class="p">;</span>			<span class="cm">/* not at start of chain */</span>
-</span></span><span class="line"><span class="cl">			<span class="n">chainitems</span><span class="p">[</span><span class="n">nchain</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">offnum</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">			<span class="n">offnum</span> <span class="o">=</span> <span class="nf">ItemIdGetRedirect</span><span class="p">(</span><span class="n">rootlp</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">			<span class="k">continue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="n">nchain</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>			<span class="cm">/* not at start of chain */</span>
+</span></span><span class="line"><span class="cl">      <span class="n">chainitems</span><span class="p">[</span><span class="n">nchain</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">offnum</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="n">offnum</span> <span class="o">=</span> <span class="nf">ItemIdGetRedirect</span><span class="p">(</span><span class="n">rootlp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">continue</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nf">ItemIdIsDead</span><span class="p">(</span><span class="n">lp</span><span class="p">))</span>
@@ -741,40 +741,40 @@ No need to generate a new index entry to represent the new tuple. Old versions o
 </span></span><span class="line"><span class="cl">    <span class="n">htup</span> <span class="o">=</span> <span class="p">(</span><span class="n">HeapTupleHeader</span><span class="p">)</span> <span class="nf">PageGetItem</span><span class="p">(</span><span class="n">dp</span><span class="p">,</span> <span class="n">lp</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="cm">/*
-</span></span></span><span class="line"><span class="cl"><span class="cm">		 * Check the tuple XMIN against prior XMAX, if any
-</span></span></span><span class="line"><span class="cl"><span class="cm">		 */</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="nf">TransactionIdIsValid</span><span class="p">(</span><span class="n">priorXmax</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
-</span></span><span class="line"><span class="cl">			<span class="o">!</span><span class="nf">TransactionIdEquals</span><span class="p">(</span><span class="nf">HeapTupleHeaderGetXmin</span><span class="p">(</span><span class="n">htup</span><span class="p">),</span> <span class="n">priorXmax</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">			<span class="k">break</span><span class="p">;</span>
+</span></span></span><span class="line"><span class="cl"><span class="cm">     * Check the tuple XMIN against prior XMAX, if any
+</span></span></span><span class="line"><span class="cl"><span class="cm">     */</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nf">TransactionIdIsValid</span><span class="p">(</span><span class="n">priorXmax</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">!</span><span class="nf">TransactionIdEquals</span><span class="p">(</span><span class="nf">HeapTupleHeaderGetXmin</span><span class="p">(</span><span class="n">htup</span><span class="p">),</span> <span class="n">priorXmax</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">      <span class="k">break</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"> 		<span class="cm">/* record each item of this chain */</span>
-</span></span><span class="line"><span class="cl">   	<span class="n">chainitems</span><span class="p">[</span><span class="n">nchain</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">offnum</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">     <span class="cm">/* record each item of this chain */</span>
+</span></span><span class="line"><span class="cl">     <span class="n">chainitems</span><span class="p">[</span><span class="n">nchain</span><span class="o">++</span><span class="p">]</span> <span class="o">=</span> <span class="n">offnum</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="k">switch</span> <span class="p">((</span><span class="n">HTSV_Result</span><span class="p">)</span> <span class="n">prstate</span><span class="o">-&gt;</span><span class="n">htsv</span><span class="p">[</span><span class="n">offnum</span><span class="p">])</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    	<span class="k">case</span><span class="o">:</span> <span class="nl">HEAPTUPLE_DEAD</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">      	<span class="n">tupdead</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">case</span><span class="o">:</span> <span class="nl">HEAPTUPLE_DEAD</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tupdead</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="k">break</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">      <span class="k">case</span> <span class="nl">HEAPTUPLE_RECENTLY_DEAD</span><span class="p">:</span>
 </span></span><span class="line"><span class="cl">        <span class="nf">heap_prune_record_prunable</span><span class="p">(</span><span class="n">prstate</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">										   						 <span class="nf">HeapTupleHeaderGetUpdateXid</span><span class="p">(</span><span class="n">htup</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                                    <span class="nf">HeapTupleHeaderGetUpdateXid</span><span class="p">(</span><span class="n">htup</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">      <span class="p">...</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nf">OffsetNumberIsValid</span><span class="p">(</span><span class="n">latestdead</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">nchain</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">chainitems</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">latestdead</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="nf">heap_prune_record_unused</span><span class="p">(</span><span class="n">prstate</span><span class="p">,</span> <span class="n">chainitems</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">			<span class="n">ndeleted</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">heap_prune_record_unused</span><span class="p">(</span><span class="n">prstate</span><span class="p">,</span> <span class="n">chainitems</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ndeleted</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="n">nchain</span><span class="p">)</span> <span class="cm">/* The whole chain is dead */</span>
-</span></span><span class="line"><span class="cl">    	<span class="nf">heap_prune_record_dead</span><span class="p">(</span><span class="n">prstate</span><span class="p">,</span> <span class="n">rootoffnum</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">heap_prune_record_dead</span><span class="p">(</span><span class="n">prstate</span><span class="p">,</span> <span class="n">rootoffnum</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="k">else</span>						<span class="cm">/* Or just redirect */</span>
-</span></span><span class="line"><span class="cl">			<span class="nf">heap_prune_record_redirect</span><span class="p">(</span><span class="n">prstate</span><span class="p">,</span> <span class="n">rootoffnum</span><span class="p">,</span> <span class="n">chainitems</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">heap_prune_record_redirect</span><span class="p">(</span><span class="n">prstate</span><span class="p">,</span> <span class="n">rootoffnum</span><span class="p">,</span> <span class="n">chainitems</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
     <button
@@ -801,19 +801,19 @@ No need to generate a new index entry to represent the new tuple. Old versions o
 </span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nredirected</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">ItemIdSetRedirect</span><span class="p">(</span><span class="n">fromlp</span><span class="p">,</span> <span class="n">tooff</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  
 </span></span><span class="line"><span class="cl">  <span class="cm">/* dead */</span>
 </span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">ndead</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nf">ItemIdSetDead</span><span class="p">(</span><span class="n">lp</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">ItemIdSetDead</span><span class="p">(</span><span class="n">lp</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  
 </span></span><span class="line"><span class="cl">  <span class="cm">/* unused */</span>
 </span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nunused</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">ItemIdSetUnused</span><span class="p">(</span><span class="n">lp</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">PageRepairFragmentation</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">page_verify_redirects</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
@@ -840,8 +840,6 @@ No need to generate a new index entry to represent the new tuple. Old versions o
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">lp</span> <span class="o">=</span> <span class="nf">PageGetItemId</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">offnum</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">    <span class="n">heapTuple</span><span class="o">-&gt;</span><span class="n">t_data</span> <span class="o">=</span> <span class="p">(</span><span class="n">HeapTupleHeader</span><span class="p">)</span> <span class="nf">PageGetItem</span><span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">lp</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
     <button
