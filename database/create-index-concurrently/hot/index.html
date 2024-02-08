@@ -23,12 +23,12 @@ No need to generate a new index entry to represent the new tuple. Old versions o
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mobilephone724.github.io/database/create-index-concurrently/hot/" /><meta property="article:section" content="database" />
 
-<meta property="article:modified_time" content="2024-01-28T15:16:26+08:00" />
+<meta property="article:modified_time" content="2024-01-28T15:18:03+08:00" />
 
   <meta itemprop="name" content="HOT">
 <meta itemprop="description" content="Simply SpeakingSimply speaking, a technical to reduce the table and index bloat caused by updating, through a link from old tuple(dead tuple) to new tuple if the changed attribute isn&rsquo;t in any indexes. With such links:
 No need to generate a new index entry to represent the new tuple. Old versions of updated tuples can be actually removed by normal operations instead of vacuum operation only related posts postgreSQL HOT From ZhiHu">
-<meta itemprop="dateModified" content="2024-01-28T15:16:26+08:00" />
+<meta itemprop="dateModified" content="2024-01-28T15:18:03+08:00" />
 <meta itemprop="wordCount" content="442">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="HOT"/>
@@ -690,7 +690,7 @@ No need to generate a new index entry to represent the new tuple. Old versions o
 <div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-1"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="nf">heap_page_prune</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="k">for</span> <span class="p">(</span><span class="n">offnum</span> <span class="o">=</span> <span class="n">FirstOffsetNumber</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">offnum</span> <span class="o">&lt;=</span> <span class="n">maxoff</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">       <span class="n">offnum</span> <span class="o">&lt;=</span> <span class="n">maxoff</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">       <span class="n">offnum</span> <span class="o">=</span> <span class="nf">OffsetNumberNext</span><span class="p">(</span><span class="n">offnum</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">  <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nf">heap_prune_chain</span><span class="p">(</span><span class="o">&amp;</span><span class="n">prstate</span><span class="p">)</span>
@@ -855,7 +855,7 @@ No need to generate a new index entry to represent the new tuple. Old versions o
 
         </div>
         
-    <div class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400">Last updated on <time datetime="2024-01-28T15:16:26.000Z">January 28, 2024</time></div>
+    <div class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400">Last updated on <time datetime="2024-01-28T15:18:03.000Z">January 28, 2024</time></div>
         <div class="mb-8 flex items-center border-t pt-8 dark:border-neutral-800 contrast-more:border-neutral-400 dark:contrast-more:border-neutral-400 print:hidden"><a
         href="/database/create-index-concurrently/create_index_concurrently/"
         title="create index concurrently"
