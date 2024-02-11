@@ -1,8 +1,8 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hextra – envirnment</title>
+    <title>mobilephone724 – envirnment</title>
     <link>https://mobilephone724.github.io/tags/envirnment/</link>
-    <description>Recent content in envirnment on Hextra</description>
+    <description>Recent content in envirnment on mobilephone724</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Wed, 02 Mar 2022 22:44:12 +0800</lastBuildDate>
@@ -17,10 +17,10 @@
     
     <item>
       <title>something to using docker</title>
-      <link>https://mobilephone724.github.io/miscellaneous/somethingtousingdocker/</link>
+      <link>https://mobilephone724.github.io/docs/somethingtousingdocker/</link>
       <pubDate>Wed, 02 Mar 2022 22:44:12 +0800</pubDate>
       
-      <guid>https://mobilephone724.github.io/miscellaneous/somethingtousingdocker/</guid>
+      <guid>https://mobilephone724.github.io/docs/somethingtousingdocker/</guid>
       <description>
         
         

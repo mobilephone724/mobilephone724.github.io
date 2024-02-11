@@ -1,8 +1,8 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hextra – cuda</title>
+    <title>mobilephone724 – cuda</title>
     <link>https://mobilephone724.github.io/categories/cuda/</link>
-    <description>Recent content in cuda on Hextra</description>
+    <description>Recent content in cuda on mobilephone724</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Sat, 05 Mar 2022 09:41:11 +0800</lastBuildDate>
@@ -17,10 +17,10 @@
     
     <item>
       <title>basic of cublasDgemm</title>
-      <link>https://mobilephone724.github.io/miscellaneous/cublasdgemmtutor/</link>
+      <link>https://mobilephone724.github.io/docs/cublasdgemmtutor/</link>
       <pubDate>Sat, 05 Mar 2022 09:41:11 +0800</pubDate>
       
-      <guid>https://mobilephone724.github.io/miscellaneous/cublasdgemmtutor/</guid>
+      <guid>https://mobilephone724.github.io/docs/cublasdgemmtutor/</guid>
       <description>
         
         

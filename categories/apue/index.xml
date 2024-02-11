@@ -1,8 +1,8 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hextra – APUE</title>
+    <title>mobilephone724 – APUE</title>
     <link>https://mobilephone724.github.io/categories/apue/</link>
-    <description>Recent content in APUE on Hextra</description>
+    <description>Recent content in APUE on mobilephone724</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <lastBuildDate>Fri, 14 Jan 2022 12:02:42 +0800</lastBuildDate>
@@ -17,10 +17,10 @@
     
     <item>
       <title>APUE/Chapter3: file and I/O</title>
-      <link>https://mobilephone724.github.io/linux/chapter3/</link>
+      <link>https://mobilephone724.github.io/docs/linux-file/</link>
       <pubDate>Fri, 14 Jan 2022 12:02:42 +0800</pubDate>
       
-      <guid>https://mobilephone724.github.io/linux/chapter3/</guid>
+      <guid>https://mobilephone724.github.io/docs/linux-file/</guid>
       <description>
         
         
@@ -243,10 +243,7 @@ classic definition&lt;/li&gt;
 &lt;li&gt;This example works for both text files and binary file&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;how we chose the BUFFSIZE value?&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;
-    &lt;img src=&#34;pic/Screenshot-2021-05-04-19-58-12.png&#34; title=&#34;pic/Screenshot-2021-05-04-19-58-12.png&#34; alt=&#34;image-20210517160118314&#34; loading=&#34;lazy&#34; /&gt;
-    &lt;figcaption&gt;pic/Screenshot-2021-05-04-19-58-12.png&lt;/figcaption&gt;
-  &lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/Screenshot-2021-05-04-19-58-12.2024_02_12_1707675786.png&#34; alt=&#34;image-20210517160118314&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
 &lt;h2&gt;file sharing&lt;span class=&#34;absolute -mt-20&#34; id=&#34;file-sharing&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#file-sharing&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;The UNIX System supports the sharing of open files among different processes.&lt;/p&gt;
 &lt;p&gt;The kernel uses three data structures to represent an open file, and the relationships among them determine the effect one process has on another with regard to file sharing&lt;/p&gt;
@@ -265,10 +262,7 @@ classic definition&lt;/li&gt;
 &lt;/ol&gt;
 &lt;/li&gt;
 &lt;li&gt;Each open file (or device) has a &lt;strong&gt;v-node structure that contains information about the type of file and pointers to functions that operate on the file&lt;/strong&gt;. For most files, the v-node also contains the &lt;strong&gt;&lt;code&gt;i-node&lt;/code&gt; for the file&lt;/strong&gt;. This information is read from disk when the file is opened, so that all the &lt;strong&gt;pertinent information&lt;/strong&gt; about the file is readily available. For example, the &lt;code&gt;i-node&lt;/code&gt; contains the owner of the file, the size of the file, pointers to where the actual data blocks for the file are located on disk, and so on
-&lt;figure&gt;
-    &lt;img src=&#34;pic/file.png&#34; title=&#34;file.png&#34; alt=&#34;file&#34; loading=&#34;lazy&#34; /&gt;
-    &lt;figcaption&gt;file.png&lt;/figcaption&gt;
-  &lt;/figure&gt;&lt;/li&gt;
+&lt;img src=&#34;https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/file.2024_02_12_1707675802.png&#34; alt=&#34;file&#34; loading=&#34;lazy&#34; /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;If two independent processes have the same file open, we could have the arrangement&lt;/p&gt;
 &lt;p&gt;Each process that opens the file gets its own file table entry, but only a single v-node table entry is required for a given file. One reason each process gets its own file table entry is so that each process has its own current offset for the file.&lt;/p&gt;
@@ -317,10 +311,7 @@ classic definition&lt;/li&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;With dup2, we specify the value of the new descriptor with the fd2 argument. If fd2 is already open, it is first closed. If fd equals fd2, then dup2 returns fd2 without closing it. Otherwise, the FD_CLOEXEC file descriptor flag is cleared for fd2, so that fd2 is left open if the process calls exec&lt;/p&gt;
-&lt;p&gt;&lt;figure&gt;
-    &lt;img src=&#34;pic/Screenshot-2021-05-05-09-34-21.png&#34; title=&#34;pic/Screenshot-2021-05-05-09-34-21.png&#34; alt=&#34;image-20210517160118314&#34; loading=&#34;lazy&#34; /&gt;
-    &lt;figcaption&gt;pic/Screenshot-2021-05-05-09-34-21.png&lt;/figcaption&gt;
-  &lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/Screenshot-2021-05-05-09-34-21.2024_02_12_1707675820.png&#34; alt=&#34;image-20210517160118314&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
 &lt;h2&gt;&lt;code&gt;sync&lt;/code&gt;,&lt;code&gt;fsync&lt;/code&gt; , and &lt;code&gt;fdatasync&lt;/code&gt; function&lt;span class=&#34;absolute -mt-20&#34; id=&#34;syncfsync--and-fdatasync-function&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#syncfsync--and-fdatasync-function&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Traditional implementations of the UNIX System have a buffer cache or page cache in the kernel through which most disk I/O passes. When we write data to a file, the data is normally copied by the kernel into one of its buffers and queued for writing to disk at some later time. This is called delayed write&lt;/p&gt;
 &lt;p&gt;To ensure consistency of the file system on disk with the contents of the buffer cache, the sync, fsync, and fdatasync functions are provided.&lt;/p&gt;
