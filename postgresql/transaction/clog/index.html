@@ -23,7 +23,7 @@ clog(commit log), records the commit status of each transaction. The log exists 
 clog(commit log), records the commit status of each transaction. The log exists both in memory mannaged by slru buffer and disk for durability. The commit status can be the four kinds below:
 #define TRANSACTION_STATUS_IN_PROGRESS	0x00 #define TRANSACTION_STATUS_COMMITTED	0x01 #define TRANSACTION_STATUS_ABORTED	0x02 #define TRANSACTION_STATUS_SUB_COMMITTED	0x03 In-Disk Representation Thinking that the commit status of each transaction composites an array clog[] and clog[xid] records the status, we can easily store the array to disk by the slru." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://mobilephone724.github.io/postgresql/transaction/clog/" /><meta property="article:section" content="PostgreSQL" />
+<meta property="og:url" content="https://mobilephone724.github.io/postgresql/transaction/clog/" /><meta property="article:section" content="postgresql" />
 
 
 
@@ -189,7 +189,7 @@ clog(commit log), records the commit status of each transaction. The log exists 
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
     href="/topics/ssl/ssl-in-pg/"
     
-  >SSL in PG2
+  >SSL in PG
     </a>
               
             </li></ul>

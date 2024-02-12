@@ -25,7 +25,7 @@
 与WAL不同，WAL文件的大小在创建时就已经确定为16M，与WAL文件重用保持一致，而slru的文件，先在内存中产生相应的page，再会去落盘。
 #define SLRU_PAGES_PER_SEGMENT	32 内存slru 全局 buffer 数组 typedef struct SlruSharedData { LWLock	*ControlLock; /* Number of buffers managed by this SLRU structure */ int	num_slots; /* * Arrays holding info for each buffer slot. Page number is undefined * when status is EMPTY, as is page_lru_count. */ char	**page_buffer; SlruPageStatus *page_status; bool	*page_dirty; int	*page_number; int	*page_lru_count; LWLockPadded *buffer_locks; XLogRecPtr *group_lsn; int	lsn_groups_per_page; /*---------- * We mark a page &#34;most recently used&#34; by setting *	page_lru_count[slotno] = &#43;&#43;cur_lru_count; * The oldest page is therefore the one with the highest value of *	cur_lru_count - page_lru_count[slotno] * The counts will eventually wrap around, but this calculation still * works as long as no page&#39;s age exceeds INT_MAX counts." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://mobilephone724.github.io/postgresql/transaction/slru/" /><meta property="article:section" content="PostgreSQL" />
+<meta property="og:url" content="https://mobilephone724.github.io/postgresql/transaction/slru/" /><meta property="article:section" content="postgresql" />
 
 
 
@@ -193,7 +193,7 @@
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
     href="/topics/ssl/ssl-in-pg/"
     
-  >SSL in PG2
+  >SSL in PG
     </a>
               
             </li></ul>

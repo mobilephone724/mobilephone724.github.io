@@ -23,7 +23,7 @@ WAL记录类型。（TODO不同的修改有不同的记录方式？） 这个页
 WAL记录类型。（TODO不同的修改有不同的记录方式？） 这个页的修改方式 被修改的页的信息。被修改的页通过一个唯一ID标识，也可以有更多的关联数据（&ldquo;record-specific data associated with the block&rdquo;）。如果要写full page，就没有关联数据 构建一个WAL记录包含5个核心函数 void XLogBeginInsert(void) 初始化相关状态 如果当前无法构建WAL日志（例如在recovery模式），则报错 void XLogRegisterBuffer(uint8 block_id, Buffer buf, uint8 flags); 增加了数据块的信息；注册一个buffer的引用，相当于上述WAL日志的第三部分 block_id is an arbitrary number used to identify this page reference in the redo routine
 在redo阶段，可以根据这些信息找到需要redo的page regbuf = &amp;registered_buffers[block_id]; /* * Returns the relfilenode, fork number and block number associated with * a buffer */ BufferGetTag(buffer, &amp;regbuf-&gt;rnode, &amp;regbuf-&gt;forkno, &amp;regbuf-&gt;block); regbuf-&gt;page = BufferGetPage(buffer); regbuf-&gt;flags = flags; regbuf-&gt;rdata_tail = (XLogRecData *) &amp;regbuf-&gt;rdata_head; regbuf-&gt;rdata_len = 0; registered_buffer的结构" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://mobilephone724.github.io/postgresql/transaction/wal-insert/" /><meta property="article:section" content="PostgreSQL" />
+<meta property="og:url" content="https://mobilephone724.github.io/postgresql/transaction/wal-insert/" /><meta property="article:section" content="postgresql" />
 
 
 
@@ -189,7 +189,7 @@ WAL记录类型。（TODO不同的修改有不同的记录方式？） 这个页
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
     href="/topics/ssl/ssl-in-pg/"
     
-  >SSL in PG2
+  >SSL in PG
     </a>
               
             </li></ul>

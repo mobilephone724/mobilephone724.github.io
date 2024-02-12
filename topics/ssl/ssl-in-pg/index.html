@@ -11,31 +11,31 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 
-  <title>SSL in PG2 – mobilephone724</title>
-  <meta name="description" content="SSL In PostgreSQLOverviewIn application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.
+  <title>SSL in PG – mobilephone724</title>
+  <meta name="description" content="Overview In application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.
 With SSL, we can:
 Encrypted data on Internet transmission Allow client to authorize the server(PostgreSQL), which can protect the client from connecting to the attacker’s server Allow server to authorize the client, which can stop the attacker from connecting to the database even if password leak." />
 
   
 
-<meta property="og:title" content="SSL in PG2" />
-<meta property="og:description" content="SSL In PostgreSQLOverviewIn application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.
+<meta property="og:title" content="SSL in PG" />
+<meta property="og:description" content="Overview In application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.
 With SSL, we can:
 Encrypted data on Internet transmission Allow client to authorize the server(PostgreSQL), which can protect the client from connecting to the attacker’s server Allow server to authorize the client, which can stop the attacker from connecting to the database even if password leak." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://mobilephone724.github.io/topics/ssl/ssl-in-pg/" /><meta property="article:section" content="Topics" />
+<meta property="og:url" content="https://mobilephone724.github.io/topics/ssl/ssl-in-pg/" /><meta property="article:section" content="topics" />
 <meta property="article:published_time" content="2024-02-12T20:30:38+08:00" />
 <meta property="article:modified_time" content="2024-02-12T20:30:38+08:00" />
 
-  <meta itemprop="name" content="SSL in PG2">
-<meta itemprop="description" content="SSL In PostgreSQLOverviewIn application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.
+  <meta itemprop="name" content="SSL in PG">
+<meta itemprop="description" content="Overview In application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.
 With SSL, we can:
 Encrypted data on Internet transmission Allow client to authorize the server(PostgreSQL), which can protect the client from connecting to the attacker’s server Allow server to authorize the client, which can stop the attacker from connecting to the database even if password leak."><meta itemprop="datePublished" content="2024-02-12T20:30:38+08:00" />
 <meta itemprop="dateModified" content="2024-02-12T20:30:38+08:00" />
-<meta itemprop="wordCount" content="451">
+<meta itemprop="wordCount" content="453">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="SSL in PG2"/>
-<meta name="twitter:description" content="SSL In PostgreSQLOverviewIn application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.
+<meta name="twitter:title" content="SSL in PG"/>
+<meta name="twitter:description" content="Overview In application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.
 With SSL, we can:
 Encrypted data on Internet transmission Allow client to authorize the server(PostgreSQL), which can protect the client from connecting to the attacker’s server Allow server to authorize the client, which can stop the attacker from connecting to the database even if password leak."/>
 
@@ -189,26 +189,32 @@ Encrypted data on Internet transmission Allow client to authorize the server(Pos
       sidebar-active-item bg-primary-100 font-semibold text-primary-800 contrast-more:border contrast-more:border-primary-500 dark:bg-primary-400/10 dark:text-primary-600 contrast-more:dark:border-primary-500"
     href="/topics/ssl/ssl-in-pg/"
     
-  >SSL in PG2
+  >SSL in PG
     </a>
   
     <ul class='flex flex-col gap-1 relative before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] dark:before:bg-neutral-800 ltr:pl-3 ltr:before:left-0 rtl:pr-3 rtl:before:right-0 ltr:ml-3 rtl:mr-3'><li>
               <a
-                href="#build-binary-from-source"
+                href="#overview"
                 class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
-              >build binary from source</a>
+              >Overview</a>
             </li>
           <li>
               <a
-                href="#configure-ssl-on-server"
+                href="#just-encrypt-internet-transmission"
                 class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
-              >Configure ssl on server</a>
+              >Just encrypt internet transmission</a>
             </li>
           <li>
               <a
-                href="#test-connection"
+                href="#server-sides-authorization"
                 class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
-              >test connection</a>
+              >Server sides Authorization</a>
+            </li>
+          <li>
+              <a
+                href="#client-sides-authorization"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              >Client sides Authorization</a>
             </li>
           </ul>
   
@@ -377,7 +383,7 @@ Encrypted data on Internet transmission Allow client to authorize the server(Pos
       sidebar-active-item bg-primary-100 font-semibold text-primary-800 contrast-more:border contrast-more:border-primary-500 dark:bg-primary-400/10 dark:text-primary-600 contrast-more:dark:border-primary-500"
     href="/topics/ssl/ssl-in-pg/"
     
-  >SSL in PG2
+  >SSL in PG
     </a></li>
         
       </ul>
@@ -396,29 +402,45 @@ Encrypted data on Internet transmission Allow client to authorize the server(Pos
 </div></div></aside>
     
 <nav class="hextra-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
-    <div class="hextra-scrollbar sticky top-16 overflow-y-auto pr-4 pt-6 text-sm [hyphens:auto] max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:-mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul></ul><ul></ul><ul>
+    <div class="hextra-scrollbar sticky top-16 overflow-y-auto pr-4 pt-6 text-sm [hyphens:auto] max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:-mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#build-binary-from-source">build binary from source
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#overview">Overview
         </a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#configure-ssl-on-server">Configure ssl on server
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#just-encrypt-internet-transmission">Just encrypt internet transmission
         </a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#prepare-a-certification">prepare a certification
+        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#build-binary-from-source">build binary from source
         </a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#configure-in-pgdata">configure in <code>$PGDATA</code>
+        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#configure-ssl-on-server">Configure ssl on server
         </a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#connect-and-test">connect and test
+        <a class="ltr:pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#prepare-a-certification">prepare a certification
         </a>
-      </li></ul><ul></ul><ul>
+      </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#test-connection">test connection
+        <a class="ltr:pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#configure-in-pgdata">configure in <code>$PGDATA</code>
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="ltr:pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#connect-and-test">connect and test
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#server-sides-authorization">Server sides Authorization
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#client-sides-authorization">Client sides Authorization
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#test-connection">test connection
         </a>
       </li></ul>
       <div class="mt-8 border-t bg-white pt-8 shadow-[0_-12px_16px_white] dark:bg-dark dark:shadow-[0_-12px_16px_#111] sticky bottom-0 flex flex-col items-start gap-2 pb-8 dark:border-neutral-800 contrast-more:border-t contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:border-neutral-400">
@@ -438,20 +460,22 @@ Encrypted data on Internet transmission Allow client to authorize the server(Pos
         <div class="mt-1.5 flex items-center gap-1 overflow-hidden text-sm text-gray-500 dark:text-gray-400 contrast-more:text-current">
       <div class="whitespace-nowrap transition-colors min-w-[24px] overflow-hidden text-ellipsis hover:text-gray-900 dark:hover:text-gray-100">
         <a href="https://mobilephone724.github.io/topics/">Some topics that spans many domains</a>
-      </div><svg class="w-3.5 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="whitespace-nowrap transition-colors font-medium text-gray-700 contrast-more:font-bold contrast-more:text-current dark:text-gray-100 contrast-more:dark:text-current">SSL in PG2</div>
+      </div><svg class="w-3.5 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="whitespace-nowrap transition-colors font-medium text-gray-700 contrast-more:font-bold contrast-more:text-current dark:text-gray-100 contrast-more:dark:text-current">SSL in PG</div>
 </div>
 
         <div class="content">
-          <h1>SSL in PG2</h1>
-          <h1>SSL In PostgreSQL</h1><h1>Overview</h1><p>In application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.</p>
+          <h1>SSL in PG</h1>
+          <h2>Overview<span class="absolute -mt-20" id="overview"></span>
+    <a href="#overview" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>In application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.</p>
 <p>With SSL, we can:</p>
 <ol>
 <li>Encrypted data on Internet transmission</li>
 <li>Allow client to authorize the server(PostgreSQL), which can protect the client from connecting to the attacker’s server</li>
 <li>Allow server to authorize the client, which can stop the attacker from connecting to the database even if password leak.</li>
 </ol>
-<h1>Just encrypt internet transmission</h1><h2>build binary from source<span class="absolute -mt-20" id="build-binary-from-source"></span>
-    <a href="#build-binary-from-source" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>just configure with <code>-with-openssl</code>  option.  You may need to install <code>ssl-dev</code> tools first</p>
+<h2>Just encrypt internet transmission<span class="absolute -mt-20" id="just-encrypt-internet-transmission"></span>
+    <a href="#just-encrypt-internet-transmission" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>build binary from source<span class="absolute -mt-20" id="build-binary-from-source"></span>
+    <a href="#build-binary-from-source" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>just configure with <code>-with-openssl</code>  option.  You may need to install <code>ssl-dev</code> tools first</p>
 <div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-0"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt-get install libssl-dev</span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
     <button
       class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
@@ -511,9 +535,9 @@ Encrypted data on Internet transmission Allow client to authorize the server(Pos
     </button>
   </div>
 </div>
-<h2>Configure ssl on server<span class="absolute -mt-20" id="configure-ssl-on-server"></span>
-    <a href="#configure-ssl-on-server" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>prepare a certification<span class="absolute -mt-20" id="prepare-a-certification"></span>
-    <a href="#prepare-a-certification" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>use <code>openssl</code> command to generate one. The <code>127.0.0.1</code> means that the certification only protects localhost connections</p>
+<h3>Configure ssl on server<span class="absolute -mt-20" id="configure-ssl-on-server"></span>
+    <a href="#configure-ssl-on-server" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><h4>prepare a certification<span class="absolute -mt-20" id="prepare-a-certification"></span>
+    <a href="#prepare-a-certification" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>use <code>openssl</code> command to generate one. The <code>127.0.0.1</code> means that the certification only protects localhost connections</p>
 <div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-2"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># generate root certification</span>
 </span></span><span class="line"><span class="cl">openssl req -new -x509 -days <span class="m">3650</span> -nodes <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -out ca.crt -keyout ca.key -subj <span class="s2">&#34;/CN=root-server-ca&#34;</span>
@@ -535,8 +559,8 @@ Encrypted data on Internet transmission Allow client to authorize the server(Pos
     </button>
   </div>
 </div>
-<h3>configure in <code>$PGDATA</code><span class="absolute -mt-20" id="configure-in-pgdata"></span>
-    <a href="#configure-in-pgdata" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>copy the <code>key</code> and <code>crt</code> to <code>$PGDATA</code></p>
+<h4>configure in <code>$PGDATA</code><span class="absolute -mt-20" id="configure-in-pgdata"></span>
+    <a href="#configure-in-pgdata" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>copy the <code>key</code> and <code>crt</code> to <code>$PGDATA</code></p>
 <div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-3"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">$PGDATA</span><span class="o">=</span>/home/dev/data
 </span></span><span class="line"><span class="cl">cp server.key <span class="nv">$PGDATA</span>/.
 </span></span><span class="line"><span class="cl">cp server.crt <span class="nv">$PGDATA</span>/.</span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
@@ -565,8 +589,8 @@ Encrypted data on Internet transmission Allow client to authorize the server(Pos
   </div>
 </div>
 <p>And (re)start the server</p>
-<h3>connect and test<span class="absolute -mt-20" id="connect-and-test"></span>
-    <a href="#connect-and-test" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-5"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">psql <span class="s2">&#34;host=127.0.0.1 port=5432 dbname=postgres user=postgres sslmode=require&#34;</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+<h4>connect and test<span class="absolute -mt-20" id="connect-and-test"></span>
+    <a href="#connect-and-test" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-5"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">psql <span class="s2">&#34;host=127.0.0.1 port=5432 dbname=postgres user=postgres sslmode=require&#34;</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
     <button
       class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
       title="Copy code"
@@ -578,7 +602,8 @@ Encrypted data on Internet transmission Allow client to authorize the server(Pos
   </div>
 </div>
 <p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/tls-connection.2024_02_12_1707741369.png" alt="Untitled" loading="lazy" /></p>
-<h1>Server sides Authorization</h1><p>Note that the client hasn’t check the certification of the server now. Check in this way:</p>
+<h2>Server sides Authorization<span class="absolute -mt-20" id="server-sides-authorization"></span>
+    <a href="#server-sides-authorization" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Note that the client hasn’t check the certification of the server now. Check in this way:</p>
 <div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-6"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">PGSSLROOTCERT</span><span class="o">=</span>ca.crt <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>psql <span class="s2">&#34;host=127.0.0.1 port=5432 dbname=postgres user=postgres sslmode=require&#34;</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
     <button
@@ -591,7 +616,8 @@ Encrypted data on Internet transmission Allow client to authorize the server(Pos
     </button>
   </div>
 </div>
-<h1>Client sides Authorization</h1><p>Generate certification similarly</p>
+<h2>Client sides Authorization<span class="absolute -mt-20" id="client-sides-authorization"></span>
+    <a href="#client-sides-authorization" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Generate certification similarly</p>
 <div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-7"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">openssl req -new -x509 -days <span class="m">3650</span> -nodes <span class="se">\
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>  -out ca-client.crt -keyout ca-client.key -subj <span class="s2">&#34;/CN=root-client-ca&#34;</span>
 </span></span><span class="line"><span class="cl">
@@ -624,8 +650,8 @@ Encrypted data on Internet transmission Allow client to authorize the server(Pos
   </div>
 </div>
 <p>and restart</p>
-<h2>test connection<span class="absolute -mt-20" id="test-connection"></span>
-    <a href="#test-connection" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Before connection, remember to set <code>pg_hba.conf</code> to only authorized with cetification.</p>
+<h3>test connection<span class="absolute -mt-20" id="test-connection"></span>
+    <a href="#test-connection" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>Before connection, remember to set <code>pg_hba.conf</code> to only authorized with cetification.</p>
 <div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-9"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hostssl    all             all             127.0.0.1/32          cert</span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
     <button
       class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
