@@ -1,10 +1,11 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hextra – Linux</title>
+    <title>mobilephone724 – Posts related to linux</title>
     <link>https://mobilephone724.github.io/linux/</link>
-    <description>Recent content in Linux on Hextra</description>
+    <description>Recent content in Posts related to linux on mobilephone724</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
+    <lastBuildDate>Fri, 14 Jan 2022 12:02:42 +0800</lastBuildDate>
     
 	  <atom:link href="https://mobilephone724.github.io/linux/index.xml" rel="self" type="application/rss+xml" />
     

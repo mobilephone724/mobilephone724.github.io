@@ -1,0 +1,19 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mobilephone724 – Posts related to PostgreSQL</title>
+    <link>https://mobilephone724.github.io/postgresql/</link>
+    <description>Recent content in Posts related to PostgreSQL on mobilephone724</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Thu, 31 Mar 2022 11:01:15 +0800</lastBuildDate>
+    
+	  <atom:link href="https://mobilephone724.github.io/postgresql/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+  </channel>
+</rss>

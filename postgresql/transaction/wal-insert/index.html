@@ -11,20 +11,33 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 
-  <title>database – mobilephone724</title>
-  <meta name="description" content="" />
+  <title>WAL日志的插入 – mobilephone724</title>
+  <meta name="description" content="接口函数 一个WAL记录包含
+WAL记录类型。（TODO不同的修改有不同的记录方式？） 这个页的修改方式 被修改的页的信息。被修改的页通过一个唯一ID标识，也可以有更多的关联数据（“record-specific data associated with the block”）。如果要写full page，就没有关联数据 构建一个WAL记录包含5个核心函数 void XLogBeginInsert(void) 初始化相关状态 如果当前无法构建WAL日志（例如在recovery模式），则报错 void XLogRegisterBuffer(uint8 block_id, Buffer buf, uint8 flags); 增加了数据块的信息；注册一个buffer的引用，相当于上述WAL日志的第三部分 block_id is an arbitrary number used to identify this page reference in the redo routine
+在redo阶段，可以根据这些信息找到需要redo的page regbuf = &amp;registered_buffers[block_id]; /* * Returns the relfilenode, fork number and block number associated with * a buffer */ BufferGetTag(buffer, &amp;regbuf-&gt;rnode, &amp;regbuf-&gt;forkno, &amp;regbuf-&gt;block); regbuf-&gt;page = BufferGetPage(buffer); regbuf-&gt;flags = flags; regbuf-&gt;rdata_tail = (XLogRecData *) &amp;regbuf-&gt;rdata_head; regbuf-&gt;rdata_len = 0; registered_buffer的结构" />
 
   
 
-<meta property="og:title" content="database" />
-<meta property="og:description" content="home of mobilephone724" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://mobilephone724.github.io/categories/database/" />
+<meta property="og:title" content="WAL日志的插入" />
+<meta property="og:description" content="接口函数 一个WAL记录包含
+WAL记录类型。（TODO不同的修改有不同的记录方式？） 这个页的修改方式 被修改的页的信息。被修改的页通过一个唯一ID标识，也可以有更多的关联数据（&ldquo;record-specific data associated with the block&rdquo;）。如果要写full page，就没有关联数据 构建一个WAL记录包含5个核心函数 void XLogBeginInsert(void) 初始化相关状态 如果当前无法构建WAL日志（例如在recovery模式），则报错 void XLogRegisterBuffer(uint8 block_id, Buffer buf, uint8 flags); 增加了数据块的信息；注册一个buffer的引用，相当于上述WAL日志的第三部分 block_id is an arbitrary number used to identify this page reference in the redo routine
+在redo阶段，可以根据这些信息找到需要redo的page regbuf = &amp;registered_buffers[block_id]; /* * Returns the relfilenode, fork number and block number associated with * a buffer */ BufferGetTag(buffer, &amp;regbuf-&gt;rnode, &amp;regbuf-&gt;forkno, &amp;regbuf-&gt;block); regbuf-&gt;page = BufferGetPage(buffer); regbuf-&gt;flags = flags; regbuf-&gt;rdata_tail = (XLogRecData *) &amp;regbuf-&gt;rdata_head; regbuf-&gt;rdata_len = 0; registered_buffer的结构" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mobilephone724.github.io/postgresql/transaction/wal-insert/" /><meta property="article:section" content="PostgreSQL" />
 
-  <meta itemprop="name" content="database">
-<meta itemprop="description" content="home of mobilephone724"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="database"/>
-<meta name="twitter:description" content="home of mobilephone724"/>
+
+
+  <meta itemprop="name" content="WAL日志的插入">
+<meta itemprop="description" content="接口函数 一个WAL记录包含
+WAL记录类型。（TODO不同的修改有不同的记录方式？） 这个页的修改方式 被修改的页的信息。被修改的页通过一个唯一ID标识，也可以有更多的关联数据（&ldquo;record-specific data associated with the block&rdquo;）。如果要写full page，就没有关联数据 构建一个WAL记录包含5个核心函数 void XLogBeginInsert(void) 初始化相关状态 如果当前无法构建WAL日志（例如在recovery模式），则报错 void XLogRegisterBuffer(uint8 block_id, Buffer buf, uint8 flags); 增加了数据块的信息；注册一个buffer的引用，相当于上述WAL日志的第三部分 block_id is an arbitrary number used to identify this page reference in the redo routine
+在redo阶段，可以根据这些信息找到需要redo的page regbuf = &amp;registered_buffers[block_id]; /* * Returns the relfilenode, fork number and block number associated with * a buffer */ BufferGetTag(buffer, &amp;regbuf-&gt;rnode, &amp;regbuf-&gt;forkno, &amp;regbuf-&gt;block); regbuf-&gt;page = BufferGetPage(buffer); regbuf-&gt;flags = flags; regbuf-&gt;rdata_tail = (XLogRecData *) &amp;regbuf-&gt;rdata_head; regbuf-&gt;rdata_len = 0; registered_buffer的结构">
+
+<meta itemprop="wordCount" content="346">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="WAL日志的插入"/>
+<meta name="twitter:description" content="接口函数 一个WAL记录包含
+WAL记录类型。（TODO不同的修改有不同的记录方式？） 这个页的修改方式 被修改的页的信息。被修改的页通过一个唯一ID标识，也可以有更多的关联数据（&ldquo;record-specific data associated with the block&rdquo;）。如果要写full page，就没有关联数据 构建一个WAL记录包含5个核心函数 void XLogBeginInsert(void) 初始化相关状态 如果当前无法构建WAL日志（例如在recovery模式），则报错 void XLogRegisterBuffer(uint8 block_id, Buffer buf, uint8 flags); 增加了数据块的信息；注册一个buffer的引用，相当于上述WAL日志的第三部分 block_id is an arbitrary number used to identify this page reference in the redo routine
+在redo阶段，可以根据这些信息找到需要redo的page regbuf = &amp;registered_buffers[block_id]; /* * Returns the relfilenode, fork number and block number associated with * a buffer */ BufferGetTag(buffer, &amp;regbuf-&gt;rnode, &amp;regbuf-&gt;forkno, &amp;regbuf-&gt;block); regbuf-&gt;page = BufferGetPage(buffer); regbuf-&gt;flags = flags; regbuf-&gt;rdata_tail = (XLogRecData *) &amp;regbuf-&gt;rdata_head; regbuf-&gt;rdata_len = 0; registered_buffer的结构"/>
 
     <link rel="preload" href="/css/compiled/main.min.16b68a354e65cf45bc12a9b9a023854fe5d743c179103958df82062ebdb2af3a.css" as="style" integrity="sha256-FraKNU5lz0W8Eqm5oCOFT&#43;XXQ8F5EDlY34IGLr2yrzo=" />
     <link href="/css/compiled/main.min.16b68a354e65cf45bc12a9b9a023854fe5d743c179103958df82062ebdb2af3a.css" rel="stylesheet" integrity="sha256-FraKNU5lz0W8Eqm5oCOFT&#43;XXQ8F5EDlY34IGLr2yrzo=" />
@@ -75,7 +88,7 @@
             title="PostgreSQL"
             href="/postgresql/"
             
-            class="text-sm contrast-more:text-gray-700 contrast-more:dark:text-gray-100 relative -ml-2 hidden whitespace-nowrap p-2 md:inline-block text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+            class="text-sm contrast-more:text-gray-700 contrast-more:dark:text-gray-100 relative -ml-2 hidden whitespace-nowrap p-2 md:inline-block font-medium"
           >
             <span class="text-center">PostgreSQL</span>
           </a><a
@@ -231,7 +244,7 @@
               
             </li></ul>
       </div></li>
-        <li class=""><a
+        <li class="open"><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
     href="/postgresql/"
@@ -239,7 +252,7 @@
   >Posts related to PostgreSQL
         <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg></span>
     </a><div class="pt-1 ltr:pr-0 overflow-hidden transition-all ease-in-out duration-200">
-        <ul class='relative flex flex-col gap-1 before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] ltr:ml-3 ltr:pl-3 ltr:before:left-0 rtl:mr-3 rtl:pr-3 rtl:before:right-0 dark:before:bg-neutral-800'><li class="flex flex-col gap-1 "><a
+        <ul class='relative flex flex-col gap-1 before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] ltr:ml-3 ltr:pl-3 ltr:before:left-0 rtl:mr-3 rtl:pr-3 rtl:before:right-0 dark:before:bg-neutral-800'><li class="flex flex-col gap-1 open"><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
     href="/postgresql/transaction/"
@@ -272,13 +285,34 @@
   >WAL基础
     </a>
               
-            </li><li class="flex flex-col gap-1 "><a
+            </li><li class="flex flex-col gap-1 open"><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 contrast-more:border contrast-more:border-primary-500 dark:bg-primary-400/10 dark:text-primary-600 contrast-more:dark:border-primary-500"
     href="/postgresql/transaction/wal-insert/"
     
   >WAL日志的插入
     </a>
+  
+    <ul class='flex flex-col gap-1 relative before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] dark:before:bg-neutral-800 ltr:pl-3 ltr:before:left-0 rtl:pr-3 rtl:before:right-0 ltr:ml-3 rtl:mr-3'><li>
+              <a
+                href="#%e6%8e%a5%e5%8f%a3%e5%87%bd%e6%95%b0"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              >接口函数</a>
+            </li>
+          <li>
+              <a
+                href="#%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e6%b1%87%e6%80%bb"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              >数据结构汇总</a>
+            </li>
+          <li>
+              <a
+                href="#%e5%85%b7%e4%bd%93%e7%9a%84%e6%8f%92%e5%85%a5%e6%96%b9%e5%bc%8f"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              >具体的插入方式</a>
+            </li>
+          </ul>
+  
               
             </li></ul>
       </div>
@@ -338,91 +372,14 @@
 
     <ul class="flex flex-col gap-1 max-md:hidden">
         
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/topics/"
-    
-  >Some topics that spans many domains
-        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg></span>
-    </a><div class="pt-1 ltr:pr-0 overflow-hidden transition-all ease-in-out duration-200">
-        <ul class='relative flex flex-col gap-1 before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] ltr:ml-3 ltr:pl-3 ltr:before:left-0 rtl:mr-3 rtl:pr-3 rtl:before:right-0 dark:before:bg-neutral-800'><li class="flex flex-col gap-1 "><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/topics/ssl/ssl-in-pg/"
-    
-  >SSL in PG2
-    </a>
-              
-            </li></ul>
-      </div></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/docs/"
-    
-  >Posts that can&#39;t be classified now.
-        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg></span>
-    </a><div class="pt-1 ltr:pr-0 overflow-hidden transition-all ease-in-out duration-200">
-        <ul class='relative flex flex-col gap-1 before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] ltr:ml-3 ltr:pl-3 ltr:before:left-0 rtl:mr-3 rtl:pr-3 rtl:before:right-0 dark:before:bg-neutral-800'><li class="flex flex-col gap-1 "><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/docs/predict-lock/"
-    
-  >Phantoms Predicate Lock
-    </a>
-              
-            </li><li class="flex flex-col gap-1 "><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/docs/somethingtousingdocker/"
-    
-  >something to using docker
-    </a>
-              
-            </li><li class="flex flex-col gap-1 "><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/docs/howtoknowwhoseisbigger/"
-    
-  >Alice and Bob how to know whose number is bigger without giving away their own&#39;s
-    </a>
-              
-            </li><li class="flex flex-col gap-1 "><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/docs/cublasdgemmtutor/"
-    
-  >basic of cublasDgemm
-    </a>
-              
-            </li><li class="flex flex-col gap-1 "><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/docs/google-f1/"
-    
-  >Read Google F1
-    </a>
-              
-            </li></ul>
-      </div></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/postgresql/"
-    
-  >Posts related to PostgreSQL
-        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg></span>
-    </a><div class="pt-1 ltr:pr-0 overflow-hidden transition-all ease-in-out duration-200">
-        <ul class='relative flex flex-col gap-1 before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] ltr:ml-3 ltr:pl-3 ltr:before:left-0 rtl:mr-3 rtl:pr-3 rtl:before:right-0 dark:before:bg-neutral-800'><li class="flex flex-col gap-1 "><a
+        <li class="open"><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
     href="/postgresql/transaction/"
     
   >Transaction Related
         <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg></span>
-    </a>
-              <div class="pt-1 ltr:pr-0 overflow-hidden transition-all ease-in-out duration-200">
+    </a><div class="pt-1 ltr:pr-0 overflow-hidden transition-all ease-in-out duration-200">
         <ul class='relative flex flex-col gap-1 before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] ltr:ml-3 ltr:pl-3 ltr:before:left-0 rtl:mr-3 rtl:pr-3 rtl:before:right-0 dark:before:bg-neutral-800'><li class="flex flex-col gap-1 "><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
@@ -447,46 +404,12 @@
   >WAL基础
     </a>
               
-            </li><li class="flex flex-col gap-1 "><a
+            </li><li class="flex flex-col gap-1 open"><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 contrast-more:border contrast-more:border-primary-500 dark:bg-primary-400/10 dark:text-primary-600 contrast-more:dark:border-primary-500"
     href="/postgresql/transaction/wal-insert/"
     
   >WAL日志的插入
-    </a>
-              
-            </li></ul>
-      </div>
-            </li><li class="flex flex-col gap-1 "><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/postgresql/hashjoin/"
-    
-  >hash join
-    </a>
-              
-            </li><li class="flex flex-col gap-1 "><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/postgresql/database-log/"
-    
-  >Basic Knowledge of Database Log
-    </a>
-              
-            </li><li class="flex flex-col gap-1 "><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/postgresql/create-index-currently/"
-    
-  >create index concurrently
-    </a>
-              
-            </li><li class="flex flex-col gap-1 "><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/postgresql/pgvector/"
-    
-  >PGVECTOR AND VECTOR DATABASE
     </a>
               
             </li></ul>
@@ -494,21 +417,31 @@
         <li class=""><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/linux/"
+    href="/postgresql/hashjoin/"
     
-  >Posts related to linux
-        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg></span>
-    </a><div class="pt-1 ltr:pr-0 overflow-hidden transition-all ease-in-out duration-200">
-        <ul class='relative flex flex-col gap-1 before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] ltr:ml-3 ltr:pl-3 ltr:before:left-0 rtl:mr-3 rtl:pr-3 rtl:before:right-0 dark:before:bg-neutral-800'><li class="flex flex-col gap-1 "><a
+  >hash join
+    </a></li>
+        <li class=""><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/linux/linux-file/"
+    href="/postgresql/database-log/"
     
-  >APUE/Chapter3: file and I/O
-    </a>
-              
-            </li></ul>
-      </div></li>
+  >Basic Knowledge of Database Log
+    </a></li>
+        <li class=""><a
+    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
+    href="/postgresql/create-index-currently/"
+    
+  >create index concurrently
+    </a></li>
+        <li class=""><a
+    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
+    href="/postgresql/pgvector/"
+    
+  >PGVECTOR AND VECTOR DATABASE
+    </a></li>
         
       </ul>
     </div>
@@ -526,8 +459,32 @@
 </div></div></aside>
     
 <nav class="hextra-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
-    <div class="hextra-scrollbar sticky top-16 overflow-y-auto pr-4 pt-6 text-sm [hyphens:auto] max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:-mr-4 rtl:-ml-4">
-      <div class=" sticky bottom-0 flex flex-col items-start gap-2 pb-8 dark:border-neutral-800 contrast-more:border-t contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:border-neutral-400">
+    <div class="hextra-scrollbar sticky top-16 overflow-y-auto pr-4 pt-6 text-sm [hyphens:auto] max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:-mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#%e6%8e%a5%e5%8f%a3%e5%87%bd%e6%95%b0">接口函数
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#%e6%9e%84%e5%bb%ba%e4%b8%80%e4%b8%aawal%e8%ae%b0%e5%bd%95%e5%8c%85%e5%90%ab5%e4%b8%aa%e6%a0%b8%e5%bf%83%e5%87%bd%e6%95%b0">构建一个WAL记录包含5个核心函数
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e6%b1%87%e6%80%bb">数据结构汇总
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#registered_buffers">registered_buffers
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#%e5%85%b7%e4%bd%93%e7%9a%84%e6%8f%92%e5%85%a5%e6%96%b9%e5%bc%8f">具体的插入方式
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#xlogrecordassemble">XLogRecordAssemble
+        </a>
+      </li></ul>
+      <div class="mt-8 border-t bg-white pt-8 shadow-[0_-12px_16px_white] dark:bg-dark dark:shadow-[0_-12px_16px_#111] sticky bottom-0 flex flex-col items-start gap-2 pb-8 dark:border-neutral-800 contrast-more:border-t contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:border-neutral-400">
         <button aria-hidden="true" id="backToTop" onClick="scrollUp();" class="transition-all transition duration-75 opacity-0 text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 contrast-more:text-gray-800 contrast-more:dark:text-gray-50">
           <span>Scroll to top</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline ml-1 h-3.5 w-3.5 border rounded-full border-gray-500 hover:border-gray-900 dark:border-gray-400 dark:hover:border-gray-100 contrast-more:border-gray-800 contrast-more:dark:border-gray-50">
@@ -541,13 +498,229 @@
 
     <article class="w-full break-words flex min-h-[calc(100vh-var(--navbar-height))] min-w-0 justify-center pb-8 pr-[calc(env(safe-area-inset-right)-1.5rem)]">
       <main class="w-full min-w-0 max-w-6xl px-6 pt-4 md:px-12">
+        <div class="mt-1.5 flex items-center gap-1 overflow-hidden text-sm text-gray-500 dark:text-gray-400 contrast-more:text-current">
+      <div class="whitespace-nowrap transition-colors min-w-[24px] overflow-hidden text-ellipsis hover:text-gray-900 dark:hover:text-gray-100">
+        <a href="https://mobilephone724.github.io/postgresql/">Posts related to PostgreSQL</a>
+      </div><svg class="w-3.5 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      <div class="whitespace-nowrap transition-colors min-w-[24px] overflow-hidden text-ellipsis hover:text-gray-900 dark:hover:text-gray-100">
+        <a href="https://mobilephone724.github.io/postgresql/transaction/">Transaction Related</a>
+      </div><svg class="w-3.5 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg><div class="whitespace-nowrap transition-colors font-medium text-gray-700 contrast-more:font-bold contrast-more:text-current dark:text-gray-100 contrast-more:dark:text-current">WAL日志的插入</div>
+</div>
+
         <div class="content">
-          <h1>database</h1>
-          
+          <h1>WAL日志的插入</h1>
+          <h2>接口函数<span class="absolute -mt-20" id="接口函数"></span>
+    <a href="#%e6%8e%a5%e5%8f%a3%e5%87%bd%e6%95%b0" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>一个WAL记录包含</p>
+<ol>
+<li>WAL记录类型。（TODO不同的修改有不同的记录方式？）</li>
+<li>这个页的修改方式</li>
+<li>被修改的页的信息。被修改的页通过一个唯一ID标识，也可以有更多的关联数据（&ldquo;record-specific data associated with the block&rdquo;）。如果要写full page，就没有关联数据</li>
+</ol>
+<h3>构建一个WAL记录包含5个核心函数<span class="absolute -mt-20" id="构建一个wal记录包含5个核心函数"></span>
+    <a href="#%e6%9e%84%e5%bb%ba%e4%b8%80%e4%b8%aawal%e8%ae%b0%e5%bd%95%e5%8c%85%e5%90%ab5%e4%b8%aa%e6%a0%b8%e5%bf%83%e5%87%bd%e6%95%b0" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
+<li><code>void XLogBeginInsert(void)</code>
+<ul>
+<li>初始化相关状态</li>
+<li>如果当前无法构建WAL日志（例如在recovery模式），则报错</li>
+</ul>
+</li>
+<li><code>void XLogRegisterBuffer(uint8 block_id, Buffer buf, uint8 flags);</code>
+<ul>
+<li>增加了数据块的信息；注册一个buffer的引用，相当于上述WAL日志的第三部分</li>
+<li>
+<blockquote>
+<p>block_id is an arbitrary number used to identify this page reference in the redo routine</p>
+</blockquote>
+</li>
+<li>在redo阶段，可以根据这些信息找到需要redo的page</li>
+</ul>
+</li>
+</ul>
+<div class="code-block relative mt-6 first:mt-0 group/code"><pre><code id="code-block-0">    regbuf = &amp;registered_buffers[block_id];
+    /*
+     * Returns the relfilenode, fork number and block number associated with
+     * a buffer
+     */
+    BufferGetTag(buffer, &amp;regbuf-&gt;rnode, &amp;regbuf-&gt;forkno, &amp;regbuf-&gt;block);
+    regbuf-&gt;page = BufferGetPage(buffer);
+    regbuf-&gt;flags = flags;
+    regbuf-&gt;rdata_tail = (XLogRecData *) &amp;regbuf-&gt;rdata_head;
+    regbuf-&gt;rdata_len = 0;</code></pre><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+      data-clipboard-target="#code-block-0"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<p>registered_buffer的结构</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-1"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* xxx */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* info to re-find the page */</span>
+</span></span><span class="line"><span class="cl">	<span class="n">ForkNumber</span>	<span class="n">forkno</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">BlockNumber</span> <span class="n">block</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Page</span>		<span class="n">page</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* a loop-linked structure to store the data change of each buffer */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">uint32</span>       <span class="n">rdata_len</span><span class="p">;</span>      <span class="cm">/* total length of data in rdata chain */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">XLogRecData</span> <span class="o">*</span><span class="n">rdata_head</span><span class="p">;</span>    <span class="cm">/* head of the chain of data registered with
+</span></span></span><span class="line"><span class="cl"><span class="cm">                                * this block */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">XLogRecData</span> <span class="o">*</span><span class="n">rdata_tail</span><span class="p">;</span>	<span class="cm">/* last entry in the chain, or &amp;rdata_head if
+</span></span></span><span class="line"><span class="cl"><span class="cm">                                 * empty */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* xxx */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">registered_buffer</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">XLogRecData</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="n">XLogRecData</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>   <span class="cm">/* next struct in chain, or NULL */</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">char</span>       <span class="o">*</span><span class="n">data</span><span class="p">;</span>           <span class="cm">/* start of rmgr data to include */</span>
+</span></span><span class="line"><span class="cl">    <span class="n">uint32</span>      <span class="n">len</span><span class="p">;</span>            <span class="cm">/* length of rmgr data to include */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="n">XLogRecData</span><span class="p">;</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+      data-clipboard-target="#code-block-1"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<ul>
+<li><code>void XLogRegisterData(char *data, int len);</code>
+<ul>
+<li>向WAL日志中写入任意数据</li>
+<li>可多次调用，保证连续。这样在rodo时，就可以得到连续的数据</li>
+</ul>
+</li>
+</ul>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-2"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl">    <span class="n">rdata</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">rdatas</span><span class="p">[</span><span class="n">num_rdatas</span><span class="o">++</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rdata</span><span class="o">-&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">rdata</span><span class="o">-&gt;</span><span class="n">len</span> <span class="o">=</span> <span class="n">len</span><span class="p">;</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+      data-clipboard-target="#code-block-2"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<ul>
+<li><code>void XLogRegisterBufData(uint8 block_id, char *data, int len);</code></li>
+</ul>
+<div class="code-block relative mt-6 first:mt-0 group/code"><pre><code id="code-block-3">    rdata = &amp;rdatas[num_rdatas&#43;&#43;];
+    rdata-&gt;data = data;
+    rdata-&gt;len = len;
+
+    regbuf = &amp;registered_buffers[block_id];
+    regbuf-&gt;rdata_tail-&gt;next = rdata;
+    regbuf-&gt;rdata_tail = rdata;
+    regbuf-&gt;rdata_len &#43;= len;</code></pre><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+      data-clipboard-target="#code-block-3"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<p>可见，<code>XLogRegisterBufData</code> 和 <code>XLogRegisterData</code> 的核心区别在，前者写入的数据会关联到具体的buffer，而后者没有</p>
+<ul>
+<li><code>XLogInsert</code>
+<ul>
+<li>Insert the record.</li>
+</ul>
+</li>
+</ul>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-4"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl">    <span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">GetFullPageWriteInfo</span><span class="p">(</span><span class="o">&amp;</span><span class="n">RedoRecPtr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">doPageWrites</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">rdt</span> <span class="o">=</span> <span class="nf">XLogRecordAssemble</span><span class="p">(</span><span class="n">rmid</span><span class="p">,</span> <span class="n">info</span><span class="p">,</span> <span class="n">RedoRecPtr</span><span class="p">,</span> <span class="n">doPageWrites</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                 <span class="o">&amp;</span><span class="n">fpw_lsn</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">num_fpi</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">EndPos</span> <span class="o">=</span> <span class="nf">XLogInsertRecord</span><span class="p">(</span><span class="n">rdt</span><span class="p">,</span> <span class="n">fpw_lsn</span><span class="p">,</span> <span class="n">curinsert_flags</span><span class="p">,</span> <span class="n">num_fpi</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">EndPos</span> <span class="o">==</span> <span class="n">InvalidXLogRecPtr</span><span class="p">);</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+      data-clipboard-target="#code-block-4"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<h2>数据结构汇总<span class="absolute -mt-20" id="数据结构汇总"></span>
+    <a href="#%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e6%b1%87%e6%80%bb" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>registered_buffers<span class="absolute -mt-20" id="registered_buffers"></span>
+    <a href="#registered_buffers" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>每一个buffer对应registered_buffers中的一个元素（一个<code>registered buffer</code>）</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-5"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="kt">void</span>
+</span></span><span class="line"><span class="cl"><span class="nf">XLogEnsureRecordSpace</span><span class="p">(</span><span class="kt">int</span> <span class="n">max_block_id</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ndatas</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">nbuffers</span> <span class="o">&gt;</span> <span class="n">max_registered_buffers</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">registered_buffers</span> <span class="o">=</span> <span class="p">(</span><span class="n">registered_buffer</span> <span class="o">*</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nf">repalloc</span><span class="p">(</span><span class="n">registered_buffers</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">registered_buffer</span><span class="p">)</span> <span class="o">*</span> <span class="n">nbuffers</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">max_registered_buffers</span> <span class="o">=</span> <span class="n">nbuffers</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+      data-clipboard-target="#code-block-5"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<h2>具体的插入方式<span class="absolute -mt-20" id="具体的插入方式"></span>
+    <a href="#%e5%85%b7%e4%bd%93%e7%9a%84%e6%8f%92%e5%85%a5%e6%96%b9%e5%bc%8f" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>上述代码中的<code>XLogRecordAssemble</code>和<code>XLogInsertRecord</code>已经概括了具体的插入步骤</p>
+<h3>XLogRecordAssemble<span class="absolute -mt-20" id="xlogrecordassemble"></span>
+    <a href="#xlogrecordassemble" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><blockquote>
+<p>Assemble a WAL record from the registered data and buffers into an XLogRecData chain</p>
+</blockquote>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-6"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="k">static</span> <span class="n">XLogRecData</span> <span class="o">*</span>
+</span></span><span class="line"><span class="cl"><span class="nf">XLogRecordAssemble</span><span class="p">(</span><span class="n">RmgrId</span> <span class="n">rmid</span><span class="p">,</span> <span class="n">uint8</span> <span class="n">info</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">				   <span class="n">XLogRecPtr</span> <span class="n">RedoRecPtr</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">doPageWrites</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">				   <span class="n">XLogRecPtr</span> <span class="o">*</span><span class="n">fpw_lsn</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">num_fpi</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="n">block_id</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">block_id</span> <span class="o">&lt;</span> <span class="n">max_registered_block_id</span><span class="p">;</span> <span class="n">block_id</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">needs_data</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">rdt_datas_last</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">=</span> <span class="n">regbuf</span><span class="o">-&gt;</span><span class="n">rdata_head</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+      data-clipboard-target="#code-block-6"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+
         </div>
         <div class="mt-16"></div>
-        
-    <div class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400">Last updated on <time datetime="2023-08-14T21:46:24.000Z">August 14, 2023</time></div>
+        <div class="mb-8 flex items-center border-t pt-8 dark:border-neutral-800 contrast-more:border-neutral-400 dark:contrast-more:border-neutral-400 print:hidden"><a
+        href="/postgresql/transaction/wal-basic/"
+        title="WAL基础"
+        class="flex max-w-[50%] items-center gap-1 py-4 text-base font-medium text-gray-600 transition-colors [word-break:break-word] hover:text-primary-600 dark:text-gray-300 md:text-lg ltr:pr-4 rtl:pl-4"
+      ><svg class="inline h-5 shrink-0 ltr:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>WAL基础</a></div>
         
       </main>
     </article>
@@ -570,6 +743,24 @@
 
 <script defer src="/lib/flexsearch/flexsearch.bundle.min.0425860527cc9968f9f049421c7a56b39327d475e2e3a8f550416be3a9134327.js" integrity="sha256-BCWGBSfMmWj58ElCHHpWs5Mn1HXi46j1UEFr46kTQyc="></script>
     <script defer src="/en.search.min.9afdc7c586c6f971dd94df10b989f10faaf38e5702571fd8cfc9ff9135c2d495.js" integrity="sha256-mv3HxYbG&#43;XHdlN8QuYnxD6rzjlcCVx/Yz8n/kTXC1JU="></script>
+<link type="text/css" rel="stylesheet" href="/lib/katex/katex.min.df9ef84e97d38557de02183e238f8ddfd10988b37741492e12c3157bc856011e.css" integrity="sha256-3574TpfThVfeAhg&#43;I4&#43;N39EJiLN3QUkuEsMVe8hWAR4=" />
+  <script defer src="/lib/katex/katex.min.d4f0ea25c4ccb7986b229d6427794b7063cf3209b0376cf5a64bfc4dd7918c95.js" integrity="sha256-1PDqJcTMt5hrIp1kJ3lLcGPPMgmwN2z1pkv8TdeRjJU="></script>
+  <script defer src="/lib/katex/auto-render.min.9cb8dacfc086c2966c9ec4ba54f4a2dc43b7cbe2b33cec1a2743d886c7fb47a7.js" integrity="sha256-nLjaz8CGwpZsnsS6VPSi3EO3y&#43;KzPOwaJ0PYhsf7R6c="></script>
+  <script defer src="/lib/katex/mhchem.min.f0ca03df194b8c3d6017ff455db6a0ef98857905663fa311a6cded788b15340b.js" integrity="sha256-8MoD3xlLjD1gF/9FXbag75iFeQVmP6MRps3teIsVNAs="></script>
+  <script>
+    
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false },
+          { left: "\\(", right: "\\)", display: false },
+          { left: "\\[", right: "\\]", display: true },
+        ],
+        throwOnError: false,
+      });
+    });
+  </script>
 
 
 </html>
