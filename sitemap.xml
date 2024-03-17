@@ -31,6 +31,9 @@
     <loc>https://mobilephone724.github.io/topics/</loc>
     <lastmod>2024-02-12T20:30:38+08:00</lastmod>
   </url><url>
+    <loc>https://mobilephone724.github.io/topics/ssl/</loc>
+    <lastmod>2024-02-12T20:30:38+08:00</lastmod>
+  </url><url>
     <loc>https://mobilephone724.github.io/topics/ssl/ssl-in-pg/</loc>
     <lastmod>2024-02-12T20:30:38+08:00</lastmod>
   </url><url>
@@ -103,5 +106,7 @@
     <loc>https://mobilephone724.github.io/postgresql/transaction/wal-basic/</loc>
   </url><url>
     <loc>https://mobilephone724.github.io/postgresql/transaction/wal-insert/</loc>
+  </url><url>
+    <loc>https://mobilephone724.github.io/topics/ssl/zero2rsa/</loc>
   </url>
 </urlset>

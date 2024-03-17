@@ -1,0 +1,463 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>mobilephone724 – something related to ssl</title>
+    <link>https://mobilephone724.github.io/topics/ssl/</link>
+    <description>Recent content in something related to ssl on mobilephone724</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 12 Feb 2024 20:30:38 +0800</lastBuildDate>
+    
+	  <atom:link href="https://mobilephone724.github.io/topics/ssl/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+    <item>
+      <title>SSL in PG</title>
+      <link>https://mobilephone724.github.io/topics/ssl/ssl-in-pg/</link>
+      <pubDate>Mon, 12 Feb 2024 20:30:38 +0800</pubDate>
+      
+      <guid>https://mobilephone724.github.io/topics/ssl/ssl-in-pg/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;Overview&lt;span class=&#34;absolute -mt-20&#34; id=&#34;overview&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#overview&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.&lt;/p&gt;
+&lt;p&gt;With SSL, we can:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Encrypted data on Internet transmission&lt;/li&gt;
+&lt;li&gt;Allow client to authorize the server(PostgreSQL), which can protect the client from connecting to the attacker’s server&lt;/li&gt;
+&lt;li&gt;Allow server to authorize the client, which can stop the attacker from connecting to the database even if password leak.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Just encrypt internet transmission&lt;span class=&#34;absolute -mt-20&#34; id=&#34;just-encrypt-internet-transmission&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#just-encrypt-internet-transmission&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;build binary from source&lt;span class=&#34;absolute -mt-20&#34; id=&#34;build-binary-from-source&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#build-binary-from-source&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;just configure with &lt;code&gt;-with-openssl&lt;/code&gt;  option.  You may need to install &lt;code&gt;ssl-dev&lt;/code&gt; tools first&lt;/p&gt;
+&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;div id=&#34;code-block-0&#34;&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt-get install libssl-dev&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
+    &lt;button
+      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
+      title=&#34;Copy code&#34;
+      data-clipboard-target=&#34;#code-block-0&#34;
+    &gt;
+      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Below is a building example:&lt;/p&gt;
+&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;div id=&#34;code-block-1&#34;&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;build_dir&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/home/dev/build
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;data_dir&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/home/dev/data
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;superuser&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;postgres
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;defaultdb&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;nb&#34;&gt;test&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;build_dir&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/bin/pg_ctl -D &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;data_dir&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; stop
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rm -rf build
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rm -rf data
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; postgresql
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clean -xdf
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./configure &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --prefix&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;build_dir&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --enable-debug &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --enable-cassert &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --with-tcl &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --with-perl &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --with-python &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --enable-debug &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --without-icu &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --with-openssl &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;nv&#34;&gt;CC&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/usr/bin/gcc &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    &lt;span class=&#34;nv&#34;&gt;CFLAGS&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;-O0 -pipe -Wall -g3&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# export CLFAGS=&amp;#34;-O0 -Wall -g3&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# export CPPLFAGS=&amp;#34;-O0 -Wall -g3&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;make -j8 &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; make install
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;make -C contrib install
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;build_dir&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/bin/initdb --username&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;superuser&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; --pgdata&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;data_dir&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;build_dir&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/bin/pg_ctl -D &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;data_dir&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; -l &lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;data_dir&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/logfile start
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;build_dir&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;/bin/psql -U&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;superuser&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt; postgres -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;create database &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;defaultdb&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;----------------- all finished -----------------------&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;use ************** &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;[ &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;build_dir&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/bin/psql -U&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;superuser&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;defaultdb&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; ] &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;to connect postgresql&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; ..&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
+    &lt;button
+      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
+      title=&#34;Copy code&#34;
+      data-clipboard-target=&#34;#code-block-1&#34;
+    &gt;
+      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;h3&gt;Configure ssl on server&lt;span class=&#34;absolute -mt-20&#34; id=&#34;configure-ssl-on-server&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#configure-ssl-on-server&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;h4&gt;prepare a certification&lt;span class=&#34;absolute -mt-20&#34; id=&#34;prepare-a-certification&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#prepare-a-certification&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;use &lt;code&gt;openssl&lt;/code&gt; command to generate one. The &lt;code&gt;127.0.0.1&lt;/code&gt; means that the certification only protects localhost connections&lt;/p&gt;
+&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;div id=&#34;code-block-2&#34;&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# generate root certification&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;openssl req -new -x509 -days &lt;span class=&#34;m&#34;&gt;3650&lt;/span&gt; -nodes &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -out ca.crt -keyout ca.key -subj &lt;span class=&#34;s2&#34;&gt;&amp;#34;/CN=root-server-ca&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# generate csr and key&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;openssl req -new -nodes -text -out server.csr &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -keyout server.key -subj &lt;span class=&#34;s2&#34;&gt;&amp;#34;/CN=127.0.0.1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# generate certification&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;openssl x509 -req -in server.csr -text -days &lt;span class=&#34;m&#34;&gt;365&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
+    &lt;button
+      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
+      title=&#34;Copy code&#34;
+      data-clipboard-target=&#34;#code-block-2&#34;
+    &gt;
+      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;h4&gt;configure in &lt;code&gt;$PGDATA&lt;/code&gt;&lt;span class=&#34;absolute -mt-20&#34; id=&#34;configure-in-pgdata&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#configure-in-pgdata&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;copy the &lt;code&gt;key&lt;/code&gt; and &lt;code&gt;crt&lt;/code&gt; to &lt;code&gt;$PGDATA&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;div id=&#34;code-block-3&#34;&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$PGDATA&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;/home/dev/data
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp server.key &lt;span class=&#34;nv&#34;&gt;$PGDATA&lt;/span&gt;/.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp server.crt &lt;span class=&#34;nv&#34;&gt;$PGDATA&lt;/span&gt;/.&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
+    &lt;button
+      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
+      title=&#34;Copy code&#34;
+      data-clipboard-target=&#34;#code-block-3&#34;
+    &gt;
+      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;configure in &lt;code&gt;postgresql.conf&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;div id=&#34;code-block-4&#34;&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;ssl&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; on
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;ssl_cert_file&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;server.crt&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;ssl_key_file&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;server.key&amp;#39;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
+    &lt;button
+      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
+      title=&#34;Copy code&#34;
+      data-clipboard-target=&#34;#code-block-4&#34;
+    &gt;
+      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;And (re)start the server&lt;/p&gt;
+&lt;h4&gt;connect and test&lt;span class=&#34;absolute -mt-20&#34; id=&#34;connect-and-test&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#connect-and-test&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;div id=&#34;code-block-5&#34;&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;psql &lt;span class=&#34;s2&#34;&gt;&amp;#34;host=127.0.0.1 port=5432 dbname=postgres user=postgres sslmode=require&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
+    &lt;button
+      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
+      title=&#34;Copy code&#34;
+      data-clipboard-target=&#34;#code-block-5&#34;
+    &gt;
+      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/tls-connection.2024_02_12_1707741369.png&#34; alt=&#34;Untitled&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
+&lt;h2&gt;Server sides Authorization&lt;span class=&#34;absolute -mt-20&#34; id=&#34;server-sides-authorization&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#server-sides-authorization&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Note that the client hasn’t check the certification of the server now. Check in this way:&lt;/p&gt;
+&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;div id=&#34;code-block-6&#34;&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;PGSSLROOTCERT&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;ca.crt &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;psql &lt;span class=&#34;s2&#34;&gt;&amp;#34;host=127.0.0.1 port=5432 dbname=postgres user=postgres sslmode=require&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
+    &lt;button
+      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
+      title=&#34;Copy code&#34;
+      data-clipboard-target=&#34;#code-block-6&#34;
+    &gt;
+      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;h2&gt;Client sides Authorization&lt;span class=&#34;absolute -mt-20&#34; id=&#34;client-sides-authorization&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#client-sides-authorization&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Generate certification similarly&lt;/p&gt;
+&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;div id=&#34;code-block-7&#34;&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;openssl req -new -x509 -days &lt;span class=&#34;m&#34;&gt;3650&lt;/span&gt; -nodes &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -out ca-client.crt -keyout ca-client.key -subj &lt;span class=&#34;s2&#34;&gt;&amp;#34;/CN=root-client-ca&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;openssl req -new -nodes -text -out client.csr &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -keyout client.key -subj &lt;span class=&#34;s2&#34;&gt;&amp;#34;/CN=postgres&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;openssl x509 -req -in client.csr -text -days &lt;span class=&#34;m&#34;&gt;365&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -CA ca-client.crt -CAkey ca-client.key -CAcreateserial -out client.crt&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
+    &lt;button
+      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
+      title=&#34;Copy code&#34;
+      data-clipboard-target=&#34;#code-block-7&#34;
+    &gt;
+      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;prepare in &lt;code&gt;$PGDATA&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;div id=&#34;code-block-8&#34;&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cp ca-client.crt &lt;span class=&#34;nv&#34;&gt;$PGDATA&lt;/span&gt;/.
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; -e &lt;span class=&#34;s2&#34;&gt;&amp;#34;\nssl_ca_file = &amp;#39;ca-client.crt&amp;#39;&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; &lt;span class=&#34;nv&#34;&gt;$PGDATA&lt;/span&gt;/postgresql.conf&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
+    &lt;button
+      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
+      title=&#34;Copy code&#34;
+      data-clipboard-target=&#34;#code-block-8&#34;
+    &gt;
+      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;and restart&lt;/p&gt;
+&lt;h3&gt;test connection&lt;span class=&#34;absolute -mt-20&#34; id=&#34;test-connection&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#test-connection&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Before connection, remember to set &lt;code&gt;pg_hba.conf&lt;/code&gt; to only authorized with cetification.&lt;/p&gt;
+&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;div id=&#34;code-block-9&#34;&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hostssl    all             all             127.0.0.1/32          cert&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
+    &lt;button
+      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
+      title=&#34;Copy code&#34;
+      data-clipboard-target=&#34;#code-block-9&#34;
+    &gt;
+      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;code-block relative mt-6 first:mt-0 group/code&#34;&gt;&lt;div id=&#34;code-block-10&#34;&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;psql &lt;span class=&#34;s2&#34;&gt;&amp;#34;sslrootcert=ca.crt sslcert=client.crt sslkey=client.key \
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;s2&#34;&gt;  host=127.0.0.1 dbname=postgres user=postgres sslmode=verify-full&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&#34;opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0&#34;&gt;
+    &lt;button
+      class=&#34;code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50&#34;
+      title=&#34;Copy code&#34;
+      data-clipboard-target=&#34;#code-block-10&#34;
+    &gt;
+      &lt;div class=&#34;group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+      &lt;div class=&#34;hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4&#34;&gt;&lt;/div&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+      </description>
+    </item>
+    
+    <item>
+      <title>ZERO TO RSA</title>
+      <link>https://mobilephone724.github.io/topics/ssl/zero2rsa/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://mobilephone724.github.io/topics/ssl/zero2rsa/</guid>
+      <description>
+        
+        
+        &lt;h2&gt;从0证明RSA&lt;span class=&#34;absolute -mt-20&#34; id=&#34;从0证明rsa&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e4%bb%8e0%e8%af%81%e6%98%8ersa&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;RSA 算法（即一个非对称加密算法）除了应用非常广泛外，其特性也非常吸引人（起码非常吸引我）。我在网上找了很多关于RSA的证明，要么不够详细（例如缺失对前置定理的证明），要么需要引出较多复杂的数论概念。作者本身水平不高，试图绕过这些复杂的概念，从初等数学的开始，完备地证明RSA。&lt;/p&gt;
+&lt;p&gt;关于RSA的背景知识可能很多，可以慢慢阅读，我在此尝试从初等数学开始证明。这些背景知识的证明有一定的顺序，如果读者发现某个证明看不懂，可以向前翻阅。&lt;/p&gt;
+&lt;p&gt;参考的文章如下：（因为参考的文章太多，大概率不全）&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;费马小定理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zh.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E5%89%A9%E4%BD%99%E5%AE%9A%E7%90%86&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;中国剩余定理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2013/07/rsa_algorithm_part_two.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;阮一峰的博客——RSA算法原理（一）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;阮一峰的博客——RSA算法原理（二）&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/35060143&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;初等数论笔记Part 1： 欧拉定理&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://zhuanlan.zhihu.com/p/100587745&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;算法学习笔记(9)：逆元&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;费马小定理&lt;span class=&#34;absolute -mt-20&#34; id=&#34;费马小定理&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e8%b4%b9%e9%a9%ac%e5%b0%8f%e5%ae%9a%e7%90%86&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;简介&lt;span class=&#34;absolute -mt-20&#34; id=&#34;简介&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e7%ae%80%e4%bb%8b&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果 $p$ 是质数且 $\mathrm{gcd}(a,p)=1$ , 那么 $a^{p-1}\equiv 1\ (\mathrm{mod}\ p)$&lt;/p&gt;
+&lt;p&gt;在证明该定理前，先证明一个简单的引理&lt;/p&gt;
+&lt;h3&gt;引理1&lt;span class=&#34;absolute -mt-20&#34; id=&#34;引理1&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e5%bc%95%e7%90%861&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;如果 $p$ 是质数，且 $\mathrm{gcd}(a,p)=1$ , 那么&lt;/p&gt;
+&lt;p&gt;$$
+\lbrace ka \ \mathrm{mod}\ p | k = \lbrace 1,2,&amp;hellip;,p -1 \rbrace \rbrace= \lbrace 1,2,3,&amp;hellip;,p-1 \rbrace
+$$&lt;/p&gt;
+&lt;p&gt;即二者存在一对一的关系。由于这两个集合的元素个数相同，所以只要证明左侧集合没有重复元素即可&lt;/p&gt;
+&lt;p&gt;证明：假设存在 $k_1$ 和 $k_2$ 满足 $1 \leq k_1 &amp;lt; k_2 \leq p-1$ ，且 $k_1a\ \mathrm{mod}\ p = k_2a\ \mathrm{mod}\ p$ . 那么可知&lt;/p&gt;
+&lt;p&gt;$$
+(k_1+p-k_2)a\ \mathrm{mod}\ p = pa\ \mathrm{mod}\ p=0
+$$&lt;/p&gt;
+&lt;p&gt;即 $(k_1+p-k_2)a\ \mathrm{mod}\ p=0$ 。由于 $p$ 是质数，那么 $(k_1+p-k_2)a$ 一定是 $p$​​ 的倍数，这显然不可能。&lt;/p&gt;
+&lt;h3&gt;证明费马小定理&lt;span class=&#34;absolute -mt-20&#34; id=&#34;证明费马小定理&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e8%af%81%e6%98%8e%e8%b4%b9%e9%a9%ac%e5%b0%8f%e5%ae%9a%e7%90%86&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;$$
+\begin{align}
+(1a)(2a)(3a)&amp;hellip;((p-1)a)\ \mathrm{mod}\ p &amp;amp;= (a^{p-1}(p-1)!)\ \mathrm{mod}\ p \newline
+(1a\ \mathrm{mod}\ p)(2a\ \mathrm{mod}\ p)&amp;hellip;((p-1)a\ \mathrm{mod}\ p) &amp;amp;=  (a^{p-1}(p-1)!)\ \mathrm{mod}\ p\newline
+(p-1)! &amp;amp;= (a^{p-1}(p-1)!)\ \mathrm{mod}\ p
+\end{align}
+$$&lt;/p&gt;
+&lt;p&gt;整理得 $a^{p-1}\equiv 1\ (\mathrm{mod}\ p)$​&lt;/p&gt;
+&lt;h2&gt;模逆元&lt;span class=&#34;absolute -mt-20&#34; id=&#34;模逆元&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e6%a8%a1%e9%80%86%e5%85%83&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;简介&lt;span class=&#34;absolute -mt-20&#34; id=&#34;简介-1&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e7%ae%80%e4%bb%8b-1&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;定义： $a$ 对 $n$ 的&lt;strong&gt;模逆元&lt;/strong&gt;是满足 $ab\equiv 1\ (\mathrm{mod}\ n)$ 的 $b$​&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;模逆元的存在性&lt;/strong&gt;：模逆元存在的充要条件是 $\mathrm{gcd}(a,n)=1$​&lt;/p&gt;
+&lt;p&gt;为证明该存在性定理，需要先证明引理2&lt;/p&gt;
+&lt;h3&gt;引理2&lt;span class=&#34;absolute -mt-20&#34; id=&#34;引理2&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e5%bc%95%e7%90%862&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;若 $\mathrm{gcd}(a,n)=g$ ，则存在 $x,y\in Z$，满足 $ax+ny=g$&lt;/p&gt;
+&lt;p&gt;证明：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;设集合 $S=\lbrace ax+ny|x,y\in Z \rbrace $，显然，存在 $s\in S$ 并且 $s&amp;gt;0$&lt;/li&gt;
+&lt;li&gt;设 $d$ 为 $S$ 中最小的，大于 $0$ 的元素&lt;/li&gt;
+&lt;li&gt;若 $a\ \mathrm{mod}\ p\neq 0$ ，则存在 $k,r$ 满足 $a=kd+r$ ，其中 $0 &amp;lt; r &amp;lt; k$ ，带入 $d=ax_0+ny_0$ ，得到 $r=a(1-kx_0)+n(-ky_0)$ 。 显然 $r\in S$ ，又 $0 &amp;lt; r &amp;lt; k$ ，这与 $d$ 为 $S$ 中最小的大于 $0$ 的假设不符。&lt;/li&gt;
+&lt;li&gt;故 $a\ \mathrm{mod}\ d=0$ ，同理 $n\ \mathrm{mod}\ d=0$&lt;/li&gt;
+&lt;li&gt;所以 $d$ 为 $a$ 和 $n$ 共同的因数。设 $g=ld$ ， $l\geq0$ 且 $l\in Z$ ，那么有 $g=ld=a(lx_0)+n(ly_0)$ 。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;证明模逆元&lt;span class=&#34;absolute -mt-20&#34; id=&#34;证明模逆元&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e8%af%81%e6%98%8e%e6%a8%a1%e9%80%86%e5%85%83&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;现在证明模逆元&lt;/p&gt;
+&lt;p&gt;充分性&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;已知 $\mathrm{gcd}(a,n)=1$ ，则有 $1=ax_0+ny_0$&lt;/li&gt;
+&lt;li&gt;$(ax_0+ny_0)\ \mathrm{mod}\ n = ax_0 \ \mathrm{mod}\ n $​&lt;/li&gt;
+&lt;li&gt;$(ax_0+ny_0)\ \mathrm{mod}\ n= 1 \ \mathrm{mod}\ n=1$&lt;/li&gt;
+&lt;li&gt;故 $ax_0 \ \mathrm{mod}\ n=1$ 即 $ax_0\ \equiv 1\ (\mathrm{mod}\ n)$ ， $b=x_0$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;必要性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;已经存在 $b$ 满足 $ab\ \equiv 1\ (\mathrm{mod}\ n)$​&lt;/li&gt;
+&lt;li&gt;则存在 $y,k$ 满足 $(ab+ny)\ \mathrm{mod}\ n=1$&lt;/li&gt;
+&lt;li&gt;则存在 $k$ 满足 $ab+ny-1=kn$&lt;/li&gt;
+&lt;li&gt;即 $ab + n(y-k)=1$&lt;/li&gt;
+&lt;li&gt;根据&lt;strong&gt;引理2&lt;/strong&gt;，有 $\mathrm{gcd}(a,n)\leq 1$ ，显然只有 $\mathrm{gcd}(a,n)=1$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;中国剩余定理&lt;span class=&#34;absolute -mt-20&#34; id=&#34;中国剩余定理&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e4%b8%ad%e5%9b%bd%e5%89%a9%e4%bd%99%e5%ae%9a%e7%90%86&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;方程组&lt;/p&gt;
+&lt;p&gt;$$
+\begin{equation}
+\begin{cases}
+x\ \equiv a_1\ (\mathrm{mod}\ m_1)\newline
+x\ \equiv a_2\ (\mathrm{mod}\ m_2)\newline
+&amp;hellip;\newline
+x\ \equiv a_n\ (\mathrm{mod}\ m_n)\newline
+\end{cases}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;其中对于任意 $i\neq j$ 有 $\mathrm{gcd}(m_i,m_j)=1$ ，对于任意 $a_1,a_2,&amp;hellip;,a_n$ 有解。&lt;/p&gt;
+&lt;p&gt;证明：如下&lt;/p&gt;
+&lt;p&gt;存在性&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;令 $M=m_1m_2,&amp;hellip;m_n=\prod\limits_{i=1}^{n}m_i$， $M_i=M/m_i$&lt;/li&gt;
+&lt;li&gt;显然有 $\mathrm{gcd}(M_i,m_i)=1$ ，故存在 $t_i$ 满足 $M_it_i\ \equiv 1\ (\mathrm{mod}\ m_i)$&lt;/li&gt;
+&lt;li&gt;故对于 $x\ \equiv a_1\ (\mathrm{mod}\ m_1)$ ，有 $a_iM_it_i\ \equiv a_i\ (\mathrm{mod}\ m_i)$&lt;/li&gt;
+&lt;li&gt;故可得 $x$ 的一个解 $x=\sum\limits_{i=1}^{n}a_iM_it_i$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;完备性&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若 $x_1,x_2$ 都是方程组的解，那么对于任意 $i\in \lbrace 1,2,&amp;hellip;,n \rbrace$ ，有 $(x_1-x_2)\ \mathrm{mod}\ m_i=0$&lt;/li&gt;
+&lt;li&gt;故 $x_1-x_2=kM$&lt;/li&gt;
+&lt;li&gt;所以通解为 ${kM+}\sum\limits_{i=1}^{n}a_iM_it_i$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;欧拉公式&lt;span class=&#34;absolute -mt-20&#34; id=&#34;欧拉公式&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e6%ac%a7%e6%8b%89%e5%85%ac%e5%bc%8f&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;简介&lt;span class=&#34;absolute -mt-20&#34; id=&#34;简介-2&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e7%ae%80%e4%bb%8b-2&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;函数 $\phi(n)$ 为 $\lbrace 1,2,&amp;hellip;,n \rbrace$ 中和 $n$ 互质的数的数量&lt;/li&gt;
+&lt;li&gt;例如 $\phi(8)=4$ ，因为 $\mathrm{gcd}(\lbrace 1,3,5,7 \rbrace,4)=1$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;性质&lt;span class=&#34;absolute -mt-20&#34; id=&#34;性质&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e6%80%a7%e8%b4%a8&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;（性质1）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于质数 $n$ ，有 $\phi(n)=n-1$&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;（性质2）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若存在质数 $p$ 满足 $n=p^k$ ，则 $\phi(n)=p^k-p^k/p=n(1-1/p)$ 。思路为 $\lbrace 1,2,&amp;hellip;,n \rbrace$ 中除去 $p$ 的倍数&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;（性质3）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;若 $\mathrm{gcd}(m,n)=1$ ，则 $\phi(mn)=\phi(m)\phi(n)$ ​。证明如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对于任意 $0 &amp;lt; N &amp;lt; mn$ ，有 $N=k_1m+p=k_2n+q$ 。假设 $N$ 满足 $\mathrm{gcd}(N,mn)=1$&lt;/li&gt;
+&lt;li&gt;显然， $\mathrm{gcd}(N,m)=1$ ，故 $\mathrm{gcd}(k_1m+p,m)=1$ ，显然 $\mathrm{gcd}(p,m)=1$ 。同理 $\mathrm{gcd}(q,n)$ 。&lt;/li&gt;
+&lt;li&gt;对于方程组&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;$$
+\begin{equation}
+\begin{cases}
+N\ \equiv p\ (\mathrm{mod}\ m)\newline
+N\ \equiv q\ (\mathrm{mod}\ n)
+\end{cases}
+\end{equation}
+$$&lt;/p&gt;
+&lt;p&gt;根据中国剩余定理，有解 $N=kmn+t_ppn+t_qqm$ 。&lt;/p&gt;
+&lt;p&gt;每有一组 $(p,q)$ ，该方程组就有一个解。注意 $\mathrm{gcd}(p,m)=1$ ,且 $\mathrm{gcd}(q,n)$ 。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;（性质4）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对于 $n=\prod\limits_{i=1}^rp_i^{k_i}$ ，有 $\phi(n)=\phi(\prod\limits_{i=1}^rp_i^{k_i})=\prod\limits_{i=1}^r\phi(p_i^{k_i})=\prod\limits_{i=1}^r(n(1-1/p_i))=n^r\prod\limits_{i=1}^r(1-1/p_i)$&lt;/p&gt;
+&lt;h2&gt;欧拉定理&lt;span class=&#34;absolute -mt-20&#34; id=&#34;欧拉定理&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e6%ac%a7%e6%8b%89%e5%ae%9a%e7%90%86&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;简介&lt;span class=&#34;absolute -mt-20&#34; id=&#34;简介-3&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e7%ae%80%e4%bb%8b-3&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;若 $n,a$ 为正整数，且 $\mathrm{gcd}(n,a)=1$ 则 $a^{\phi(n)}\ \equiv 1\ (\mathrm{mod}\ n)$​&lt;/p&gt;
+&lt;h3&gt;欧拉定理的证明&lt;span class=&#34;absolute -mt-20&#34; id=&#34;欧拉定理的证明&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e6%ac%a7%e6%8b%89%e5%ae%9a%e7%90%86%e7%9a%84%e8%af%81%e6%98%8e&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;设 $\Phi(n)=\lbrace c_1,c_2,&amp;hellip;,c_{\phi(n)} \rbrace$ 为小于 $n$ 且与 $n$ 互质的数的集合，即 $\mathrm{gcd}(c_i,n)=1$。&lt;/p&gt;
+&lt;p&gt;若 $\mathrm{gcd}(a,n)=1$ ，考虑集合 $\Phi_a(n)=\lbrace (ac_1)\ \mathrm{mod}\ n,(ac_2)\ \mathrm{mod}\ n,&amp;hellip;,(ac_{\phi(n)})\ \mathrm{mod}\ n \rbrace$ 。我们证明 $\Phi(n)=\Phi_a(n)$&lt;/p&gt;
+&lt;p&gt;先证明 $\Phi_a(n)$ 中没有重复的元素，若 $ac_i\ \equiv ac_j\ (\mathrm{mod}\ n)$ ,则 $c_i\ \equiv c_j\ (\mathrm{mod}\ n)$ ，这显然错误。&lt;/p&gt;
+&lt;p&gt;再证明 $\mathrm{gcd}(ac_i\ \mathrm{mod}\ n, n)=1$ 。设 $ac_i=k_in+r_i$ ，若 $\mathrm{gcd}(r_i,n)=g$ ，则 $ac_i=g(k_i(n/g)+(r_i/g))$ 。等式右侧是 $g$ 的倍数，而左侧显然不是（ $a$ 和 $c$ 都与 $n$ 互质）&lt;/p&gt;
+&lt;p&gt;所以：&lt;/p&gt;
+&lt;p&gt;$$
+\prod\limits_{i=1}^{\phi(n)}c_i \ \equiv \prod\limits_{i=1}^{\phi(n)}c_ia(\ \mathrm{mod}\ n)
+$$&lt;/p&gt;
+&lt;p&gt;即&lt;/p&gt;
+&lt;p&gt;$$
+\prod\limits_{i=1}^{\phi(n)}c_i \ \equiv a^{\phi(n)}\prod\limits_{i=1}^{\phi(n)}c_i(\ \mathrm{mod}\ n)
+$$&lt;/p&gt;
+&lt;p&gt;显然 $\mathrm{gcd}(\prod\limits_{i=1}^{\phi(n)}c_i,n)=1$&lt;/p&gt;
+&lt;p&gt;故&lt;/p&gt;
+&lt;p&gt;$$
+a^{\phi(n)}\ \equiv 1\ (\mathrm{mod}\ n)
+$$&lt;/p&gt;
+&lt;h2&gt;RSA算法&lt;span class=&#34;absolute -mt-20&#34; id=&#34;rsa算法&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#rsa%e7%ae%97%e6%b3%95&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;算法流程&lt;span class=&#34;absolute -mt-20&#34; id=&#34;算法流程&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e7%ae%97%e6%b3%95%e6%b5%81%e7%a8%8b&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;生成秘钥
+&lt;ol&gt;
+&lt;li&gt;选择连个大质数 $p$ 和 $q$ ，计算 $n=p * q$&lt;/li&gt;
+&lt;li&gt;计算 $\phi(n)=(p-1)(q-1)$&lt;/li&gt;
+&lt;li&gt;选择正整数 $e$ 满足 $1 &amp;lt; e &amp;lt; \phi(n)$ ，且 $\mathrm{gcd}(e,\phi(n))=1$&lt;/li&gt;
+&lt;li&gt;计算 $e$ 对 $\phi(n)$ 的模逆元 $d$ ，即 $ed\ \equiv 1\ (\mathrm{mod}\ \phi(n))$&lt;/li&gt;
+&lt;li&gt;得到公钥对 $(n,e)$ ，私钥对 $(n, d)$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;加密
+&lt;ol&gt;
+&lt;li&gt;加密的数为 $m$ ，满足 $0\leq m &amp;lt; n$&lt;/li&gt;
+&lt;li&gt;计算 $c=m^e\ \mathrm{mod}\ n$ ，则 $c$ 就是密文&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;li&gt;解密
+&lt;ol&gt;
+&lt;li&gt;$m=c^d\ \mathrm{mod}\ n$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;算法证明&lt;span class=&#34;absolute -mt-20&#34; id=&#34;算法证明&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e7%ae%97%e6%b3%95%e8%af%81%e6%98%8e&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;显然，核心点在于证明 $m=c^d\ \mathrm{mod}\ n$​ 。&lt;/p&gt;
+&lt;p&gt;简答化简可得， $c^d\ \mathrm{mod}\ n=(m^e\ \mathrm{mod}\ n)^d\ \mathrm{mod}\ n=m^{ed}\ \mathrm{mod}\ n$​&lt;/p&gt;
+&lt;p&gt;根据 $ed\ \equiv 1\ (\mathrm{mod}\ \phi(n))$ ，可知存在 $k$ 使得 $ed=k\phi(n)+1$ ，带入 $m^{ed}\ \mathrm{mod}\ n$ 得，&lt;/p&gt;
+&lt;p&gt;$$
+\begin{align}
+m^{ed}\ \mathrm{mod}\ n&amp;amp;= m^{k\phi(n)+1}\ \mathrm{mod}\ n \newline
+&amp;amp;= ((m^{\phi(n)} \mathrm{mod}\ n)^k*(m\ \mathrm{mod}\ n))\ \mathrm{mod}\ n \newline
+&amp;amp;= (m(m^{\phi(n)} \mathrm{mod}\ n)^k) \ \mathrm{mod}\ n
+\end{align}
+$$&lt;/p&gt;
+&lt;h4&gt;通常情况&lt;span class=&#34;absolute -mt-20&#34; id=&#34;通常情况&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e9%80%9a%e5%b8%b8%e6%83%85%e5%86%b5&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;当 $\mathrm{gcd}(m,n)=1$ 时（即 $m\neq hp$ 且 $m\neq hq$ 时），根据欧拉定理 $m^{\phi(n)}\ \equiv 1\ (\mathrm{mod}\ n)$ ，可知 $m^{\phi(n)} \mathrm{mod}\ n=1$​&lt;/p&gt;
+&lt;p&gt;则 $m^{ed}\ \mathrm{mod}\ n = m\ \mathrm{mod}\ n=m$&lt;/p&gt;
+&lt;h4&gt;特殊情况&lt;span class=&#34;absolute -mt-20&#34; id=&#34;特殊情况&#34;&gt;&lt;/span&gt;
+    &lt;a href=&#34;#%e7%89%b9%e6%ae%8a%e6%83%85%e5%86%b5&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;p&gt;当 $m=hp$ 时，（ $m=hq$ 同理）有 $m^{\phi(n)} \mathrm{mod}\ n = (hp)^{(p-1)(q-1)}\mathrm{mod}\ pq$&lt;/p&gt;
+&lt;p&gt;而因为 $q$ 是质数，根据费马小定理，有 $((hp)^{k(p-1)})^{q-1}\ \equiv 1\ (\mathrm{mod}\ q)$ 。故&lt;/p&gt;
+&lt;p&gt;$$
+\begin{align}
+((hp)^{k(p-1)})^{q-1}hp\ &amp;amp;\equiv hp\ (\mathrm{mod}\ q) \newline
+(hp)^{k(p-1)(q-1)+1}\ &amp;amp;\equiv hp\ (\mathrm{mod}\ q) \newline
+(hp)^{(cd)}\ &amp;amp;\equiv hp\ (\mathrm{mod}\ q)
+\end{align}
+$$&lt;/p&gt;
+&lt;p&gt;故存在 $t$ 满足&lt;/p&gt;
+&lt;p&gt;$$
+(hp)^{ed}=tq+hp
+$$&lt;/p&gt;
+&lt;p&gt;注意，等式左侧是 $p$ 的倍数，而 $p$ 是质数，故 $t$ 必定是 $p$ 的倍数，设 $t=t&amp;rsquo;p$ ，则&lt;/p&gt;
+&lt;p&gt;$$
+\begin{align}
+(hp)^{ed}&amp;amp;=t&amp;rsquo;pq+hp=t&amp;rsquo;n+hp \newline
+m^{ed}\ &amp;amp;\equiv m\ (\mathrm{mod}\ n) \newline
+m^{ed-1} \ &amp;amp;\equiv 1\ (\mathrm{mod}\ n) \newline
+m^{k\phi(n)} \ &amp;amp;\equiv 1\ (\mathrm{mod}\ n)
+\end{align}
+$$&lt;/p&gt;
+&lt;p&gt;同理 $m^{ed}\ \mathrm{mod}\ n = (m(m^{\phi(n)} \mathrm{mod}\ n)^k) \ \mathrm{mod}\ n = m\ \mathrm{mod}\ n=m$&lt;/p&gt;
+
+      </description>
+    </item>
+    
+  </channel>
+</rss>
