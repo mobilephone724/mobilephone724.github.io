@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-	<meta name="generator" content="Hugo 0.118.2">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="index, follow" />
@@ -12,20 +11,37 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 
-  <title>mobilephone724</title>
-  <meta name="description" content="home of mobilephone724" />
+  <title>cublasDgemm – mobilephone724</title>
+  <meta name="description" content="concept cublasDgemm is a convenient function in cublas to compute the product of two matrix, while letter ‘D’ in cublasDgemm means double.
+Before reading this post, basic cuda functions like cudaMalloc are what you are supposed to know.
+basic use Definition of this function
+cublasStatus_t cublasDgemm(cublasHandle_t handle, cublasOperation_t transa, cublasOperation_t transb, int m, int n, int k, const double *alpha, const double *A, int lda, const double *B, int ldb, const double *beta, double *C, int ldc) Basic information of parameters is show in this page." />
 
   
 
-<meta property="og:title" content="Blog Of Mobileophone724" />
-<meta property="og:description" content="home of mobilephone724" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://mobilephone724.github.io/" />
+<meta property="og:title" content="cublasDgemm" />
+<meta property="og:description" content="concept cublasDgemm is a convenient function in cublas to compute the product of two matrix, while letter &lsquo;D&rsquo; in cublasDgemm means double.
+Before reading this post, basic cuda functions like cudaMalloc are what you are supposed to know.
+basic use Definition of this function
+cublasStatus_t cublasDgemm(cublasHandle_t handle, cublasOperation_t transa, cublasOperation_t transb, int m, int n, int k, const double *alpha, const double *A, int lda, const double *B, int ldb, const double *beta, double *C, int ldc) Basic information of parameters is show in this page." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mobilephone724.github.io/cublasdgemmtutor/" /><meta property="article:section" content="" />
 
-  <meta itemprop="name" content="Blog Of Mobileophone724">
-<meta itemprop="description" content="home of mobilephone724"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Blog Of Mobileophone724"/>
-<meta name="twitter:description" content="home of mobilephone724"/>
+
+
+  <meta itemprop="name" content="cublasDgemm">
+<meta itemprop="description" content="concept cublasDgemm is a convenient function in cublas to compute the product of two matrix, while letter &lsquo;D&rsquo; in cublasDgemm means double.
+Before reading this post, basic cuda functions like cudaMalloc are what you are supposed to know.
+basic use Definition of this function
+cublasStatus_t cublasDgemm(cublasHandle_t handle, cublasOperation_t transa, cublasOperation_t transb, int m, int n, int k, const double *alpha, const double *A, int lda, const double *B, int ldb, const double *beta, double *C, int ldc) Basic information of parameters is show in this page.">
+
+<meta itemprop="wordCount" content="638">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="cublasDgemm"/>
+<meta name="twitter:description" content="concept cublasDgemm is a convenient function in cublas to compute the product of two matrix, while letter &lsquo;D&rsquo; in cublasDgemm means double.
+Before reading this post, basic cuda functions like cudaMalloc are what you are supposed to know.
+basic use Definition of this function
+cublasStatus_t cublasDgemm(cublasHandle_t handle, cublasOperation_t transa, cublasOperation_t transb, int m, int n, int k, const double *alpha, const double *A, int lda, const double *B, int ldb, const double *beta, double *C, int ldc) Basic information of parameters is show in this page."/>
 
     <link rel="preload" href="/css/compiled/main.min.16b68a354e65cf45bc12a9b9a023854fe5d743c179103958df82062ebdb2af3a.css" as="style" integrity="sha256-FraKNU5lz0W8Eqm5oCOFT&#43;XXQ8F5EDlY34IGLr2yrzo=" />
     <link href="/css/compiled/main.min.16b68a354e65cf45bc12a9b9a023854fe5d743c179103958df82062ebdb2af3a.css" rel="stylesheet" integrity="sha256-FraKNU5lz0W8Eqm5oCOFT&#43;XXQ8F5EDlY34IGLr2yrzo=" />
@@ -234,13 +250,28 @@
     
   >create index concurrently
     </a></li>
-        <li class=""><a
+        <li class="open"><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 contrast-more:border contrast-more:border-primary-500 dark:bg-primary-400/10 dark:text-primary-600 contrast-more:dark:border-primary-500"
     href="/cublasdgemmtutor/"
     
   >cublasDgemm
-    </a></li>
+    </a>
+  
+    <ul class='flex flex-col gap-1 relative before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] dark:before:bg-neutral-800 ltr:pl-3 ltr:before:left-0 rtl:pr-3 rtl:before:right-0 ltr:ml-3 rtl:mr-3'><li>
+              <a
+                href="#concept"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              >concept</a>
+            </li>
+          <li>
+              <a
+                href="#basic-use"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              >basic use</a>
+            </li>
+          </ul>
+  </li>
         <li class=""><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
@@ -295,35 +326,11 @@
 <nav class="hextra-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
     <div class="hextra-scrollbar sticky top-16 overflow-y-auto pr-4 pt-6 text-sm [hyphens:auto] max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:-mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#whoami">Whoami
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#concept">concept
         </a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#top-five-newest">TOP FIVE NEWEST
-        </a>
-      </li>
-      <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#postgresql">PostgreSQL
-        </a>
-      </li>
-      <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#slru-related">SLRU RELATED
-        </a>
-      </li>
-      <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#wal-related">WAL RELATED
-        </a>
-      </li>
-      <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#ddl">DDL
-        </a>
-      </li>
-      <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="ltr:pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#others-of-postgresql">others of PostgreSQL
-        </a>
-      </li>
-      <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#others">others
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#basic-use">basic use
         </a>
       </li></ul>
       <div class="mt-8 border-t bg-white pt-8 shadow-[0_-12px_16px_white] dark:bg-dark dark:shadow-[0_-12px_16px_#111] sticky bottom-0 flex flex-col items-start gap-2 pb-8 dark:border-neutral-800 contrast-more:border-t contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:border-neutral-400">
@@ -340,57 +347,145 @@
 
     <article class="w-full break-words flex min-h-[calc(100vh-var(--navbar-height))] min-w-0 justify-center pb-8 pr-[calc(env(safe-area-inset-right)-1.5rem)]">
       <main class="w-full min-w-0 max-w-6xl px-6 pt-4 md:px-12">
-        <h1 class="text-center mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Blog Of Mobileophone724</h1>
+        <br class="mt-1.5 text-sm" />
+        <h1 class="text-center mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">cublasDgemm</h1>
+        <div class="mb-16"></div>
         <div class="content">
-          <h1>Hello! Welcome</h1><h2>Whoami<span class="absolute -mt-20" id="whoami"></span>
-    <a href="#whoami" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
-<li>freshman in database</li>
-<li>coredump analyzer (one must analyze his own coredump)</li>
-</ul>
-<h2>TOP FIVE NEWEST<span class="absolute -mt-20" id="top-five-newest"></span>
-    <a href="#top-five-newest" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
-<li><a href="zero2rsa" >从零开始证明RSA</a></li>
-</ul>
-<h2>PostgreSQL<span class="absolute -mt-20" id="postgresql"></span>
-    <a href="#postgresql" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>SLRU RELATED<span class="absolute -mt-20" id="slru-related"></span>
-    <a href="#slru-related" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
-<li>The reason and implement of <a href="slru" >simple lru</a></li>
-<li><a href="clog" >commit log: the visibility of transactions</a></li>
-<li>&ldquo;todo&rdquo; [subtransaction]</li>
-<li>&ldquo;todo&rdquo; [multitransaction]</li>
-</ul>
-<h3>WAL RELATED<span class="absolute -mt-20" id="wal-related"></span>
-    <a href="#wal-related" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
-<li><a href="database-log" >log based database</a></li>
-<li><a href="wal-basic" >The idea of WAL</a></li>
-<li><a href="wal-insert" >Generate a WAL log</a></li>
-<li>&ldquo;todo&rdquo; [IO method of WAL]</li>
-<li>&ldquo;todo&rdquo; [Decode a WAL]</li>
-<li>&ldquo;todo&rdquo; [WAL level]</li>
-</ul>
-<h3>DDL<span class="absolute -mt-20" id="ddl"></span>
-    <a href="#ddl" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
-<li>&ldquo;todo&rdquo; [nbtree index]</li>
-<li>&ldquo;todo&rdquo; [index access method]</li>
-<li><a href="create-index-currently" >create index concurrently</a></li>
-<li><a href="pg_repack" >principle of pg_repack and online ddl</a></li>
-</ul>
-<h3>others of PostgreSQL<span class="absolute -mt-20" id="others-of-postgresql"></span>
-    <a href="#others-of-postgresql" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><ul>
-<li><a href="ssl-in-pg" >ssl in pg</a></li>
-<li><a href="pgvector" >pgvector</a></li>
-<li><a href="hashjoin" >hash join</a></li>
-<li><a href="sequence_type" >sequence type</a></li>
-</ul>
-<h2>others<span class="absolute -mt-20" id="others"></span>
-    <a href="#others" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><ul>
-<li><a href="google-f1" >google f1 file system</a></li>
-<li><a href="zero2rsa" >从零开始证明RSA</a></li>
-<li><a href="linux-file" >linux file interface</a></li>
-<li><a href="cublasdgemmtutor" >cublas related</a></li>
-</ul>
+          <h2>concept<span class="absolute -mt-20" id="concept"></span>
+    <a href="#concept" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p><code>cublasDgemm</code> is a convenient function in cublas to compute the product of two matrix, while letter &lsquo;D&rsquo; in <code>cublasDgemm</code> means <code>double</code>.</p>
+<p>Before reading this post, basic cuda functions like <code>cudaMalloc</code> are what you are supposed to know.</p>
+<h2>basic use<span class="absolute -mt-20" id="basic-use"></span>
+    <a href="#basic-use" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Definition of this function</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-0"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">cublasStatus_t</span> <span class="n">cublasDgemm</span><span class="p">(</span><span class="n">cublasHandle_t</span> <span class="n">handle</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                           <span class="n">cublasOperation_t</span> <span class="n">transa</span><span class="p">,</span> <span class="n">cublasOperation_t</span> <span class="n">transb</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                           <span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">k</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                           <span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">alpha</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                           <span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">A</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lda</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                           <span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">B</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ldb</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                           <span class="k">const</span> <span class="kt">double</span> <span class="o">*</span><span class="n">beta</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                           <span class="kt">double</span> <span class="o">*</span><span class="n">C</span><span class="p">,</span> <span class="kt">int</span> <span class="n">ldc</span><span class="p">)</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+      data-clipboard-target="#code-block-0"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<p><a href="https://docs.nvidia.com/cuda/cublas/index.html" target="_blank" rel="noopener">Basic information of parameters is show in this page</a>. Simply put, $C = \alpha A \times B + \beta C $ .But it may remains confused for fresher. Below is an simple example.</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-1"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cm">/* A is matrix in gpu memory looks like
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 1 2 3
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 4 5 6
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 7 8 9
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * and ptr_A is a pointer to A
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * B is matrix in gpu memory looks like
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 1 2
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 3 4
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * 5 6
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * and ptr_A is a pointer to A
+</span></span></span><span class="line"><span class="cl"><span class="cm"> *
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * While memory is one-dimensional while matrix is two-dimensional, I 
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * suggeset that all matrix in gpu memory are stored in column major for 
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * convevient use of cublas. In this case, A in memory is like 
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * [1, 4, 7, 2, 5, 8, 3, 6, 9].
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * C is a matrix to store the product of A * B
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//get handle and stat of this function
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="n">cublasHandle_t</span> <span class="n">handle</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">cublasStatus_t</span> <span class="n">stat</span> <span class="o">=</span> <span class="n">cublasCreate</span><span class="p">(</span><span class="o">&amp;</span><span class="n">handle</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">stat</span> <span class="o">!=</span> <span class="n">CUBLAS_STATUS_SUCCESS</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;CUBLAS initialization failed</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">EXIT_FAILURE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//setting alpha and cuda
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">double</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">beta</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="n">stat</span> <span class="o">=</span> <span class="n">cublasDgemm</span><span class="p">(</span>	<span class="n">handle</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">					<span class="n">CUBLAS_OP_N</span><span class="p">,</span>	<span class="c1">// we use matrix A instead of A^T
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="n">CUBLAS_OP_N</span><span class="p">,</span>	<span class="c1">// we use matrix B instead of B^T
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the row of A 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="mi">2</span><span class="p">,</span>				<span class="c1">// the col of B
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the row of B(ro col of A)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="o">&amp;</span><span class="n">alpha</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="n">devPtrA</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the leading dimension of A
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="n">devPtrB</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the leading dimension of B
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="o">&amp;</span><span class="n">beta</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="n">devPtrC</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="mi">3</span><span class="p">);</span>				<span class="c1">// the leading dimension of C
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="cm">/*
+</span></span></span><span class="line"><span class="cl"><span class="cm"> * if we want to compute C = A^T * B
+</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
+</span></span><span class="line"><span class="cl"><span class="n">stat</span> <span class="o">=</span> <span class="n">cublasDgemm</span><span class="p">(</span>	<span class="n">handle</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">					<span class="n">CUBLAS_OP_T</span><span class="p">,</span>	<span class="c1">// we use matrix A^T instead of A
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="n">CUBLAS_OP_N</span><span class="p">,</span>	<span class="c1">// we use matrix A instead of B^T
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the row of A^T
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="mi">2</span><span class="p">,</span>				<span class="c1">// the col of B
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the row of B(or col of A^T)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="o">&amp;</span><span class="n">alpha</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="n">devPtrA</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the leading dimension of A^T. 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>									<span class="c1">// So whether or not A or A^T, the leading dimension 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>									<span class="c1">// of A or A^T is the row of A, decided when A is 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>									<span class="c1">// initialized in memory
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="n">devPtrB</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the leading dimension of B
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="o">&amp;</span><span class="n">beta</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="n">devPtrC</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="mi">3</span><span class="p">);</span>				<span class="c1">// the leading dimension of C
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">if</span> <span class="p">(</span><span class="n">stat</span> <span class="o">!=</span> <span class="n">CUBLAS_STATUS_SUCCESS</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">printf</span><span class="p">(</span><span class="s">&#34;cublasSgemm failed</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">EXIT_FAILURE</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+      data-clipboard-target="#code-block-1"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<p>An obvious question is what is <code>leading dimension</code> for we have know the column and row of A and B, no more information is need to finish this computation.</p>
+<p>My understanding of leading dimension is the <code>offest</code> to get the element in next column at the same row. An implement to compute the product of submatrix. below is an example. <code>A</code> and <code>B</code> are the same matrix in the previous example.</p>
+<p>And what we want to compute is $A[0:1][0:1] \times B[1:2][0:1]$.</p>
+<div class="code-block relative mt-6 first:mt-0 group/code"><div id="code-block-2"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="n">stat</span> <span class="o">=</span> <span class="n">cublasDgemm</span><span class="p">(</span>	<span class="n">handle</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">					<span class="n">CUBLAS_OP_N</span><span class="p">,</span>	<span class="c1">// we use matrix A[0:1][0:1] instead of A[0:1][0:1]^T
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="n">CUBLAS_OP_N</span><span class="p">,</span>	<span class="c1">// we use matrix B[1:2][0:1] instead of B[1:2][0:1]^T
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="mi">2</span><span class="p">,</span>				<span class="c1">// the row of A[0:1][0:1]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="mi">2</span><span class="p">,</span>				<span class="c1">// the col of B[1:2][0:1]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="mi">2</span><span class="p">,</span>				<span class="c1">// the row of A[0:1][0:1](or col of B[1:2][0:1])
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="o">&amp;</span><span class="n">alpha</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="n">devPtrA</span><span class="p">,</span>		<span class="c1">// pointer to A[0][0]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the offset of A[0][0] to A[0][1] is 3 of double size
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="n">devPtrB</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>	<span class="c1">// pointer to B[1][0]
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="mi">3</span><span class="p">,</span>				<span class="c1">// the offset of B[1][0] to B[1][1] is 3 of double size
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="o">&amp;</span><span class="n">beta</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="n">devPtrC</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="mi">2</span><span class="p">);</span>				<span class="c1">// the leading dimension of C
+</span></span></span></code></pre></div></div><div class="opacity-0 transition group-hover/code:opacity-100 flex gap-1 absolute m-[11px] right-0 top-0">
+    <button
+      class="code-copy-btn group/copybtn transition-all active:opacity-50 bg-primary-700/5 border border-black/5 text-gray-600 hover:text-gray-900 rounded-md p-1.5 dark:bg-primary-300/10 dark:border-white/10 dark:text-gray-400 dark:hover:text-gray-50"
+      title="Copy code"
+      data-clipboard-target="#code-block-2"
+    >
+      <div class="group-[.copied]/copybtn:hidden copy-icon pointer-events-none h-4 w-4"></div>
+      <div class="hidden group-[.copied]/copybtn:block success-icon pointer-events-none h-4 w-4"></div>
+    </button>
+  </div>
+</div>
+<p>So it&rsquo;s the use of leading dimension which makes matrix production more flexible</p>
 
         </div>
+        <div class="mt-16"></div>
+        
       </main>
     </article>
   </div>
@@ -421,6 +516,24 @@
 
 <script defer src="/lib/flexsearch/flexsearch.bundle.min.0425860527cc9968f9f049421c7a56b39327d475e2e3a8f550416be3a9134327.js" integrity="sha256-BCWGBSfMmWj58ElCHHpWs5Mn1HXi46j1UEFr46kTQyc="></script>
     <script defer src="/en.search.min.9afdc7c586c6f971dd94df10b989f10faaf38e5702571fd8cfc9ff9135c2d495.js" integrity="sha256-mv3HxYbG&#43;XHdlN8QuYnxD6rzjlcCVx/Yz8n/kTXC1JU="></script>
+<link type="text/css" rel="stylesheet" href="/lib/katex/katex.min.df9ef84e97d38557de02183e238f8ddfd10988b37741492e12c3157bc856011e.css" integrity="sha256-3574TpfThVfeAhg&#43;I4&#43;N39EJiLN3QUkuEsMVe8hWAR4=" />
+  <script defer src="/lib/katex/katex.min.d4f0ea25c4ccb7986b229d6427794b7063cf3209b0376cf5a64bfc4dd7918c95.js" integrity="sha256-1PDqJcTMt5hrIp1kJ3lLcGPPMgmwN2z1pkv8TdeRjJU="></script>
+  <script defer src="/lib/katex/auto-render.min.9cb8dacfc086c2966c9ec4ba54f4a2dc43b7cbe2b33cec1a2743d886c7fb47a7.js" integrity="sha256-nLjaz8CGwpZsnsS6VPSi3EO3y&#43;KzPOwaJ0PYhsf7R6c="></script>
+  <script defer src="/lib/katex/mhchem.min.f0ca03df194b8c3d6017ff455db6a0ef98857905663fa311a6cded788b15340b.js" integrity="sha256-8MoD3xlLjD1gF/9FXbag75iFeQVmP6MRps3teIsVNAs="></script>
+  <script>
+    
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false },
+          { left: "\\(", right: "\\)", display: false },
+          { left: "\\[", right: "\\]", display: true },
+        ],
+        throwOnError: false,
+      });
+    });
+  </script>
 
 
 </html>

@@ -11,20 +11,37 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 
-  <title>FILE – mobilephone724</title>
-  <meta name="description" content="" />
+  <title>WAL基础 – mobilephone724</title>
+  <meta name="description" content=" From access/transam/README
+Write-Ahead Log Coding 基本思想，日志在数据页前落盘
+LSN：刷脏前检查LSN对应的日志已经落盘 优势：仅在必要的时候等待XLOG的IO。（异步IO） LSN的检查模块只用在 buffer manager 中实现 在WAL回放时，避免相同的日志被重复回放（可重入）。（TODO：full page write是否在另一个层面上保证了可重入） WAL 包含一个（或一小组）页的增量更新的重做信息。 依赖文件系统和硬件的原子写，不可靠！ checkpoint，checkpointer后的第一次写全页。通过 checkpoint 留下的 LSN 来判断是否为第一次写 写下WAL日志的逻辑为 pin and exclusive-lock the shared buffer START_CRIT_SECTION，发生错误时确保整个数据库能立即重启 在shared buffer上，进行对应的修改 标记为脏页， 必须在WAL日志写入前完成（TODO，为什么？SyncOneBuffer） 只有在要写WAL时，才能标记脏页（TODO，为什么？） 使用XLogBeginInsert 和 XLogRegister* 函数构建WAL，使用返回的LSN来更新page END_CRIT_SECTION，退出 解锁和unpin （注意顺序） 一些复杂的操作，需要原子地写下一串WAL记录，但中间状态必须自洽(self-consistent)。这样在回放wal日志时，如果中断，系统还能够正常运行。注意：此时相当于事务回滚，但是其部分更改已经落盘。举例：
+在btree索引中，页的分裂分为两步（1）分配一个新页（2）在上一层的页(parent page)中新插入一条数据。 但是因为锁，这会形成两个独立的WAL日志。在回放WAL日志时 回放第（1）个日志： 分配一个新页，将元组移动进去 设置标记位，表示上一层的页没有更新 回放第（2）个日志： 在上一层的页中新插入一条数据 清除第（1）个日志中的标记位 标志位通常情况下不可见，因为对 child page 的修改时持有的锁，在两个操作完成后才会释放。 仅在写下第（2）个日志前，数据库恰好崩溃，标志位才会被感知。（该标志位应该没有MVCC，否则会在事务层屏蔽） 搜索时，不管这个中间状态 插入时，如果发现这个中间状态，先在上一层的页插入对应key，以修复这个“崩溃”状态，再继续插入 " />
 
   
 
-<meta property="og:title" content="FILE" />
-<meta property="og:description" content="home of mobilephone724" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://mobilephone724.github.io/tags/file/" />
+<meta property="og:title" content="WAL基础" />
+<meta property="og:description" content=" From access/transam/README
+Write-Ahead Log Coding 基本思想，日志在数据页前落盘
+LSN：刷脏前检查LSN对应的日志已经落盘 优势：仅在必要的时候等待XLOG的IO。（异步IO） LSN的检查模块只用在 buffer manager 中实现 在WAL回放时，避免相同的日志被重复回放（可重入）。（TODO：full page write是否在另一个层面上保证了可重入） WAL 包含一个（或一小组）页的增量更新的重做信息。 依赖文件系统和硬件的原子写，不可靠！ checkpoint，checkpointer后的第一次写全页。通过 checkpoint 留下的 LSN 来判断是否为第一次写 写下WAL日志的逻辑为 pin and exclusive-lock the shared buffer START_CRIT_SECTION，发生错误时确保整个数据库能立即重启 在shared buffer上，进行对应的修改 标记为脏页， 必须在WAL日志写入前完成（TODO，为什么？SyncOneBuffer） 只有在要写WAL时，才能标记脏页（TODO，为什么？） 使用XLogBeginInsert 和 XLogRegister* 函数构建WAL，使用返回的LSN来更新page END_CRIT_SECTION，退出 解锁和unpin （注意顺序） 一些复杂的操作，需要原子地写下一串WAL记录，但中间状态必须自洽(self-consistent)。这样在回放wal日志时，如果中断，系统还能够正常运行。注意：此时相当于事务回滚，但是其部分更改已经落盘。举例：
+在btree索引中，页的分裂分为两步（1）分配一个新页（2）在上一层的页(parent page)中新插入一条数据。 但是因为锁，这会形成两个独立的WAL日志。在回放WAL日志时 回放第（1）个日志： 分配一个新页，将元组移动进去 设置标记位，表示上一层的页没有更新 回放第（2）个日志： 在上一层的页中新插入一条数据 清除第（1）个日志中的标记位 标志位通常情况下不可见，因为对 child page 的修改时持有的锁，在两个操作完成后才会释放。 仅在写下第（2）个日志前，数据库恰好崩溃，标志位才会被感知。（该标志位应该没有MVCC，否则会在事务层屏蔽） 搜索时，不管这个中间状态 插入时，如果发现这个中间状态，先在上一层的页插入对应key，以修复这个“崩溃”状态，再继续插入 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mobilephone724.github.io/wal-basic/" /><meta property="article:section" content="" />
 
-  <meta itemprop="name" content="FILE">
-<meta itemprop="description" content="home of mobilephone724"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="FILE"/>
-<meta name="twitter:description" content="home of mobilephone724"/>
+
+
+  <meta itemprop="name" content="WAL基础">
+<meta itemprop="description" content=" From access/transam/README
+Write-Ahead Log Coding 基本思想，日志在数据页前落盘
+LSN：刷脏前检查LSN对应的日志已经落盘 优势：仅在必要的时候等待XLOG的IO。（异步IO） LSN的检查模块只用在 buffer manager 中实现 在WAL回放时，避免相同的日志被重复回放（可重入）。（TODO：full page write是否在另一个层面上保证了可重入） WAL 包含一个（或一小组）页的增量更新的重做信息。 依赖文件系统和硬件的原子写，不可靠！ checkpoint，checkpointer后的第一次写全页。通过 checkpoint 留下的 LSN 来判断是否为第一次写 写下WAL日志的逻辑为 pin and exclusive-lock the shared buffer START_CRIT_SECTION，发生错误时确保整个数据库能立即重启 在shared buffer上，进行对应的修改 标记为脏页， 必须在WAL日志写入前完成（TODO，为什么？SyncOneBuffer） 只有在要写WAL时，才能标记脏页（TODO，为什么？） 使用XLogBeginInsert 和 XLogRegister* 函数构建WAL，使用返回的LSN来更新page END_CRIT_SECTION，退出 解锁和unpin （注意顺序） 一些复杂的操作，需要原子地写下一串WAL记录，但中间状态必须自洽(self-consistent)。这样在回放wal日志时，如果中断，系统还能够正常运行。注意：此时相当于事务回滚，但是其部分更改已经落盘。举例：
+在btree索引中，页的分裂分为两步（1）分配一个新页（2）在上一层的页(parent page)中新插入一条数据。 但是因为锁，这会形成两个独立的WAL日志。在回放WAL日志时 回放第（1）个日志： 分配一个新页，将元组移动进去 设置标记位，表示上一层的页没有更新 回放第（2）个日志： 在上一层的页中新插入一条数据 清除第（1）个日志中的标记位 标志位通常情况下不可见，因为对 child page 的修改时持有的锁，在两个操作完成后才会释放。 仅在写下第（2）个日志前，数据库恰好崩溃，标志位才会被感知。（该标志位应该没有MVCC，否则会在事务层屏蔽） 搜索时，不管这个中间状态 插入时，如果发现这个中间状态，先在上一层的页插入对应key，以修复这个“崩溃”状态，再继续插入 ">
+
+<meta itemprop="wordCount" content="60">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="WAL基础"/>
+<meta name="twitter:description" content=" From access/transam/README
+Write-Ahead Log Coding 基本思想，日志在数据页前落盘
+LSN：刷脏前检查LSN对应的日志已经落盘 优势：仅在必要的时候等待XLOG的IO。（异步IO） LSN的检查模块只用在 buffer manager 中实现 在WAL回放时，避免相同的日志被重复回放（可重入）。（TODO：full page write是否在另一个层面上保证了可重入） WAL 包含一个（或一小组）页的增量更新的重做信息。 依赖文件系统和硬件的原子写，不可靠！ checkpoint，checkpointer后的第一次写全页。通过 checkpoint 留下的 LSN 来判断是否为第一次写 写下WAL日志的逻辑为 pin and exclusive-lock the shared buffer START_CRIT_SECTION，发生错误时确保整个数据库能立即重启 在shared buffer上，进行对应的修改 标记为脏页， 必须在WAL日志写入前完成（TODO，为什么？SyncOneBuffer） 只有在要写WAL时，才能标记脏页（TODO，为什么？） 使用XLogBeginInsert 和 XLogRegister* 函数构建WAL，使用返回的LSN来更新page END_CRIT_SECTION，退出 解锁和unpin （注意顺序） 一些复杂的操作，需要原子地写下一串WAL记录，但中间状态必须自洽(self-consistent)。这样在回放wal日志时，如果中断，系统还能够正常运行。注意：此时相当于事务回滚，但是其部分更改已经落盘。举例：
+在btree索引中，页的分裂分为两步（1）分配一个新页（2）在上一层的页(parent page)中新插入一条数据。 但是因为锁，这会形成两个独立的WAL日志。在回放WAL日志时 回放第（1）个日志： 分配一个新页，将元组移动进去 设置标记位，表示上一层的页没有更新 回放第（2）个日志： 在上一层的页中新插入一条数据 清除第（1）个日志中的标记位 标志位通常情况下不可见，因为对 child page 的修改时持有的锁，在两个操作完成后才会释放。 仅在写下第（2）个日志前，数据库恰好崩溃，标志位才会被感知。（该标志位应该没有MVCC，否则会在事务层屏蔽） 搜索时，不管这个中间状态 插入时，如果发现这个中间状态，先在上一层的页插入对应key，以修复这个“崩溃”状态，再继续插入 "/>
 
     <link rel="preload" href="/css/compiled/main.min.16b68a354e65cf45bc12a9b9a023854fe5d743c179103958df82062ebdb2af3a.css" as="style" integrity="sha256-FraKNU5lz0W8Eqm5oCOFT&#43;XXQ8F5EDlY34IGLr2yrzo=" />
     <link href="/css/compiled/main.min.16b68a354e65cf45bc12a9b9a023854fe5d743c179103958df82062ebdb2af3a.css" rel="stylesheet" integrity="sha256-FraKNU5lz0W8Eqm5oCOFT&#43;XXQ8F5EDlY34IGLr2yrzo=" />
@@ -131,7 +148,7 @@
 </div>
 
   <div class='mx-auto flex max-w-[90rem]'>
-    <aside class="sidebar-container flex flex-col print:hidden md:top-16 md:shrink-0 md:w-64 md:self-start max-md:[transform:translate3d(0,-100%,0)] md:sticky">
+    <aside class="sidebar-container flex flex-col print:hidden md:top-16 md:shrink-0 md:w-64 md:self-start max-md:[transform:translate3d(0,-100%,0)] md:hidden xl:block">
   
   <div class="px-4 pt-4 md:hidden">
     <div class="search-wrapper relative md:w-64">
@@ -254,13 +271,22 @@
     
   >PGVECTOR AND VECTOR DATABASE
     </a></li>
-        <li class=""><a
+        <li class="open"><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 contrast-more:border contrast-more:border-primary-500 dark:bg-primary-400/10 dark:text-primary-600 contrast-more:dark:border-primary-500"
     href="/wal-basic/"
     
   >WAL基础
-    </a></li>
+    </a>
+  
+    <ul class='flex flex-col gap-1 relative before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] dark:before:bg-neutral-800 ltr:pl-3 ltr:before:left-0 rtl:pr-3 rtl:before:right-0 ltr:ml-3 rtl:mr-3'><li>
+              <a
+                href="#write-ahead-log-coding"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              >Write-Ahead Log Coding</a>
+            </li>
+          </ul>
+  </li>
         <li class=""><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
@@ -277,126 +303,10 @@
     </a></li>
     </ul>
 
-    <ul class="flex flex-col gap-1 max-md:hidden">
-        
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/slru/"
-    
-  >SLRU
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/clog/"
-    
-  >CLOG
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/hashjoin/"
-    
-  >hash join
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/predict-lock/"
-    
-  >Phantoms Predicate Lock
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/howtoknowwhoseisbigger/"
-    
-  >Alice and Bob how to know whose number is bigger without giving away their own&#39;s
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/linux-file/"
-    
-  >APUE/Chapter3: file and I/O
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/ssl-in-pg/"
-    
-  >SSL in PG
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/google-f1/"
-    
-  >Read Google F1
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/database-log/"
-    
-  >Basic Knowledge of Database Log
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/create-index-currently/"
-    
-  >create index concurrently
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/cublasdgemmtutor/"
-    
-  >cublasDgemm
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/pg_repack/"
-    
-  >pg_repack
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/pgvector/"
-    
-  >PGVECTOR AND VECTOR DATABASE
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/wal-basic/"
-    
-  >WAL基础
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/wal-insert/"
-    
-  >WAL日志的插入
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/zero2rsa/"
-    
-  >ZERO TO RSA
-    </a></li>
-        
-      </ul>
-    </div>
+    <div class="max-xl:hidden h-0 w-64 shrink-0"></div></div>
   
   
-    <div class="  sticky bottom-0 bg-white dark:bg-dark mx-4 py-4 shadow-[0_-12px_16px_#fff] flex items-center gap-2 dark:border-neutral-800 dark:shadow-[0_-12px_16px_#111] contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:shadow-none border-t" data-toggle-animation="show"><div class="flex grow flex-col"><button
+    <div class="md:hidden  sticky bottom-0 bg-white dark:bg-dark mx-4 py-4 shadow-[0_-12px_16px_#fff] flex items-center gap-2 dark:border-neutral-800 dark:shadow-[0_-12px_16px_#111] contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:shadow-none border-t" data-toggle-animation="show"><div class="flex grow flex-col"><button
   title="Change theme"
   data-theme="light"
   class="theme-toggle group h-7 rounded-md px-2 text-left text-xs font-medium text-gray-600 transition-colors dark:text-gray-400 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-primary-100/5 dark:hover:text-gray-50"
@@ -408,8 +318,12 @@
 </div></div></aside>
     
 <nav class="hextra-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
-    <div class="hextra-scrollbar sticky top-16 overflow-y-auto pr-4 pt-6 text-sm [hyphens:auto] max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:-mr-4 rtl:-ml-4">
-      <div class=" sticky bottom-0 flex flex-col items-start gap-2 pb-8 dark:border-neutral-800 contrast-more:border-t contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:border-neutral-400">
+    <div class="hextra-scrollbar sticky top-16 overflow-y-auto pr-4 pt-6 text-sm [hyphens:auto] max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:-mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#write-ahead-log-coding">Write-Ahead Log Coding
+        </a>
+      </li></ul>
+      <div class="mt-8 border-t bg-white pt-8 shadow-[0_-12px_16px_white] dark:bg-dark dark:shadow-[0_-12px_16px_#111] sticky bottom-0 flex flex-col items-start gap-2 pb-8 dark:border-neutral-800 contrast-more:border-t contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:border-neutral-400">
         <button aria-hidden="true" id="backToTop" onClick="scrollUp();" class="transition-all transition duration-75 opacity-0 text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 contrast-more:text-gray-800 contrast-more:dark:text-gray-50">
           <span>Scroll to top</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline ml-1 h-3.5 w-3.5 border rounded-full border-gray-500 hover:border-gray-900 dark:border-gray-400 dark:hover:border-gray-100 contrast-more:border-gray-800 contrast-more:dark:border-gray-50">
@@ -423,19 +337,91 @@
 
     <article class="w-full break-words flex min-h-[calc(100vh-var(--navbar-height))] min-w-0 justify-center pb-8 pr-[calc(env(safe-area-inset-right)-1.5rem)]">
       <main class="w-full min-w-0 max-w-6xl px-6 pt-4 md:px-12">
+        <br class="mt-1.5 text-sm" />
+        <h1 class="text-center mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">WAL基础</h1>
+        <div class="mb-16"></div>
         <div class="content">
-          <h1>FILE</h1>
-          
+          <blockquote>
+<p>From <code>access/transam/README</code></p>
+</blockquote>
+<h2>Write-Ahead Log Coding<span class="absolute -mt-20" id="write-ahead-log-coding"></span>
+    <a href="#write-ahead-log-coding" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>基本思想，日志在数据页前落盘</p>
+<ol>
+<li><code>LSN</code>：刷脏前检查<code>LSN</code>对应的日志已经落盘
+<ol>
+<li>优势：仅在必要的时候等待<code>XLOG</code>的<code>IO</code>。（异步<code>IO</code>）</li>
+<li><code>LSN</code>的检查模块只用在 buffer manager 中实现</li>
+<li>在WAL回放时，避免相同的日志被重复回放（可重入）。（TODO：full page write是否在另一个层面上保证了可重入）</li>
+</ol>
+</li>
+<li>WAL 包含一个（或一小组）页的<strong>增量更新</strong>的重做信息。
+<ol>
+<li>依赖文件系统和硬件的原子写，不可靠！</li>
+<li>checkpoint，checkpointer后的第一次写全页。通过 checkpoint 留下的 <code>LSN </code> 来判断是否为第一次写</li>
+</ol>
+</li>
+<li>写下WAL日志的逻辑为
+<ol>
+<li>pin and exclusive-lock the shared buffer</li>
+<li>START_CRIT_SECTION，发生错误时确保整个数据库能立即重启</li>
+<li>在shared buffer上，进行对应的修改</li>
+<li>标记为脏页，
+<ol>
+<li>必须在WAL日志写入前完成（TODO，为什么？<code>SyncOneBuffer</code>）</li>
+<li>只有在要写WAL时，才能标记脏页（TODO，为什么？）</li>
+</ol>
+</li>
+<li>使用<code>XLogBeginInsert</code> 和 <code>XLogRegister*</code> 函数构建WAL，使用返回的<code>LSN</code>来更新<code>page</code></li>
+<li>END_CRIT_SECTION，退出</li>
+<li>解锁和unpin （注意顺序）</li>
+</ol>
+</li>
+</ol>
+<p>一些复杂的操作，需要原子地写下一串WAL记录，但中间状态必须自洽(self-consistent)。这样在回放wal日志时，如果中断，系统还能够正常运行。注意：此时相当于事务回滚，但是其部分更改已经落盘。举例：</p>
+<ul>
+<li>在btree索引中，页的分裂分为两步（1）分配一个新页（2）在上一层的页(parent page)中新插入一条数据。</li>
+<li>但是因为锁，这会形成两个独立的WAL日志。在回放WAL日志时
+<ul>
+<li>回放第（1）个日志：
+<ul>
+<li>分配一个新页，将元组移动进去</li>
+<li>设置标记位，表示上一层的页没有更新</li>
+</ul>
+</li>
+<li>回放第（2）个日志：
+<ul>
+<li>在上一层的页中新插入一条数据</li>
+<li>清除第（1）个日志中的标记位</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>标志位通常情况下不可见，因为对 child page 的修改时持有的锁，在两个操作完成后才会释放。</li>
+<li>仅在写下第（2）个日志前，数据库恰好崩溃，标志位才会被感知。（该标志位应该没有MVCC，否则会在事务层屏蔽）
+<ul>
+<li>搜索时，不管这个中间状态</li>
+<li>插入时，如果发现这个中间状态，先在上一层的页插入对应key，以修复这个“崩溃”状态，再继续插入</li>
+</ul>
+</li>
+</ul>
+
         </div>
         <div class="mt-16"></div>
-        
-    <div class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400">Last updated on <time datetime="2022-01-14T12:02:42.000Z">January 14, 2022</time></div>
         
       </main>
     </article>
   </div>
 
-      <footer class="hextra-footer bg-gray-100 pb-[env(safe-area-inset-bottom)] dark:bg-neutral-900 print:bg-transparent"><div
+      <footer class="hextra-footer bg-gray-100 pb-[env(safe-area-inset-bottom)] dark:bg-neutral-900 print:bg-transparent"><div class="mx-auto flex gap-2 py-2 px-4 max-w-screen-xl"><button
+  title="Change theme"
+  data-theme="light"
+  class="theme-toggle group h-7 rounded-md px-2 text-left text-xs font-medium text-gray-600 transition-colors dark:text-gray-400 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-primary-100/5 dark:hover:text-gray-50"
+  type="button"
+  aria-label="Change theme"
+>
+  <div class="flex items-center gap-2 capitalize"><svg height=12 class="group-data-[theme=light]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span class="group-data-[theme=light]:hidden">Light</span><svg height=12 class="group-data-[theme=dark]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg><span class="group-data-[theme=dark]:hidden">Dark</span></div>
+</button>
+</div><hr class="dark:border-neutral-800" /><div
     class="max-w-screen-xl mx-auto flex justify-center py-12 pl-[max(env(safe-area-inset-left),1.5rem)] pr-[max(env(safe-area-inset-right),1.5rem)] text-gray-600 dark:text-gray-400 md:justify-start"
   >
     <div class="flex w-full flex-col items-center sm:items-start"><div class="font-semibold"><a class="flex text-sm items-center gap-1 text-current" target="_blank" rel="noopener noreferrer" title="Hextra GitHub Homepage" href="https://github.com/imfing/hextra">
@@ -452,6 +438,24 @@
 
 <script defer src="/lib/flexsearch/flexsearch.bundle.min.0425860527cc9968f9f049421c7a56b39327d475e2e3a8f550416be3a9134327.js" integrity="sha256-BCWGBSfMmWj58ElCHHpWs5Mn1HXi46j1UEFr46kTQyc="></script>
     <script defer src="/en.search.min.9afdc7c586c6f971dd94df10b989f10faaf38e5702571fd8cfc9ff9135c2d495.js" integrity="sha256-mv3HxYbG&#43;XHdlN8QuYnxD6rzjlcCVx/Yz8n/kTXC1JU="></script>
+<link type="text/css" rel="stylesheet" href="/lib/katex/katex.min.df9ef84e97d38557de02183e238f8ddfd10988b37741492e12c3157bc856011e.css" integrity="sha256-3574TpfThVfeAhg&#43;I4&#43;N39EJiLN3QUkuEsMVe8hWAR4=" />
+  <script defer src="/lib/katex/katex.min.d4f0ea25c4ccb7986b229d6427794b7063cf3209b0376cf5a64bfc4dd7918c95.js" integrity="sha256-1PDqJcTMt5hrIp1kJ3lLcGPPMgmwN2z1pkv8TdeRjJU="></script>
+  <script defer src="/lib/katex/auto-render.min.9cb8dacfc086c2966c9ec4ba54f4a2dc43b7cbe2b33cec1a2743d886c7fb47a7.js" integrity="sha256-nLjaz8CGwpZsnsS6VPSi3EO3y&#43;KzPOwaJ0PYhsf7R6c="></script>
+  <script defer src="/lib/katex/mhchem.min.f0ca03df194b8c3d6017ff455db6a0ef98857905663fa311a6cded788b15340b.js" integrity="sha256-8MoD3xlLjD1gF/9FXbag75iFeQVmP6MRps3teIsVNAs="></script>
+  <script>
+    
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false },
+          { left: "\\(", right: "\\)", display: false },
+          { left: "\\[", right: "\\]", display: true },
+        ],
+        throwOnError: false,
+      });
+    });
+  </script>
 
 
 </html>

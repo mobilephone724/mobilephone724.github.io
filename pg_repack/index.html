@@ -11,20 +11,33 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 
-  <title>FILE – mobilephone724</title>
-  <meta name="description" content="" />
+  <title>pg_repack – mobilephone724</title>
+  <meta name="description" content="principle pg_repack 1.5.0 – Reorganize tables in PostgreSQL databases with minimal locks
+https://github.com/reorg/pg_repack
+create a log table to record changes made to the original table add a trigger onto the original table, logging INSERTs, UPDATEs and DELETEs into our log table create a new table containing all the rows in the old table build indexes on this new table apply all changes which have accrued in the log table to the new table swap the tables, including indexes and toast tables, using the system catalogs drop the original table The basic idea is" />
 
   
 
-<meta property="og:title" content="FILE" />
-<meta property="og:description" content="home of mobilephone724" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://mobilephone724.github.io/tags/file/" />
+<meta property="og:title" content="pg_repack" />
+<meta property="og:description" content="principle pg_repack 1.5.0 &ndash; Reorganize tables in PostgreSQL databases with minimal locks
+https://github.com/reorg/pg_repack
+create a log table to record changes made to the original table add a trigger onto the original table, logging INSERTs, UPDATEs and DELETEs into our log table create a new table containing all the rows in the old table build indexes on this new table apply all changes which have accrued in the log table to the new table swap the tables, including indexes and toast tables, using the system catalogs drop the original table The basic idea is" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mobilephone724.github.io/pg_repack/" /><meta property="article:section" content="" />
 
-  <meta itemprop="name" content="FILE">
-<meta itemprop="description" content="home of mobilephone724"><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="FILE"/>
-<meta name="twitter:description" content="home of mobilephone724"/>
+
+
+  <meta itemprop="name" content="pg_repack">
+<meta itemprop="description" content="principle pg_repack 1.5.0 &ndash; Reorganize tables in PostgreSQL databases with minimal locks
+https://github.com/reorg/pg_repack
+create a log table to record changes made to the original table add a trigger onto the original table, logging INSERTs, UPDATEs and DELETEs into our log table create a new table containing all the rows in the old table build indexes on this new table apply all changes which have accrued in the log table to the new table swap the tables, including indexes and toast tables, using the system catalogs drop the original table The basic idea is">
+
+<meta itemprop="wordCount" content="625">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="pg_repack"/>
+<meta name="twitter:description" content="principle pg_repack 1.5.0 &ndash; Reorganize tables in PostgreSQL databases with minimal locks
+https://github.com/reorg/pg_repack
+create a log table to record changes made to the original table add a trigger onto the original table, logging INSERTs, UPDATEs and DELETEs into our log table create a new table containing all the rows in the old table build indexes on this new table apply all changes which have accrued in the log table to the new table swap the tables, including indexes and toast tables, using the system catalogs drop the original table The basic idea is"/>
 
     <link rel="preload" href="/css/compiled/main.min.16b68a354e65cf45bc12a9b9a023854fe5d743c179103958df82062ebdb2af3a.css" as="style" integrity="sha256-FraKNU5lz0W8Eqm5oCOFT&#43;XXQ8F5EDlY34IGLr2yrzo=" />
     <link href="/css/compiled/main.min.16b68a354e65cf45bc12a9b9a023854fe5d743c179103958df82062ebdb2af3a.css" rel="stylesheet" integrity="sha256-FraKNU5lz0W8Eqm5oCOFT&#43;XXQ8F5EDlY34IGLr2yrzo=" />
@@ -131,7 +144,7 @@
 </div>
 
   <div class='mx-auto flex max-w-[90rem]'>
-    <aside class="sidebar-container flex flex-col print:hidden md:top-16 md:shrink-0 md:w-64 md:self-start max-md:[transform:translate3d(0,-100%,0)] md:sticky">
+    <aside class="sidebar-container flex flex-col print:hidden md:top-16 md:shrink-0 md:w-64 md:self-start max-md:[transform:translate3d(0,-100%,0)] md:hidden xl:block">
   
   <div class="px-4 pt-4 md:hidden">
     <div class="search-wrapper relative md:w-64">
@@ -240,13 +253,28 @@
     
   >cublasDgemm
     </a></li>
-        <li class=""><a
+        <li class="open"><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 contrast-more:border contrast-more:border-primary-500 dark:bg-primary-400/10 dark:text-primary-600 contrast-more:dark:border-primary-500"
     href="/pg_repack/"
     
   >pg_repack
-    </a></li>
+    </a>
+  
+    <ul class='flex flex-col gap-1 relative before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] dark:before:bg-neutral-800 ltr:pl-3 ltr:before:left-0 rtl:pr-3 rtl:before:right-0 ltr:ml-3 rtl:mr-3'><li>
+              <a
+                href="#principle"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              >principle</a>
+            </li>
+          <li>
+              <a
+                href="#details"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              >details</a>
+            </li>
+          </ul>
+  </li>
         <li class=""><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
@@ -277,126 +305,10 @@
     </a></li>
     </ul>
 
-    <ul class="flex flex-col gap-1 max-md:hidden">
-        
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/slru/"
-    
-  >SLRU
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/clog/"
-    
-  >CLOG
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/hashjoin/"
-    
-  >hash join
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/predict-lock/"
-    
-  >Phantoms Predicate Lock
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/howtoknowwhoseisbigger/"
-    
-  >Alice and Bob how to know whose number is bigger without giving away their own&#39;s
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/linux-file/"
-    
-  >APUE/Chapter3: file and I/O
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/ssl-in-pg/"
-    
-  >SSL in PG
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/google-f1/"
-    
-  >Read Google F1
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/database-log/"
-    
-  >Basic Knowledge of Database Log
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/create-index-currently/"
-    
-  >create index concurrently
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/cublasdgemmtutor/"
-    
-  >cublasDgemm
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/pg_repack/"
-    
-  >pg_repack
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/pgvector/"
-    
-  >PGVECTOR AND VECTOR DATABASE
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/wal-basic/"
-    
-  >WAL基础
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/wal-insert/"
-    
-  >WAL日志的插入
-    </a></li>
-        <li class=""><a
-    class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
-    href="/zero2rsa/"
-    
-  >ZERO TO RSA
-    </a></li>
-        
-      </ul>
-    </div>
+    <div class="max-xl:hidden h-0 w-64 shrink-0"></div></div>
   
   
-    <div class="  sticky bottom-0 bg-white dark:bg-dark mx-4 py-4 shadow-[0_-12px_16px_#fff] flex items-center gap-2 dark:border-neutral-800 dark:shadow-[0_-12px_16px_#111] contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:shadow-none border-t" data-toggle-animation="show"><div class="flex grow flex-col"><button
+    <div class="md:hidden  sticky bottom-0 bg-white dark:bg-dark mx-4 py-4 shadow-[0_-12px_16px_#fff] flex items-center gap-2 dark:border-neutral-800 dark:shadow-[0_-12px_16px_#111] contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:shadow-none border-t" data-toggle-animation="show"><div class="flex grow flex-col"><button
   title="Change theme"
   data-theme="light"
   class="theme-toggle group h-7 rounded-md px-2 text-left text-xs font-medium text-gray-600 transition-colors dark:text-gray-400 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-primary-100/5 dark:hover:text-gray-50"
@@ -408,8 +320,16 @@
 </div></div></aside>
     
 <nav class="hextra-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
-    <div class="hextra-scrollbar sticky top-16 overflow-y-auto pr-4 pt-6 text-sm [hyphens:auto] max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:-mr-4 rtl:-ml-4">
-      <div class=" sticky bottom-0 flex flex-col items-start gap-2 pb-8 dark:border-neutral-800 contrast-more:border-t contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:border-neutral-400">
+    <div class="hextra-scrollbar sticky top-16 overflow-y-auto pr-4 pt-6 text-sm [hyphens:auto] max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:-mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#principle">principle
+        </a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#details">details
+        </a>
+      </li></ul>
+      <div class="mt-8 border-t bg-white pt-8 shadow-[0_-12px_16px_white] dark:bg-dark dark:shadow-[0_-12px_16px_#111] sticky bottom-0 flex flex-col items-start gap-2 pb-8 dark:border-neutral-800 contrast-more:border-t contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:border-neutral-400">
         <button aria-hidden="true" id="backToTop" onClick="scrollUp();" class="transition-all transition duration-75 opacity-0 text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 contrast-more:text-gray-800 contrast-more:dark:text-gray-50">
           <span>Scroll to top</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline ml-1 h-3.5 w-3.5 border rounded-full border-gray-500 hover:border-gray-900 dark:border-gray-400 dark:hover:border-gray-100 contrast-more:border-gray-800 contrast-more:dark:border-gray-50">
@@ -423,19 +343,153 @@
 
     <article class="w-full break-words flex min-h-[calc(100vh-var(--navbar-height))] min-w-0 justify-center pb-8 pr-[calc(env(safe-area-inset-right)-1.5rem)]">
       <main class="w-full min-w-0 max-w-6xl px-6 pt-4 md:px-12">
+        <br class="mt-1.5 text-sm" />
+        <h1 class="text-center mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">pg_repack</h1>
+        <div class="mb-16"></div>
         <div class="content">
-          <h1>FILE</h1>
-          
+          <h2>principle<span class="absolute -mt-20" id="principle"></span>
+    <a href="#principle" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p><a href="https://reorg.github.io/pg_repack/" target="_blank" rel="noopener">pg_repack 1.5.0 &ndash; Reorganize tables in PostgreSQL databases with minimal locks</a></p>
+<p><a href="https://github.com/reorg/pg_repack" target="_blank" rel="noopener">https://github.com/reorg/pg_repack</a></p>
+<ol>
+<li>create a log table to record changes made to the original table</li>
+<li>add a trigger onto the original table, logging INSERTs, UPDATEs and DELETEs into our log table</li>
+<li>create a new table containing all the rows in the old table</li>
+<li>build indexes on this new table</li>
+<li>apply all changes which have accrued in the log table to the new table</li>
+<li>swap the tables, including indexes and toast tables, using the system catalogs</li>
+<li>drop the original table</li>
+</ol>
+<p>The basic idea is</p>
+<ol>
+<li>transport the existent data with a old snapshot</li>
+<li>record the incremental data into a table and replay the record</li>
+</ol>
+<p>And this idea is so general that almost all online-ddl ability in PG(supported in extensions) takes the way.</p>
+<h2>details<span class="absolute -mt-20" id="details"></span>
+    <a href="#details" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Although the idea is so simple, there are many problems to challenge. Such as how to ensure there are no duplicated or lost data in both existent part and incremental part. So code-level details are shown below:</p>
+<p>All the 7 step are manipulated through 2 connections: See function <code>repack_one_table</code> for detail:</p>
+<ol>
+<li>
+<p>create a log table to record changes made to the original table</p>
+</li>
+<li>
+<p>add a trigger onto the original table, logging INSERTs, UPDATEs and DELETEs into our log table</p>
+<ol>
+<li><code>conn1</code> starts a transaction and acquire an <a href="https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS" target="_blank" rel="noopener">advisory lock</a> to prevent potential conflict with other repack process</li>
+<li>get the <code>AccessiveExclusive</code> lock to the original table, <code>tbl</code> for example</li>
+<li>create the trigger on <code>tbl</code> and the corresponding  <code>log-table</code> where the incremental changes will be stored.</li>
+<li>(Just comments: If we release the exclusive lock here, we may not able to acquire a shared lock later if another process has gotten a exclusive lock in the interval, which can cause that we have no way to continue or revert what we have done. So we must acquire a lock during the whole process. 👌)</li>
+<li><code>conn2</code> tries to acquire the <code>AccessiveShared</code> lock on <code>tbl</code>. Since the <code>conn1</code> &rsquo;s transaction hasn&rsquo;t finished, this lock acquisition will be blocked.</li>
+<li><code>conn1</code> kill all connections that tries to perform a DDL operation, whose character is waiting for <code>AccessiveLock</code> . Then, <code>conn1</code> commits.</li>
+<li>Now <code>conn2</code> get the <code>AccessiveShared</code> lock on <code>tbl</code> , which can ensure that no other dll operation on <code>tbl</code> ✌️</li>
+</ol>
+</li>
+<li>
+<p>create a new table containing all the rows in the old table</p>
+<ol>
+<li>
+<p><code>conn1</code> begins a serializable transaction( repeatable read, at least)</p>
+</li>
+<li>
+<p><code>conn1</code> get the <code>vxids</code> of current active transactions</p>
+</li>
+<li>
+<p><code>conn1</code> delete all data in <code>tbl</code> with the current snapshot (This means we don&rsquo;t perform a “truncate” operation ). This is a very skillful technique:</p>
+<ol>
+<li>
+<p><strong>The table shows the secret:</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>tbl</th>
+<th>log table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>visible</td>
+<td>existent data</td>
+<td>empty</td>
+</tr>
+<tr>
+<td>invisible</td>
+<td>incremental data</td>
+<td>incremental data</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>All existent data is visible in <code>tbl</code> through the current snapshot</p>
+</li>
+<li>
+<p>All incremental data is invisible in <code>log table</code> and <code>tbl</code> (The latter one isn&rsquo;t important</p>
+</li>
+<li>
+<p>So there is no lost or duplicated data</p>
+</li>
+</ol>
+</li>
+<li>
+<p><code>conn1</code> copies all data in <code>tbl</code> to a temp table <code>tbl-tmp</code>  for example</p>
+</li>
+<li>
+<p><code>conn1</code> commits</p>
+</li>
+</ol>
+</li>
+<li>
+<p>build indexes on this new table. (I don&rsquo;t care this.)</p>
+</li>
+<li>
+<p>apply all changes which have accrued in the log table to the new table</p>
+<ol>
+<li><code>conn1</code> apply at most 1000 records in <code>log-table</code> , until
+<ol>
+<li>the remaining records are few. AND</li>
+<li>All transactions in <code>vxids</code> finish. This operation is to keep the ISOLATION, but it still has some accidence. #TODO</li>
+</ol>
+</li>
+<li>(Just comments: Now we believe that there is few records in <code>log-table</code> .)</li>
+<li><code>conn2</code> acquire the <code>AccessiveExclusive</code> lock. Note that no other process can do that</li>
+<li><code>conn2</code> apply all data in <code>log-table</code></li>
+</ol>
+</li>
+<li>
+<p>swap the tables, including indexes and toast tables, using the system catalogs</p>
+<ol>
+<li><code>conn2</code> swaps <code>relfilenode</code> between <code>tbl-tmp</code> and <code>tbl</code></li>
+<li><code>conn2</code> commits</li>
+</ol>
+</li>
+<li>
+<p>drop the original table</p>
+<ol>
+<li><code>conn1</code> drop the current <code>tbl-tmp</code></li>
+<li><code>conn1</code> analyze the current <code>tbl</code></li>
+<li><code>conn1</code> release the advisory lock</li>
+</ol>
+</li>
+</ol>
+
         </div>
         <div class="mt-16"></div>
-        
-    <div class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400">Last updated on <time datetime="2022-01-14T12:02:42.000Z">January 14, 2022</time></div>
         
       </main>
     </article>
   </div>
 
-      <footer class="hextra-footer bg-gray-100 pb-[env(safe-area-inset-bottom)] dark:bg-neutral-900 print:bg-transparent"><div
+      <footer class="hextra-footer bg-gray-100 pb-[env(safe-area-inset-bottom)] dark:bg-neutral-900 print:bg-transparent"><div class="mx-auto flex gap-2 py-2 px-4 max-w-screen-xl"><button
+  title="Change theme"
+  data-theme="light"
+  class="theme-toggle group h-7 rounded-md px-2 text-left text-xs font-medium text-gray-600 transition-colors dark:text-gray-400 hover:bg-gray-100 hover:text-gray-900 dark:hover:bg-primary-100/5 dark:hover:text-gray-50"
+  type="button"
+  aria-label="Change theme"
+>
+  <div class="flex items-center gap-2 capitalize"><svg height=12 class="group-data-[theme=light]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg><span class="group-data-[theme=light]:hidden">Light</span><svg height=12 class="group-data-[theme=dark]:hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg><span class="group-data-[theme=dark]:hidden">Dark</span></div>
+</button>
+</div><hr class="dark:border-neutral-800" /><div
     class="max-w-screen-xl mx-auto flex justify-center py-12 pl-[max(env(safe-area-inset-left),1.5rem)] pr-[max(env(safe-area-inset-right),1.5rem)] text-gray-600 dark:text-gray-400 md:justify-start"
   >
     <div class="flex w-full flex-col items-center sm:items-start"><div class="font-semibold"><a class="flex text-sm items-center gap-1 text-current" target="_blank" rel="noopener noreferrer" title="Hextra GitHub Homepage" href="https://github.com/imfing/hextra">
@@ -452,6 +506,24 @@
 
 <script defer src="/lib/flexsearch/flexsearch.bundle.min.0425860527cc9968f9f049421c7a56b39327d475e2e3a8f550416be3a9134327.js" integrity="sha256-BCWGBSfMmWj58ElCHHpWs5Mn1HXi46j1UEFr46kTQyc="></script>
     <script defer src="/en.search.min.9afdc7c586c6f971dd94df10b989f10faaf38e5702571fd8cfc9ff9135c2d495.js" integrity="sha256-mv3HxYbG&#43;XHdlN8QuYnxD6rzjlcCVx/Yz8n/kTXC1JU="></script>
+<link type="text/css" rel="stylesheet" href="/lib/katex/katex.min.df9ef84e97d38557de02183e238f8ddfd10988b37741492e12c3157bc856011e.css" integrity="sha256-3574TpfThVfeAhg&#43;I4&#43;N39EJiLN3QUkuEsMVe8hWAR4=" />
+  <script defer src="/lib/katex/katex.min.d4f0ea25c4ccb7986b229d6427794b7063cf3209b0376cf5a64bfc4dd7918c95.js" integrity="sha256-1PDqJcTMt5hrIp1kJ3lLcGPPMgmwN2z1pkv8TdeRjJU="></script>
+  <script defer src="/lib/katex/auto-render.min.9cb8dacfc086c2966c9ec4ba54f4a2dc43b7cbe2b33cec1a2743d886c7fb47a7.js" integrity="sha256-nLjaz8CGwpZsnsS6VPSi3EO3y&#43;KzPOwaJ0PYhsf7R6c="></script>
+  <script defer src="/lib/katex/mhchem.min.f0ca03df194b8c3d6017ff455db6a0ef98857905663fa311a6cded788b15340b.js" integrity="sha256-8MoD3xlLjD1gF/9FXbag75iFeQVmP6MRps3teIsVNAs="></script>
+  <script>
+    
+    document.addEventListener("DOMContentLoaded", function () {
+      renderMathInElement(document.body, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "$", right: "$", display: false },
+          { left: "\\(", right: "\\)", display: false },
+          { left: "\\[", right: "\\]", display: true },
+        ],
+        throwOnError: false,
+      });
+    });
+  </script>
 
 
 </html>
