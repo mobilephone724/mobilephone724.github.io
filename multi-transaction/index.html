@@ -11,29 +11,25 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
 
-  <title>Basic Knowledge of Database Log – mobilephone724</title>
-  <meta name="description" content="Primitive Operation if Transactions There are three address spaces that transaction interact in important ways:
-The space of disk blocks holding the database elements. The memory address space managed by buffer manager. The local address space of the transaction. To describe a transaction, we need some operation notions:(X below is a database element while t is a local varible, and we suppose a database element is no larger than a single block)" />
+  <title>Multitransaction – mobilephone724</title>
+  <meta name="description" content=" " />
 
   
 
-<meta property="og:title" content="Basic Knowledge of Database Log" />
-<meta property="og:description" content="Primitive Operation if Transactions There are three address spaces that transaction interact in important ways:
-The space of disk blocks holding the database elements. The memory address space managed by buffer manager. The local address space of the transaction. To describe a transaction, we need some operation notions:(X below is a database element while t is a local varible, and we suppose a database element is no larger than a single block)" />
+<meta property="og:title" content="Multitransaction" />
+<meta property="og:description" content=" " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://mobilephone724.github.io/database-log/" /><meta property="article:section" content="" />
-<meta property="article:published_time" content="2022-03-31T11:01:15+08:00" />
-<meta property="article:modified_time" content="2022-03-31T11:01:15+08:00" />
+<meta property="og:url" content="https://mobilephone724.github.io/multi-transaction/" /><meta property="article:section" content="" />
+<meta property="article:published_time" content="2024-04-07T22:13:58+08:00" />
+<meta property="article:modified_time" content="2024-04-07T22:13:58+08:00" />
 
-  <meta itemprop="name" content="Basic Knowledge of Database Log">
-<meta itemprop="description" content="Primitive Operation if Transactions There are three address spaces that transaction interact in important ways:
-The space of disk blocks holding the database elements. The memory address space managed by buffer manager. The local address space of the transaction. To describe a transaction, we need some operation notions:(X below is a database element while t is a local varible, and we suppose a database element is no larger than a single block)"><meta itemprop="datePublished" content="2022-03-31T11:01:15+08:00" />
-<meta itemprop="dateModified" content="2022-03-31T11:01:15+08:00" />
-<meta itemprop="wordCount" content="387">
+  <meta itemprop="name" content="Multitransaction">
+<meta itemprop="description" content=" "><meta itemprop="datePublished" content="2024-04-07T22:13:58+08:00" />
+<meta itemprop="dateModified" content="2024-04-07T22:13:58+08:00" />
+<meta itemprop="wordCount" content="0">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Basic Knowledge of Database Log"/>
-<meta name="twitter:description" content="Primitive Operation if Transactions There are three address spaces that transaction interact in important ways:
-The space of disk blocks holding the database elements. The memory address space managed by buffer manager. The local address space of the transaction. To describe a transaction, we need some operation notions:(X below is a database element while t is a local varible, and we suppose a database element is no larger than a single block)"/>
+<meta name="twitter:title" content="Multitransaction"/>
+<meta name="twitter:description" content=" "/>
 
     <link rel="preload" href="/css/compiled/main.min.16b68a354e65cf45bc12a9b9a023854fe5d743c179103958df82062ebdb2af3a.css" as="style" integrity="sha256-FraKNU5lz0W8Eqm5oCOFT&#43;XXQ8F5EDlY34IGLr2yrzo=" />
     <link href="/css/compiled/main.min.16b68a354e65cf45bc12a9b9a023854fe5d743c179103958df82062ebdb2af3a.css" rel="stylesheet" integrity="sha256-FraKNU5lz0W8Eqm5oCOFT&#43;XXQ8F5EDlY34IGLr2yrzo=" />
@@ -207,13 +203,22 @@ The space of disk blocks holding the database elements. The memory address space
     
   >Column Schema Change
     </a></li>
-        <li class=""><a
+        <li class="open"><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 contrast-more:border contrast-more:border-primary-500 dark:bg-primary-400/10 dark:text-primary-600 contrast-more:dark:border-primary-500"
     href="/multi-transaction/"
     
   >Multitransaction
-    </a></li>
+    </a>
+  
+    <ul class='flex flex-col gap-1 relative before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] dark:before:bg-neutral-800 ltr:pl-3 ltr:before:left-0 rtl:pr-3 rtl:before:right-0 ltr:ml-3 rtl:mr-3'><li>
+              <a
+                href="#heading"
+                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
+              ></a>
+            </li>
+          </ul>
+  </li>
         <li class=""><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
@@ -228,28 +233,13 @@ The space of disk blocks holding the database elements. The memory address space
     
   >Read Google F1
     </a></li>
-        <li class="open"><a
+        <li class=""><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      sidebar-active-item bg-primary-100 font-semibold text-primary-800 contrast-more:border contrast-more:border-primary-500 dark:bg-primary-400/10 dark:text-primary-600 contrast-more:dark:border-primary-500"
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
     href="/database-log/"
     
   >Basic Knowledge of Database Log
-    </a>
-  
-    <ul class='flex flex-col gap-1 relative before:absolute before:inset-y-1 before:w-px before:bg-gray-200 before:content-[""] dark:before:bg-neutral-800 ltr:pl-3 ltr:before:left-0 rtl:pr-3 rtl:before:right-0 ltr:ml-3 rtl:mr-3'><li>
-              <a
-                href="#primitive-operation-if-transactions"
-                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
-              >Primitive Operation if Transactions</a>
-            </li>
-          <li>
-              <a
-                href="#undo-logging"
-                class="flex rounded px-2 py-1.5 text-sm transition-colors [word-break:break-word] cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border flex gap-2 before:opacity-25 before:content-['#'] text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:text-gray-900 contrast-more:dark:text-gray-50 contrast-more:border-transparent contrast-more:hover:border-gray-900 contrast-more:dark:hover:border-gray-50"
-              >undo logging</a>
-            </li>
-          </ul>
-  </li>
+    </a></li>
         <li class=""><a
     class="flex items-center justify-between gap-2 cursor-pointer rounded px-2 py-1.5 text-sm transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 contrast-more:border contrast-more:border-transparent contrast-more:text-gray-900 contrast-more:hover:border-gray-900 dark:text-neutral-400 dark:hover:bg-primary-100/5 dark:hover:text-gray-50 contrast-more:dark:text-gray-50 contrast-more:dark:hover:border-gray-50"
@@ -330,15 +320,7 @@ The space of disk blocks holding the database elements. The memory address space
 </div></div></aside>
     
 <nav class="hextra-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
-    <div class="hextra-scrollbar sticky top-16 overflow-y-auto pr-4 pt-6 text-sm [hyphens:auto] max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:-mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
-      <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#primitive-operation-if-transactions">Primitive Operation if Transactions
-        </a>
-      </li>
-      <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 contrast-more:text-gray-900 contrast-more:underline contrast-more:dark:text-gray-50 w-full break-words" href="#undo-logging">undo logging
-        </a>
-      </li></ul>
+    <div class="hextra-scrollbar sticky top-16 overflow-y-auto pr-4 pt-6 text-sm [hyphens:auto] max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] ltr:-mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul></ul>
       <div class="mt-8 border-t bg-white pt-8 shadow-[0_-12px_16px_white] dark:bg-dark dark:shadow-[0_-12px_16px_#111] sticky bottom-0 flex flex-col items-start gap-2 pb-8 dark:border-neutral-800 contrast-more:border-t contrast-more:border-neutral-400 contrast-more:shadow-none contrast-more:dark:border-neutral-400">
         <button aria-hidden="true" id="backToTop" onClick="scrollUp();" class="transition-all transition duration-75 opacity-0 text-xs font-medium text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100 contrast-more:text-gray-800 contrast-more:dark:text-gray-50">
           <span>Scroll to top</span>
@@ -354,38 +336,11 @@ The space of disk blocks holding the database elements. The memory address space
     <article class="w-full break-words flex min-h-[calc(100vh-var(--navbar-height))] min-w-0 justify-center pb-8 pr-[calc(env(safe-area-inset-right)-1.5rem)]">
       <main class="w-full min-w-0 max-w-6xl px-6 pt-4 md:px-12">
         <br class="mt-1.5 text-sm" />
-        <h1 class="text-center mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Basic Knowledge of Database Log</h1>
+        <h1 class="text-center mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Multitransaction</h1>
         <div class="mb-16"></div>
         <div class="content">
-          <h2>Primitive Operation if Transactions<span class="absolute -mt-20" id="primitive-operation-if-transactions"></span>
-    <a href="#primitive-operation-if-transactions" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>There are <code>three address spaces</code> that transaction interact in important ways:</p>
-<ol>
-<li>The space of <strong>disk blocks</strong> holding the database elements.</li>
-<li>The <strong>memory address space</strong> managed by buffer manager.</li>
-<li>The <strong>local address space</strong> of the transaction.</li>
-</ol>
-<p>To describe a transaction, we need some <code>operation notions</code>:(X below is a database element while t is a local varible, and we suppose a database element is no larger than a single block)</p>
-<ol>
-<li>INPUT(X): copy disk block containing X to memroy buffer</li>
-<li>READ(X, t): Copy X to transaction&rsquo;s local varible t no matter where X is, which means INPUT(X) may be executed first before READ(X,t).</li>
-<li>WRITE(X, t): Copy the value of t to X no matter where X is.</li>
-<li>OUTPUT(X): Copy the block containing X from its buffer to disk</li>
-</ol>
-<h2>undo logging<span class="absolute -mt-20" id="undo-logging"></span>
-    <a href="#undo-logging" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>Undo log makes repairs to the database state by undoing the effects of transactions that may not completed before the crash.</p>
-<p>An Undo log has the form [T,X,v] which means transaction T has changed the database elememnt X, and its before value was v. The log record is a response to a WRITE action into memory, not an OUTPUT action.</p>
-<p>An undo log is suffcient to allow recovery from system failure, provided transactions and buffer manager obey two rules:</p>
-<ol>
-<li>If transaction T modifies database element X, then the log record of form &lt;T,X,v&gt; must be written to disk before the new value of X is written to disk</li>
-<li>If a transaction commits, the its commit log record must be written to disk only after all database elements changed by the transaction have been written to disk, but as soon there after is possible</li>
-<li>If a transaction aborts, recovery manager is need to repair the values.</li>
-</ol>
-<p>When recovering, the recovery manager scan the log from the end. As it travels, it remembers all thos transactions T for which it has seen a [COMMIT T] record or [ABORT T] record, the:</p>
-<ol>
-<li>If T&rsquo;s COMMIT record is found, do nothing.</li>
-<li>Otherwise, T is an incomplete transaction, or aborted transaction. The recovery manager must change the value of X in the database to v,in case X had been altered just before the crash. After this, the recovery manager must write a log record [ABORT T] for each incomplete transaction T that was not previously aborted, and then flush the log</li>
-</ol>
-
+          <h2><span class="absolute -mt-20" id="heading"></span>
+    <a href="#heading" class="subheading-anchor" aria-label="Permalink for this section"></a></h2>
         </div>
         <div class="mt-16"></div>
         
