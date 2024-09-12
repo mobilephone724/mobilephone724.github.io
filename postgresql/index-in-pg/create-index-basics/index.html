@@ -30,7 +30,7 @@
   <meta itemprop="description" content="0 概述 本文介绍普通的创建索引的大致过程（或者说 access method 对应的框架），包括从入口函数，到进入对应的 access method 的过程。不包括 access method 的内部实现。分区表，表达式">
   <meta itemprop="datePublished" content="2024-09-08T14:41:35+08:00">
   <meta itemprop="dateModified" content="2024-09-10T23:02:39+08:00">
-  <meta itemprop="wordCount" content="849">
+  <meta itemprop="wordCount" content="1012">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="create index basics">
   <meta name="twitter:description" content="0 概述 本文介绍普通的创建索引的大致过程（或者说 access method 对应的框架），包括从入口函数，到进入对应的 access method 的过程。不包括 access method 的内部实现。分区表，表达式">
@@ -338,6 +338,12 @@
                 href="#2-%e5%88%9b%e5%bb%ba%e7%a9%ba%e7%b4%a2%e5%bc%95"
                 class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
               >2 创建空索引</a>
+            </li>
+          <li>
+              <a
+                href="#3-%e8%b0%83%e7%94%a8%e5%af%b9%e5%ba%94%e7%9a%84-index-access-method-%e5%88%9b%e5%bb%ba%e7%b4%a2%e5%bc%95"
+                class="hx-flex hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [word-break:break-word] hx-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:hx-border hx-gap-2 before:hx-opacity-25 before:hx-content-['#'] hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:hx-text-gray-900 contrast-more:dark:hx-text-gray-50 contrast-more:hx-border-transparent contrast-more:hover:hx-border-gray-900 contrast-more:dark:hover:hx-border-gray-50"
+              >3 调用对应的 index access method 创建索引</a>
             </li>
           </ul>
   
@@ -765,15 +771,23 @@
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#3-%e8%b0%83%e7%94%a8%e5%af%b9%e5%ba%94%e7%9a%84-index-access-method-%e5%88%9b%e5%bb%ba%e7%b4%a2%e5%bc%95">3 调用对应的 index access method 创建索引
+        <a class="hx-font-semibold hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#3-%e8%b0%83%e7%94%a8%e5%af%b9%e5%ba%94%e7%9a%84-index-access-method-%e5%88%9b%e5%bb%ba%e7%b4%a2%e5%bc%95">3 调用对应的 index access method 创建索引
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#3-1-%e9%9d%9e-hot">3-1 非 HOT
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#3-1-%e5%a6%82%e4%bd%95%e5%a4%84%e7%90%86-heaptuple_recently_dead">3-1 如何处理 HEAPTUPLE_RECENTLY_DEAD
         </a>
       </li>
       <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
-        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#3-2-hot">3-2 HOT
+        <a class="ltr:hx-pl-8 rtl:hx-pr-8 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#3-1-1-%e9%9d%9e-hot">3-1-1 非 HOT
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-8 rtl:hx-pr-8 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#3-1-2-hot">3-1-2 HOT
+        </a>
+      </li>
+      <li class="hx-my-2 hx-scroll-my-6 hx-scroll-py-6">
+        <a class="ltr:hx-pl-4 rtl:hx-pr-4 hx-inline-block hx-text-gray-500 hover:hx-text-gray-900 dark:hx-text-gray-400 dark:hover:hx-text-gray-300 contrast-more:hx-text-gray-900 contrast-more:hx-underline contrast-more:dark:hx-text-gray-50 hx-w-full hx-break-words" href="#3-2-%e5%af%b9-hot-%e9%93%be%e4%b8%8a%e7%9a%84%e5%85%83%e7%bb%84%e6%9e%84%e5%bb%ba%e7%b4%a2%e5%bc%95">3-2 对 HOT 链上的元组构建索引
         </a>
       </li></ul>
       <div class="hx-mt-8 hx-border-t hx-bg-white hx-pt-8 hx-shadow-[0_-12px_16px_white] dark:hx-bg-dark dark:hx-shadow-[0_-12px_16px_#111] hx-sticky hx-bottom-0 hx-flex hx-flex-col hx-items-start hx-gap-2 hx-pb-8 dark:hx-border-neutral-800 contrast-more:hx-border-t contrast-more:hx-border-neutral-400 contrast-more:hx-shadow-none contrast-more:dark:hx-border-neutral-400">
@@ -822,8 +836,8 @@
 <li>向 <code>pg_class</code> , <code>pg_index</code> , <code>pg_attribute</code>  中写入对应的记录</li>
 <li>注册对应表的缓存无效信息，会在事务结束时发送 <code>CacheInvalidateRelcache</code></li>
 </ol>
-<h3>3 调用对应的 index access method 创建索引<span class="hx-absolute -hx-mt-20" id="3-调用对应的-index-access-method-创建索引"></span>
-    <a href="#3-%e8%b0%83%e7%94%a8%e5%af%b9%e5%ba%94%e7%9a%84-index-access-method-%e5%88%9b%e5%bb%ba%e7%b4%a2%e5%bc%95" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>这里和 HOT 关系较大，需要简单展开：</p>
+<h2>3 调用对应的 index access method 创建索引<span class="hx-absolute -hx-mt-20" id="3-调用对应的-index-access-method-创建索引"></span>
+    <a href="#3-%e8%b0%83%e7%94%a8%e5%af%b9%e5%ba%94%e7%9a%84-index-access-method-%e5%88%9b%e5%bb%ba%e7%b4%a2%e5%bc%95" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><p>这里和 HOT 关系较大，需要简单展开：</p>
 <p>在 index access method 内部，会使用回调函数 <code>heapam_index_build_range_scan</code> 来扫描 heap，以确定有哪些 tuple 需要被创建索引。</p>
 <ol>
 <li>此时使用的快照为 <code>SnapshotAny</code> ，即所有行都可见。</li>
@@ -841,12 +855,12 @@
 </li>
 </ol>
 <hr>
-<p><code>HEAPTUPLE_RECENTLY_DEAD</code> 是重点：如何处理</p>
-<h3>3-1 非 HOT<span class="hx-absolute -hx-mt-20" id="3-1-非-hot"></span>
-    <a href="#3-1-%e9%9d%9e-hot" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>说明该 tuple 被删除了，但是有一些事务仍然对其可见，那么也需要加入到索引中。否则这些事务后续通过当前创建的索引就无法找到该元组。</p>
+<h3>3-1 如何处理 <code>HEAPTUPLE_RECENTLY_DEAD</code><span class="hx-absolute -hx-mt-20" id="3-1-如何处理-heaptuple_recently_dead"></span>
+    <a href="#3-1-%e5%a6%82%e4%bd%95%e5%a4%84%e7%90%86-heaptuple_recently_dead" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><h4>3-1-1 非 HOT<span class="hx-absolute -hx-mt-20" id="3-1-1-非-hot"></span>
+    <a href="#3-1-1-%e9%9d%9e-hot" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>说明该 tuple 被删除了，但是有一些事务仍然对其可见，那么也需要加入到索引中。否则这些事务后续通过当前创建的索引就无法找到该元组。</p>
 <p>注意：在判断一个表有哪些索引时，使用快照是“最新的快照”，而非当前事务的快照。</p>
-<h3>3-2 HOT<span class="hx-absolute -hx-mt-20" id="3-2-hot"></span>
-    <a href="#3-2-hot" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>如果该 tuple 在 HOT 链中（不在末尾，否则就是 <code>HEAPTUPLE_DEAD</code> OR <code>HEAPTUPLE_LIVE</code>），问题就有些棘手。</p>
+<h4>3-1-2 HOT<span class="hx-absolute -hx-mt-20" id="3-1-2-hot"></span>
+    <a href="#3-1-2-hot" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>如果该 tuple 在 HOT 链中，问题就有些棘手。</p>
 <ol>
 <li>此时不方便将 HOT 链破坏掉。（创建索引的时候直接修改 HEAP 中内容确实不算合理）</li>
 <li>但如果不破坏，就（必须）将该 tuple 加入到新索引中，而该 HOT 链可能和新索引冲突</li>
@@ -862,6 +876,11 @@
 <li><code>pg_index</code>  中对应 tuple 的 <code>xmin</code> 表示 该索引创建的 xid</li>
 </ol>
 <p><img src="./indcheckxmin.png" alt="image-20240908163824450" loading="lazy" /></p>
+<h3>3-2 对 HOT 链上的元组构建索引<span class="hx-absolute -hx-mt-20" id="3-2-对-hot-链上的元组构建索引"></span>
+    <a href="#3-2-%e5%af%b9-hot-%e9%93%be%e4%b8%8a%e7%9a%84%e5%85%83%e7%bb%84%e6%9e%84%e5%bb%ba%e7%b4%a2%e5%bc%95" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p>由于创建新索引会导致已有的 HOT 链无效，这里还需讨论如何将已有 HOT 链中元组如何构建到索引中。考虑如下情形，现在需要对 <code>y</code> 这一列创建索引，只需要将 tuple_3 加入到索引中(y=2)即可。由于一个 line pointer 只能在一个 HOT 链中，所以此时索引应该指向 lp_1（注意 tuple_1 有 y=1)。</p>
+<p><img src="./build_on_hot.png" alt="image-20240912154408429" loading="lazy" /></p>
+<p>如果想去“优化“ 新HOT链的长度，让索引指向 lp_2 或者 lp_3，会产生很多问题，例如指向 lp_2，那么此时 tuple_2 还是 heap only tuple 么？</p>
+<p><img src="./build_on_hot_2.png" alt="image-20240912155430901" loading="lazy" /></p>
 
         </div>
         
