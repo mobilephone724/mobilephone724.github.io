@@ -2,8 +2,8 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://mobilephone724.github.io/postgresql/index-in-pg/create-index-concurrently/</loc>
-    <lastmod>2024-09-10T23:02:39+08:00</lastmod>
+    <loc>https://mobilephone724.github.io/postgresql/index-in-pg/hot-and-index/</loc>
+    <lastmod>2024-09-13T22:09:20+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/postgresql/slru/slru/</loc>
     <lastmod>2024-09-08T21:48:07+08:00</lastmod>
@@ -11,14 +11,14 @@
     <loc>https://mobilephone724.github.io/postgresql/slru/</loc>
     <lastmod>2024-09-08T21:48:07+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/postgresql/index-in-pg/create-index-basics/</loc>
-    <lastmod>2024-09-10T23:02:39+08:00</lastmod>
-  </url><url>
     <loc>https://mobilephone724.github.io/postgresql/slru/clog/</loc>
     <lastmod>2024-09-08T21:48:07+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/postgresql/hashjoin/</loc>
     <lastmod>2024-09-08T21:48:07+08:00</lastmod>
+  </url><url>
+    <loc>https://mobilephone724.github.io/postgresql/index-in-pg/heap-only-tuple/</loc>
+    <lastmod>2024-09-12T18:53:17+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/postgresql/index-in-pg/</loc>
     <lastmod>2024-09-10T08:18:34+08:00</lastmod>
@@ -26,11 +26,17 @@
     <loc>https://mobilephone724.github.io/postgresql/wal/</loc>
     <lastmod>2024-09-08T21:48:07+08:00</lastmod>
   </url><url>
+    <loc>https://mobilephone724.github.io/postgresql/index-in-pg/create-index-basics/</loc>
+    <lastmod>2024-09-12T18:53:17+08:00</lastmod>
+  </url><url>
     <loc>https://mobilephone724.github.io/computer_science/howtoknowwhoseisbigger/</loc>
     <lastmod>2024-09-08T21:48:07+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/computer_science/linux-file/</loc>
     <lastmod>2024-09-08T21:48:07+08:00</lastmod>
+  </url><url>
+    <loc>https://mobilephone724.github.io/postgresql/index-in-pg/create-index-concurrently/</loc>
+    <lastmod>2024-09-12T18:53:17+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/paper_reading/</loc>
     <lastmod>2024-09-08T21:48:07+08:00</lastmod>
@@ -114,9 +120,6 @@
     <lastmod>2024-09-10T08:18:34+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/computer_science/cublasdgemmtutor/</loc>
-    <lastmod>2024-09-08T21:48:07+08:00</lastmod>
-  </url><url>
-    <loc>https://mobilephone724.github.io/postgresql/index-in-pg/heap-only-tuple/</loc>
     <lastmod>2024-09-08T21:48:07+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/postgresql/pg_repack/</loc>

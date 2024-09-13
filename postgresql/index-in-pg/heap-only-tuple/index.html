@@ -28,7 +28,7 @@
   
   <meta itemprop="name" content="HOT(Heap Only Tuple)">
   <meta itemprop="description" content="概述 简单而言, HOT(Heap Only Tuple) 指没有索引指向的元组 用于消除元组更新引起的索引膨胀，原理如下图所示 索引指向 line_ptr_1 ，line_ptr_1 指向 tuple_1 ，tuple_1">
-  <meta itemprop="dateModified" content="2024-09-08T21:48:07+08:00">
+  <meta itemprop="dateModified" content="2024-09-12T18:53:17+08:00">
   <meta itemprop="wordCount" content="982">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="HOT(Heap Only Tuple)">
@@ -307,17 +307,9 @@
         <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
     class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
-    href="/postgresql/index-in-pg/create-index-concurrently/"
+    href="/postgresql/index-in-pg/hot-and-index/"
     
-  >create index concurrently
-    </a>
-              
-            </li><li class="hx-flex hx-flex-col "><a
-    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
-    href="/postgresql/index-in-pg/create-index-basics/"
-    
-  >create index basics
+  >Hot and Index
     </a>
               
             </li><li class="hx-flex hx-flex-col open"><a
@@ -366,6 +358,22 @@
             </li>
           </ul>
   
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/postgresql/index-in-pg/create-index-basics/"
+    
+  >create index basics
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/postgresql/index-in-pg/create-index-concurrently/"
+    
+  >create index concurrently
+    </a>
               
             </li></ul>
       </div>
@@ -632,9 +640,17 @@
         <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
     class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
-    href="/postgresql/index-in-pg/create-index-concurrently/"
+    href="/postgresql/index-in-pg/hot-and-index/"
     
-  >create index concurrently
+  >Hot and Index
+    </a>
+              
+            </li><li class="hx-flex hx-flex-col open"><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      sidebar-active-item hx-bg-primary-100 hx-font-semibold hx-text-primary-800 contrast-more:hx-border contrast-more:hx-border-primary-500 dark:hx-bg-primary-400/10 dark:hx-text-primary-600 contrast-more:dark:hx-border-primary-500"
+    href="/postgresql/index-in-pg/heap-only-tuple/"
+    
+  >HOT(Heap Only Tuple)
     </a>
               
             </li><li class="hx-flex hx-flex-col "><a
@@ -645,12 +661,12 @@
   >create index basics
     </a>
               
-            </li><li class="hx-flex hx-flex-col open"><a
+            </li><li class="hx-flex hx-flex-col "><a
     class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
-      sidebar-active-item hx-bg-primary-100 hx-font-semibold hx-text-primary-800 contrast-more:hx-border contrast-more:hx-border-primary-500 dark:hx-bg-primary-400/10 dark:hx-text-primary-600 contrast-more:dark:hx-border-primary-500"
-    href="/postgresql/index-in-pg/heap-only-tuple/"
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/postgresql/index-in-pg/create-index-concurrently/"
     
-  >HOT(Heap Only Tuple)
+  >create index concurrently
     </a>
               
             </li></ul>
@@ -1122,7 +1138,7 @@
 
         </div>
         
-    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">最后更新于 <time datetime="2024-09-08T21:48:07.000Z">September 8, 2024</time></div>
+    <div class="hx-mt-12 hx-mb-8 hx-block hx-text-xs hx-text-gray-500 ltr:hx-text-right rtl:hx-text-left dark:hx-text-gray-400">最后更新于 <time datetime="2024-09-12T18:53:17.000Z">September 12, 2024</time></div>
         
         
       </main>
