@@ -193,22 +193,34 @@ document.addEventListener("DOMContentLoaded", function () {
    */
   async function preloadIndex() {
     const tokenize = 'forward';
+
+    const isCJK = () => {
+      const lang = document.documentElement.lang || "en";
+      return lang.startsWith("zh") || lang.startsWith("ja") || lang.startsWith("ko");
+    }
+
+    const encodeCJK = (str) => str.replace(/[\x00-\x7F]/g, "").split("");
+    const encodeDefault = (str) => (""+str).toLocaleLowerCase().split(/[\p{Z}\p{S}\p{P}\p{C}]+/u);
+    const encodeFunction = isCJK() ? encodeCJK : encodeDefault;
+
     window.pageIndex = new FlexSearch.Document({
       tokenize,
+      encode: encodeFunction,
       cache: 100,
       document: {
         id: 'id',
-        store: ['title'],
+        store: ['title', 'crumb'],
         index: "content"
       }
     });
 
     window.sectionIndex = new FlexSearch.Document({
       tokenize,
+      encode: encodeFunction,
       cache: 100,
       document: {
         id: 'id',
-        store: ['title', 'content', 'url', 'display'],
+        store: ['title', 'content', 'url', 'display', 'crumb'],
         index: "content",
         tag: 'pageId'
       }
@@ -220,6 +232,30 @@ document.addEventListener("DOMContentLoaded", function () {
     for (const route in data) {
       let pageContent = '';
       ++pageId;
+      const urlParts = route.split('/').filter(x => x != "" && !x.startsWith('#'));
+
+      let crumb = '';
+      let searchUrl = '/'
+      for (let i = 0; i < urlParts.length; i++) {
+        const urlPart = urlParts[i];
+        searchUrl += urlPart + '/'
+
+        const crumbData = data[searchUrl];
+        if (!crumbData) {
+          console.warn('Excluded page', searchUrl, '- will not be included for search result breadcrumb for', route);
+          continue;
+        }
+
+        let title = data[searchUrl].title;
+        if (title == "_index") {
+          title = urlPart.split("-").map(x => x).join(" ");
+        }
+        crumb += title;
+
+        if (i < urlParts.length - 1) {
+          crumb += ' > ';
+        }
+      }
 
       for (const heading in data[route].data) {
         const [hash, text] = heading.split('#');
@@ -233,6 +269,7 @@ document.addEventListener("DOMContentLoaded", function () {
           id: url,
           url,
           title,
+          crumb,
           pageId: `page_${pageId}`,
           content: title,
           ...(paragraphs[0] && { display: paragraphs[0] })
@@ -243,6 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
             id: `${url}_${i}`,
             url,
             title,
+            crumb,
             pageId: `page_${pageId}`,
             content: paragraphs[i]
           });
@@ -254,6 +292,7 @@ document.addEventListener("DOMContentLoaded", function () {
       window.pageIndex.add({
         id: pageId,
         title: data[route].title,
+        crumb,
         content: pageContent
       });
 
@@ -306,7 +345,7 @@ document.addEventListener("DOMContentLoaded", function () {
           _page_rk: i,
           _section_rk: j,
           route: url,
-          prefix: isFirstItemOfPage ? result.doc.title : undefined,
+          prefix: isFirstItemOfPage ? result.doc.crumb : undefined,
           children: { title, content }
         })
         isFirstItemOfPage = false

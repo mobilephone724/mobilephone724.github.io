@@ -1,0 +1,19 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hextra – Paper_reading</title>
+    <link>http://localhost:1313/0008-paper_reading/</link>
+    <description>Recent content in Paper_reading on Hextra</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sun, 08 Sep 2024 21:37:33 +0800</lastBuildDate>
+    
+	  <atom:link href="http://localhost:1313/0008-paper_reading/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+      
+        
+      
+    
+    
+  </channel>
+</rss>

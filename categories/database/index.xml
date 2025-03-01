@@ -117,7 +117,7 @@
 &lt;/ul&gt;
 &lt;p&gt;enables distributed schema changes in a way that&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;does not require &lt;strong&gt;global membership&lt;/strong&gt;, &lt;strong&gt;implicit or explicit synchronization&lt;/strong&gt; between nodes, or the need to &lt;strong&gt;retain old schema versions&lt;/strong&gt; once a schema change is complete&lt;/p&gt;
+  &lt;p&gt;does not require &lt;strong&gt;global membership&lt;/strong&gt;, &lt;strong&gt;implicit or explicit synchronization&lt;/strong&gt; between nodes, or the need to &lt;strong&gt;retain old schema versions&lt;/strong&gt; once a schema change is complete&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2&gt;BackGround&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;background&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#background&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In this section, we:&lt;/p&gt;
@@ -134,7 +134,7 @@
 &lt;li&gt;&lt;em&gt;get&lt;/em&gt;: returns &lt;strong&gt;any stored values&lt;/strong&gt; whose key &lt;strong&gt;matches a given prefix&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Note that &lt;em&gt;put&lt;/em&gt; and &lt;em&gt;del&lt;/em&gt; reference exactly one key–value pair, while &lt;em&gt;get&lt;/em&gt; may return multiple key–value pairs&lt;/p&gt;
+  &lt;p&gt;Note that &lt;em&gt;put&lt;/em&gt; and &lt;em&gt;del&lt;/em&gt; reference exactly one key–value pair, while &lt;em&gt;get&lt;/em&gt; may return multiple key–value pairs&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;/li&gt;
 &lt;/ul&gt;

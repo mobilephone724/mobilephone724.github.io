@@ -165,7 +165,6 @@
 &lt;p&gt;代码实现与上述有所差别：&lt;/p&gt;
 &lt;p&gt;“等待其他事务” 并不是通过巡检 &lt;code&gt;ProcArray&lt;/code&gt; 等方式实现，而是巧妙的使用了 &lt;code&gt;lmgr&lt;/code&gt; 层的 &lt;code&gt;WaitForLockers&lt;/code&gt; 实现：即等到没有连接持有该表的与 &lt;code&gt;ShareLock&lt;/code&gt; 相冲突的锁：&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
-  
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-C&#34; data-lang=&#34;C&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;/*
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt; * Now we must wait until no running transaction could have the table open
@@ -183,12 +182,9 @@
     &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
   &lt;/button&gt;
 &lt;/div&gt;
-
-  
 &lt;/div&gt;
 &lt;p&gt;（1）&lt;code&gt;SharedLock&lt;/code&gt;  与 &lt;code&gt;select&lt;/code&gt; 和 &lt;code&gt;select for update/share&lt;/code&gt; 相冲突，持有者两种锁时，都无法破坏 HOT 链。（2）当进程执行修改表的操作时，已经需要打开表获取 &lt;code&gt;relcache&lt;/code&gt; ，而在打开表操作时，会处理缓存失效信息。&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
-  
 
 &lt;pre&gt;&lt;code&gt;relation_open/try_relation_open -&amp;gt; LockRelationOid -&amp;gt; AcceptInvalidationMessages&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
@@ -199,8 +195,6 @@
     &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
   &lt;/button&gt;
 &lt;/div&gt;
-
-  
 &lt;/div&gt;
 &lt;p&gt;&lt;img src=&#34;./waitforlockers.png&#34; alt=&#34;image-20240910080804584&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
 &lt;h3&gt;阶段二：使用存量数据创建索引&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;阶段二使用存量数据创建索引&#34;&gt;&lt;/span&gt;
@@ -293,10 +287,9 @@
     &lt;a href=&#34;#key-functions&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;heap_page_prune&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;heap_page_prune&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#heap_page_prune&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;h4&gt;&lt;code&gt;heap_page_prune_opt&lt;/code&gt;&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;heap_page_prune_opt&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#heap_page_prune_opt&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;Optionally prune and repair fragmentation in the specified page.&lt;/p&gt;
+  &lt;p&gt;Optionally prune and repair fragmentation in the specified page.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
-  
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;heap_page_prune_opt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
@@ -321,15 +314,12 @@
     &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
   &lt;/button&gt;
 &lt;/div&gt;
-
-  
 &lt;/div&gt;
 &lt;h4&gt;&lt;code&gt;heap_page_prune&lt;/code&gt;&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;heap_page_prune-1&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#heap_page_prune-1&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;Prune and repair fragmentation in the specified page.&lt;/p&gt;
+  &lt;p&gt;Prune and repair fragmentation in the specified page.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
-  
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;heap_page_prune&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
@@ -354,15 +344,12 @@
     &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
   &lt;/button&gt;
 &lt;/div&gt;
-
-  
 &lt;/div&gt;
 &lt;h4&gt;&lt;code&gt;heap_prune_chain&lt;/code&gt;&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;heap_prune_chain&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#heap_prune_chain&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;Prune specified line pointer or a HOT chain originating at line pointer.&lt;/p&gt;
+  &lt;p&gt;Prune specified line pointer or a HOT chain originating at line pointer.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
-  
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;heap_prune_chain&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
@@ -433,18 +420,15 @@
     &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
   &lt;/button&gt;
 &lt;/div&gt;
-
-  
 &lt;/div&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;heap_prune_record_redirect&lt;/code&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;code&gt;heap_prune_record_redirect&lt;/code&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h4&gt;&lt;code&gt;heap_page_prune_execute&lt;/code&gt;&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;heap_page_prune_execute&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#heap_page_prune_execute&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;Perform the actual page changes needed by heap_page_prune&lt;/p&gt;
+  &lt;p&gt;Perform the actual page changes needed by heap_page_prune&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
-  
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-C&#34; data-lang=&#34;C&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;heap_page_prune_execute&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
@@ -477,15 +461,12 @@
     &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
   &lt;/button&gt;
 &lt;/div&gt;
-
-  
 &lt;/div&gt;
 &lt;h4&gt;search HOT chain&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;search-hot-chain&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#search-hot-chain&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h4&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;heap_hot_search_buffer&lt;/code&gt; search HOT chain for tuple satisfying snapshot&lt;/p&gt;
+  &lt;p&gt;&lt;code&gt;heap_hot_search_buffer&lt;/code&gt; search HOT chain for tuple satisfying snapshot&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
-  
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-C&#34; data-lang=&#34;C&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;bool&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;heap_hot_search_buffer&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
@@ -506,8 +487,6 @@
     &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
   &lt;/button&gt;
 &lt;/div&gt;
-
-  
 &lt;/div&gt;
 
       </description>
@@ -634,7 +613,6 @@
 &lt;p&gt;代码实现与上述有所差别：&lt;/p&gt;
 &lt;p&gt;“等待其他事务” 并不是通过巡检 &lt;code&gt;ProcArray&lt;/code&gt; 等方式实现，而是巧妙的使用了 &lt;code&gt;lmgr&lt;/code&gt; 层的 &lt;code&gt;WaitForLockers&lt;/code&gt; 实现：即等到没有连接持有该表的与 &lt;code&gt;ShareLock&lt;/code&gt; 相冲突的锁：&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
-  
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-C&#34; data-lang=&#34;C&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;/*
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt; * Now we must wait until no running transaction could have the table open
@@ -652,12 +630,9 @@
     &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
   &lt;/button&gt;
 &lt;/div&gt;
-
-  
 &lt;/div&gt;
 &lt;p&gt;（1）&lt;code&gt;SharedLock&lt;/code&gt;  与 &lt;code&gt;select&lt;/code&gt; 和 &lt;code&gt;select for update/share&lt;/code&gt; 相冲突，持有者两种锁时，都无法破坏 HOT 链。（2）当进程执行修改表的操作时，已经需要打开表获取 &lt;code&gt;relcache&lt;/code&gt; ，而在打开表操作时，会处理缓存失效信息。&lt;/p&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
-  
 
 &lt;pre&gt;&lt;code&gt;relation_open/try_relation_open -&amp;gt; LockRelationOid -&amp;gt; AcceptInvalidationMessages&lt;/code&gt;&lt;/pre&gt;&lt;div class=&#34;hextra-code-copy-btn-container hx-opacity-0 hx-transition group-hover/code:hx-opacity-100 hx-flex hx-gap-1 hx-absolute hx-m-[11px] hx-right-0 hx-top-0&#34;&gt;
   &lt;button
@@ -668,8 +643,6 @@
     &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
   &lt;/button&gt;
 &lt;/div&gt;
-
-  
 &lt;/div&gt;
 &lt;p&gt;&lt;img src=&#34;waitforlockers.png&#34; alt=&#34;image-20240910080804584&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
 &lt;h2&gt;阶段二：使用存量数据创建索引&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;阶段二使用存量数据创建索引&#34;&gt;&lt;/span&gt;
@@ -703,7 +676,7 @@
     &lt;a href=&#34;#draft&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;h3&gt;Official document&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;official-document&#34;&gt;&lt;/span&gt;
     &lt;a href=&#34;#official-document&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;a href=&#34;https://www.postgresql.org/docs/current/sql-createindex.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.postgresql.org/docs/current/sql-createindex.html&lt;/a&gt;&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Creating an index can interfere with regular operation of a database. Normally PostgreSQL locks the table to be indexed against writes and performs the entire index build with a single scan of the table. Other transactions can still read the table, but if they try to insert, update, or delete rows in the table they will block until the index build is finished. This could have a severe effect if the system is a live production database. Very large tables can take many hours to be indexed, and even for smaller tables, an index build can lock out writers for periods that are unacceptably long for a production system.&lt;/p&gt;
+  &lt;p&gt;Creating an index can interfere with regular operation of a database. Normally PostgreSQL locks the table to be indexed against writes and performs the entire index build with a single scan of the table. Other transactions can still read the table, but if they try to insert, update, or delete rows in the table they will block until the index build is finished. This could have a severe effect if the system is a live production database. Very large tables can take many hours to be indexed, and even for smaller tables, an index build can lock out writers for periods that are unacceptably long for a production system.&lt;/p&gt;
 &lt;p&gt;PostgreSQL supports building indexes without locking out writes. This method is invoked by specifying the &lt;code&gt;CONCURRENTLY&lt;/code&gt; option of &lt;code&gt;CREATE INDEX&lt;/code&gt;. When this option is used, PostgreSQL must perform two scans of the table, and in addition it must wait for all existing transactions that could potentially modify or use the index to terminate. Thus this method requires more total work than a standard index build and takes significantly longer to complete. However, since it allows normal operations to continue while the index is built, this method is useful for adding new indexes in a production environment. Of course, the extra CPU and I/O load imposed by the index creation might slow other operations.&lt;/p&gt;
 &lt;p&gt;In a concurrent index build, &lt;strong&gt;the index is actually entered as an “invalid” index into the system catalogs in one transaction, then two table scans occur in two more transactions&lt;/strong&gt;. Before each table scan, the index build must wait for existing transactions that have modified the table to terminate. &lt;strong&gt;After the second scan, the index build must wait for any transactions that have a snapshot (see &lt;a href=&#34;https://www.postgresql.org/docs/current/mvcc.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Chapter 13&lt;/a&gt;) predating the second scan to terminate&lt;/strong&gt;, including transactions used by any phase of concurrent index builds on other tables, if the indexes involved are partial or have columns that are not simple column references. Then finally the index can be marked “valid” and ready for use, and the &lt;code&gt;CREATE INDEX&lt;/code&gt; command terminates. Even then, however, the index may not be immediately usable for queries: in the worst case, it cannot be used as long as transactions exist that predate the start of the index build.&lt;/p&gt;
 &lt;p&gt;If a problem arises while scanning the table, such as a deadlock or a uniqueness violation in a unique index, the &lt;code&gt;CREATE INDEX&lt;/code&gt; command will fail but leave behind an “invalid” index. This index will be ignored for querying purposes because it might be incomplete; however it will still consume update overhead. The psql &lt;code&gt;\\d&lt;/code&gt; command will report such an index as &lt;code&gt;INVALID&lt;/code&gt;:&lt;/p&gt;
@@ -721,7 +694,6 @@
 &lt;li&gt;merge 是怎么实现的？&lt;/li&gt;
 &lt;/ul&gt;
 &lt;div class=&#34;hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code&#34;&gt;
-  
 
 &lt;div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt;/*
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cm&#34;&gt; * validate_index - support code for concurrent index builds
@@ -794,8 +766,6 @@
     &lt;div class=&#34;success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4&#34;&gt;&lt;/div&gt;
   &lt;/button&gt;
 &lt;/div&gt;
-
-  
 &lt;/div&gt;
 
       </description>

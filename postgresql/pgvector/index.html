@@ -10,41 +10,32 @@
 <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link fetchpriority="low" href="/site.webmanifest" rel="manifest" />
-
-  <title>PGVECTOR AND VECTOR DATABASE – Hextra</title>
-  <meta name="description" content="序言 pgvector是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。 PASE中提到，向量A" />
-
-  
-    <link rel="canonical" href="https://mobilephone724.github.io/postgresql/pgvector/" itemprop="url" />
-  
-
-  
+<title>PGVECTOR AND VECTOR DATABASE – Hextra</title>
+  <meta name="description" content="序言 pgvector是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。 PASE中提到，向量ANN算法包括4类" /><link rel="canonical" href="https://mobilephone724.github.io/postgresql/pgvector/" itemprop="url" />
 
 <meta property="og:title" content="PGVECTOR AND VECTOR DATABASE" />
-<meta property="og:description" content="序言 pgvector是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。 PASE中提到，向量A" />
+<meta property="og:description" content="序言
+    pgvector是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。
+PASE中提到，向量ANN算法包括4类" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://mobilephone724.github.io/postgresql/pgvector/" /><meta property="article:section" content="postgresql" />
 
 <meta property="article:modified_time" content="2024-09-08T21:48:07+08:00" />
 
-  
   <meta itemprop="name" content="PGVECTOR AND VECTOR DATABASE">
-  <meta itemprop="description" content="序言 pgvector是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。 PASE中提到，向量A">
+  <meta itemprop="description" content="序言 pgvector是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。 PASE中提到，向量ANN算法包括4类">
   <meta itemprop="dateModified" content="2024-09-08T21:48:07+08:00">
   <meta itemprop="wordCount" content="4091">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="PGVECTOR AND VECTOR DATABASE">
-  <meta name="twitter:description" content="序言 pgvector是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。 PASE中提到，向量A">
+  <meta name="twitter:description" content="序言 pgvector是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。 PASE中提到，向量ANN算法包括4类">
 
-    <link rel="preload" href="/css/compiled/main.min.c1fe2c80102c9dc9ddc66184191e646769052d36a21b38ac5ab5077713cf7a81.css" as="style" integrity="sha256-wf4sgBAsncndxmGEGR5kZ2kFLTaiGzisWrUHdxPPeoE=" />
-    <link href="/css/compiled/main.min.c1fe2c80102c9dc9ddc66184191e646769052d36a21b38ac5ab5077713cf7a81.css" rel="stylesheet" integrity="sha256-wf4sgBAsncndxmGEGR5kZ2kFLTaiGzisWrUHdxPPeoE=" />
+    <link rel="preload" href="/css/compiled/main.min.9a2a4c6e602ce30f10fa86afbb1ce624db853742eeccc2e954764594ee62c18f.css" as="style" integrity="sha256-mipMbmAs4w8Q&#43;oavuxzmJNuFN0LuzMLpVHZFlO5iwY8=" />
+    <link href="/css/compiled/main.min.9a2a4c6e602ce30f10fa86afbb1ce624db853742eeccc2e954764594ee62c18f.css" rel="stylesheet" integrity="sha256-mipMbmAs4w8Q&#43;oavuxzmJNuFN0LuzMLpVHZFlO5iwY8=" />
 
 
 
   <link href="/css/custom.min.e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css" rel="stylesheet" integrity="sha256-47DEQpj8HBSa&#43;/TImW&#43;5JCeuQeRkm5NMpJWZG3hSuFU=" />
-
-
-
 
 
   <script>
@@ -77,9 +68,9 @@
 
   <nav class="hx-mx-auto hx-flex hx-items-center hx-justify-end hx-gap-2 hx-h-16 hx-px-6 hx-max-w-[90rem]">
     <a class="hx-flex hx-items-center hover:hx-opacity-75 ltr:hx-mr-auto rtl:hx-ml-auto" href="/">
-        <img class="hx-block dark:hx-hidden" src="/images/logo.svg" alt="Hextra" height="20" width="40" />
-        <img class="hx-hidden dark:hx-block" src="/images/logo-dark.svg" alt="Hextra" height="20" width="40" />
-        <span class="hx-mx-2 hx-font-extrabold hx-inline hx-select-none" title="Hextra">Hextra</span>
+        <img class="hx-mr-2 hx-block dark:hx-hidden" src="/images/logo.svg" alt="Hextra" height="20" width="40" />
+        <img class="hx-mr-2 hx-hidden dark:hx-block" src="/images/logo-dark.svg" alt="Hextra" height="20" width="40" />
+        <span class="hx-mr-2 hx-font-extrabold hx-inline hx-select-none" title="Hextra">Hextra</span>
     </a><div class="search-wrapper hx-relative md:hx-w-64">
   <div class="hx-relative hx-flex hx-items-center hx-text-gray-900 contrast-more:hx-text-gray-800 dark:hx-text-gray-300 contrast-more:dark:hx-text-gray-300">
     <input
@@ -104,7 +95,7 @@
   </div>
 </div>
 
-          <a class="hx-p-2 hx-text-current" target="_blank" rel="noreferer" href="https://github.com/mobilephone724/hugoBlog" title="GitHub"><svg height=24 fill="currentColor" viewBox="3 3 18 18">
+          <a class="hx-p-2 hx-text-current" target="_blank" rel="noreferrer" href="https://github.com/mobilephone724/hugoBlog" title="GitHub"><svg height=24 fill="currentColor" viewBox="3 3 18 18">
   <path d="M12 3C7.0275 3 3 7.12937 3 12.2276C3 16.3109 5.57625 19.7597 9.15374 20.9824C9.60374 21.0631 9.77249 20.7863 9.77249 20.5441C9.77249 20.3249 9.76125 19.5982 9.76125 18.8254C7.5 19.2522 6.915 18.2602 6.735 17.7412C6.63375 17.4759 6.19499 16.6569 5.8125 16.4378C5.4975 16.2647 5.0475 15.838 5.80124 15.8264C6.51 15.8149 7.01625 16.4954 7.18499 16.7723C7.99499 18.1679 9.28875 17.7758 9.80625 17.5335C9.885 16.9337 10.1212 16.53 10.38 16.2993C8.3775 16.0687 6.285 15.2728 6.285 11.7432C6.285 10.7397 6.63375 9.9092 7.20749 9.26326C7.1175 9.03257 6.8025 8.08674 7.2975 6.81794C7.2975 6.81794 8.05125 6.57571 9.77249 7.76377C10.4925 7.55615 11.2575 7.45234 12.0225 7.45234C12.7875 7.45234 13.5525 7.55615 14.2725 7.76377C15.9937 6.56418 16.7475 6.81794 16.7475 6.81794C17.2424 8.08674 16.9275 9.03257 16.8375 9.26326C17.4113 9.9092 17.76 10.7281 17.76 11.7432C17.76 15.2843 15.6563 16.0687 13.6537 16.2993C13.98 16.5877 14.2613 17.1414 14.2613 18.0065C14.2613 19.2407 14.25 20.2326 14.25 20.5441C14.25 20.7863 14.4188 21.0746 14.8688 20.9824C16.6554 20.364 18.2079 19.1866 19.3078 17.6162C20.4077 16.0457 20.9995 14.1611 21 12.2276C21 7.12937 16.9725 3 12 3Z"></path>
 </svg>
 <span class="hx-sr-only">GitHub</span>
@@ -250,6 +241,24 @@
     href="/computer_science/zero2rsa/"
     
   >ZERO TO RSA
+    </a>
+              
+            </li></ul>
+      </div></li>
+          <li class=""><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/daily_advance_of_a_pawn/"
+    
+  >日拱一卒
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx-h-[18px] hx-min-w-[18px] hx-rounded-sm hx-p-0.5 hover:hx-bg-gray-800/5 dark:hover:hx-bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx-origin-center hx-transition-transform rtl:-hx-rotate-180"></path></svg></span>
+    </a><div class="ltr:hx-pr-0 hx-overflow-hidden">
+        <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/post/20250301-1r5xzc.html"
+    
+  >2025-03-01
     </a>
               
             </li></ul>
@@ -467,12 +476,11 @@
       <li class="[word-break:break-word] hx-mt-5 hx-mb-2 hx-px-2 hx-py-1.5 hx-text-sm hx-font-semibold hx-text-gray-900 first:hx-mt-0 dark:hx-text-gray-100">
         <span class="hx-cursor-default">More</span>
       </li>
-    
-      <li><a
+    <li><a
     class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
     href="https://www.postgresql.org/list/"
-    target="_blank" rel="noreferer"
+    target="_blank" rel="noreferrer"
   >PostgreSQL Mail List</a></li>
     
     </ul>
@@ -583,6 +591,24 @@
     href="/computer_science/zero2rsa/"
     
   >ZERO TO RSA
+    </a>
+              
+            </li></ul>
+      </div></li>
+          <li class=""><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/daily_advance_of_a_pawn/"
+    
+  >日拱一卒
+        <span class="hextra-sidebar-collapsible-button"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="hx-h-[18px] hx-min-w-[18px] hx-rounded-sm hx-p-0.5 hover:hx-bg-gray-800/5 dark:hover:hx-bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="hx-origin-center hx-transition-transform rtl:-hx-rotate-180"></path></svg></span>
+    </a><div class="ltr:hx-pr-0 hx-overflow-hidden">
+        <ul class='hx-relative hx-flex hx-flex-col hx-gap-1 before:hx-absolute before:hx-inset-y-1 before:hx-w-px before:hx-bg-gray-200 before:hx-content-[""] ltr:hx-ml-3 ltr:hx-pl-3 ltr:before:hx-left-0 rtl:hx-mr-3 rtl:hx-pr-3 rtl:before:hx-right-0 dark:before:hx-bg-neutral-800'><li class="hx-flex hx-flex-col "><a
+    class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
+      hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
+    href="/post/20250301-1r5xzc.html"
+    
+  >2025-03-01
     </a>
               
             </li></ul>
@@ -762,12 +788,11 @@
       <li class="[word-break:break-word] hx-mt-5 hx-mb-2 hx-px-2 hx-py-1.5 hx-text-sm hx-font-semibold hx-text-gray-900 first:hx-mt-0 dark:hx-text-gray-100">
         <span class="hx-cursor-default">More</span>
       </li>
-    
-      <li><a
+    <li><a
     class="hx-flex hx-items-center hx-justify-between hx-gap-2 hx-cursor-pointer hx-rounded hx-px-2 hx-py-1.5 hx-text-sm hx-transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
       hx-text-gray-500 hover:hx-bg-gray-100 hover:hx-text-gray-900 contrast-more:hx-border contrast-more:hx-border-transparent contrast-more:hx-text-gray-900 contrast-more:hover:hx-border-gray-900 dark:hx-text-neutral-400 dark:hover:hx-bg-primary-100/5 dark:hover:hx-text-gray-50 contrast-more:dark:hx-text-gray-50 contrast-more:dark:hover:hx-border-gray-50"
     href="https://www.postgresql.org/list/"
-    target="_blank" rel="noreferer"
+    target="_blank" rel="noreferrer"
   >PostgreSQL Mail List</a></li>
     
       </ul>
@@ -1083,7 +1108,6 @@ Given an initial set of $k$ means $m_1^{1}, \dots , m_k^{(1)}$ (see below), the 
 <li>构建数据页（&lsquo;data pages&rsquo;）</li>
 </ol>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>ivfflatbuild
 	BuildIndex
@@ -1101,8 +1125,6 @@ Given an initial set of $k$ means $m_1^{1}, \dots , m_k^{(1)}$ (see below), the 
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h6>计算中心点<span class="hx-absolute -hx-mt-20" id="计算中心点"></span>
     <a href="#%e8%ae%a1%e7%ae%97%e4%b8%ad%e5%bf%83%e7%82%b9" class="subheading-anchor" aria-label="Permalink for this section"></a></h6><ol>
@@ -1114,7 +1136,6 @@ Given an initial set of $k$ means $m_1^{1}, \dots , m_k^{(1)}$ (see below), the 
 </li>
 </ol>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>ComputeCenters
 	SampleRows
@@ -1153,12 +1174,9 @@ SampleCallback
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h6>构建元信息页<span class="hx-absolute -hx-mt-20" id="构建元信息页"></span>
     <a href="#%e6%9e%84%e5%bb%ba%e5%85%83%e4%bf%a1%e6%81%af%e9%a1%b5" class="subheading-anchor" aria-label="Permalink for this section"></a></h6><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>CreateMetaPage # info about meta information
 	IvfflatNewBuffer
@@ -1172,13 +1190,10 @@ SampleCallback
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h6>构建中心点页<span class="hx-absolute -hx-mt-20" id="构建中心点页"></span>
     <a href="#%e6%9e%84%e5%bb%ba%e4%b8%ad%e5%bf%83%e7%82%b9%e9%a1%b5" class="subheading-anchor" aria-label="Permalink for this section"></a></h6><p>当一个页的剩余空间不够时，使用字段<code>nextblkno</code>指向下一个页</p>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>typedef struct IvfflatPageOpaqueData
 {
@@ -1206,12 +1221,9 @@ CreateListPages # info about center infomation
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h6>构建数据页<span class="hx-absolute -hx-mt-20" id="构建数据页"></span>
     <a href="#%e6%9e%84%e5%bb%ba%e6%95%b0%e6%8d%ae%e9%a1%b5" class="subheading-anchor" aria-label="Permalink for this section"></a></h6><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>CreateEntryPages # omit parallel optimization here
 	AssignTuples # Scan table for tuples to index
@@ -1233,13 +1245,10 @@ CreateListPages # info about center infomation
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h5>index scan<span class="hx-absolute -hx-mt-20" id="index-scan"></span>
     <a href="#index-scan" class="subheading-anchor" aria-label="Permalink for this section"></a></h5><h6>begin scan<span class="hx-absolute -hx-mt-20" id="begin-scan"></span>
     <a href="#begin-scan" class="subheading-anchor" aria-label="Permalink for this section"></a></h6><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>ivfflatbeginscan
     IvfflatGetMetaPageInfo(index, &amp;lists, &amp;dimensions);  # Get lists and dimensions from metapage
@@ -1252,12 +1261,9 @@ CreateListPages # info about center infomation
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h6>get tupele<span class="hx-absolute -hx-mt-20" id="get-tupele"></span>
     <a href="#get-tupele" class="subheading-anchor" aria-label="Permalink for this section"></a></h6><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>ivfflatgettuple
     if (first) # try to get the first tuple
@@ -1281,8 +1287,6 @@ CreateListPages # info about center infomation
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h2>HNSW<span class="hx-absolute -hx-mt-20" id="hnsw"></span>
     <a href="#hnsw" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>概览<span class="hx-absolute -hx-mt-20" id="概览-1"></span>
@@ -1317,7 +1321,6 @@ CreateListPages # info about center infomation
 <h5>NSW的构建<span class="hx-absolute -hx-mt-20" id="nsw的构建"></span>
     <a href="#nsw%e7%9a%84%e6%9e%84%e5%bb%ba" class="subheading-anchor" aria-label="Permalink for this section"></a></h5><p>构建NSW的算法如下（此处忽略边角情况以方便理解</p>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>INPUT: a set of points S
 OUTPUT: graph G
@@ -1379,12 +1382,9 @@ RETURN G</code></pre><div class="hextra-code-copy-btn-container hx-opacity-0 hx-
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h5>NSW的搜索<span class="hx-absolute -hx-mt-20" id="nsw的搜索"></span>
     <a href="#nsw%e7%9a%84%e6%90%9c%e7%b4%a2" class="subheading-anchor" aria-label="Permalink for this section"></a></h5><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>OUTPUT: graph G, point P
 RETURN K nearest neighbors
@@ -1422,8 +1422,6 @@ RETURN candidates</code></pre><div class="hextra-code-copy-btn-container hx-opac
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h4>HNSW —— NSW的进化<span class="hx-absolute -hx-mt-20" id="hnsw--nsw的进化"></span>
     <a href="#hnsw--nsw%e7%9a%84%e8%bf%9b%e5%8c%96" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>显然，上述过程最大的问题之一为：</p>
@@ -1436,7 +1434,6 @@ H(hierarchy)NSW 为解决这个问题，从NSW图（layer=0）中选出部分点
 </ol>
 <p>为了构建一个这样的图，我们在插入一个点时。</p>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>INPUT: point P, a series of NSW graph G[]
 
@@ -1458,12 +1455,9 @@ FOR l from cur_layer to 0
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <p>同理在搜索时</p>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>INPUT: point P, a series of NSW graph G[]
 
@@ -1486,14 +1480,11 @@ return closest_points</code></pre><div class="hextra-code-copy-btn-container hx-
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h3>PGVECTOR中的算法实现<span class="hx-absolute -hx-mt-20" id="pgvector中的算法实现"></span>
     <a href="#pgvector%e4%b8%ad%e7%9a%84%e7%ae%97%e6%b3%95%e5%ae%9e%e7%8e%b0" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><h4>INSERT<span class="hx-absolute -hx-mt-20" id="insert"></span>
     <a href="#insert" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/HNSW_INSERT_ALGORITH.2024_02_12_1707672412.png" alt="" loading="lazy" /></p>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>/*
  * Algorithm 1 from paper: update graph by inserting an element
@@ -1545,13 +1536,10 @@ HnswInsertElement(HnswElement element, HnswElement entryPoint,
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h4>search layer<span class="hx-absolute -hx-mt-20" id="search-layer"></span>
     <a href="#search-layer" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/HNSW_SEARCH_LAYER_ALGORITHM.2024_02_12_1707672421.png" alt="" loading="lazy" /></p>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>/*
  * Algorithm 2 from paper: search this layer with specifiyed enter points to
@@ -1621,8 +1609,6 @@ HnswSearchLayer(Datum q, List *ep, int ef, int lc, Relation index,
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h5>pairing heap<span class="hx-absolute -hx-mt-20" id="pairing-heap"></span>
     <a href="#pairing-heap" class="subheading-anchor" aria-label="Permalink for this section"></a></h5><p><a href="https://oi-wiki.org/ds/pairing-heap/" target="_blank" rel="noopener">配对堆 - OI Wiki (oi-wiki.org)</a></p>
@@ -1634,7 +1620,6 @@ HnswSearchLayer(Datum q, List *ep, int ef, int lc, Relation index,
 <h4>select neighbors<span class="hx-absolute -hx-mt-20" id="select-neighbors"></span>
     <a href="#select-neighbors" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/HNSW_SELECT_NEIGHBORS_ALGORITHMS.2024_02_12_1707672431.png" alt="" loading="lazy" /></p>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>/*
  * Algorithm 4: select neighbors starting with specified candidates
@@ -1686,12 +1671,9 @@ SelectNeighbors(List *c, int m, int lc, FmgrInfo *procinfo, Oid collation,
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h4>data structure<span class="hx-absolute -hx-mt-20" id="data-structure"></span>
     <a href="#data-structure" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">HnswElementData</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
@@ -1725,8 +1707,6 @@ SelectNeighbors(List *c, int m, int lc, FmgrInfo *procinfo, Oid collation,
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <h5>底层实现中的问题<span class="hx-absolute -hx-mt-20" id="底层实现中的问题"></span>
     <a href="#%e5%ba%95%e5%b1%82%e5%ae%9e%e7%8e%b0%e4%b8%ad%e7%9a%84%e9%97%ae%e9%a2%98" class="subheading-anchor" aria-label="Permalink for this section"></a></h5><ol>
@@ -1740,20 +1720,20 @@ SelectNeighbors(List *c, int m, int lc, FmgrInfo *procinfo, Oid collation,
     <a href="#vector-database-%e8%b0%83%e7%a0%94" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>qdrant<span class="hx-absolute -hx-mt-20" id="qdrant"></span>
     <a href="#qdrant" class="subheading-anchor" aria-label="Permalink for this section"></a></h3><p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/vector-database.2024_02_12_1707672561.png" alt="image-20231007080940352" loading="lazy" /></p>
 <blockquote>
-<p>Vector databases are optimized for <strong>storing</strong> and <strong>querying</strong> these high-dimensional vectors efficiently, and they often using specialized data structures and indexing techniques such as Hierarchical Navigable Small World (HNSW) – which is used to implement Approximate Nearest Neighbors – and Product Quantization, among others.</p>
+  <p>Vector databases are optimized for <strong>storing</strong> and <strong>querying</strong> these high-dimensional vectors efficiently, and they often using specialized data structures and indexing techniques such as Hierarchical Navigable Small World (HNSW) – which is used to implement Approximate Nearest Neighbors – and Product Quantization, among others.</p>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/image-20231007081700863.2024_02_12_1707672473.png" alt="image-20231007081700863" loading="lazy" /></p>
 <h4>算法与存储<span class="hx-absolute -hx-mt-20" id="算法与存储"></span>
     <a href="#%e7%ae%97%e6%b3%95%e4%b8%8e%e5%ad%98%e5%82%a8" class="subheading-anchor" aria-label="Permalink for this section"></a></h4><p>qdrant使用 <code>hnsw</code> 算法</p>
 <blockquote>
-<p>A key feature of Qdrant is the effective combination of <strong>vector</strong> and <strong>traditional</strong> indexes. It is essential to have this because for vector search to work effectively with filters, having vector index only is not enough. In simpler terms, a vector index speeds up vector search, and payload indexes speed up filtering.</p>
+  <p>A key feature of Qdrant is the effective combination of <strong>vector</strong> and <strong>traditional</strong> indexes. It is essential to have this because for vector search to work effectively with filters, having vector index only is not enough. In simpler terms, a vector index speeds up vector search, and payload indexes speed up filtering.</p>
 </blockquote>
 <p>payload 索引仅用于过滤，我们关注向量索引部分</p>
 <blockquote>
-<p>Qdrant currently only uses HNSW as a vector index.</p>
+  <p>Qdrant currently only uses HNSW as a vector index.</p>
 </blockquote>
 <blockquote>
-<p>All data within one collection is divided into segments. Each segment has its independent vector and payload storage as well as indexes.</p>
+  <p>All data within one collection is divided into segments. Each segment has its independent vector and payload storage as well as indexes.</p>
 </blockquote>
 <h2>附录<span class="hx-absolute -hx-mt-20" id="附录"></span>
     <a href="#%e9%99%84%e5%bd%95" class="subheading-anchor" aria-label="Permalink for this section"></a></h2><h3>trianlge-inequality-Kmeans<span class="hx-absolute -hx-mt-20" id="trianlge-inequality-kmeans"></span>
@@ -1814,7 +1794,6 @@ SelectNeighbors(List *c, int m, int lc, FmgrInfo *procinfo, Oid collation,
 <li>实现</li>
 </ul>
 <div class="hextra-code-block hx-relative hx-mt-6 first:hx-mt-0 hx-group/code">
-  
 
 <pre><code>samples = set[0:n-1]
 for i in (n, M)
@@ -1828,8 +1807,6 @@ for i in (n, M)
     <div class="success-icon hx-hidden group-[.copied]/copybtn:hx-block hx-pointer-events-none hx-h-4 hx-w-4"></div>
   </button>
 </div>
-
-  
 </div>
 <p>参考文档 <a href="https://rosettacode.org/wiki/Knuth%27s_algorithm_S" target="_blank" rel="noopener">Knuth&rsquo;s algorithm S - Rosetta Code</a> 。</p>
 <p>社区讨论 [PostgreSQL: Re: <a href="https://www.postgresql.org/message-id/8ftr60l1ebgcable559ogr2tlb6nuujllq@email.aon.at" target="_blank" rel="noopener">GENERAL] Large DB</a></p>
@@ -1852,39 +1829,42 @@ for i in (n, M)
   </div>
 
       <footer class="hextra-footer hx-bg-gray-100 hx-pb-[env(safe-area-inset-bottom)] dark:hx-bg-neutral-900 print:hx-bg-transparent"><div
-    class="hx-max-w-screen-xl hx-mx-auto hx-flex hx-justify-center hx-py-12 hx-pl-[max(env(safe-area-inset-left),1.5rem)] hx-pr-[max(env(safe-area-inset-right),1.5rem)] hx-text-gray-600 dark:hx-text-gray-400 md:hx-justify-start"
-  >
-    <div class="hx-flex hx-w-full hx-flex-col hx-items-center sm:hx-items-start"><div class="hx-font-semibold"><a class="hx-flex hx-text-sm hx-items-center hx-gap-1 hx-text-current" target="_blank" rel="noopener noreferrer" title="Hextra GitHub Homepage" href="https://github.com/imfing/hextra">
+      class="hextra-custom-footer hx-max-w-screen-xl hx-pl-[max(env(safe-area-inset-left),1.5rem)] hx-pr-[max(env(safe-area-inset-right),1.5rem)] hx-text-gray-600 dark:hx-text-gray-400"
+    ></div><div
+        class="hx-max-w-screen-xl hx-mx-auto hx-flex hx-justify-center hx-py-12 hx-pl-[max(env(safe-area-inset-left),1.5rem)] hx-pr-[max(env(safe-area-inset-right),1.5rem)] hx-text-gray-600 dark:hx-text-gray-400 md:hx-justify-start"
+      >
+        <div class="hx-flex hx-w-full hx-flex-col hx-items-center sm:hx-items-start"><div class="hx-font-semibold"><a class="hx-flex hx-text-sm hx-items-center hx-gap-1 hx-text-current" target="_blank" rel="noopener noreferrer" title="Hextra GitHub Homepage" href="https://github.com/imfing/hextra">
     <span>由 Hextra 驱动<svg height=1em class="hx-inline-block ltr:hx-ml-1 rtl:hx-mr-1 hx-align-[-2.5px]" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="m 105.50024,22.224647 c -9.59169,-5.537563 -21.40871,-5.537563 -31.000093,0 L 39.054693,42.689119 C 29.463353,48.226675 23.55484,58.460531 23.55484,69.535642 v 40.928918 c 0,11.07542 5.908513,21.3092 15.499853,26.84652 l 35.445453,20.46446 c 9.591313,5.53732 21.408404,5.53732 31.000094,0 l 35.44507,-20.46446 c 9.59131,-5.53732 15.49985,-15.7711 15.49985,-26.84652 V 69.535642 c 0,-11.075111 -5.90854,-21.308967 -15.49985,-26.846523 z M 34.112797,85.737639 c -1.384445,2.397827 -1.384445,5.352099 0,7.749927 l 24.781554,42.922974 c 1.38437,2.39783 3.942853,3.87496 6.711592,3.87496 h 49.563107 c 2.76905,0 5.3273,-1.47713 6.71144,-3.87496 l 24.78194,-42.922974 c 1.38414,-2.397828 1.38414,-5.3521 0,-7.749927 L 121.88049,42.814746 c -1.38414,-2.397828 -3.94239,-3.874964 -6.71144,-3.874964 H 65.605944 c -2.768739,0 -5.327223,1.477059 -6.711592,3.874964 z" style="stroke-width:0.774993" /></svg></span>
-  </a></div><div class="hx-mt-6 hx-text-xs">© 2024 Hextra Project.</div>
-    </div>
-  </div>
-</footer>
+  </a></div><div class="hx-mt-6 hx-text-xs">© 2025 Hextra Project.</div></div>
+      </div></footer>
     
-    <script defer src="/js/main.min.998f7d6b2520d6d9875145cbe14b35964b365b44b3b1bfa6b797a74a9c173b07.js" integrity="sha256-mY99ayUg1tmHUUXL4Us1lks2W0Szsb&#43;mt5enSpwXOwc="></script>
-
-
+    <script defer src="/js/main.min.0942239592f0795dc7213dd1057fd229d7edc19c0ef1a285396eb292d9ca9842.js" integrity="sha256-CUIjlZLweV3HIT3RBX/SKdftwZwO8aKFOW6yktnKmEI="></script>
 <script defer src="/lib/flexsearch/flexsearch.bundle.min.0425860527cc9968f9f049421c7a56b39327d475e2e3a8f550416be3a9134327.js" integrity="sha256-BCWGBSfMmWj58ElCHHpWs5Mn1HXi46j1UEFr46kTQyc="></script>
-    <script defer src="/zh-cn.search.min.8ba6fec238dfec5b38824b4c8d7153cd98d1f0348ee98934dea7320dca0e9694.js" integrity="sha256-i6b&#43;wjjf7Fs4gktMjXFTzZjR8DSO6Yk03qcyDcoOlpQ="></script>
+    <script defer src="/zh-cn.search.min.034b7ec9c28f572c223768a7e77f619157ad09c73dc6b3ce2314a73136bf596d.js" integrity="sha256-A0t&#43;ycKPVywiN2in539hkVetCcc9xrPOIxSnMTa/WW0="></script>
 <link type="text/css" rel="stylesheet" href="/lib/katex/katex.min.7e5db7914b97e596a36c1abb67ccc7f174f8bb71d38c9a88c55b262ed1737f97.css" integrity="sha256-fl23kUuX5ZajbBq7Z8zH8XT4u3HTjJqIxVsmLtFzf5c=" />
-  <script defer src="/lib/katex/katex.min.9f45307c5794ed247a0d095f3a62e52ef2215a67b2327203a7fd919959ae79d1.js" integrity="sha256-n0UwfFeU7SR6DQlfOmLlLvIhWmeyMnIDp/2RmVmuedE="></script>
-  <script defer src="/lib/katex/auto-render.min.7b57d427ac6270677daf8d8380ded2cc73336f9149a167b8e1fe0d6ef66604ae.js" integrity="sha256-e1fUJ6xicGd9r42DgN7SzHMzb5FJoWe44f4NbvZmBK4="></script>
-  <script defer src="/lib/katex/mhchem.min.f0ca03df194b8c3d6017ff455db6a0ef98857905663fa311a6cded788b15340b.js" integrity="sha256-8MoD3xlLjD1gF/9FXbag75iFeQVmP6MRps3teIsVNAs="></script>
-  <script>
-    
-    document.addEventListener("DOMContentLoaded", function () {
-      renderMathInElement(document.body, {
-        delimiters: [
-          { left: "$$", right: "$$", display: true },
-          { left: "$", right: "$", display: false },
-          { left: "\\(", right: "\\)", display: false },
-          { left: "\\[", right: "\\]", display: true },
-        ],
-        throwOnError: false,
-      });
+<script defer src="/lib/katex/katex.min.9f45307c5794ed247a0d095f3a62e52ef2215a67b2327203a7fd919959ae79d1.js" integrity="sha256-n0UwfFeU7SR6DQlfOmLlLvIhWmeyMnIDp/2RmVmuedE="></script>
+<script defer src="/lib/katex/auto-render.min.7b57d427ac6270677daf8d8380ded2cc73336f9149a167b8e1fe0d6ef66604ae.js" integrity="sha256-e1fUJ6xicGd9r42DgN7SzHMzb5FJoWe44f4NbvZmBK4="></script>
+<script defer src="/lib/katex/mhchem.min.f0ca03df194b8c3d6017ff455db6a0ef98857905663fa311a6cded788b15340b.js" integrity="sha256-8MoD3xlLjD1gF/9FXbag75iFeQVmP6MRps3teIsVNAs="></script>
+<script>
+  
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\begin{equation}", right: "\\end{equation}", display: true },
+        {left: "\\begin{align}", right: "\\end{align}", display: true},
+        {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+        {left: "\\begin{gather}", right: "\\end{gather}", display: true},
+        {left: "\\begin{CD}", right: "\\end{CD}", display: true},
+        { left: "\\[", right: "\\]", display: true },
+      ],
+      throwOnError: false,
     });
-  </script>
-
+  });
+</script>
 
   </body>
 </html>
