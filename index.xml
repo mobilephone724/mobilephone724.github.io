@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>mobilephone724 on PaperMod</title>
-    <link>http://localhost:1313/</link>
+    <link>https://mobilephone724.github.io/</link>
     <description>Recent content in mobilephone724 on PaperMod</description>
     <image>
       <title>PaperMod</title>
-      <url>http://localhost:1313/images/papermod-cover.png</url>
-      <link>http://localhost:1313/images/papermod-cover.png</link>
+      <url>https://mobilephone724.github.io/images/papermod-cover.png</url>
+      <link>https://mobilephone724.github.io/images/papermod-cover.png</link>
     </image>
     <generator>Hugo -- 0.127.0</generator>
     <language>en</language>
     <copyright>PaperMod Contributors</copyright>
     <lastBuildDate>Sat, 01 Mar 2025 15:27:33 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mobilephone724.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SLRU</title>
-      <link>http://localhost:1313/article/slru/</link>
+      <link>https://mobilephone724.github.io/article/slru/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/slru/</guid>
+      <guid>https://mobilephone724.github.io/article/slru/</guid>
       <description>本文主要为SLRU本身的结构解读。
 简述 slru用来干什么？ slru是一个简单的buffer管理模块，simple slru 有了buffer pool manager，为什么还要slru？ bpm管理通用的page，比如heap，vm等 slru最大的特点就是lru，非常适合处理xid这样，递增的信息。 下面的代码分析基于pg15 存储结构 与bpm不同，通过slru管理的page，其文件大小固定，一个文件有32个page，一个page有8KB，故一个文件最大为256K。
 与WAL不同，WAL文件的大小在创建时就已经确定为16M，与WAL文件重用保持一致，而slru的文件，先在内存中产生相应的page，再会去落盘。
@@ -26,26 +26,26 @@
     </item>
     <item>
       <title>CLOG</title>
-      <link>http://localhost:1313/article/clog/</link>
+      <link>https://mobilephone724.github.io/article/clog/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/clog/</guid>
+      <guid>https://mobilephone724.github.io/article/clog/</guid>
       <description>Overview This chapter explains the content of clog
 clog(commit log), records the commit status of each transaction. The log exists both in memory mannaged by slru buffer and disk for durability. The commit status can be the four kinds below:
 #define TRANSACTION_STATUS_IN_PROGRESS	0x00 #define TRANSACTION_STATUS_COMMITTED	0x01 #define TRANSACTION_STATUS_ABORTED	0x02 #define TRANSACTION_STATUS_SUB_COMMITTED	0x03 In-Disk Representation Thinking that the commit status of each transaction composites an array clog[] and clog[xid] records the status, we can easily store the array to disk by the slru.</description>
     </item>
     <item>
       <title>hash join</title>
-      <link>http://localhost:1313/article/hashjoin/</link>
+      <link>https://mobilephone724.github.io/article/hashjoin/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/hashjoin/</guid>
+      <guid>https://mobilephone724.github.io/article/hashjoin/</guid>
       <description>high level view See Queries in PostgreSQL: 6. Hashing
 One-pass hash join Note that join in PostgreSql, we scan the right relation first, which means that the right relation is the &amp;ldquo;inner relation&amp;rdquo; and the left relation is the outer one. Two-pass hash join Since we can&amp;rsquo;t allocate as much memory as we want, instead of building a hash table of the entire table, PG split the tables to several batches where all tuples have the same hash value flag.</description>
     </item>
     <item>
       <title>Alice and Bob how to know whose number is bigger without giving away their own&#39;s</title>
-      <link>http://localhost:1313/archive/howtoknowwhoseisbigger/</link>
+      <link>https://mobilephone724.github.io/archive/howtoknowwhoseisbigger/</link>
       <pubDate>Fri, 14 Jan 2022 23:43:08 +0800</pubDate>
-      <guid>http://localhost:1313/archive/howtoknowwhoseisbigger/</guid>
+      <guid>https://mobilephone724.github.io/archive/howtoknowwhoseisbigger/</guid>
       <description>Definiteness： Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &amp;lt; j$ in the end(aside from their own values)
 Solution: Let $M$ be the set of all $N$-bit nonnegative integers
 Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$
@@ -53,23 +53,23 @@ Alice generates a public key from $Q_N$, called $E_a$, and the inverse function 
     </item>
     <item>
       <title>APUE/Chapter3: file and I/O</title>
-      <link>http://localhost:1313/archive/linux-file/</link>
+      <link>https://mobilephone724.github.io/archive/linux-file/</link>
       <pubDate>Fri, 14 Jan 2022 12:02:42 +0800</pubDate>
-      <guid>http://localhost:1313/archive/linux-file/</guid>
+      <guid>https://mobilephone724.github.io/archive/linux-file/</guid>
       <description>Hugo provides multiple built-in shortcodes for author convenience and to keep your markdown content clean.</description>
     </item>
     <item>
       <title>2025-03-01</title>
-      <link>http://localhost:1313/post/20250301-1r5xzc.html</link>
+      <link>https://mobilephone724.github.io/post/20250301-1r5xzc.html</link>
       <pubDate>Sat, 01 Mar 2025 15:14:45 +0800</pubDate>
-      <guid>http://localhost:1313/post/20250301-1r5xzc.html</guid>
+      <guid>https://mobilephone724.github.io/post/20250301-1r5xzc.html</guid>
       <description>Column-Oriented Storage Basic idea: Although fact tables are often over 100 columns wide, a typical data warehouse query only accesses 4 or 5 of them at one time (SELECT *​ queries are rarely needed for analytics) The idea behind column-oriented storage is simple: don’t store all the values from one row together, but store all the values from each column together instead. If each column</description>
     </item>
     <item>
       <title>Everyday PostgreSQL</title>
-      <link>http://localhost:1313/archive/every_data_pg/</link>
+      <link>https://mobilephone724.github.io/archive/every_data_pg/</link>
       <pubDate>Fri, 16 Aug 2024 23:45:50 +0800</pubDate>
-      <guid>http://localhost:1313/archive/every_data_pg/</guid>
+      <guid>https://mobilephone724.github.io/archive/every_data_pg/</guid>
       <description>0x01-8级锁的不对称性 2024-08-17 00:14:26 +0800
 用于创建索引的 SHARE LOCK，虽然和修改时需要的 ROW EXCL 锁冲突，却不和自己冲突。虽然创建索引时不能插入数据，但是可以创建其他索引。 SHARE 这个名字非常贴切。
 注意：create index 可以事务块中执行
@@ -77,9 +77,9 @@ test=# begin transaction; BEGIN test=*# insert into test values (1); INSERT 0 1 
     </item>
     <item>
       <title>&#34;-fwrapv&#34; option in gcc</title>
-      <link>http://localhost:1313/archive/fwrapv/</link>
+      <link>https://mobilephone724.github.io/archive/fwrapv/</link>
       <pubDate>Mon, 05 Aug 2024 21:30:13 +0800</pubDate>
-      <guid>http://localhost:1313/archive/fwrapv/</guid>
+      <guid>https://mobilephone724.github.io/archive/fwrapv/</guid>
       <description>c - What does -fwrapv do? - Stack Overflow
 -fwrapv tells the compiler that overflow of signed integer arithmetic must be treated as well-defined behavior, even though it is undefined in the C standard.
 It has two meaning full results:
@@ -87,9 +87,9 @@ INT_MAX + 1 is overflowed to INT_MIN correctly. This is almost the default behav
     </item>
     <item>
       <title>Number of Reversed Inode</title>
-      <link>http://localhost:1313/archive/reversed_inode/</link>
+      <link>https://mobilephone724.github.io/archive/reversed_inode/</link>
       <pubDate>Sat, 03 Aug 2024 17:13:10 +0800</pubDate>
-      <guid>http://localhost:1313/archive/reversed_inode/</guid>
+      <guid>https://mobilephone724.github.io/archive/reversed_inode/</guid>
       <description>0x0 what is inode From https://en.wikipedia.org/wiki/Inode
 The inode (index node) is a data structure in a Unix-style file system that describes a file-system object such as a file or a directory. Each inode stores the attributes and disk block locations of the object&amp;rsquo;s data
 From https://www.redhat.com/sysadmin/inodes-linux-filesystem
@@ -97,58 +97,58 @@ By definition, an inode is an index node. It serves as a unique identifier for a
     </item>
     <item>
       <title>constant recovery with undo</title>
-      <link>http://localhost:1313/article/constant_recovery/</link>
+      <link>https://mobilephone724.github.io/article/constant_recovery/</link>
       <pubDate>Sun, 07 Jul 2024 15:53:54 +0800</pubDate>
-      <guid>http://localhost:1313/article/constant_recovery/</guid>
+      <guid>https://mobilephone724.github.io/article/constant_recovery/</guid>
       <description>0x0 backgroud Even though ARIES simplifies the recovery process and allows it to be generic for all transactional operations, recovering the database to a consistent state requires undoing all operations performed by uncommitted transactions which makes the cost of recovery proportional to the work performed by these transactions. This significantly impacts database availability since recovering a long running transaction can take several hours.
 This paper describes the overall design of “Constant Time Recovery” (CTR)</description>
     </item>
     <item>
       <title>MESI AND MEMORY_BARRIER: paper reading</title>
-      <link>http://localhost:1313/article/mesi/</link>
+      <link>https://mobilephone724.github.io/article/mesi/</link>
       <pubDate>Sun, 16 Jun 2024 01:12:36 +0800</pubDate>
-      <guid>http://localhost:1313/article/mesi/</guid>
+      <guid>https://mobilephone724.github.io/article/mesi/</guid>
       <description>paper Introduction: Memory Barriers: a Hardware View for Software Hackers 0x0 why we need memory barrier In short, because reordering memory references allows much better performance, and so memory barriers are needed to force ordering in things like synchronization primitives whose correct operation depends on ordered memory references.
 0x1 Cache Structure 0x11 some cases of cache miss(not important) The cache miss means that the CPU will have to wait (or be “stalled”) for hundreds of cycles while the item is fetched from memory.</description>
     </item>
     <item>
       <title>roaring bitmap</title>
-      <link>http://localhost:1313/article/roaring_bitmap/</link>
+      <link>https://mobilephone724.github.io/article/roaring_bitmap/</link>
       <pubDate>Tue, 07 May 2024 21:04:38 +0800</pubDate>
-      <guid>http://localhost:1313/article/roaring_bitmap/</guid>
+      <guid>https://mobilephone724.github.io/article/roaring_bitmap/</guid>
       <description>0x0 Introduction A bitmap, also known as a bit array or bitset, is a data structure that represents a fixed-size sequence of bits. That is the value of the ith bit representing the existence of the the ith object. Bare bitmap can cost much memory according to the total substantial data size, even if we have stored little infomation. Roaring bitmap provide a new method to compress the bitmap structure.</description>
     </item>
     <item>
       <title>Build PostgreSQL From Source</title>
-      <link>http://localhost:1313/archive/build_from_source/</link>
+      <link>https://mobilephone724.github.io/archive/build_from_source/</link>
       <pubDate>Tue, 16 Apr 2024 23:09:39 +0800</pubDate>
-      <guid>http://localhost:1313/archive/build_from_source/</guid>
+      <guid>https://mobilephone724.github.io/archive/build_from_source/</guid>
       <description>Download through git See official docs for detail. Below is a simple example:
 export user=dev export src_dir=postgresql export build_dir=/home/${user}/build export data_dir=/home/${user}/data export superuser=postgres export defaultdb=test ${build_dir}/bin/pg_ctl -D ${data_dir} stop rm -rf ${build_dir} rm -rf ${data} cd ~ #start from home/${user} git clone https://git.postgresql.org/git/postgresql.git cd ${src_dir} git clean -xdf # may be too dangerous # delete for add some configures accordingly ./configure \ --prefix=${build_dir} \ --enable-cassert \ --with-tcl \ --with-perl \ --with-python \ --enable-debug \ --without-icu \ --with-openssl \ CC=/usr/bin/gcc \ CFLAGS=&amp;#39;-O0 -pipe -Wall -g3&amp;#39; make -j8 &amp;amp;&amp;amp; make install make -C contrib install ${build_dir}/bin/initdb --username=${superuser} --pgdata=${data_dir} ${build_dir}/bin/pg_ctl -D ${data_dir} -l ${data_dir}/logfile start ${build_dir}/bin/psql -U${superuser} postgres -c &amp;#34;create database ${defaultdb};&amp;#34; echo &amp;#34;----------------- all finished -----------------------&amp;#34; echo &amp;#34;use ************** &amp;#34; echo &amp;#34;[ ${build_dir}/bin/psql -U${superuser} ${defaultdb} ] &amp;#34; echo &amp;#34;to connect postgresql&amp;#34; cd .</description>
     </item>
     <item>
       <title>Column Schema Change</title>
-      <link>http://localhost:1313/archive/column-schema-change/</link>
+      <link>https://mobilephone724.github.io/archive/column-schema-change/</link>
       <pubDate>Sun, 07 Apr 2024 22:19:24 +0800</pubDate>
-      <guid>http://localhost:1313/archive/column-schema-change/</guid>
+      <guid>https://mobilephone724.github.io/archive/column-schema-change/</guid>
       <description>In PostgreSQL, the adding and dropping a column is an instant ddl(This name seems only to be used in mysql, but I like it). In this article, I try to explain the implement of that.
 The reference:
 https://www.postgresql.org/docs/current/sql-altertable.html Basic Concepts instant ddl For a table with $n$ tuples, if a ddl post can be performed in time $O(1)$ ,we call this ddl instant. So to implement an instant ddl, the data organization must remain unchanged.</description>
     </item>
     <item>
       <title>SSL in PG</title>
-      <link>http://localhost:1313/archive/ssl-in-pg/</link>
+      <link>https://mobilephone724.github.io/archive/ssl-in-pg/</link>
       <pubDate>Mon, 12 Feb 2024 20:30:38 +0800</pubDate>
-      <guid>http://localhost:1313/archive/ssl-in-pg/</guid>
+      <guid>https://mobilephone724.github.io/archive/ssl-in-pg/</guid>
       <description>Overview In application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.
 With SSL, we can:
 Encrypted data on Internet transmission Allow client to authorize the server(PostgreSQL), which can protect the client from connecting to the attacker’s server Allow server to authorize the client, which can stop the attacker from connecting to the database even if password leak.</description>
     </item>
     <item>
       <title>pg_squeence_type</title>
-      <link>http://localhost:1313/archive/sequence_type/</link>
+      <link>https://mobilephone724.github.io/archive/sequence_type/</link>
       <pubDate>Mon, 12 Feb 2024 19:51:45 +0800</pubDate>
-      <guid>http://localhost:1313/archive/sequence_type/</guid>
+      <guid>https://mobilephone724.github.io/archive/sequence_type/</guid>
       <description>sequence type background From official documents:
 9.17. Sequence Manipulation Functions
 CREATE SEQUENCE
@@ -158,24 +158,24 @@ Advances the sequence object to its next value and returns that value setval</de
     </item>
     <item>
       <title>Read Google F1</title>
-      <link>http://localhost:1313/archive/google-f1/</link>
+      <link>https://mobilephone724.github.io/archive/google-f1/</link>
       <pubDate>Mon, 14 Aug 2023 21:46:24 +0800</pubDate>
-      <guid>http://localhost:1313/archive/google-f1/</guid>
+      <guid>https://mobilephone724.github.io/archive/google-f1/</guid>
       <description>Abstract a protocol for schema evolution in a globally distributed database management system with shared data, stateless servers, and no global membership. asynchronous all servers can access and update all data during a schema change INTRODUCTION Schema evolution: the ability to change a database’s definition without the loss of data F1 is built on top of Spanner, a globally distributed KV data store Main feature The main features of F1 that impact schema changes are:</description>
     </item>
     <item>
       <title>Basic Knowledge of Database Log</title>
-      <link>http://localhost:1313/archive/database-log/</link>
+      <link>https://mobilephone724.github.io/archive/database-log/</link>
       <pubDate>Thu, 31 Mar 2022 11:01:15 +0800</pubDate>
-      <guid>http://localhost:1313/archive/database-log/</guid>
+      <guid>https://mobilephone724.github.io/archive/database-log/</guid>
       <description>Primitive Operation if Transactions There are three address spaces that transaction interact in important ways:
 The space of disk blocks holding the database elements. The memory address space managed by buffer manager. The local address space of the transaction. To describe a transaction, we need some operation notions:(X below is a database element while t is a local varible, and we suppose a database element is no larger than a single block)</description>
     </item>
     <item>
       <title>cublasDgemm</title>
-      <link>http://localhost:1313/archive/cublasdgemmtutor/</link>
+      <link>https://mobilephone724.github.io/archive/cublasdgemmtutor/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/archive/cublasdgemmtutor/</guid>
+      <guid>https://mobilephone724.github.io/archive/cublasdgemmtutor/</guid>
       <description>concept cublasDgemm is a convenient function in cublas to compute the product of two matrix, while letter &amp;lsquo;D&amp;rsquo; in cublasDgemm means double.
 Before reading this post, basic cuda functions like cudaMalloc are what you are supposed to know.
 basic use Definition of this function
@@ -183,18 +183,18 @@ cublasStatus_t cublasDgemm(cublasHandle_t handle, cublasOperation_t transa, cubl
     </item>
     <item>
       <title>pg_repack</title>
-      <link>http://localhost:1313/article/pg_repack/</link>
+      <link>https://mobilephone724.github.io/article/pg_repack/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/pg_repack/</guid>
+      <guid>https://mobilephone724.github.io/article/pg_repack/</guid>
       <description>principle pg_repack 1.5.0 &amp;ndash; Reorganize tables in PostgreSQL databases with minimal locks
 https://github.com/reorg/pg_repack
 create a log table to record changes made to the original table add a trigger onto the original table, logging INSERTs, UPDATEs and DELETEs into our log table create a new table containing all the rows in the old table build indexes on this new table apply all changes which have accrued in the log table to the new table swap the tables, including indexes and toast tables, using the system catalogs drop the original table The basic idea is</description>
     </item>
     <item>
       <title>PGVECTOR AND VECTOR DATABASE</title>
-      <link>http://localhost:1313/article/pgvector/</link>
+      <link>https://mobilephone724.github.io/article/pgvector/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/pgvector/</guid>
+      <guid>https://mobilephone724.github.io/article/pgvector/</guid>
       <description>序言 pgvector是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。 PASE中提到，向量ANN算法包括4类
 tree-based algorithms KD-Tree RTree quantization-based algorithms IVFFlat IVFADC IMI graph based algorithms HNSW NSG SSG hash-base algorithms LSH pgvector 包括两个算法，IVFFlat 和 HNSW，后续内容将以这两个算法的内容及其实现展开。 IVFFlat 概览 IVFFlat 算法主要包括以下几个步骤
 索引构建阶段 使用 KMeans 将数据集划分成多个簇(cluster) 查询阶段 通过每个簇的中心点（向量是高维的点）获取N个最近的簇 遍历这N个簇的所有点，从中找到最近的K个点 算法介绍 基础算法kmeans reference k-means clustering - Wikipedia 算法目标：选取K个中心点，使得数据集中的所有点到其最近的中心点“距离”之和最近，以平方和距离为例：
@@ -202,9 +202,9 @@ Given a set of observations $(x_1, x_2, \dots, x_n)$, where each observation is 
     </item>
     <item>
       <title>WAL基础</title>
-      <link>http://localhost:1313/article/wal-basic/</link>
+      <link>https://mobilephone724.github.io/article/wal-basic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/wal-basic/</guid>
+      <guid>https://mobilephone724.github.io/article/wal-basic/</guid>
       <description> From access/transam/README
 Write-Ahead Log Coding 基本思想，日志在数据页前落盘
 LSN：刷脏前检查LSN对应的日志已经落盘 优势：仅在必要的时候等待XLOG的IO。（异步IO） LSN的检查模块只用在 buffer manager 中实现 在WAL回放时，避免相同的日志被重复回放（可重入）。（TODO：full page write是否在另一个层面上保证了可重入） WAL 包含一个（或一小组）页的增量更新的重做信息。 依赖文件系统和硬件的原子写，不可靠！ checkpoint，checkpointer后的第一次写全页。通过 checkpoint 留下的 LSN 来判断是否为第一次写 写下WAL日志的逻辑为 pin and exclusive-lock the shared buffer START_CRIT_SECTION，发生错误时确保整个数据库能立即重启 在shared buffer上，进行对应的修改 标记为脏页， 必须在WAL日志写入前完成（TODO，为什么？SyncOneBuffer） 只有在要写WAL时，才能标记脏页（TODO，为什么？） 使用XLogBeginInsert 和 XLogRegister* 函数构建WAL，使用返回的LSN来更新page END_CRIT_SECTION，退出 解锁和unpin （注意顺序） 一些复杂的操作，需要原子地写下一串WAL记录，但中间状态必须自洽(self-consistent)。这样在回放wal日志时，如果中断，系统还能够正常运行。注意：此时相当于事务回滚，但是其部分更改已经落盘。举例：
@@ -212,18 +212,18 @@ LSN：刷脏前检查LSN对应的日志已经落盘 优势：仅在必要的时�
     </item>
     <item>
       <title>WAL日志的插入</title>
-      <link>http://localhost:1313/article/wal-insert/</link>
+      <link>https://mobilephone724.github.io/article/wal-insert/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/wal-insert/</guid>
+      <guid>https://mobilephone724.github.io/article/wal-insert/</guid>
       <description>接口函数 一个WAL记录包含
 WAL记录类型。（TODO不同的修改有不同的记录方式？） 这个页的修改方式 被修改的页的信息。被修改的页通过一个唯一ID标识，也可以有更多的关联数据（&amp;ldquo;record-specific data associated with the block&amp;rdquo;）。如果要写full page，就没有关联数据 构建一个WAL记录包含5个核心函数 void XLogBeginInsert(void) 初始化相关状态 如果当前无法构建WAL日志（例如在recovery模式），则报错 void XLogRegisterBuffer(uint8 block_id, Buffer buf, uint8 flags); 增加了数据块的信息；注册一个buffer的引用，相当于上述WAL日志的第三部分 block_id is an arbitrary number used to identify this page reference in the redo routine
 在redo阶段，可以根据这些信息找到需要redo的page regbuf = &amp;amp;registered_buffers[block_id]; /* * Returns the relfilenode, fork number and block number associated with * a buffer */ BufferGetTag(buffer, &amp;amp;regbuf-&amp;gt;rnode, &amp;amp;regbuf-&amp;gt;forkno, &amp;amp;regbuf-&amp;gt;block); regbuf-&amp;gt;page = BufferGetPage(buffer); regbuf-&amp;gt;flags = flags; regbuf-&amp;gt;rdata_tail = (XLogRecData *) &amp;amp;regbuf-&amp;gt;rdata_head; regbuf-&amp;gt;rdata_len = 0; registered_buffer的结构</description>
     </item>
     <item>
       <title>ZERO TO RSA</title>
-      <link>http://localhost:1313/article/zero2rsa/</link>
+      <link>https://mobilephone724.github.io/article/zero2rsa/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/zero2rsa/</guid>
+      <guid>https://mobilephone724.github.io/article/zero2rsa/</guid>
       <description>从0证明RSA RSA 算法（即一个非对称加密算法）除了应用非常广泛外，其特性也非常吸引人（起码非常吸引我）。我在网上找了很多关于RSA的证明，要么不够详细（例如缺失对前置定理的证明），要么需要引出较多复杂的数论概念。作者本身水平不高，试图绕过这些复杂的概念，从初等数学的开始，完备地证明RSA。
 关于RSA的背景知识可能很多，可以慢慢阅读，我在此尝试从初等数学开始证明。这些背景知识的证明有一定的顺序，如果读者发现某个证明看不懂，可以向前翻阅。
 参考的文章如下：（因为参考的文章太多，大概率不全）

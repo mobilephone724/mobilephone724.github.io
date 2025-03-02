@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>较长的专题文章 on PaperMod</title>
-    <link>http://localhost:1313/article/</link>
+    <link>https://mobilephone724.github.io/article/</link>
     <description>Recent content in 较长的专题文章 on PaperMod</description>
     <image>
       <title>PaperMod</title>
-      <url>http://localhost:1313/images/papermod-cover.png</url>
-      <link>http://localhost:1313/images/papermod-cover.png</link>
+      <url>https://mobilephone724.github.io/images/papermod-cover.png</url>
+      <link>https://mobilephone724.github.io/images/papermod-cover.png</link>
     </image>
     <generator>Hugo -- 0.127.0</generator>
     <language>en</language>
     <copyright>PaperMod Contributors</copyright>
     <lastBuildDate>Sun, 07 Jul 2024 15:53:54 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/article/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mobilephone724.github.io/article/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SLRU</title>
-      <link>http://localhost:1313/article/slru/</link>
+      <link>https://mobilephone724.github.io/article/slru/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/slru/</guid>
+      <guid>https://mobilephone724.github.io/article/slru/</guid>
       <description>本文主要为SLRU本身的结构解读。
 简述 slru用来干什么？ slru是一个简单的buffer管理模块，simple slru 有了buffer pool manager，为什么还要slru？ bpm管理通用的page，比如heap，vm等 slru最大的特点就是lru，非常适合处理xid这样，递增的信息。 下面的代码分析基于pg15 存储结构 与bpm不同，通过slru管理的page，其文件大小固定，一个文件有32个page，一个page有8KB，故一个文件最大为256K。
 与WAL不同，WAL文件的大小在创建时就已经确定为16M，与WAL文件重用保持一致，而slru的文件，先在内存中产生相应的page，再会去落盘。
@@ -26,58 +26,58 @@
     </item>
     <item>
       <title>CLOG</title>
-      <link>http://localhost:1313/article/clog/</link>
+      <link>https://mobilephone724.github.io/article/clog/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/clog/</guid>
+      <guid>https://mobilephone724.github.io/article/clog/</guid>
       <description>Overview This chapter explains the content of clog
 clog(commit log), records the commit status of each transaction. The log exists both in memory mannaged by slru buffer and disk for durability. The commit status can be the four kinds below:
 #define TRANSACTION_STATUS_IN_PROGRESS	0x00 #define TRANSACTION_STATUS_COMMITTED	0x01 #define TRANSACTION_STATUS_ABORTED	0x02 #define TRANSACTION_STATUS_SUB_COMMITTED	0x03 In-Disk Representation Thinking that the commit status of each transaction composites an array clog[] and clog[xid] records the status, we can easily store the array to disk by the slru.</description>
     </item>
     <item>
       <title>hash join</title>
-      <link>http://localhost:1313/article/hashjoin/</link>
+      <link>https://mobilephone724.github.io/article/hashjoin/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/hashjoin/</guid>
+      <guid>https://mobilephone724.github.io/article/hashjoin/</guid>
       <description>high level view See Queries in PostgreSQL: 6. Hashing
 One-pass hash join Note that join in PostgreSql, we scan the right relation first, which means that the right relation is the &amp;ldquo;inner relation&amp;rdquo; and the left relation is the outer one. Two-pass hash join Since we can&amp;rsquo;t allocate as much memory as we want, instead of building a hash table of the entire table, PG split the tables to several batches where all tuples have the same hash value flag.</description>
     </item>
     <item>
       <title>constant recovery with undo</title>
-      <link>http://localhost:1313/article/constant_recovery/</link>
+      <link>https://mobilephone724.github.io/article/constant_recovery/</link>
       <pubDate>Sun, 07 Jul 2024 15:53:54 +0800</pubDate>
-      <guid>http://localhost:1313/article/constant_recovery/</guid>
+      <guid>https://mobilephone724.github.io/article/constant_recovery/</guid>
       <description>0x0 backgroud Even though ARIES simplifies the recovery process and allows it to be generic for all transactional operations, recovering the database to a consistent state requires undoing all operations performed by uncommitted transactions which makes the cost of recovery proportional to the work performed by these transactions. This significantly impacts database availability since recovering a long running transaction can take several hours.
 This paper describes the overall design of “Constant Time Recovery” (CTR)</description>
     </item>
     <item>
       <title>MESI AND MEMORY_BARRIER: paper reading</title>
-      <link>http://localhost:1313/article/mesi/</link>
+      <link>https://mobilephone724.github.io/article/mesi/</link>
       <pubDate>Sun, 16 Jun 2024 01:12:36 +0800</pubDate>
-      <guid>http://localhost:1313/article/mesi/</guid>
+      <guid>https://mobilephone724.github.io/article/mesi/</guid>
       <description>paper Introduction: Memory Barriers: a Hardware View for Software Hackers 0x0 why we need memory barrier In short, because reordering memory references allows much better performance, and so memory barriers are needed to force ordering in things like synchronization primitives whose correct operation depends on ordered memory references.
 0x1 Cache Structure 0x11 some cases of cache miss(not important) The cache miss means that the CPU will have to wait (or be “stalled”) for hundreds of cycles while the item is fetched from memory.</description>
     </item>
     <item>
       <title>roaring bitmap</title>
-      <link>http://localhost:1313/article/roaring_bitmap/</link>
+      <link>https://mobilephone724.github.io/article/roaring_bitmap/</link>
       <pubDate>Tue, 07 May 2024 21:04:38 +0800</pubDate>
-      <guid>http://localhost:1313/article/roaring_bitmap/</guid>
+      <guid>https://mobilephone724.github.io/article/roaring_bitmap/</guid>
       <description>0x0 Introduction A bitmap, also known as a bit array or bitset, is a data structure that represents a fixed-size sequence of bits. That is the value of the ith bit representing the existence of the the ith object. Bare bitmap can cost much memory according to the total substantial data size, even if we have stored little infomation. Roaring bitmap provide a new method to compress the bitmap structure.</description>
     </item>
     <item>
       <title>pg_repack</title>
-      <link>http://localhost:1313/article/pg_repack/</link>
+      <link>https://mobilephone724.github.io/article/pg_repack/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/pg_repack/</guid>
+      <guid>https://mobilephone724.github.io/article/pg_repack/</guid>
       <description>principle pg_repack 1.5.0 &amp;ndash; Reorganize tables in PostgreSQL databases with minimal locks
 https://github.com/reorg/pg_repack
 create a log table to record changes made to the original table add a trigger onto the original table, logging INSERTs, UPDATEs and DELETEs into our log table create a new table containing all the rows in the old table build indexes on this new table apply all changes which have accrued in the log table to the new table swap the tables, including indexes and toast tables, using the system catalogs drop the original table The basic idea is</description>
     </item>
     <item>
       <title>PGVECTOR AND VECTOR DATABASE</title>
-      <link>http://localhost:1313/article/pgvector/</link>
+      <link>https://mobilephone724.github.io/article/pgvector/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/pgvector/</guid>
+      <guid>https://mobilephone724.github.io/article/pgvector/</guid>
       <description>序言 pgvector是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。 PASE中提到，向量ANN算法包括4类
 tree-based algorithms KD-Tree RTree quantization-based algorithms IVFFlat IVFADC IMI graph based algorithms HNSW NSG SSG hash-base algorithms LSH pgvector 包括两个算法，IVFFlat 和 HNSW，后续内容将以这两个算法的内容及其实现展开。 IVFFlat 概览 IVFFlat 算法主要包括以下几个步骤
 索引构建阶段 使用 KMeans 将数据集划分成多个簇(cluster) 查询阶段 通过每个簇的中心点（向量是高维的点）获取N个最近的簇 遍历这N个簇的所有点，从中找到最近的K个点 算法介绍 基础算法kmeans reference k-means clustering - Wikipedia 算法目标：选取K个中心点，使得数据集中的所有点到其最近的中心点“距离”之和最近，以平方和距离为例：
@@ -85,9 +85,9 @@ Given a set of observations $(x_1, x_2, \dots, x_n)$, where each observation is 
     </item>
     <item>
       <title>WAL基础</title>
-      <link>http://localhost:1313/article/wal-basic/</link>
+      <link>https://mobilephone724.github.io/article/wal-basic/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/wal-basic/</guid>
+      <guid>https://mobilephone724.github.io/article/wal-basic/</guid>
       <description> From access/transam/README
 Write-Ahead Log Coding 基本思想，日志在数据页前落盘
 LSN：刷脏前检查LSN对应的日志已经落盘 优势：仅在必要的时候等待XLOG的IO。（异步IO） LSN的检查模块只用在 buffer manager 中实现 在WAL回放时，避免相同的日志被重复回放（可重入）。（TODO：full page write是否在另一个层面上保证了可重入） WAL 包含一个（或一小组）页的增量更新的重做信息。 依赖文件系统和硬件的原子写，不可靠！ checkpoint，checkpointer后的第一次写全页。通过 checkpoint 留下的 LSN 来判断是否为第一次写 写下WAL日志的逻辑为 pin and exclusive-lock the shared buffer START_CRIT_SECTION，发生错误时确保整个数据库能立即重启 在shared buffer上，进行对应的修改 标记为脏页， 必须在WAL日志写入前完成（TODO，为什么？SyncOneBuffer） 只有在要写WAL时，才能标记脏页（TODO，为什么？） 使用XLogBeginInsert 和 XLogRegister* 函数构建WAL，使用返回的LSN来更新page END_CRIT_SECTION，退出 解锁和unpin （注意顺序） 一些复杂的操作，需要原子地写下一串WAL记录，但中间状态必须自洽(self-consistent)。这样在回放wal日志时，如果中断，系统还能够正常运行。注意：此时相当于事务回滚，但是其部分更改已经落盘。举例：
@@ -95,18 +95,18 @@ LSN：刷脏前检查LSN对应的日志已经落盘 优势：仅在必要的时�
     </item>
     <item>
       <title>WAL日志的插入</title>
-      <link>http://localhost:1313/article/wal-insert/</link>
+      <link>https://mobilephone724.github.io/article/wal-insert/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/wal-insert/</guid>
+      <guid>https://mobilephone724.github.io/article/wal-insert/</guid>
       <description>接口函数 一个WAL记录包含
 WAL记录类型。（TODO不同的修改有不同的记录方式？） 这个页的修改方式 被修改的页的信息。被修改的页通过一个唯一ID标识，也可以有更多的关联数据（&amp;ldquo;record-specific data associated with the block&amp;rdquo;）。如果要写full page，就没有关联数据 构建一个WAL记录包含5个核心函数 void XLogBeginInsert(void) 初始化相关状态 如果当前无法构建WAL日志（例如在recovery模式），则报错 void XLogRegisterBuffer(uint8 block_id, Buffer buf, uint8 flags); 增加了数据块的信息；注册一个buffer的引用，相当于上述WAL日志的第三部分 block_id is an arbitrary number used to identify this page reference in the redo routine
 在redo阶段，可以根据这些信息找到需要redo的page regbuf = &amp;amp;registered_buffers[block_id]; /* * Returns the relfilenode, fork number and block number associated with * a buffer */ BufferGetTag(buffer, &amp;amp;regbuf-&amp;gt;rnode, &amp;amp;regbuf-&amp;gt;forkno, &amp;amp;regbuf-&amp;gt;block); regbuf-&amp;gt;page = BufferGetPage(buffer); regbuf-&amp;gt;flags = flags; regbuf-&amp;gt;rdata_tail = (XLogRecData *) &amp;amp;regbuf-&amp;gt;rdata_head; regbuf-&amp;gt;rdata_len = 0; registered_buffer的结构</description>
     </item>
     <item>
       <title>ZERO TO RSA</title>
-      <link>http://localhost:1313/article/zero2rsa/</link>
+      <link>https://mobilephone724.github.io/article/zero2rsa/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/article/zero2rsa/</guid>
+      <guid>https://mobilephone724.github.io/article/zero2rsa/</guid>
       <description>从0证明RSA RSA 算法（即一个非对称加密算法）除了应用非常广泛外，其特性也非常吸引人（起码非常吸引我）。我在网上找了很多关于RSA的证明，要么不够详细（例如缺失对前置定理的证明），要么需要引出较多复杂的数论概念。作者本身水平不高，试图绕过这些复杂的概念，从初等数学的开始，完备地证明RSA。
 关于RSA的背景知识可能很多，可以慢慢阅读，我在此尝试从初等数学开始证明。这些背景知识的证明有一定的顺序，如果读者发现某个证明看不懂，可以向前翻阅。
 参考的文章如下：（因为参考的文章太多，大概率不全）

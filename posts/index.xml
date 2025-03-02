@@ -2,23 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on PaperMod</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>https://mobilephone724.github.io/posts/</link>
     <description>Recent content in Posts on PaperMod</description>
     <image>
       <title>PaperMod</title>
-      <url>http://localhost:1313/images/papermod-cover.png</url>
-      <link>http://localhost:1313/images/papermod-cover.png</link>
+      <url>https://mobilephone724.github.io/images/papermod-cover.png</url>
+      <link>https://mobilephone724.github.io/images/papermod-cover.png</link>
     </image>
     <generator>Hugo -- 0.127.0</generator>
     <language>en</language>
     <copyright>PaperMod Contributors</copyright>
     <lastBuildDate>Sat, 01 Mar 2025 15:27:33 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://mobilephone724.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>2025-03-01</title>
-      <link>http://localhost:1313/post/20250301-1r5xzc.html</link>
+      <link>https://mobilephone724.github.io/post/20250301-1r5xzc.html</link>
       <pubDate>Sat, 01 Mar 2025 15:14:45 +0800</pubDate>
-      <guid>http://localhost:1313/post/20250301-1r5xzc.html</guid>
+      <guid>https://mobilephone724.github.io/post/20250301-1r5xzc.html</guid>
       <description>Column-Oriented Storage Basic idea: Although fact tables are often over 100 columns wide, a typical data warehouse query only accesses 4 or 5 of them at one time (SELECT *​ queries are rarely needed for analytics) The idea behind column-oriented storage is simple: don’t store all the values from one row together, but store all the values from each column together instead. If each column</description>
     </item>
   </channel>
