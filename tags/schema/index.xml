@@ -1,221 +1,25 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Hextra – Schema</title>
-    <link>https://mobilephone724.github.io/tags/schema/</link>
-    <description>Recent content in Schema on Hextra</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
+    <title>Schema on PaperMod</title>
+    <link>http://localhost:1313/tags/schema/</link>
+    <description>Recent content in Schema on PaperMod</description>
+    <image>
+      <title>PaperMod</title>
+      <url>http://localhost:1313/images/papermod-cover.png</url>
+      <link>http://localhost:1313/images/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- 0.127.0</generator>
+    <language>en</language>
+    <copyright>PaperMod Contributors</copyright>
     <lastBuildDate>Mon, 14 Aug 2023 21:46:24 +0800</lastBuildDate>
-    
-	  <atom:link href="https://mobilephone724.github.io/tags/schema/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <atom:link href="http://localhost:1313/tags/schema/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Read Google F1</title>
-      <link>https://mobilephone724.github.io/computer_science/google-f1/</link>
+      <link>http://localhost:1313/archive/google-f1/</link>
       <pubDate>Mon, 14 Aug 2023 21:46:24 +0800</pubDate>
-      
-      <guid>https://mobilephone724.github.io/computer_science/google-f1/</guid>
-      <description>
-        
-        
-        &lt;h2&gt;Abstract&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;abstract&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#abstract&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;a protocol for schema evolution in a globally distributed database management system with &lt;strong&gt;shared data&lt;/strong&gt;, &lt;strong&gt;stateless servers&lt;/strong&gt;, and &lt;strong&gt;no global membership&lt;/strong&gt;.
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;asynchronous&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;all servers can &lt;strong&gt;access&lt;/strong&gt; and &lt;strong&gt;update&lt;/strong&gt; all data during a schema change&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;INTRODUCTION&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;introduction&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#introduction&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;Schema evolution:  the ability to change a database’s definition without the loss of data&lt;/li&gt;
-&lt;li&gt;F1 is built on top of Spanner, a globally distributed &lt;strong&gt;KV&lt;/strong&gt; data store&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Main feature&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;main-feature&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#main-feature&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;The main features of F1 that impact schema changes are:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Massively distributed:
-&lt;ul&gt;
-&lt;li&gt;An instance of F1 consists of hundreds of individual F1 servers&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Relational schema:
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Each F1 server has a copy of a relational schema&lt;/strong&gt; that describes tables, columns, indexes, and constraints.&lt;/li&gt;
-&lt;li&gt;Any modification to the schema requires a distributed schema change to update all servers&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Shared data storage:
-&lt;ul&gt;
-&lt;li&gt;All F1 servers in all datacenters &lt;strong&gt;have access to all data&lt;/strong&gt; stored in Spanner.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Stateless servers:
-&lt;ul&gt;
-&lt;li&gt;F1 servers must tolerate machine failures, preemption(取代), and loss of access to network resources
-&lt;ul&gt;
-&lt;li&gt;clients may &lt;strong&gt;connect to any F1 server&lt;/strong&gt;, even for &lt;strong&gt;different statements in the same transaction&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;No global membership:
-&lt;ul&gt;
-&lt;li&gt;no reliable mechanism for determining currently running F1 servers, and explicit &lt;strong&gt;global synchronization is not possible&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/google-f1-arch.2024_02_12_1707671860.png&#34; alt=&#34;image-20230814210030515&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;several constraints on the schema change process:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Full data availability:
-&lt;ul&gt;
-&lt;li&gt;the availability of the data managed by F1 is paramount(至为重要的)&lt;/li&gt;
-&lt;li&gt;it is unacceptable to take even a portion of the database offline during a schema change (e.g., locking a column to build an index).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Minimal performance impact:
-&lt;ul&gt;
-&lt;li&gt;the F1 schema changes rapidly to support new features&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Asynchronous schema change
-&lt;ul&gt;
-&lt;li&gt;In other words, different F1 servers may transition to using a new schema at different times&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;These requirements influenced the design in several ways&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Since all data must be as available as possible, we do &lt;strong&gt;not restrict access to data undergoing reorganization&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;Because the schema change must have minimal impact on user transactions, we allow transactions to &lt;strong&gt;span an arbitrary number of schema changes&lt;/strong&gt;, although we do not automatically rewrite queries to conform to the schema in use&lt;/li&gt;
-&lt;li&gt;Applying schema changes asynchronously on individual F1 servers means that &lt;strong&gt;multiple versions of the schema may be in use simultaneously&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;An example&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;an-example&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#an-example&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Consider a schema change from schema &lt;code&gt;S1&lt;/code&gt; to schema &lt;code&gt;S2&lt;/code&gt; that adds index &lt;code&gt;I&lt;/code&gt; on table &lt;code&gt;R&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Assume two different servers, &lt;code&gt;M1&lt;/code&gt; and &lt;code&gt;M2&lt;/code&gt;, execute the following sequence of operations:
-&lt;ul&gt;
-&lt;li&gt;Server &lt;code&gt;M2&lt;/code&gt;, using schema &lt;code&gt;S2&lt;/code&gt;, inserts a new row &lt;code&gt;r&lt;/code&gt; to table &lt;code&gt;R&lt;/code&gt;. Because &lt;code&gt;S2&lt;/code&gt; contains index &lt;code&gt;I&lt;/code&gt;, server &lt;code&gt;M2&lt;/code&gt; also adds a new index entry corresponding to &lt;code&gt;r&lt;/code&gt; to the key– value store.&lt;/li&gt;
-&lt;li&gt;Server &lt;code&gt;M1&lt;/code&gt;, using schema &lt;code&gt;S1&lt;/code&gt;, deletes &lt;code&gt;r&lt;/code&gt;. Because &lt;code&gt;S1&lt;/code&gt; does not contain &lt;code&gt;I&lt;/code&gt;, &lt;code&gt;M1&lt;/code&gt; removes &lt;code&gt;r&lt;/code&gt; from the key–value store but fails to remove the corresponding index entry in &lt;code&gt;I&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;The second delete &lt;strong&gt;leaves the database corrupt.&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;We consider not only changes to the &lt;strong&gt;logical schema&lt;/strong&gt;, such as the addition or removal of &lt;strong&gt;columns&lt;/strong&gt;, but also changes to the physical schema like adding or removing &lt;strong&gt;secondary indexes&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;By ensuring that:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;no more than two schema versions are in use at any given time&lt;/li&gt;
-&lt;li&gt;those schema versions have &lt;strong&gt;specific properties?&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;enables distributed schema changes in a way that&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;does not require &lt;strong&gt;global membership&lt;/strong&gt;, &lt;strong&gt;implicit or explicit synchronization&lt;/strong&gt; between nodes, or the need to &lt;strong&gt;retain old schema versions&lt;/strong&gt; once a schema change is complete&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2&gt;BackGround&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;background&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#background&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;In this section, we:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;separate the &lt;strong&gt;interface provided by the key–value store&lt;/strong&gt; from its implementation&lt;/li&gt;
-&lt;li&gt;show how we &lt;strong&gt;map traditional relational database features into this unique setting&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Key-value store&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;key-value-store&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#key-value-store&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;F1 assumes the key–value store supports three operations
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;put&lt;/em&gt;: insert a value with a given key&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;del&lt;/em&gt;: delete a value with a given key&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;get&lt;/em&gt;: returns &lt;strong&gt;any stored values&lt;/strong&gt; whose key &lt;strong&gt;matches a given prefix&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;Note that &lt;em&gt;put&lt;/em&gt; and &lt;em&gt;del&lt;/em&gt; reference exactly one key–value pair, while &lt;em&gt;get&lt;/em&gt; may return multiple key–value pairs&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Two more requirements
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;Commit timestamps&lt;/em&gt;: Every key–value pair has a &lt;strong&gt;last-modified timestamp&lt;/strong&gt; which is updated atomically by the key–value store&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;Atomic test-and-set support&lt;/em&gt;:  Multiple &lt;em&gt;get&lt;/em&gt; and &lt;em&gt;put&lt;/em&gt; operations can be executed &lt;strong&gt;atomically&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Relational schema&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;relational-schema&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#relational-schema&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;An F1 &lt;strong&gt;schema&lt;/strong&gt; is a set of table definitions that enable F1 to &lt;em&gt;interpret the database located in the key–value store&lt;/em&gt;&lt;/li&gt;
-&lt;li&gt;Each table definition has:
-&lt;ul&gt;
-&lt;li&gt;a list of columns&lt;/li&gt;
-&lt;li&gt;a list of secondary indexes&lt;/li&gt;
-&lt;li&gt;a list of integrity constraints(foreign key or index uniqueness constraints)&lt;/li&gt;
-&lt;li&gt;a list of optimistic locks.
-&lt;ul&gt;
-&lt;li&gt;required columns that cannot be read directly by client transactions&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;A subset of columns in a table forms the primary key of the table&lt;/li&gt;
-&lt;li&gt;We call a column &lt;strong&gt;required&lt;/strong&gt; if its value must be present in every row. All primary-key columns are implicitly required, while non-key columns may be either required or &lt;strong&gt;optional&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Row representation&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;row-representation&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#row-representation&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;one pair for each non-primary-key column&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Each key logically includes&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;the name of the table,&lt;/li&gt;
-&lt;li&gt;the primary key values of the containing row,&lt;/li&gt;
-&lt;li&gt;the name of the column whose value is stored in the pair&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Although this appears to needlessly repeat all primary key values in the key for each column value, in practice, &lt;strong&gt;F1’s physical storage format eliminates this redundancy&lt;/strong&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/google-f1-relational-representation.2024_02_12_1707672029.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; /&gt;
-&lt;img src=&#34;https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/google-f1-kv-representation.2024_02_12_1707672075.png&#34; alt=&#34;&#34; loading=&#34;lazy&#34; /&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;A secondary index
-&lt;ul&gt;
-&lt;li&gt;covers a &lt;strong&gt;non-empty subset of columns&lt;/strong&gt; on a table&lt;/li&gt;
-&lt;li&gt;is itself represented by &lt;strong&gt;a set of key–value pairs&lt;/strong&gt; in the key– value store&lt;/li&gt;
-&lt;li&gt;Each row in the indexed table has an associated index key–value pair
-&lt;ul&gt;
-&lt;li&gt;The key for this pair is formed by concatenating
-&lt;ul&gt;
-&lt;li&gt;the table name&lt;/li&gt;
-&lt;li&gt;the index name&lt;/li&gt;
-&lt;li&gt;the row’s indexed column values&lt;/li&gt;
-&lt;li&gt;and the row’s primary key values&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;We denote the index key for row $r$ in index $I$ as $k_r(I)$&lt;/li&gt;
-&lt;li&gt;the special exists column doesn&amp;rsquo;t have the associated value&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Relational operations&lt;span class=&#34;hx-absolute -hx-mt-20&#34; id=&#34;relational-operations&#34;&gt;&lt;/span&gt;
-    &lt;a href=&#34;#relational-operations&#34; class=&#34;subheading-anchor&#34; aria-label=&#34;Permalink for this section&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;F1 supports a set of standard relational operations:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;$insert(R,vk_r,vc_r)$ inserts row &lt;em&gt;r&lt;/em&gt; to table &lt;em&gt;R&lt;/em&gt; with primary key values $vk_r$ and non-key column values $vc_r$. Insert fails if a row with the same primary key values already exists in table R.&lt;/li&gt;
-&lt;li&gt;$delete (R, vk_r )$&lt;/li&gt;
-&lt;li&gt;$update(R,vk_r,vc_r)$&lt;/li&gt;
-&lt;li&gt;$query(\vec{R},\vec{C},P)$ :returns a projection $\vec{C}$ of rows from tables in $\vec{R}$ that satisfy predicate $P$ .&lt;/li&gt;
-&lt;/ul&gt;
-
-      </description>
+      <guid>http://localhost:1313/archive/google-f1/</guid>
+      <description>Abstract a protocol for schema evolution in a globally distributed database management system with shared data, stateless servers, and no global membership. asynchronous all servers can access and update all data during a schema change INTRODUCTION Schema evolution: the ability to change a database’s definition without the loss of data F1 is built on top of Spanner, a globally distributed KV data store Main feature The main features of F1 that impact schema changes are:</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,19 +1,60 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Hextra – Tags</title>
-    <link>https://mobilephone724.github.io/tags/</link>
-    <description>Recent content in Tags on Hextra</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>zh-CN</language>
+    <title>Tags on PaperMod</title>
+    <link>http://localhost:1313/tags/</link>
+    <description>Recent content in Tags on PaperMod</description>
+    <image>
+      <title>PaperMod</title>
+      <url>http://localhost:1313/images/papermod-cover.png</url>
+      <link>http://localhost:1313/images/papermod-cover.png</link>
+    </image>
+    <generator>Hugo -- 0.127.0</generator>
+    <language>en</language>
+    <copyright>PaperMod Contributors</copyright>
     <lastBuildDate>Mon, 14 Aug 2023 21:46:24 +0800</lastBuildDate>
-    
-	  <atom:link href="https://mobilephone724.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-      
-        
-      
-    
-    
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Schema</title>
+      <link>http://localhost:1313/tags/schema/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/schema/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zero—Knowledge Proof</title>
+      <link>http://localhost:1313/tags/zeroknowledge-proof/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/zeroknowledge-proof/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>FILE</title>
+      <link>http://localhost:1313/tags/file/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/file/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>I/O</title>
+      <link>http://localhost:1313/tags/i/o/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/i/o/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>LINUX</title>
+      <link>http://localhost:1313/tags/linux/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/linux/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OS</title>
+      <link>http://localhost:1313/tags/os/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/os/</guid>
+      <description></description>
+    </item>
   </channel>
 </rss>
