@@ -2,14 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://mobilephone724.github.io/post/20250302-8ctcr.html</loc>
+    <lastmod>2025-03-02T20:01:05+08:00</lastmod>
+  </url><url>
+    <loc>https://mobilephone724.github.io/</loc>
+    <lastmod>2025-03-02T20:01:05+08:00</lastmod>
+  </url><url>
+    <loc>https://mobilephone724.github.io/posts/</loc>
+    <lastmod>2025-03-02T20:01:05+08:00</lastmod>
+  </url><url>
     <loc>https://mobilephone724.github.io/post/20250301-1r5xzc.html</loc>
     <lastmod>2025-03-01T15:27:33+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/</loc>
-    <lastmod>2025-03-01T15:27:33+08:00</lastmod>
-  </url><url>
-    <loc>https://mobilephone724.github.io/posts/</loc>
-    <lastmod>2025-03-01T15:27:33+08:00</lastmod>
+    <loc>https://mobilephone724.github.io/post/github-ssh-failed-2k9xdc.html</loc>
+    <lastmod>2025-03-02T19:57:33+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/article/hot-and-index/</loc>
     <lastmod>2024-09-13T22:09:20+08:00</lastmod>
@@ -17,13 +23,13 @@
     <loc>https://mobilephone724.github.io/article/</loc>
     <lastmod>2024-09-08T21:34:22+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/posts/every_data_pg/</loc>
+    <loc>https://mobilephone724.github.io/posts/archive_posts/every_data_pg/</loc>
     <lastmod>2024-08-16T23:45:50+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/posts/fwrapv/</loc>
+    <loc>https://mobilephone724.github.io/posts/archive_posts/fwrapv/</loc>
     <lastmod>2024-08-05T21:30:13+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/posts/reversed_inode/</loc>
+    <loc>https://mobilephone724.github.io/posts/archive_posts/reversed_inode/</loc>
     <lastmod>2024-08-03T17:13:10+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/article/constant_recovery/</loc>
@@ -35,16 +41,16 @@
     <loc>https://mobilephone724.github.io/article/roaring_bitmap/</loc>
     <lastmod>2024-05-07T21:04:38+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/posts/build_from_source/</loc>
+    <loc>https://mobilephone724.github.io/posts/archive_posts/build_from_source/</loc>
     <lastmod>2024-04-16T23:09:39+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/posts/column-schema-change/</loc>
+    <loc>https://mobilephone724.github.io/posts/archive_posts/column-schema-change/</loc>
     <lastmod>2024-04-07T22:19:24+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/posts/ssl-in-pg/</loc>
+    <loc>https://mobilephone724.github.io/posts/archive_posts/ssl-in-pg/</loc>
     <lastmod>2024-02-12T20:30:38+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/posts/sequence_type/</loc>
+    <loc>https://mobilephone724.github.io/posts/archive_posts/sequence_type/</loc>
     <lastmod>2024-02-12T19:51:45+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/categories/</loc>
@@ -53,7 +59,7 @@
     <loc>https://mobilephone724.github.io/categories/database/</loc>
     <lastmod>2023-08-14T21:46:24+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/posts/google-f1/</loc>
+    <loc>https://mobilephone724.github.io/posts/archive_posts/google-f1/</loc>
     <lastmod>2023-08-14T21:46:24+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/tags/schema/</loc>
@@ -62,10 +68,10 @@
     <loc>https://mobilephone724.github.io/tags/</loc>
     <lastmod>2023-08-14T21:46:24+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/posts/database-log/</loc>
+    <loc>https://mobilephone724.github.io/posts/archive_posts/database-log/</loc>
     <lastmod>2022-03-31T11:01:15+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/posts/howtoknowwhoseisbigger/</loc>
+    <loc>https://mobilephone724.github.io/posts/archive_posts/howtoknowwhoseisbigger/</loc>
     <lastmod>2022-01-14T23:43:08+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/categories/cryptology/</loc>
@@ -77,7 +83,7 @@
     <loc>https://mobilephone724.github.io/categories/apue/</loc>
     <lastmod>2022-01-14T12:02:42+08:00</lastmod>
   </url><url>
-    <loc>https://mobilephone724.github.io/posts/linux-file/</loc>
+    <loc>https://mobilephone724.github.io/posts/archive_posts/linux-file/</loc>
     <lastmod>2022-01-14T12:02:42+08:00</lastmod>
   </url><url>
     <loc>https://mobilephone724.github.io/tags/file/</loc>
@@ -96,7 +102,7 @@
   </url><url>
     <loc>https://mobilephone724.github.io/article/clog/</loc>
   </url><url>
-    <loc>https://mobilephone724.github.io/posts/cublasdgemmtutor/</loc>
+    <loc>https://mobilephone724.github.io/posts/archive_posts/cublasdgemmtutor/</loc>
   </url><url>
     <loc>https://mobilephone724.github.io/article/hashjoin/</loc>
   </url><url>

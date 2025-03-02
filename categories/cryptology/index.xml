@@ -16,9 +16,9 @@
     <atom:link href="https://mobilephone724.github.io/categories/cryptology/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Alice and Bob how to know whose number is bigger without giving away their own&#39;s</title>
-      <link>https://mobilephone724.github.io/posts/howtoknowwhoseisbigger/</link>
+      <link>https://mobilephone724.github.io/posts/archive_posts/howtoknowwhoseisbigger/</link>
       <pubDate>Fri, 14 Jan 2022 23:43:08 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/howtoknowwhoseisbigger/</guid>
+      <guid>https://mobilephone724.github.io/posts/archive_posts/howtoknowwhoseisbigger/</guid>
       <description>Definiteness： Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &amp;lt; j$ in the end(aside from their own values)
 Solution: Let $M$ be the set of all $N$-bit nonnegative integers
 Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$

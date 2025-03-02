@@ -16,9 +16,9 @@
     <atom:link href="https://mobilephone724.github.io/categories/database/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Read Google F1</title>
-      <link>https://mobilephone724.github.io/posts/google-f1/</link>
+      <link>https://mobilephone724.github.io/posts/archive_posts/google-f1/</link>
       <pubDate>Mon, 14 Aug 2023 21:46:24 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/google-f1/</guid>
+      <guid>https://mobilephone724.github.io/posts/archive_posts/google-f1/</guid>
       <description>Abstract a protocol for schema evolution in a globally distributed database management system with shared data, stateless servers, and no global membership. asynchronous all servers can access and update all data during a schema change INTRODUCTION Schema evolution: the ability to change a database’s definition without the loss of data F1 is built on top of Spanner, a globally distributed KV data store Main feature The main features of F1 that impact schema changes are:</description>
     </item>
   </channel>

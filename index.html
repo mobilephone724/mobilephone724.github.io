@@ -180,6 +180,18 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">【日拱一卒】2025-03-02
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>2025-03-02 符文般的JS 0 = [&#43;[]]&#43;[] 1 = [&#43;!&#43;[]]&#43;[] 10 = [&#43;!&#43;[]]&#43;[&#43;[]] 100 = [&#43;!&#43;[]]&#43;[&#43;[]]&#43;[&#43;[]] 1. 0 = [&#43;[]]&#43;[]​ ​[]​ 是一个空数组。 ​&#43;[]​ 将空数组转换为数字。空数组转换为数字时是 0​，...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-03-02 20:00:48 +0800 CST'>March 2, 2025</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to 【日拱一卒】2025-03-02" href="https://mobilephone724.github.io/post/20250302-8ctcr.html"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">【日拱一卒】2025-03-01
     </h2>
   </header>
@@ -188,6 +200,18 @@
   </div>
   <footer class="entry-footer"><span title='2025-03-01 15:14:45 +0800 CST'>March 1, 2025</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;Theme PaperMod</footer>
   <a class="entry-link" aria-label="post link to 【日拱一卒】2025-03-01" href="https://mobilephone724.github.io/post/20250301-1r5xzc.html"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">github ssh 失败
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>github ssh 失败 ssh 失败 github 可能会屏蔽 22 的 ssh 端口，导致使用 ssh 协议拉取推送代码失败 解决方法为使用 443 端口，同时将 hostname 改为 ssh.github.com​ host github.com Hostname ssh.github.com...</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-02-03 08:44:15 +0800 CST'>February 3, 2025</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to github ssh 失败" href="https://mobilephone724.github.io/post/github-ssh-failed-2k9xdc.html"></a>
 </article>
 
 <article class="post-entry"> 
@@ -202,7 +226,7 @@
 test=# begin transaction; BEGIN test=*# insert into test values (1); INSERT 0 1 test=*# create index on test (a); CREATE INDEX test=*# commit; COMMIT 而为了不阻塞读写，持有 SHARE UPDATE EXCL 锁的行为， 例如 vacuum , create index concurrent ，大都不能在事务块中进行。原因可能是这些操作需要感知其他正在执行的事务的状态(status of running processes)，其行为超出了一般意义上 MVCC 的。</p>
   </div>
   <footer class="entry-footer"><span title='2024-08-16 23:45:50 +0800 CST'>August 16, 2024</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Everyday PostgreSQL" href="https://mobilephone724.github.io/posts/every_data_pg/"></a>
+  <a class="entry-link" aria-label="post link to Everyday PostgreSQL" href="https://mobilephone724.github.io/posts/archive_posts/every_data_pg/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -217,35 +241,7 @@ It has two meaning full results:
 INT_MAX &#43; 1 is overflowed to INT_MIN correctly. This is almost the default behavior in gcc. Don’t let the compiler assume x &#43; 1 &gt; x. See the program below...</p>
   </div>
   <footer class="entry-footer"><span title='2024-08-05 21:30:13 +0800 CST'>August 5, 2024</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to &#34;-fwrapv&#34; option in gcc" href="https://mobilephone724.github.io/posts/fwrapv/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Number of Reversed Inode
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>0x0 what is inode From https://en.wikipedia.org/wiki/Inode
-The inode (index node) is a data structure in a Unix-style file system that describes a file-system object such as a file or a directory. Each inode stores the attributes and disk block locations of the object’s data
-From https://www.redhat.com/sysadmin/inodes-linux-filesystem
-By definition, an inode is an index node. It serves as a unique identifier for a specific piece of metadata on a given filesystem. Each piece of metadata describes what we think of as a file....</p>
-  </div>
-  <footer class="entry-footer"><span title='2024-08-03 17:13:10 +0800 CST'>August 3, 2024</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Number of Reversed Inode" href="https://mobilephone724.github.io/posts/reversed_inode/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Build PostgreSQL From Source
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Download through git See official docs for detail. Below is a simple example:
-export user=dev export src_dir=postgresql export build_dir=/home/${user}/build export data_dir=/home/${user}/data export superuser=postgres export defaultdb=test ${build_dir}/bin/pg_ctl -D ${data_dir} stop rm -rf ${build_dir} rm -rf ${data} cd ~ #start from home/${user} git clone https://git.postgresql.org/git/postgresql.git cd ${src_dir} git clean -xdf # may be too dangerous # delete for add some configures accordingly ./configure \ --prefix=${build_dir} \ --enable-cassert \ --with-tcl \ --with-perl \ --with-python \ --enable-debug \ --without-icu \ --with-openssl \ CC=/usr/bin/gcc \ CFLAGS=&#39;-O0 -pipe -Wall -g3&#39; make -j8 &amp;&amp; make install make -C contrib install ${build_dir}/bin/initdb --username=${superuser} --pgdata=${data_dir} ${build_dir}/bin/pg_ctl -D ${data_dir} -l ${data_dir}/logfile start ${build_dir}/bin/psql -U${superuser} postgres -c &#34;create database ${defaultdb};&#34; echo &#34;----------------- all finished -----------------------&#34; echo &#34;use ************** &#34; echo &#34;[ ${build_dir}/bin/psql -U${superuser} ${defaultdb} ] &#34; echo &#34;to connect postgresql&#34; cd ....</p>
-  </div>
-  <footer class="entry-footer"><span title='2024-04-16 23:09:39 +0800 CST'>April 16, 2024</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Build PostgreSQL From Source" href="https://mobilephone724.github.io/posts/build_from_source/"></a>
+  <a class="entry-link" aria-label="post link to &#34;-fwrapv&#34; option in gcc" href="https://mobilephone724.github.io/posts/archive_posts/fwrapv/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

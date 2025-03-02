@@ -168,6 +168,34 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Number of Reversed Inode
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>0x0 what is inode From https://en.wikipedia.org/wiki/Inode
+The inode (index node) is a data structure in a Unix-style file system that describes a file-system object such as a file or a directory. Each inode stores the attributes and disk block locations of the object’s data
+From https://www.redhat.com/sysadmin/inodes-linux-filesystem
+By definition, an inode is an index node. It serves as a unique identifier for a specific piece of metadata on a given filesystem. Each piece of metadata describes what we think of as a file....</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-08-03 17:13:10 +0800 CST'>August 3, 2024</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Number of Reversed Inode" href="https://mobilephone724.github.io/posts/archive_posts/reversed_inode/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Build PostgreSQL From Source
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Download through git See official docs for detail. Below is a simple example:
+export user=dev export src_dir=postgresql export build_dir=/home/${user}/build export data_dir=/home/${user}/data export superuser=postgres export defaultdb=test ${build_dir}/bin/pg_ctl -D ${data_dir} stop rm -rf ${build_dir} rm -rf ${data} cd ~ #start from home/${user} git clone https://git.postgresql.org/git/postgresql.git cd ${src_dir} git clean -xdf # may be too dangerous # delete for add some configures accordingly ./configure \ --prefix=${build_dir} \ --enable-cassert \ --with-tcl \ --with-perl \ --with-python \ --enable-debug \ --without-icu \ --with-openssl \ CC=/usr/bin/gcc \ CFLAGS=&#39;-O0 -pipe -Wall -g3&#39; make -j8 &amp;&amp; make install make -C contrib install ${build_dir}/bin/initdb --username=${superuser} --pgdata=${data_dir} ${build_dir}/bin/pg_ctl -D ${data_dir} -l ${data_dir}/logfile start ${build_dir}/bin/psql -U${superuser} postgres -c &#34;create database ${defaultdb};&#34; echo &#34;----------------- all finished -----------------------&#34; echo &#34;use ************** &#34; echo &#34;[ ${build_dir}/bin/psql -U${superuser} ${defaultdb} ] &#34; echo &#34;to connect postgresql&#34; cd ....</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-04-16 23:09:39 +0800 CST'>April 16, 2024</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Build PostgreSQL From Source" href="https://mobilephone724.github.io/posts/archive_posts/build_from_source/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">Column Schema Change
     </h2>
   </header>
@@ -177,7 +205,7 @@ The reference:
 https://www.postgresql.org/docs/current/sql-altertable.html Basic Concepts instant ddl For a table with $n$ tuples, if a ddl post can be performed in time $O(1)$ ,we call this ddl instant. So to implement an instant ddl, the data organization must remain unchanged....</p>
   </div>
   <footer class="entry-footer"><span title='2024-04-07 22:19:24 +0800 CST'>April 7, 2024</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to Column Schema Change" href="https://mobilephone724.github.io/posts/column-schema-change/"></a>
+  <a class="entry-link" aria-label="post link to Column Schema Change" href="https://mobilephone724.github.io/posts/archive_posts/column-schema-change/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -191,7 +219,7 @@ With SSL, we can:
 Encrypted data on Internet transmission Allow client to authorize the server(PostgreSQL), which can protect the client from connecting to the attacker’s server Allow server to authorize the client, which can stop the attacker from connecting to the database even if password leak....</p>
   </div>
   <footer class="entry-footer"><span title='2024-02-12 20:30:38 +0800 CST'>February 12, 2024</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to SSL in PG" href="https://mobilephone724.github.io/posts/ssl-in-pg/"></a>
+  <a class="entry-link" aria-label="post link to SSL in PG" href="https://mobilephone724.github.io/posts/archive_posts/ssl-in-pg/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -208,32 +236,7 @@ nextval
 Advances the sequence object to its next value and returns that value setval...</p>
   </div>
   <footer class="entry-footer"><span title='2024-02-12 19:51:45 +0800 CST'>February 12, 2024</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to pg_squeence_type" href="https://mobilephone724.github.io/posts/sequence_type/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Read Google F1
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Abstract a protocol for schema evolution in a globally distributed database management system with shared data, stateless servers, and no global membership. asynchronous all servers can access and update all data during a schema change INTRODUCTION Schema evolution: the ability to change a database’s definition without the loss of data F1 is built on top of Spanner, a globally distributed KV data store Main feature The main features of F1 that impact schema changes are:...</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-08-14 21:46:24 +0800 CST'>August 14, 2023</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;mobilephone724</footer>
-  <a class="entry-link" aria-label="post link to Read Google F1" href="https://mobilephone724.github.io/posts/google-f1/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Basic Knowledge of Database Log
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Primitive Operation if Transactions There are three address spaces that transaction interact in important ways:
-The space of disk blocks holding the database elements. The memory address space managed by buffer manager. The local address space of the transaction. To describe a transaction, we need some operation notions:(X below is a database element while t is a local varible, and we suppose a database element is no larger than a single block)...</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-03-31 11:01:15 +0800 CST'>March 31, 2022</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;mobilephone724</footer>
-  <a class="entry-link" aria-label="post link to Basic Knowledge of Database Log" href="https://mobilephone724.github.io/posts/database-log/"></a>
+  <a class="entry-link" aria-label="post link to pg_squeence_type" href="https://mobilephone724.github.io/posts/archive_posts/sequence_type/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
