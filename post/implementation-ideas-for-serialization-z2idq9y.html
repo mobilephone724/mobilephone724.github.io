@@ -5,11 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
-<title>【日拱一卒】2025-03-02 | PaperMod</title>
+<title>可串行化的实现思路 | PaperMod</title>
 <meta name="keywords" content="">
-<meta name="description" content="2025-03-02 符文般的JS 0 = [&#43;[]]&#43;[] 1 = [&#43;!&#43;[]]&#43;[] 10 = [&#43;!&#43;[]]&#43;[&#43;[]] 100 = [&#43;!&#43;[]]&#43;[&#43;[]]&#43;[&#43;[]] 1. 0 = [&#43;[]]&#43;[]​ ​[]​ 是一个空数组。 ​&#43;[]​ 将空数组转换为数字。空数组转换为数字时是 0​，">
+<meta name="description" content="可串行化的实现思路 paper: https://drkp.net/papers/ssi-vldb12.pdf 可串行化冲突的例子 wr-dependencies: if T1 writes a version of an object, and T2 reads that version, then T1 appears to have executed before T2 ww-dependencies: if T1 writes a version of some object, and T2 replaces that version with the next version, then T1 appears to have executed before T2 rw-antidependencies: if">
 <meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="https://mobilephone724.github.io/post/20250302-8ctcr.html">
+<link rel="canonical" href="https://mobilephone724.github.io/post/implementation-ideas-for-serialization-z2idq9y.html">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.45e028aa8ce0961349adf411b013ee39406be2c0bc80d4ea3fc04555f7f4611a.css" integrity="sha256-ReAoqozglhNJrfQRsBPuOUBr4sC8gNTqP8BFVff0YRo=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://mobilephone724.github.io/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://mobilephone724.github.io/favicon-16x16.png">
@@ -18,7 +18,7 @@
 <link rel="mask-icon" href="https://mobilephone724.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://mobilephone724.github.io/post/20250302-8ctcr.html">
+<link rel="alternate" hreflang="en" href="https://mobilephone724.github.io/post/implementation-ideas-for-serialization-z2idq9y.html">
 <noscript>
     <style>
         #theme-toggle,
@@ -58,20 +58,20 @@
 </noscript>
   
 
-<meta property="og:url" content="https://mobilephone724.github.io/post/20250302-8ctcr.html">
+<meta property="og:url" content="https://mobilephone724.github.io/post/implementation-ideas-for-serialization-z2idq9y.html">
   <meta property="og:site_name" content="PaperMod">
-  <meta property="og:title" content="【日拱一卒】2025-03-02">
-  <meta property="og:description" content="2025-03-02 符文般的JS 0 = [&#43;[]]&#43;[] 1 = [&#43;!&#43;[]]&#43;[] 10 = [&#43;!&#43;[]]&#43;[&#43;[]] 100 = [&#43;!&#43;[]]&#43;[&#43;[]]&#43;[&#43;[]] 1. 0 = [&#43;[]]&#43;[]​ ​[]​ 是一个空数组。 ​&#43;[]​ 将空数组转换为数字。空数组转换为数字时是 0​，">
+  <meta property="og:title" content="可串行化的实现思路">
+  <meta property="og:description" content="可串行化的实现思路 paper: https://drkp.net/papers/ssi-vldb12.pdf 可串行化冲突的例子 wr-dependencies: if T1 writes a version of an object, and T2 reads that version, then T1 appears to have executed before T2 ww-dependencies: if T1 writes a version of some object, and T2 replaces that version with the next version, then T1 appears to have executed before T2 rw-antidependencies: if">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-03-02T20:00:48+08:00">
-    <meta property="article:modified_time" content="2025-03-02T20:01:05+08:00">
+    <meta property="article:published_time" content="2025-03-02T22:13:38+08:00">
+    <meta property="article:modified_time" content="2025-03-02T23:13:32+08:00">
       <meta property="og:image" content="https://mobilephone724.github.io/images/papermod-cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://mobilephone724.github.io/images/papermod-cover.png">
-<meta name="twitter:title" content="【日拱一卒】2025-03-02">
-<meta name="twitter:description" content="2025-03-02 符文般的JS 0 = [&#43;[]]&#43;[] 1 = [&#43;!&#43;[]]&#43;[] 10 = [&#43;!&#43;[]]&#43;[&#43;[]] 100 = [&#43;!&#43;[]]&#43;[&#43;[]]&#43;[&#43;[]] 1. 0 = [&#43;[]]&#43;[]​ ​[]​ 是一个空数组。 ​&#43;[]​ 将空数组转换为数字。空数组转换为数字时是 0​，">
+<meta name="twitter:title" content="可串行化的实现思路">
+<meta name="twitter:description" content="可串行化的实现思路 paper: https://drkp.net/papers/ssi-vldb12.pdf 可串行化冲突的例子 wr-dependencies: if T1 writes a version of an object, and T2 reads that version, then T1 appears to have executed before T2 ww-dependencies: if T1 writes a version of some object, and T2 replaces that version with the next version, then T1 appears to have executed before T2 rw-antidependencies: if">
 
 
 <script type="application/ld+json">
@@ -88,8 +88,8 @@
     {
       "@type": "ListItem",
       "position":  2 ,
-      "name": "【日拱一卒】2025-03-02",
-      "item": "https://mobilephone724.github.io/post/20250302-8ctcr.html"
+      "name": "可串行化的实现思路",
+      "item": "https://mobilephone724.github.io/post/implementation-ideas-for-serialization-z2idq9y.html"
     }
   ]
 }
@@ -98,24 +98,24 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "【日拱一卒】2025-03-02",
-  "name": "【日拱一卒】2025-03-02",
-  "description": "2025-03-02 符文般的JS 0 = [+[]]+[] 1 = [+!+[]]+[] 10 = [+!+[]]+[+[]] 100 = [+!+[]]+[+[]]+[+[]] 1. 0 = [+[]]+[]​ ​[]​ 是一个空数组。 ​+[]​ 将空数组转换为数字。空数组转换为数字时是 0​，",
+  "headline": "可串行化的实现思路",
+  "name": "可串行化的实现思路",
+  "description": "可串行化的实现思路 paper: https://drkp.net/papers/ssi-vldb12.pdf 可串行化冲突的例子 wr-dependencies: if T1 writes a version of an object, and T2 reads that version, then T1 appears to have executed before T2 ww-dependencies: if T1 writes a version of some object, and T2 replaces that version with the next version, then T1 appears to have executed before T2 rw-antidependencies: if",
   "keywords": [
     
   ],
-  "articleBody": "2025-03-02 符文般的JS 0 = [+[]]+[] 1 = [+!+[]]+[] 10 = [+!+[]]+[+[]] 100 = [+!+[]]+[+[]]+[+[]] 1. 0 = [+[]]+[]​ ​[]​ 是一个空数组。 ​+[]​ 将空数组转换为数字。空数组转换为数字时是 0​，所以 +[]​ 的结果是 0​。 ​[+[]]​ 将 0​ 放入一个数组中，结果是 [0]​。 ​[+[]]+[]​ 将数组 [0]​ 转换为字符串，结果是 \"0\"​。 最终结果：\"0\"​（字符串形式的 0​）。\n2. 1 = [+!+[]]+[]​ ​[]​ 是一个空数组。 ​+[]​ 将空数组转换为数字，结果是 0​。 ​!+[]​ 对 0​ 进行逻辑非运算。0​ 是假值，所以 !0​ 是 true​。 ​+!+[]​ 将 true​ 转换为数字，true​ 转换为数字是 1​。 ​[+!+[]]​ 将 1​ 放入一个数组中，结果是 [1]​。 ​[+!+[]]+[]​ 将数组 [1]​ 转换为字符串，结果是 \"1\"​。 最终结果：\"1\"​（字符串形式的 1​）。\n3. 10 = [+!+[]]+[+[]]​ ​+!+[]​ 如前所述，结果是 1​。 ​[+!+[]]​ 将 1​ 放入一个数组中，结果是 [1]​。 ​+[]​ 如前所述，结果是 0​。 ​[+[]]​ 将 0​ 放入一个数组中，结果是 [0]​。 ​[+!+[]]+[+[]]​ 将 [1]​ 和 [0]​ 转换为字符串并连接，结果是 \"10\"​。 最终结果：\"10\"​（字符串形式的 10​）。\n4. 100 = [+!+[]]+[+[]]+[+[]]​ ​+!+[]​ 如前所述，结果是 1​。 ​[+!+[]]​ 将 1​ 放入一个数组中，结果是 [1]​。 ​+[]​ 如前所述，结果是 0​。 ​[+[]]​ 将 0​ 放入一个数组中，结果是 [0]​。 ​[+!+[]]+[+[]]+[+[]]​ 将 [1]​、[0]​ 和 [0]​ 转换为字符串并连接，结果是 \"100\"​。 最终结果：\"100\"​（字符串形式的 100​）。\n总结 这些代码利用了 JavaScript 中的隐式类型转换和运算符的特性，通过将数组、布尔值和数字相互转换，最终生成了字符串形式的数字。虽然这些代码看起来很复杂，但它们展示了 JavaScript 中类型转换的灵活性。\n‍\n",
-  "wordCount" : "887",
+  "articleBody": "可串行化的实现思路 paper: https://drkp.net/papers/ssi-vldb12.pdf\n可串行化冲突的例子 wr-dependencies: if T1 writes a version of an object, and T2 reads that version, then T1 appears to have executed before T2 ww-dependencies: if T1 writes a version of some object, and T2 replaces that version with the next version, then T1 appears to have executed before T2 rw-antidependencies: if T1 writes a version of some object, and T2 reads the previous version of that object, then T1 appears to have executed after T2, because T2 did not see its update. As we will see, these dependencies are central to SSI; we sometimes also refer to them as rw-conflicts. ​​\n‍\nNote that the definitions above referred to objects. We use this more abstract term rather than “tuple” or “row” because dependencies can also be caused by predicate reads. For example, if T1 scans a table for all rows where x = 1, and T2 subsequently inserts a new row matching that predicate, then there is a T1 –rw–\u003e T2 rw-antidependency.\n定理一 Theorem 1 (Fekete et al. [10]). Every cycle in the serialization history graph contains a sequence of edges T1 –rw−→ T2 –rw−→ T3 where each edge is a rw-antidependency. Furthermore, T3 must be the first transaction in the cycle to commit.\n‍\nPostgreSQL 的实现思路： 只检测相邻的 rw 依赖 However, rather than testing the graph for cycles, it checks for a “dangerous structure” of two adjacent rw-antidependency edges. If any transaction has both an incoming rw-antidependency and an outgoing one, SSI aborts one of the transactions involved.\n只检测相邻的 rw 依赖会造成假阳\n减少假阳导致性能下降 PSSI (Precisely Serializable Snapshot Isolation) is an extension of SSI that does eliminate all false positives , PSSI can reduce the abort rate by up to 40% . We considered this approach for PostgreSQL, but rejected it because we felt the costs outweighed the benefits of the reduced false positive abort rate.\n优化只读事务 只读快照的顺序优化 First, the theory enables a read-only snapshot ordering optimization to reduce the false-positive abort rate.\n例子：\nThat every cycle contains a dangerous structure T1 –rw-\u003e T2 –rw-\u003e T3, where T3 is the first to commit. Thus, even if a dangerous structure is found, no aborts are necessary if either T1 or T2 commits before T3. 参考 “定理一”\n定理三 Theorem 3. Every serialization anomaly contains a dangerous structure T1 –rw−→ T2 –rw−→ T3, where if T1 is read-only, T3 must have committed before T1 took its snapshot.\n安全快照 在 T 获取快照前，如果不存在两个已提交的事务，它们间有 rw-antidependency，则 T 的快照是安全快照。\nSafe snapshots: A read-only transaction T has a safe snapshot if no concurrent read/write transaction has committed with a rw-antidependency out to a transaction that committed before T’s snapshot, or has the possibility to do so.\nDeferrable Transactions 为了避免长的只读事务造成 SSI 冲突（SIREAD 锁冲突：只读事务需要为所有访问的数据记录 SIREAD 锁（用于跟踪读写依赖））：\nDeferrable transactions, a new feature, provide a way to ensure that complex read-only transactions will always run on a safe snapshot.\nBEGIN TRANSACTION READ ONLY, DEFERRABLE. ‍\n",
+  "wordCount" : "717",
   "inLanguage": "en",
-  "image": "https://mobilephone724.github.io/images/papermod-cover.png","datePublished": "2025-03-02T20:00:48+08:00",
-  "dateModified": "2025-03-02T20:01:05+08:00",
+  "image": "https://mobilephone724.github.io/images/papermod-cover.png","datePublished": "2025-03-02T22:13:38+08:00",
+  "dateModified": "2025-03-02T23:13:32+08:00",
   "author":{
     "@type": "Person",
     "name": "Theme PaperMod"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://mobilephone724.github.io/post/20250302-8ctcr.html"
+    "@id": "https://mobilephone724.github.io/post/implementation-ideas-for-serialization-z2idq9y.html"
   },
   "publisher": {
     "@type": "Organization",
@@ -198,9 +198,9 @@
   <header class="post-header">
     <div class="breadcrumbs"><a href="https://mobilephone724.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://mobilephone724.github.io/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
-      【日拱一卒】2025-03-02
+      可串行化的实现思路
     </h1>
-    <div class="post-meta"><span title='2025-03-02 20:00:48 +0800 CST'>March 2, 2025</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/mobilephone724/hugoBlog/tree/content/posts/20250302-8ctcr.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+    <div class="post-meta"><span title='2025-03-02 22:13:38 +0800 CST'>March 2, 2025</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/mobilephone724/hugoBlog/tree/content/posts/implementation-ideas-for-serialization-z2idq9y.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
 
 </div>
   </header> <div class="toc">
@@ -211,22 +211,35 @@
 
         <div class="inner"><ul>
                 <li>
-                    <a href="#2025-03-02" aria-label="2025-03-02">2025-03-02</a><ul>
+                    <a href="#%e5%8f%af%e4%b8%b2%e8%a1%8c%e5%8c%96%e7%9a%84%e5%ae%9e%e7%8e%b0%e6%80%9d%e8%b7%af" aria-label="可串行化的实现思路">可串行化的实现思路</a><ul>
                         
                 <li>
-                    <a href="#%e7%ac%a6%e6%96%87%e8%88%ac%e7%9a%84js" aria-label="符文般的JS">符文般的JS</a><ul>
+                    <a href="#%e5%8f%af%e4%b8%b2%e8%a1%8c%e5%8c%96%e5%86%b2%e7%aa%81%e7%9a%84%e4%be%8b%e5%ad%90" aria-label="可串行化冲突的例子">可串行化冲突的例子</a><ul>
                         
                 <li>
-                    <a href="#1-0--" aria-label="1. 0 = [&#43;[]]&#43;[]​">1. 0 = [+[]]+[]​</a></li>
-                <li>
-                    <a href="#2-1--" aria-label="2. 1 = [&#43;!&#43;[]]&#43;[]​">2. 1 = [+!+[]]+[]​</a></li>
-                <li>
-                    <a href="#3-10--" aria-label="3. 10 = [&#43;!&#43;[]]&#43;[&#43;[]]​">3. 10 = [+!+[]]+[+[]]​</a></li>
-                <li>
-                    <a href="#4-100--" aria-label="4. 100 = [&#43;!&#43;[]]&#43;[&#43;[]]&#43;[&#43;[]]​">4. 100 = [+!+[]]+[+[]]+[+[]]​</a></li>
-                <li>
-                    <a href="#%e6%80%bb%e7%bb%93" aria-label="总结">总结</a>
+                    <a href="#%e5%ae%9a%e7%90%86%e4%b8%80" aria-label="定理一">定理一</a></li></ul>
                 </li>
+                <li>
+                    <a href="#postgresql-%e7%9a%84%e5%ae%9e%e7%8e%b0%e6%80%9d%e8%b7%af" aria-label="PostgreSQL 的实现思路：">PostgreSQL 的实现思路：</a><ul>
+                        
+                <li>
+                    <a href="#%e5%8f%aa%e6%a3%80%e6%b5%8b%e7%9b%b8%e9%82%bb%e7%9a%84-rw-%e4%be%9d%e8%b5%96" aria-label="只检测相邻的 rw 依赖">只检测相邻的 rw 依赖</a></li>
+                <li>
+                    <a href="#%e5%87%8f%e5%b0%91%e5%81%87%e9%98%b3%e5%af%bc%e8%87%b4%e6%80%a7%e8%83%bd%e4%b8%8b%e9%99%8d" aria-label="减少假阳导致性能下降">减少假阳导致性能下降</a></li>
+                <li>
+                    <a href="#%e4%bc%98%e5%8c%96%e5%8f%aa%e8%af%bb%e4%ba%8b%e5%8a%a1" aria-label="优化只读事务">优化只读事务</a><ul>
+                        
+                <li>
+                    <a href="#%e5%8f%aa%e8%af%bb%e5%bf%ab%e7%85%a7%e7%9a%84%e9%a1%ba%e5%ba%8f%e4%bc%98%e5%8c%96" aria-label="只读快照的顺序优化">只读快照的顺序优化</a></li>
+                <li>
+                    <a href="#%e5%ae%9a%e7%90%86%e4%b8%89" aria-label="定理三">定理三</a></li>
+                <li>
+                    <a href="#%e5%ae%89%e5%85%a8%e5%bf%ab%e7%85%a7" aria-label="安全快照">安全快照</a></li>
+                <li>
+                    <a href="#deferrable-transactions" aria-label="Deferrable Transactions">Deferrable Transactions</a>
+                </li>
+            </ul>
+            </li>
             </ul>
             </li>
             </ul>
@@ -236,55 +249,41 @@
     </details>
 </div>
 
-  <div class="post-content"><h1 id="2025-03-02">2025-03-02<a hidden class="anchor" aria-hidden="true" href="#2025-03-02">#</a></h1>
-<h2 id="符文般的js">符文般的JS<a hidden class="anchor" aria-hidden="true" href="#符文般的js">#</a></h2>
-<pre tabindex="0"><code class="language-source" data-lang="source">0 = [+[]]+[]
-1 = [+!+[]]+[]
-10 = [+!+[]]+[+[]]
-100 = [+!+[]]+[+[]]+[+[]]
-</code></pre><h3 id="1-0--">1. <code>0 = [+[]]+[]</code>​<a hidden class="anchor" aria-hidden="true" href="#1-0--">#</a></h3>
+  <div class="post-content"><h1 id="可串行化的实现思路">可串行化的实现思路<a hidden class="anchor" aria-hidden="true" href="#可串行化的实现思路">#</a></h1>
+<p>paper: <a href="https://drkp.net/papers/ssi-vldb12.pdf">https://drkp.net/papers/ssi-vldb12.pdf</a></p>
+<h2 id="可串行化冲突的例子">可串行化冲突的例子<a hidden class="anchor" aria-hidden="true" href="#可串行化冲突的例子">#</a></h2>
 <ul>
-<li>​<code>[]</code>​ 是一个空数组。</li>
-<li>​<code>+[]</code>​ 将空数组转换为数字。空数组转换为数字时是 <code>0</code>​，所以 <code>+[]</code>​ 的结果是 <code>0</code>​。</li>
-<li>​<code>[+[]]</code>​ 将 <code>0</code>​ 放入一个数组中，结果是 <code>[0]</code>​。</li>
-<li>​<code>[+[]]+[]</code>​ 将数组 <code>[0]</code>​ 转换为字符串，结果是 <code>&quot;0&quot;</code>​。</li>
+<li><strong>wr-dependencies</strong>: if T1 writes a version of an object, and T2 reads that version, then T1 appears to have executed before T2</li>
+<li><strong>ww-dependencies</strong>: if T1 writes a version of some object, and T2 replaces that version with the next version, then T1 appears to have executed before T2</li>
+<li><strong>rw-antidependencies</strong>: <em>if T1 writes a version of some object, and T2 reads the previous version of that object, then T1 appears to have executed after T2, because T2 did not see its update</em>. As we will see, these dependencies are central to SSI; we sometimes also refer to them as rw-conflicts.</li>
 </ul>
-<p>最终结果：<code>&quot;0&quot;</code>​（字符串形式的 <code>0</code>​）。</p>
-<hr>
-<h3 id="2-1--">2. <code>1 = [+!+[]]+[]</code>​<a hidden class="anchor" aria-hidden="true" href="#2-1--">#</a></h3>
-<ul>
-<li>​<code>[]</code>​ 是一个空数组。</li>
-<li>​<code>+[]</code>​ 将空数组转换为数字，结果是 <code>0</code>​。</li>
-<li>​<code>!+[]</code>​ 对 <code>0</code>​ 进行逻辑非运算。<code>0</code>​ 是假值，所以 <code>!0</code>​ 是 <code>true</code>​。</li>
-<li>​<code>+!+[]</code>​ 将 <code>true</code>​ 转换为数字，<code>true</code>​ 转换为数字是 <code>1</code>​。</li>
-<li>​<code>[+!+[]]</code>​ 将 <code>1</code>​ 放入一个数组中，结果是 <code>[1]</code>​。</li>
-<li>​<code>[+!+[]]+[]</code>​ 将数组 <code>[1]</code>​ 转换为字符串，结果是 <code>&quot;1&quot;</code>​。</li>
-</ul>
-<p>最终结果：<code>&quot;1&quot;</code>​（字符串形式的 <code>1</code>​）。</p>
-<hr>
-<h3 id="3-10--">3. <code>10 = [+!+[]]+[+[]]</code>​<a hidden class="anchor" aria-hidden="true" href="#3-10--">#</a></h3>
-<ul>
-<li>​<code>+!+[]</code>​ 如前所述，结果是 <code>1</code>​。</li>
-<li>​<code>[+!+[]]</code>​ 将 <code>1</code>​ 放入一个数组中，结果是 <code>[1]</code>​。</li>
-<li>​<code>+[]</code>​ 如前所述，结果是 <code>0</code>​。</li>
-<li>​<code>[+[]]</code>​ 将 <code>0</code>​ 放入一个数组中，结果是 <code>[0]</code>​。</li>
-<li>​<code>[+!+[]]+[+[]]</code>​ 将 <code>[1]</code>​ 和 <code>[0]</code>​ 转换为字符串并连接，结果是 <code>&quot;10&quot;</code>​。</li>
-</ul>
-<p>最终结果：<code>&quot;10&quot;</code>​（字符串形式的 <code>10</code>​）。</p>
-<hr>
-<h3 id="4-100--">4. <code>100 = [+!+[]]+[+[]]+[+[]]</code>​<a hidden class="anchor" aria-hidden="true" href="#4-100--">#</a></h3>
-<ul>
-<li>​<code>+!+[]</code>​ 如前所述，结果是 <code>1</code>​。</li>
-<li>​<code>[+!+[]]</code>​ 将 <code>1</code>​ 放入一个数组中，结果是 <code>[1]</code>​。</li>
-<li>​<code>+[]</code>​ 如前所述，结果是 <code>0</code>​。</li>
-<li>​<code>[+[]]</code>​ 将 <code>0</code>​ 放入一个数组中，结果是 <code>[0]</code>​。</li>
-<li>​<code>[+!+[]]+[+[]]+[+[]]</code>​ 将 <code>[1]</code>​、<code>[0]</code>​ 和 <code>[0]</code>​ 转换为字符串并连接，结果是 <code>&quot;100&quot;</code>​。</li>
-</ul>
-<p>最终结果：<code>&quot;100&quot;</code>​（字符串形式的 <code>100</code>​）。</p>
-<hr>
-<h3 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h3>
-<p>这些代码利用了 JavaScript 中的隐式类型转换和运算符的特性，通过将数组、布尔值和数字相互转换，最终生成了字符串形式的数字。虽然这些代码看起来很复杂，但它们展示了 JavaScript 中类型转换的灵活性。</p>
+<p>​<img alt="image" loading="lazy" src="https://raw.githubusercontent.com/mobilephone724/hugoBlog/siyuan-pub/images/image-20250302223239-pdjy6rq.png">​</p>
 <p>‍</p>
+<p>Note that the definitions above referred to objects. We use this more abstract term rather than “tuple” or “row” because dependencies can also be caused by predicate reads. For example, if T1 scans a table for all rows where x = 1, and T2 subsequently inserts a new row matching that predicate, then there is a T1 &ndash;rw&ndash;&gt; T2 rw-antidependency.</p>
+<h3 id="定理一">定理一<a hidden class="anchor" aria-hidden="true" href="#定理一">#</a></h3>
+<p><strong>Theorem 1</strong> (Fekete et al. [10]). Every cycle in the serialization history graph contains a sequence of edges T1 &ndash;rw−→ T2 &ndash;rw−→ T3 where each edge is a rw-antidependency. Furthermore, T3 must be the first transaction in the cycle to commit.</p>
+<p>‍</p>
+<h2 id="postgresql-的实现思路">PostgreSQL 的实现思路：<a hidden class="anchor" aria-hidden="true" href="#postgresql-的实现思路">#</a></h2>
+<h3 id="只检测相邻的-rw-依赖">只检测相邻的 rw 依赖<a hidden class="anchor" aria-hidden="true" href="#只检测相邻的-rw-依赖">#</a></h3>
+<p>However, rather than testing the graph for cycles, it checks for a “dangerous structure” of two adjacent rw-antidependency edges. If any transaction has both an incoming rw-antidependency and an outgoing one, SSI aborts one of the transactions involved.</p>
+<p>只检测相邻的 rw 依赖会造成假阳</p>
+<h3 id="减少假阳导致性能下降">减少假阳导致性能下降<a hidden class="anchor" aria-hidden="true" href="#减少假阳导致性能下降">#</a></h3>
+<p>PSSI (Precisely Serializable Snapshot Isolation) is an extension of SSI that does eliminate all false positives , PSSI can reduce the abort rate by up to 40% . We considered this approach for PostgreSQL, but rejected it because we felt the costs outweighed the benefits of the reduced false positive abort rate.</p>
+<h3 id="优化只读事务">优化只读事务<a hidden class="anchor" aria-hidden="true" href="#优化只读事务">#</a></h3>
+<h4 id="只读快照的顺序优化">只读快照的顺序优化<a hidden class="anchor" aria-hidden="true" href="#只读快照的顺序优化">#</a></h4>
+<p>First, the theory enables a <em><strong>read-only snapshot ordering optimization</strong></em> to reduce the false-positive abort rate.</p>
+<p>例子：</p>
+<p>That every cycle contains a dangerous structure T1 &ndash;rw-&gt; T2 &ndash;rw-&gt; T3, where T3 is the first to commit. Thus, even if a dangerous structure is found, no aborts are necessary if either T1 or T2 commits before T3. 参考 “定理一”</p>
+<h4 id="定理三">定理三<a hidden class="anchor" aria-hidden="true" href="#定理三">#</a></h4>
+<p>Theorem 3. Every serialization anomaly contains a dangerous structure T1 &ndash;rw−→ T2 &ndash;rw−→ T3, where if T1 is read-only, T3 must have committed before T1 took its snapshot.</p>
+<h4 id="安全快照">安全快照<a hidden class="anchor" aria-hidden="true" href="#安全快照">#</a></h4>
+<p>在 T 获取快照前，如果不存在两个已提交的事务，它们间有 rw-antidependency，则 T 的快照是安全快照。</p>
+<p>Safe snapshots: A read-only transaction T has a safe snapshot if no concurrent read/write transaction has committed with a rw-antidependency out to a transaction that committed before T’s snapshot, or has the possibility to do so.</p>
+<h4 id="deferrable-transactions">Deferrable Transactions<a hidden class="anchor" aria-hidden="true" href="#deferrable-transactions">#</a></h4>
+<p>为了避免长的只读事务造成 SSI 冲突（<strong>SIREAD 锁冲突</strong>：只读事务需要为所有访问的数据记录 SIREAD 锁（用于跟踪读写依赖））：</p>
+<p>Deferrable transactions, a new feature, <strong>provide a way to ensure that complex read-only transactions will always run on a safe snapshot.</strong></p>
+<pre tabindex="0"><code class="language-pgsql" data-lang="pgsql">BEGIN TRANSACTION READ ONLY, DEFERRABLE.
+</code></pre><p>‍</p>
 
 
   </div>
@@ -293,23 +292,18 @@
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="https://mobilephone724.github.io/post/implementation-ideas-for-serialization-z2idq9y.html">
-    <span class="title">« Prev</span>
-    <br>
-    <span>可串行化的实现思路</span>
-  </a>
-  <a class="next" href="https://mobilephone724.github.io/post/20250301-1r5xzc.html">
+  <a class="next" href="https://mobilephone724.github.io/post/20250302-8ctcr.html">
     <span class="title">Next »</span>
     <br>
-    <span>【日拱一卒】2025-03-01</span>
+    <span>【日拱一卒】2025-03-02</span>
   </a>
 </nav>
 
 
 <ul class="share-buttons">
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-02 on x"
-            href="https://x.com/intent/tweet/?text=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-02&amp;url=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250302-8ctcr.html&amp;hashtags=">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 可串行化的实现思路 on x"
+            href="https://x.com/intent/tweet/?text=%e5%8f%af%e4%b8%b2%e8%a1%8c%e5%8c%96%e7%9a%84%e5%ae%9e%e7%8e%b0%e6%80%9d%e8%b7%af&amp;url=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-ideas-for-serialization-z2idq9y.html&amp;hashtags=">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
@@ -317,8 +311,8 @@
         </a>
     </li>
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-02 on linkedin"
-            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250302-8ctcr.html&amp;title=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-02&amp;summary=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-02&amp;source=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250302-8ctcr.html">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 可串行化的实现思路 on linkedin"
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-ideas-for-serialization-z2idq9y.html&amp;title=%e5%8f%af%e4%b8%b2%e8%a1%8c%e5%8c%96%e7%9a%84%e5%ae%9e%e7%8e%b0%e6%80%9d%e8%b7%af&amp;summary=%e5%8f%af%e4%b8%b2%e8%a1%8c%e5%8c%96%e7%9a%84%e5%ae%9e%e7%8e%b0%e6%80%9d%e8%b7%af&amp;source=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-ideas-for-serialization-z2idq9y.html">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
@@ -326,8 +320,8 @@
         </a>
     </li>
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-02 on reddit"
-            href="https://reddit.com/submit?url=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250302-8ctcr.html&title=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-02">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 可串行化的实现思路 on reddit"
+            href="https://reddit.com/submit?url=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-ideas-for-serialization-z2idq9y.html&title=%e5%8f%af%e4%b8%b2%e8%a1%8c%e5%8c%96%e7%9a%84%e5%ae%9e%e7%8e%b0%e6%80%9d%e8%b7%af">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
@@ -335,8 +329,8 @@
         </a>
     </li>
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-02 on facebook"
-            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250302-8ctcr.html">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 可串行化的实现思路 on facebook"
+            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-ideas-for-serialization-z2idq9y.html">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
@@ -344,8 +338,8 @@
         </a>
     </li>
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-02 on whatsapp"
-            href="https://api.whatsapp.com/send?text=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-02%20-%20https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250302-8ctcr.html">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 可串行化的实现思路 on whatsapp"
+            href="https://api.whatsapp.com/send?text=%e5%8f%af%e4%b8%b2%e8%a1%8c%e5%8c%96%e7%9a%84%e5%ae%9e%e7%8e%b0%e6%80%9d%e8%b7%af%20-%20https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-ideas-for-serialization-z2idq9y.html">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
@@ -353,8 +347,8 @@
         </a>
     </li>
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-02 on telegram"
-            href="https://telegram.me/share/url?text=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-02&amp;url=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250302-8ctcr.html">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 可串行化的实现思路 on telegram"
+            href="https://telegram.me/share/url?text=%e5%8f%af%e4%b8%b2%e8%a1%8c%e5%8c%96%e7%9a%84%e5%ae%9e%e7%8e%b0%e6%80%9d%e8%b7%af&amp;url=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-ideas-for-serialization-z2idq9y.html">
             <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
@@ -362,8 +356,8 @@
         </a>
     </li>
     <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-02 on ycombinator"
-            href="https://news.ycombinator.com/submitlink?t=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-02&u=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250302-8ctcr.html">
+        <a target="_blank" rel="noopener noreferrer" aria-label="share 可串行化的实现思路 on ycombinator"
+            href="https://news.ycombinator.com/submitlink?t=%e5%8f%af%e4%b8%b2%e8%a1%8c%e5%8c%96%e7%9a%84%e5%ae%9e%e7%8e%b0%e6%80%9d%e8%b7%af&u=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-ideas-for-serialization-z2idq9y.html">
             <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
                 xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
                 <path
