@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="index, follow">
@@ -9,16 +9,16 @@
 <meta name="keywords" content="OS, LINUX, FILE, I/O">
 <meta name="description" content="Hugo provides multiple built-in shortcodes for author convenience and to keep your markdown content clean.">
 <meta name="author" content="mobilephone724">
-<link rel="canonical" href="https://mobilephone724.github.io/archive/linux-file/">
+<link rel="canonical" href="http://localhost:1313/archive/linux-file/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.45e028aa8ce0961349adf411b013ee39406be2c0bc80d4ea3fc04555f7f4611a.css" integrity="sha256-ReAoqozglhNJrfQRsBPuOUBr4sC8gNTqP8BFVff0YRo=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://mobilephone724.github.io/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://mobilephone724.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://mobilephone724.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://mobilephone724.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://mobilephone724.github.io/safari-pinned-tab.svg">
+<link rel="icon" href="http://localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://mobilephone724.github.io/archive/linux-file/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/archive/linux-file/">
 <noscript>
     <style>
         #theme-toggle,
@@ -56,9 +56,21 @@
 
     </style>
 </noscript>
+<script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        tags: 'ams'
+      }
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
   
 
-<meta property="og:url" content="https://mobilephone724.github.io/archive/linux-file/">
+<meta property="og:url" content="http://localhost:1313/archive/linux-file/">
   <meta property="og:site_name" content="PaperMod">
   <meta property="og:title" content="APUE/Chapter3: file and I/O">
   <meta property="og:description" content="Hugo provides multiple built-in shortcodes for author convenience and to keep your markdown content clean.">
@@ -71,9 +83,9 @@
     <meta property="article:tag" content="LINUX">
     <meta property="article:tag" content="FILE">
     <meta property="article:tag" content="I/O">
-      <meta property="og:image" content="https://mobilephone724.github.io/images/papermod-cover.png">
+      <meta property="og:image" content="http://localhost:1313/images/papermod-cover.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://mobilephone724.github.io/images/papermod-cover.png">
+<meta name="twitter:image" content="http://localhost:1313/images/papermod-cover.png">
 <meta name="twitter:title" content="APUE/Chapter3: file and I/O">
 <meta name="twitter:description" content="Hugo provides multiple built-in shortcodes for author convenience and to keep your markdown content clean.">
 
@@ -86,14 +98,14 @@
     {
       "@type": "ListItem",
       "position":  1 ,
-      "name": "旧文归档",
-      "item": "https://mobilephone724.github.io/archive/"
+      "name": "Archives",
+      "item": "http://localhost:1313/archive/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "APUE/Chapter3: file and I/O",
-      "item": "https://mobilephone724.github.io/archive/linux-file/"
+      "item": "http://localhost:1313/archive/linux-file/"
     }
   ]
 }
@@ -111,7 +123,7 @@
   "articleBody": "The functions described in this chapter are often referred to as unbuffered I/O(which each read or write invokes a system call in the kernel), in contrast to the standard I/O routines\nFile Descriptors To the kernel, all open files are referred to by file descriptors. A file descriptor is a non-negative integer. When we open an existing file or create a new file, the kernel returns a file descriptor to the process. When we want to read or write a file, we identify the file with the file descriptor that was returned by open or creat as an argument to either read or write. By convention, UNIX System shells associate file descriptor 0 with the standard input of a process, file descriptor 1 with the standard output, and file descriptor 2 with the standard error File descriptors range from 0 through OPEN_MAX−1 open and openat code #include int open(const char *path, int oflag, ... /* mode_t mode */ ); int openat(int fd, const char *path, int oflag, ... /* mode_t mode */ ); //Both return: file descriptor if OK, −1 on error This function has a multitude of options, which are specified by the oflag argument. This argument is formed by ORing together one or more of the following constants from the header\nO_SYNC Have each write wait for physical I/O to complete, including I/O necessary to update file attributes modified as a result of the write. O_DSYNC Have each write wait for physical I/O to complete, but don’t wait for file attributes to be updated if they don’t affect the ability to read the data just written. The O_DSYNC flag affects a file’s attributes only when they need to be updated to reflect a change in the file’s data (for example, update the file’s size to reflect more data)\nO_RSYNC Have each read operation on the file descriptor wait until any pending writes for the same portion of the file are complete\nThe fd parameter distinguishes the openat function from the open function. There are three possibilities\nThe path parameter specifies an absolute pathname. In this case, the fd parameter is ignored and the openat function behaves like the open function. The path parameter specifies a relative pathname and the fd parameter is a file descriptor that specifies the starting location in the file system where the relative pathname is to be evaluated. The fd parameter is obtained by opening the directory where the relative pathname is to be evaluated. The path parameter specifies a relative pathname and the fd parameter has the special value AT_FDCWD. In this case, the pathname is evaluated starting in the current working directory and the openat function behaves like the open function. openat solved two problems\nIt gives threads a way to use relative pathnames to open files in directories other than the current working directory while all threads in the same process share the same current working directory, so this makes it difficult for multiple threads in the same process to work in different directories at the same time it provides a way to avoid time-of-check-to-time-of-use (TOCTTOU) errors whose baisc idea is that a program is vulnerable if it makes two file-based function calls where the second call depends on the results of the first call. Because the two calls are not atomic, the file can change between the two calls, thereby invalidating the results of the first call, leading to a program error. creat function #include int creat(const char *path, mode_t mode); This is equivalent to\nopen(path, O_WRONLY | O_CREAT | O_TRUNC, mode); close function #include int close(int fd); When a process terminates, all of its open files are closed automatically by the kernel\nlseek function Every open file has an associated ‘’current file offset,’’ normally a non-negative integer that measures the number of bytes from the beginning of the file.Read and write operations normally start at the current file offset and cause the offset to be incremented by the number of bytes read or written An open file’s offset can be set explicitly by calling lseek #include off_t lseek(int fd, off_t offset, int whence); If whence is SEEK_SET, the file’s offset is set to offset bytes from the beginning of the file If whence is SEEK_CUR, the file’s offset is set to its current value plus the offset. The offset can be positive or negative If whence is SEEK_END, the file’s offset is set to the size of the file plus the offset. The offset can be positive or negative Because a successful call to lseek returns the new file offset, we can seek zero bytes from the current position to determine the current offset off_t currpos; currpos = lseek(fd, 0, SEEK_CUR); This technique can also be used to determine if a file is capable of seeking. If the file descriptor refers to a pipe, FIFO, or socket, lseek sets errno to ESPIPE and returns −1 Normally,a file’s current offset must be a non-negative integer . Because negative offsets are possible, we should be careful to compare the return value from lseek as being equal to or not equal to −1, rather than testing whether it is less than 0. The file’s offset can be greater than the file’s current size, in which case the next write to the file will extend the file. This is referred to as creating a hole in a file and is allowed. Any bytes in a file that have not been written are read back as 0. A hole in a file isn’t required to have storage backing it on disk read function #include ssize_t read(int fd, void *buf, size_t nbytes); If the read is successful, the number of bytes read is returned. If the end of file is encountered, 0 is returned. There are several cases in which the number of bytes actually read is less than the amount requested:\nWhen reading from a regular file, if the end of file is reached before the requested number of bytes has been read. When reading from a terminal device. When reading from a network When reading from a pipe or FIFO. When reading from a record-oriented device When interrupted by a signal and a partial amount of data has already been read. classic definition int read(int fd, char *buf, unsigned nbytes); difference\nvoid * to char * 0 for end-of-file and -1 for an error write function #include ssize_t write(int fd, const void *buf, size_t nbytes) The return value is usually equal to the nbytes argument; otherwise, an error has occurred. A common cause for a write error is either filling up a disk or exceeding the file size limit for a given process\nI/O efficiency an example\n#include \"apue.h\" #define BUFFSIZE 4096 int main(void) { int n; char buf[BUFFSIZE]; while ((n = read(STDIN_FILENO, buf, BUFFSIZE)) \u003e 0) if (write(STDOUT_FILENO, buf, n) != n) err_sys(\"write error\"); if (n \u003c 0) err_sys(\"read error\"); exit(0); } some caveats\nIt reads from standard input and writes to standard output, assuming that these have been set up by the shell before this program is executed The program doesn’t close the input file or output file. This example works for both text files and binary file how we chose the BUFFSIZE value?\nfile sharing The UNIX System supports the sharing of open files among different processes.\nThe kernel uses three data structures to represent an open file, and the relationships among them determine the effect one process has on another with regard to file sharing\nEvery process has an entry in the process table. Within each process table entry is a table of open file descriptors, which we can think of as a vector, with one entry per descriptor. Associated with each file descriptor are The file descriptor flags A pointer to a file table entry The kernel maintains a file table for all open files. Each file table entry contains The file status flags for the file, such as read, write, append, sync, and nonblocking; more on these in Section 3.14 The current file offset A pointer to the v-node table entry for the file Each open file (or device) has a v-node structure that contains information about the type of file and pointers to functions that operate on the file. For most files, the v-node also contains the i-node for the file. This information is read from disk when the file is opened, so that all the pertinent information about the file is readily available. For example, the i-node contains the owner of the file, the size of the file, pointers to where the actual data blocks for the file are located on disk, and so on If two independent processes have the same file open, we could have the arrangement\nEach process that opens the file gets its own file table entry, but only a single v-node table entry is required for a given file. One reason each process gets its own file table entry is so that each process has its own current offset for the file.\nAfter each write is complete, the current file offset in the file table entry is incremented by the number of bytes written. If this causes the current file offset to exceed the current file size, the current file size in the i-node table entry is set to the current file offset (for example, the file is extended). If a file is opened with the O_APPEND flag, a corresponding flag is set in the file status flags of the file table entry. Each time a write is performed for a file with this append flag set, the current file offset in the file table entry is first set to the current file size from the i-node table entry. This forces every write to be appended to the current end of file. If a file is positioned to its current end of file using lseek, all that happens is the current file offset in the file table entry is set to the current file size from the i-node table entry (Note that this is not the same as if the file was opened with the O_APPEND flag) The lseek function modifies only the current file offset in the file table entry. No I/O takes place It is possible for more than one file descriptor entry to point to the same file table entry. This also happens after a fork when the parent and the child share the same file table entry for each open descriptor\nNote the difference in scope between the file descriptor flags and the file status flags. The former apply only to a single descriptor in a single process, whereas the latter apply to all descriptors in any process that point to the given file table entry\nAtomic Operations Any operation that requires more than one function call cannot be atomic, as there is always the possibility that the kernel might temporarily suspend the process between the two function calls\n#include ssize_t pread(int fd, void *buf, size_t nbytes, off_t offset); //Returns: number of bytes read, 0 if end of file, −1 on error ssize_t pwrite(int fd, const void *buf, size_t nbytes, off_t offset); //Returns: number of bytes written if OK, −1 on error If the operation is performed atomically, either all the steps are performed (on success) or none are performed (on failure).\ndup and dup2 Functions An existing file descriptor is duplicated by either of the following functions\n#include int dup(int fd); int dup2(int fd, int fd2); //Both return: new file descriptor if OK, −1 on error With dup2, we specify the value of the new descriptor with the fd2 argument. If fd2 is already open, it is first closed. If fd equals fd2, then dup2 returns fd2 without closing it. Otherwise, the FD_CLOEXEC file descriptor flag is cleared for fd2, so that fd2 is left open if the process calls exec\nsync,fsync , and fdatasync function Traditional implementations of the UNIX System have a buffer cache or page cache in the kernel through which most disk I/O passes. When we write data to a file, the data is normally copied by the kernel into one of its buffers and queued for writing to disk at some later time. This is called delayed write\nTo ensure consistency of the file system on disk with the contents of the buffer cache, the sync, fsync, and fdatasync functions are provided.\n#include int fsync(int fd); int fdatasync(int fd); //Returns: 0 if OK, −1 on error void sync(void); The sync function simply queues all the modified block buffers for writing and returns; it does not wait for the disk writes to take place.The function sync is normally called periodically (usually every 30 seconds) from a system daemon, often called update.\nThe function fsync refers only to a single file, specified by the file descriptor fd, and waits for the disk writes to complete before returning.(database)\nThe fdatasync function is similar to fsync, but it affects only the data portions of a file. With fsync, the file’s attributes are also updated synchronously\nfcntl function #include int fcntl(int fd, int cmd, ... /* int arg */ ); //Returns: depends on cmd if OK (see following), −1 on error The fcntl function is used for five different purposes\nDuplicate an existing descriptor (cmd = F_DUPFD or F_DUPFD_CLOEXEC) Get/set file descriptor flags (cmd = F_GETFD or F_SETFD) Get/set file status flags (cmd = F_GETFL or F_SETFL) Get/set asynchronous I/O ownership (cmd = F_GETOWN or F_SETOWN) Get/set record locks (cmd = F_GETLK, F_SETLK, or F_SETLKW) ioctl function The ioctl function has always been the catchall for I/O operations. Terminal I/O was the biggest user of this function\n#include /* System V */ #include /* BSD and Linux */ int ioctl(int fd, int request, ...); //Returns: −1 on error, something else if OK Normally, additional device-specific headers are required. For example, the ioctl commands for terminal I/O, beyond the basic operations specified by POSIX.1, all require the header.\nEach device driver can define its own set of ioctl commands. The system, however, provides generic ioctl commands for different classes of devices\n/dev/fd Newer systems provide a directory named /dev/fd whose entries are files named 0, 1, 2, and so on\nIn the function call\nfd = open(\"/dev/fd/0\", mode); most systems ignore the specified mode, whereas others require that it be a subset of the mode used when the referenced file (standard input, in this case) was originally opened. Because the previous open is equivalent to\nfd = dup(0); the descriptors 0 and fd share the same file table entry\nFor example, if descriptor 0 was opened read-only, we can only read on fd. Even if the system ignores the open mode and the call succeeds, we still can’t write to fd.\nThe main use of the /dev/fd files is from the shell. It allows programs that use pathname arguments to handle standard input and standard output in the same manner as other pathnames, like cat - to cat /dev/fd/0\nThe special meaning of - as a command-line argument to refer to the standard input or the standard output is a kludge that has crept into many programs. There are also problems if we specify - as the first file, as it looks like the start of another command-line option. Using /dev/fd is a step toward uniformity and cleanliness.\n",
   "wordCount" : "2564",
   "inLanguage": "en",
-  "image": "https://mobilephone724.github.io/images/papermod-cover.png","datePublished": "2022-01-14T12:02:42+08:00",
+  "image": "http://localhost:1313/images/papermod-cover.png","datePublished": "2022-01-14T12:02:42+08:00",
   "dateModified": "2022-01-14T12:02:42+08:00",
   "author":{
     "@type": "Person",
@@ -119,14 +131,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://mobilephone724.github.io/archive/linux-file/"
+    "@id": "http://localhost:1313/archive/linux-file/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "PaperMod",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://mobilephone724.github.io/favicon.ico"
+      "url": "http://localhost:1313/favicon.ico"
     }
   }
 }
@@ -148,7 +160,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://mobilephone724.github.io/" accesskey="h" title="PaperMod (Alt + H)">PaperMod</a>
+            <a href="http://localhost:1313/" accesskey="h" title="PaperMod (Alt + H)">PaperMod</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -174,22 +186,22 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="https://mobilephone724.github.io/article" title="article">
+                <a href="http://localhost:1313/article" title="article">
                     <span>article</span>
                 </a>
             </li>
             <li>
-                <a href="https://mobilephone724.github.io/archives" title="Archive">
+                <a href="http://localhost:1313/archives" title="Archive">
                     <span>Archive</span>
                 </a>
             </li>
             <li>
-                <a href="https://mobilephone724.github.io/search/" title="Search (Alt &#43; /)" accesskey=/>
+                <a href="http://localhost:1313/search/" title="Search (Alt &#43; /)" accesskey=/>
                     <span>Search</span>
                 </a>
             </li>
             <li>
-                <a href="https://mobilephone724.github.io/tags/" title="Tags">
+                <a href="http://localhost:1313/tags/" title="Tags">
                     <span>Tags</span>
                 </a>
             </li>
@@ -211,7 +223,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="https://mobilephone724.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://mobilephone724.github.io/archive/">旧文归档</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/archive/">Archives</a></div>
     <h1 class="post-title entry-hint-parent">
       APUE/Chapter3: file and I/O
     </h1>
@@ -476,17 +488,17 @@ classic definition</li>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="https://mobilephone724.github.io/tags/os/">OS</a></li>
-      <li><a href="https://mobilephone724.github.io/tags/linux/">LINUX</a></li>
-      <li><a href="https://mobilephone724.github.io/tags/file/">FILE</a></li>
-      <li><a href="https://mobilephone724.github.io/tags/i/o/">I/O</a></li>
+      <li><a href="http://localhost:1313/tags/os/">OS</a></li>
+      <li><a href="http://localhost:1313/tags/linux/">LINUX</a></li>
+      <li><a href="http://localhost:1313/tags/file/">FILE</a></li>
+      <li><a href="http://localhost:1313/tags/i/o/">I/O</a></li>
     </ul>
 
 
 <ul class="share-buttons">
     <li>
         <a target="_blank" rel="noopener noreferrer" aria-label="share APUE/Chapter3: file and I/O on x"
-            href="https://x.com/intent/tweet/?text=APUE%2fChapter3%3a%20file%20and%20I%2fO&amp;url=https%3a%2f%2fmobilephone724.github.io%2farchive%2flinux-file%2f&amp;hashtags=OS%2cLINUX%2cFILE%2cI%2fO">
+            href="https://x.com/intent/tweet/?text=APUE%2fChapter3%3a%20file%20and%20I%2fO&amp;url=http%3a%2f%2flocalhost%3a1313%2farchive%2flinux-file%2f&amp;hashtags=OS%2cLINUX%2cFILE%2cI%2fO">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
@@ -495,7 +507,7 @@ classic definition</li>
     </li>
     <li>
         <a target="_blank" rel="noopener noreferrer" aria-label="share APUE/Chapter3: file and I/O on linkedin"
-            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmobilephone724.github.io%2farchive%2flinux-file%2f&amp;title=APUE%2fChapter3%3a%20file%20and%20I%2fO&amp;summary=APUE%2fChapter3%3a%20file%20and%20I%2fO&amp;source=https%3a%2f%2fmobilephone724.github.io%2farchive%2flinux-file%2f">
+            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http%3a%2f%2flocalhost%3a1313%2farchive%2flinux-file%2f&amp;title=APUE%2fChapter3%3a%20file%20and%20I%2fO&amp;summary=APUE%2fChapter3%3a%20file%20and%20I%2fO&amp;source=http%3a%2f%2flocalhost%3a1313%2farchive%2flinux-file%2f">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
@@ -504,7 +516,7 @@ classic definition</li>
     </li>
     <li>
         <a target="_blank" rel="noopener noreferrer" aria-label="share APUE/Chapter3: file and I/O on reddit"
-            href="https://reddit.com/submit?url=https%3a%2f%2fmobilephone724.github.io%2farchive%2flinux-file%2f&title=APUE%2fChapter3%3a%20file%20and%20I%2fO">
+            href="https://reddit.com/submit?url=http%3a%2f%2flocalhost%3a1313%2farchive%2flinux-file%2f&title=APUE%2fChapter3%3a%20file%20and%20I%2fO">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
@@ -513,7 +525,7 @@ classic definition</li>
     </li>
     <li>
         <a target="_blank" rel="noopener noreferrer" aria-label="share APUE/Chapter3: file and I/O on facebook"
-            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmobilephone724.github.io%2farchive%2flinux-file%2f">
+            href="https://facebook.com/sharer/sharer.php?u=http%3a%2f%2flocalhost%3a1313%2farchive%2flinux-file%2f">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
@@ -522,7 +534,7 @@ classic definition</li>
     </li>
     <li>
         <a target="_blank" rel="noopener noreferrer" aria-label="share APUE/Chapter3: file and I/O on whatsapp"
-            href="https://api.whatsapp.com/send?text=APUE%2fChapter3%3a%20file%20and%20I%2fO%20-%20https%3a%2f%2fmobilephone724.github.io%2farchive%2flinux-file%2f">
+            href="https://api.whatsapp.com/send?text=APUE%2fChapter3%3a%20file%20and%20I%2fO%20-%20http%3a%2f%2flocalhost%3a1313%2farchive%2flinux-file%2f">
             <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
@@ -531,7 +543,7 @@ classic definition</li>
     </li>
     <li>
         <a target="_blank" rel="noopener noreferrer" aria-label="share APUE/Chapter3: file and I/O on telegram"
-            href="https://telegram.me/share/url?text=APUE%2fChapter3%3a%20file%20and%20I%2fO&amp;url=https%3a%2f%2fmobilephone724.github.io%2farchive%2flinux-file%2f">
+            href="https://telegram.me/share/url?text=APUE%2fChapter3%3a%20file%20and%20I%2fO&amp;url=http%3a%2f%2flocalhost%3a1313%2farchive%2flinux-file%2f">
             <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
                 <path
                     d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
@@ -540,7 +552,7 @@ classic definition</li>
     </li>
     <li>
         <a target="_blank" rel="noopener noreferrer" aria-label="share APUE/Chapter3: file and I/O on ycombinator"
-            href="https://news.ycombinator.com/submitlink?t=APUE%2fChapter3%3a%20file%20and%20I%2fO&u=https%3a%2f%2fmobilephone724.github.io%2farchive%2flinux-file%2f">
+            href="https://news.ycombinator.com/submitlink?t=APUE%2fChapter3%3a%20file%20and%20I%2fO&u=http%3a%2f%2flocalhost%3a1313%2farchive%2flinux-file%2f">
             <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
                 xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
                 <path
