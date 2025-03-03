@@ -12,8 +12,29 @@
     <generator>Hugo -- 0.127.0</generator>
     <language>en</language>
     <copyright>PaperMod Contributors</copyright>
-    <lastBuildDate>Sun, 02 Mar 2025 23:13:32 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 03 Mar 2025 23:36:34 +0800</lastBuildDate>
     <atom:link href="https://mobilephone724.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>lsmTree</title>
+      <link>https://mobilephone724.github.io/post/lsmtree-2fapmq.html</link>
+      <pubDate>Mon, 03 Mar 2025 22:34:36 +0800</pubDate>
+      <guid>https://mobilephone724.github.io/post/lsmtree-2fapmq.html</guid>
+      <description>lsmTree LSM-Tree 简介 LSM-Tree（Log-Structured Merge-Tree）是一种为高写入吞吐设计的存储结构，广泛应用于 NoSQL 数据库（如 Leve</description>
+    </item>
+    <item>
+      <title>执行引擎概览</title>
+      <link>https://mobilephone724.github.io/post/execution-engine-overview-lmovi.html</link>
+      <pubDate>Mon, 03 Mar 2025 22:25:12 +0800</pubDate>
+      <guid>https://mobilephone724.github.io/post/execution-engine-overview-lmovi.html</guid>
+      <description>执行引擎概览 FROM deepseek 执行引擎对比表 类型 数据处理方式 优势场景 劣势场景 代表系统 Volcano 逐行处理 OLTP 短查询 复杂分析查询 MySQL、PostgreSQL 向量化 按</description>
+    </item>
+    <item>
+      <title>Heap 原理</title>
+      <link>https://mobilephone724.github.io/post/heap-principle-z1iauje.html</link>
+      <pubDate>Mon, 03 Mar 2025 21:19:18 +0800</pubDate>
+      <guid>https://mobilephone724.github.io/post/heap-principle-z1iauje.html</guid>
+      <description>Heap 原理 堆（Heap）是一种基于完全二叉树的数据结构，常用于实现优先队列。它分为两种类型： 最大堆：父节点的值 ≥ 子节点的值 最小堆：父节点的值 ≤ 子</description>
+    </item>
     <item>
       <title>可串行化的实现思路</title>
       <link>https://mobilephone724.github.io/post/implementation-ideas-for-serialization-z2idq9y.html</link>
@@ -34,6 +55,13 @@
       <pubDate>Sat, 01 Mar 2025 15:14:45 +0800</pubDate>
       <guid>https://mobilephone724.github.io/post/20250301-1r5xzc.html</guid>
       <description>Column-Oriented Storage Basic idea: Although fact tables are often over 100 columns wide, a typical data warehouse query only accesses 4 or 5 of them at one time (SELECT *​ queries are rarely needed for analytics) The idea behind column-oriented storage is simple: don’t store all the values from one row together, but store all the values from each column together instead. If each column</description>
+    </item>
+    <item>
+      <title>Airwallex调研</title>
+      <link>https://mobilephone724.github.io/post/airwallex-survey-z1tsrmd.html</link>
+      <pubDate>Mon, 24 Feb 2025 20:20:27 +0800</pubDate>
+      <guid>https://mobilephone724.github.io/post/airwallex-survey-z1tsrmd.html</guid>
+      <description>Airwallex调研 2025-02-24 简介 Airwallex（空中云汇）是一家全球领先的金融科技公司，专注于为企业提供跨境支付、外汇兑换、资金管理等一站式</description>
     </item>
     <item>
       <title>github ssh 失败</title>
