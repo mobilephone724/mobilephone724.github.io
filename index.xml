@@ -12,8 +12,15 @@
     <generator>Hugo -- 0.127.0</generator>
     <language>en</language>
     <copyright>PaperMod Contributors</copyright>
-    <lastBuildDate>Tue, 04 Mar 2025 23:35:01 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 18 Mar 2025 23:30:22 +0800</lastBuildDate>
     <atom:link href="https://mobilephone724.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>DDIA--Encoding and Evolution(1)</title>
+      <link>https://mobilephone724.github.io/post/ddiaencoding-and-evolution-1-2dgaes.html</link>
+      <pubDate>Tue, 18 Mar 2025 23:03:23 +0800</pubDate>
+      <guid>https://mobilephone724.github.io/post/ddiaencoding-and-evolution-1-2dgaes.html</guid>
+      <description>DDIA&amp;ndash;Encoding and Evolution(1) Compatibility Backward compatibility: Newer code can read data that was written by older code. Forward compatibility: Older code can read data that was written by newer code. ‍ Thrift and Protocol Buffers Apache Thrift and Protocol Buffers (protobuf) are binary encoding libraries that are based on the same principle. ‍ In Thrift, you would describe the schema in the Thrift interface definition language (IDL) like this: struct</description>
+    </item>
     <item>
       <title>跳表的实现</title>
       <link>https://mobilephone724.github.io/post/implementation-of-skipping-tables-299fl1.html</link>
