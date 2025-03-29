@@ -19,7 +19,7 @@
       <link>https://mobilephone724.github.io/post/me-z1ogd4d.html</link>
       <pubDate>Sat, 29 Mar 2025 08:56:22 +0800</pubDate>
       <guid>https://mobilephone724.github.io/post/me-z1ogd4d.html</guid>
-      <description>mesi-summary store buffer why? when one cpu wants to change the data (not in modify or execlusive mode), it would always change it whatever messages others cpu returns. So just change the data in store buffer immediately. complexity it introduces Multilayer caches(what is the reason of wmb): Example: Consider a cpu, it stores two value(A and B) sequencely where A in store buffer and B is in cache. We can</description>
+      <description>store buffer why? When a CPU wants to modify data (not in the &amp;ldquo;Modified&amp;rdquo; or &amp;ldquo;Exclusive&amp;rdquo; state), it will always update the data regardless of the responses from other CPUs. Thus, the data is immediately updated in the store buffer. complexity it introduces Multilayer caches (reason for write memory barrier): Example: Consider a CPU storing two values (A and B) sequentially, where A is in the store buffer and B</description>
     </item>
     <item>
       <title>DDIA--Encoding and Evolution(1)</title>
