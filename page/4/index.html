@@ -155,6 +155,20 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">Column Schema Change
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>In PostgreSQL, the adding and dropping a column is an instant ddl(This name seems only to be used in mysql, but I like it). In this article, I try to explain the implement of that.
+The reference:
+https://www.postgresql.org/docs/current/sql-altertable.html Basic Concepts instant ddl For a table with $n$ tuples, if a ddl post can be performed in time $O(1)$ ,we call this ddl instant. So to implement an instant ddl, the data organization must remain unchanged....</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-04-07 22:19:24 +0800 CST'>April 7, 2024</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to Column Schema Change" href="https://mobilephone724.github.io/posts/archive_posts/column-schema-change/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">SSL in PG
     </h2>
   </header>
@@ -207,21 +221,6 @@ The space of disk blocks holding the database elements. The memory address space
   </div>
   <footer class="entry-footer"><span title='2022-03-31 11:01:15 +0800 CST'>March 31, 2022</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;mobilephone724</footer>
   <a class="entry-link" aria-label="post link to Basic Knowledge of Database Log" href="https://mobilephone724.github.io/posts/archive_posts/database-log/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">Alice and Bob how to know whose number is bigger without giving away their own&#39;s
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>Definiteness： Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &lt; j$ in the end(aside from their own values)
-Solution: Let $M$ be the set of all $N$-bit nonnegative integers
-Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$
-Alice generates a public key from $Q_N$, called $E_a$, and the inverse function of $E_a$ is $D_a$ Bob picks a random value $x \in M$, compute $k = E_a(x)$, then send $k - j$ to Alice Alice computes $y_u=D_a(k - j &#43; u)$ for $u = 1,2,\dots,9$ Alice generates a random prime $p$ of $N/2$-bit, and computes $z_u=y_u(\mod p)$ for all $u$....</p>
-  </div>
-  <footer class="entry-footer"><span title='2022-01-14 23:43:08 +0800 CST'>January 14, 2022</span>&nbsp;·&nbsp;1 min&nbsp;·&nbsp;mobilephone724</footer>
-  <a class="entry-link" aria-label="post link to Alice and Bob how to know whose number is bigger without giving away their own&#39;s" href="https://mobilephone724.github.io/posts/archive_posts/howtoknowwhoseisbigger/"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">

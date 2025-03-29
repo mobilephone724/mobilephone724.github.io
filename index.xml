@@ -12,8 +12,15 @@
     <generator>Hugo -- 0.127.0</generator>
     <language>en</language>
     <copyright>PaperMod Contributors</copyright>
-    <lastBuildDate>Tue, 18 Mar 2025 23:30:22 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 29 Mar 2025 09:35:38 +0800</lastBuildDate>
     <atom:link href="https://mobilephone724.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>mesi-summary</title>
+      <link>https://mobilephone724.github.io/post/me-z1ogd4d.html</link>
+      <pubDate>Sat, 29 Mar 2025 08:56:22 +0800</pubDate>
+      <guid>https://mobilephone724.github.io/post/me-z1ogd4d.html</guid>
+      <description>mesi-summary store buffer why? when one cpu wants to change the data (not in modify or execlusive mode), it would always change it whatever messages others cpu returns. So just change the data in store buffer immediately. complexity it introduces Multilayer caches(what is the reason of wmb): Example: Consider a cpu, it stores two value(A and B) sequencely where A in store buffer and B is in cache. We can</description>
+    </item>
     <item>
       <title>DDIA--Encoding and Evolution(1)</title>
       <link>https://mobilephone724.github.io/post/ddiaencoding-and-evolution-1-2dgaes.html</link>
