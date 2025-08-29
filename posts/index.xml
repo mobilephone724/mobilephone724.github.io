@@ -12,8 +12,16 @@
     <generator>Hugo -- 0.127.0</generator>
     <language>en</language>
     <copyright>PaperMod Contributors</copyright>
-    <lastBuildDate>Sat, 12 Apr 2025 14:02:15 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 29 Aug 2025 21:05:24 +0800</lastBuildDate>
     <atom:link href="https://mobilephone724.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>volatile in sigsetjmp and siglongjmp</title>
+      <link>https://mobilephone724.github.io/posts/20250829-1-volatile/</link>
+      <pubDate>Fri, 29 Aug 2025 21:05:24 +0800</pubDate>
+      <guid>https://mobilephone724.github.io/posts/20250829-1-volatile/</guid>
+      <description>conclusion In postgresql, the error handling methods pg_try() + elog() + pg_catch() is implemented through sigsetjmp and siglongjmp. But the variables changed in pg_try() and used in pg_catch() must be declared as volatile. The reasons are below:
+reason The sigsetjmp call must store all the register value and the siglongjmp restore the registers from it. It&amp;rsquo;s very reasonable in the view of asm code. If a variable is not declared as volatile, the assignment operation of it in pg_try() may only changes the variable in the register.</description>
+    </item>
     <item>
       <title>MCP学习</title>
       <link>https://mobilephone724.github.io/post/mcp-learning-z1f8c7l.html</link>

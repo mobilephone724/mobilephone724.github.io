@@ -168,6 +168,19 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">volatile in sigsetjmp and siglongjmp
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>conclusion In postgresql, the error handling methods pg_try() &#43; elog() &#43; pg_catch() is implemented through sigsetjmp and siglongjmp. But the variables changed in pg_try() and used in pg_catch() must be declared as volatile. The reasons are below:
+reason The sigsetjmp call must store all the register value and the siglongjmp restore the registers from it. It’s very reasonable in the view of asm code. If a variable is not declared as volatile, the assignment operation of it in pg_try() may only changes the variable in the register....</p>
+  </div>
+  <footer class="entry-footer"><span title='2025-08-29 21:05:24 +0800 CST'>August 29, 2025</span>&nbsp;·&nbsp;2 min&nbsp;·&nbsp;Theme PaperMod</footer>
+  <a class="entry-link" aria-label="post link to volatile in sigsetjmp and siglongjmp" href="https://mobilephone724.github.io/posts/20250829-1-volatile/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">MCP学习
     </h2>
   </header>
@@ -212,18 +225,6 @@
   </div>
   <footer class="entry-footer"><span title='2025-03-03 22:46:11 +0800 CST'>March 3, 2025</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;Theme PaperMod</footer>
   <a class="entry-link" aria-label="post link to 跳表的实现" href="https://mobilephone724.github.io/post/implementation-of-skipping-tables-299fl1.html"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">lsmTree
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>lsmTree LSM-Tree 简介 LSM-Tree（Log-Structured Merge-Tree）是一种为高写入吞吐设计的存储结构，广泛应用于 NoSQL 数据库（如 Leve...</p>
-  </div>
-  <footer class="entry-footer"><span title='2025-03-03 22:34:36 +0800 CST'>March 3, 2025</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;Theme PaperMod</footer>
-  <a class="entry-link" aria-label="post link to lsmTree" href="https://mobilephone724.github.io/post/lsmtree-2fapmq.html"></a>
 </article>
 <footer class="page-footer">
   <nav class="pagination">
