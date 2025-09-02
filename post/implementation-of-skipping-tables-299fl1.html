@@ -1,255 +1,73 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="跳表的实现
+之前还没有写过跳表，补一下实现，
+​​
+FROM deepseek
+跳表（Skip List）原理详解
+跳表是一种基于有序链表的高效数据结构，通过引入多层索引实现快速查找，其平均时间复杂度为O(log n)，与平衡树相当，但实现更简单。以下是其核心原理：">  
 
-<head><meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
-<title>跳表的实现 | PaperMod</title>
-<meta name="keywords" content="">
-<meta name="description" content="跳表的实现 之前还没有写过跳表，补一下实现， ​​ FROM deepseek 跳表（Skip List）原理详解 跳表是一种基于有序链表的高效数据结构，通过引入多层索引实现">
-<meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="https://mobilephone724.github.io/post/implementation-of-skipping-tables-299fl1.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.45e028aa8ce0961349adf411b013ee39406be2c0bc80d4ea3fc04555f7f4611a.css" integrity="sha256-ReAoqozglhNJrfQRsBPuOUBr4sC8gNTqP8BFVff0YRo=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://mobilephone724.github.io/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://mobilephone724.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://mobilephone724.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://mobilephone724.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://mobilephone724.github.io/safari-pinned-tab.svg">
-<meta name="theme-color" content="#2e2e33">
-<meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://mobilephone724.github.io/post/implementation-of-skipping-tables-299fl1.html">
-<noscript>
-    <style>
-        #theme-toggle,
-        .top-link {
-            display: none;
-        }
-
-    </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
-</noscript>
-  
-
-<meta property="og:url" content="https://mobilephone724.github.io/post/implementation-of-skipping-tables-299fl1.html">
-  <meta property="og:site_name" content="PaperMod">
-  <meta property="og:title" content="跳表的实现">
-  <meta property="og:description" content="跳表的实现 之前还没有写过跳表，补一下实现， ​​ FROM deepseek 跳表（Skip List）原理详解 跳表是一种基于有序链表的高效数据结构，通过引入多层索引实现">
-  <meta property="og:locale" content="en">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-03-03T22:46:11+08:00">
-    <meta property="article:modified_time" content="2025-03-04T23:35:01+08:00">
-      <meta property="og:image" content="https://mobilephone724.github.io/images/papermod-cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://mobilephone724.github.io/images/papermod-cover.png">
-<meta name="twitter:title" content="跳表的实现">
-<meta name="twitter:description" content="跳表的实现 之前还没有写过跳表，补一下实现， ​​ FROM deepseek 跳表（Skip List）原理详解 跳表是一种基于有序链表的高效数据结构，通过引入多层索引实现">
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://mobilephone724.github.io/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "跳表的实现",
-      "item": "https://mobilephone724.github.io/post/implementation-of-skipping-tables-299fl1.html"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "跳表的实现",
-  "name": "跳表的实现",
-  "description": "跳表的实现 之前还没有写过跳表，补一下实现， ​​ FROM deepseek 跳表（Skip List）原理详解 跳表是一种基于有序链表的高效数据结构，通过引入多层索引实现",
-  "keywords": [
+  <title>
     
-  ],
-  "articleBody": "跳表的实现 之前还没有写过跳表，补一下实现，\n​​\nFROM deepseek\n跳表（Skip List）原理详解 跳表是一种基于有序链表的高效数据结构，通过引入多层索引实现快速查找，其平均时间复杂度为O(log n)，与平衡树相当，但实现更简单。以下是其核心原理：\n1. 跳表结构 多层链表：每个节点包含多个前向指针（层），层数由概率决定（通常为1/2的概率升级到更高层）。 头节点（Header） ：作为起始点，不存储实际数据，最高层指向链表的首个元素。 尾节点（Tail） ：所有层的指针指向NULL，表示链表结束。 2. 关键操作原理 插入：\n随机生成新节点的层数（如抛硬币直到出现反面）。 从最高层开始查找插入位置，记录每层的前驱节点。 在各层的前驱和后继之间插入新节点，更新指针。 查找：\n从最高层开始，向右遍历直到当前节点的下一节点值大于目标值。 下移一层继续查找，重复直到最底层。 若找到相等节点则返回，否则不存在。 删除：\n类似查找过程，定位目标节点及其各层前驱。 更新各层前驱的指针，绕过目标节点。 释放目标节点内存。 3. 时间复杂度 平均情况：O(log n)（基于概率平衡的层数分布）。 最坏情况：O(n)（所有节点仅1层，退化为普通链表）。 ‍\n自己的实现 #include using namespace std; class skip_table { struct jump_node { int key, value; vector\u003cjump_node *\u003e next; const int _level; jump_node(int k, int v, int size, int level) : _level(level) { key = k; value = v; next = vector\u003cjump_node *\u003e(size, nullptr); } int level() { return _level; } }; public: skip_table(int level) : _level(level) { _head = new jump_node(0, 0, level, level); } bool insert(int k, int v, bool replace = true) { vector\u003cjump_node *\u003e prev_node(_level, nullptr); auto p = _head; for (int l = _level - 1; l \u003e= 0; --l) { while (p-\u003enext[l] \u0026\u0026 p-\u003enext[l]-\u003ekey \u003c k) { p = p-\u003enext[l]; } prev_node[l] = p; } if (p-\u003enext[0] \u0026\u0026 p-\u003enext[0]-\u003ekey == k) { // if found if (!replace) { return false; } p-\u003enext[0]-\u003evalue = v; return true; } // not found, insert new one int new_node_level = random_level(); auto new_node = new jump_node(k, v, _level, new_node_level); for (int i = 0; i \u003c new_node_level; ++i) { new_node-\u003enext[i] = prev_node[i]-\u003enext[i]; prev_node[i]-\u003enext[i] = new_node; } return true; } bool remove(int k) { vector\u003cjump_node *\u003e prev_node(_level, nullptr); auto p = _head; for (int l = _level - 1; l \u003e= 0; --l) { while (p-\u003enext[l] \u0026\u0026 p-\u003enext[l]-\u003ekey \u003c k) { p = p-\u003enext[l]; } prev_node[l] = p; } if (p-\u003enext[0] \u0026\u0026 p-\u003enext[0]-\u003ekey == k) { auto pending_delete = p-\u003enext[0]; for (int i = 0; i \u003c _level; ++i) { prev_node[i]-\u003enext[i] = pending_delete-\u003enext[i]; } delete pending_delete; return true; } return false; } int get(int k, bool \u0026found) { auto p = _head; for (int l = _level - 1; l \u003e= 0; --l) { while (p-\u003enext[l] \u0026\u0026 p-\u003enext[l]-\u003ekey \u003c k) { p = p-\u003enext[l]; } } if (p-\u003enext[0] \u0026\u0026 p-\u003enext[0]-\u003ekey == k) { found = true; return p-\u003enext[0]-\u003evalue; } else { found = false; return -1; } } void print() { for (int i = _level - 1; i \u003e= 0; --i) { auto p = _head-\u003enext[i]; cout \u003c\u003c \"LEVEL: \" \u003c\u003c i \u003c\u003c \"\\t\"; while (p != nullptr) { cout \u003c\u003c p-\u003ekey \u003c\u003c \" : \" \u003c\u003c p-\u003evalue \u003c\u003c \" ---\u003e \"; p = p-\u003enext[i]; } cout \u003c\u003c endl; } } private: jump_node *_head; const int _level; int random_level() { int level = 1; for (int i = 1; i \u003c _level; ++i) { if (random_bool()) { level++; } } return level; } bool random_bool() { static std::random_device rd; // Seed for the random number generator static std::mt19937 gen(rd()); // Mersenne Twister engine // Define a distribution for generating 0 or 1 static std::uniform_int_distribution\u003cint\u003e dist(0, 1); // Generate a random value (0 or 1) return dist(gen) == 1; } }; int gen_random_val() { static std::random_device rd; // Seed for the random number generator static std::mt19937 gen(rd()); // Mersenne Twister engine static int lower_bound = 1; static int upper_bound = 10000; static std::uniform_int_distribution\u003c\u003e dist(lower_bound, upper_bound); // Generate a random number return dist(gen); } int main() { auto *st = new skip_table(100); auto mp = map\u003cint, int\u003e(); auto compare_jp_with_mp = [\u0026st, \u0026mp](int key) { bool error = false; bool found_jp = false; int val_jp = st-\u003eget(key, found_jp); auto iter_mp = mp.find(key); bool found_mp = iter_mp != mp.end(); if (found_jp != found_mp) { if (found_mp) { cout \u003c\u003c \"map found but st not found \" \u003c\u003c endl; } else { cout \u003c\u003c \"st found but map not found \" \u003c\u003c endl; } cout \u003c\u003c key \u003c\u003c \":\" \u003c\u003c endl; error = true; } else if (found_jp) { if (val_jp != iter_mp-\u003esecond) { cout \u003c\u003c \"both found but st = \" \u003c\u003c val_jp \u003c\u003c \" while mp = \" \u003c\u003c iter_mp-\u003esecond; error = true; } } if (error) { st-\u003eprint(); exit(1); } return true; }; // { // auto start = std::chrono::high_resolution_clock::now(); // for (int i = 0; i \u003c= 1000000; ++i) // { // int key = gen_random_val(); // int val = gen_random_val(); // st-\u003einsert(key, val); // // st-\u003eprint(); // } // auto end = std::chrono::high_resolution_clock::now(); // auto duration = std::chrono::duration_cast(end - start); // std::cout \u003c\u003c \"JP INSERT Time taken: \" \u003c\u003c duration.count() \u003c\u003c \" microseconds\" \u003c\u003c std::endl; // } // { // auto start = std::chrono::high_resolution_clock::now(); // for (int i = 0; i \u003c= 1000000; ++i) // { // int key = gen_random_val(); // int val = gen_random_val(); // mp[key] = val; // // st-\u003eprint(); // } // auto end = std::chrono::high_resolution_clock::now(); // auto duration = std::chrono::duration_cast(end - start); // std::cout \u003c\u003c \"MP INSERT Time taken: \" \u003c\u003c duration.count() \u003c\u003c \" microseconds\" \u003c\u003c std::endl; // } for (int i = 0; i \u003c= 10000; ++i) { int key = gen_random_val(); int val = gen_random_val(); mp[key] = val; st-\u003einsert(key, val); cout \u003c\u003c \"insert \" \u003c\u003c key \u003c\u003c \":\" \u003c\u003c val \u003c\u003c endl; // st-\u003eprint(); } for (int i = 0; i \u003c= 5000; ++i) { int key = gen_random_val(); mp.erase(key); st-\u003eremove(key); } for (int i = 0; i \u003c= 10000; ++i) { int key = gen_random_val(); compare_jp_with_mp(key); } return 0; } ‍\n‍\ndeepseek的实现 未验证该代码。（deepseek 日常漏掉 “\u003c”)\n#include iostream\u003e #include vector\u003e #include cstdlib\u003e #include ctime\u003e #include climits\u003e template typename K, typename V\u003e class SkipList { private: struct Node { K key; V value; std::vector\u003cNode*\u003e forward; // 各层的前向指针 Node(K k, V v, int level) : key(k), value(v), forward(level, nullptr) {} }; Node* header; // 头节点（哨兵） int max_level; // 最大层数限制 int current_level; // 当前最大层数 float probability; // 层数增长概率 int size; // 节点数量 // 生成随机层数 int random_level() { int level = 1; while ((static_cast\u003cfloat\u003e(rand()) / RAND_MAX) probability \u0026\u0026 level max_level) { level++; } return level; } public: // 构造函数 SkipList(int max_level = 16, float prob = 0.5) : max_level(max_level), probability(prob), current_level(1), size(0) { header = new Node(K(), V(), max_level); srand(time(0)); } // 析构函数 ~SkipList() { Node* current = header-\u003eforward[0]; while (current != nullptr) { Node* next = current-\u003eforward[0]; delete current; current = next; } delete header; } // 插入键值对 void insert(const K\u0026 key, const V\u0026 value) { std::vector\u003cNode*\u003e update(max_level, nullptr); Node* current = header; // 查找各层的前驱节点 for (int i = current_level - 1; i \u003e= 0; i--) { while (current-\u003eforward[i] != nullptr \u0026\u0026 current-\u003eforward[i]-\u003ekey key) { current = current-\u003eforward[i]; } update[i] = current; } // 检查是否已存在相同键 current = current-\u003eforward[0]; if (current != nullptr \u0026\u0026 current-\u003ekey == key) { current-\u003evalue = value; // 更新值 return; } // 生成新节点的层数 int new_level = random_level(); if (new_level \u003e current_level) { for (int i = current_level; i new_level; i++) { update[i] = header; } current_level = new_level; } // 创建新节点并更新指针 Node* new_node = new Node(key, value, new_level); for (int i = 0; i new_level; i++) { new_node-\u003eforward[i] = update[i]-\u003eforward[i]; update[i]-\u003eforward[i] = new_node; } size++; } // 查找键对应的值 bool search(const K\u0026 key, V\u0026 value) { Node* current = header; for (int i = current_level - 1; i \u003e= 0; i--) { while (current-\u003eforward[i] != nullptr \u0026\u0026 current-\u003eforward[i]-\u003ekey key) { current = current-\u003eforward[i]; } } current = current-\u003eforward[0]; if (current != nullptr \u0026\u0026 current-\u003ekey == key) { value = current-\u003evalue; return true; } return false; } // 删除键 bool remove(const K\u0026 key) { std::vector\u003cNode*\u003e update(max_level, nullptr); Node* current = header; // 查找各层的前驱节点 for (int i = current_level - 1; i \u003e= 0; i--) { while (current-\u003eforward[i] != nullptr \u0026\u0026 current-\u003eforward[i]-\u003ekey key) { current = current-\u003eforward[i]; } update[i] = current; } current = current-\u003eforward[0]; if (current == nullptr || current-\u003ekey != key) { return false; // 未找到 } // 更新各层指针 for (int i = 0; i current_level; i++) { if (update[i]-\u003eforward[i] != current) break; update[i]-\u003eforward[i] = current-\u003eforward[i]; } delete current; size--; // 降低当前层数（若高层为空） while (current_level \u003e 1 \u0026\u0026 header-\u003eforward[current_level - 1] == nullptr) { current_level--; } return true; } // 打印跳表结构（调试用） void display() { std::cout \u003c \"Skip List (Level=\" \u003c current_level \u003c \", Size=\" \u003c size \u003c \"):\" \u003c std::endl; for (int i = current_level - 1; i \u003e= 0; i--) { Node* node = header-\u003eforward[i]; std::cout \u003c \"Level \" \u003c i \u003c \": \"; while (node != nullptr) { std::cout \u003c node-\u003ekey \u003c \"(\" \u003c node-\u003evalue \u003c \") \"; node = node-\u003eforward[i]; } std::cout \u003c std::endl; } } }; // 示例测试 int main() { SkipList\u003cint, std::string\u003e skiplist; // 插入数据 skiplist.insert(3, \"Alice\"); skiplist.insert(6, \"Bob\"); skiplist.insert(7, \"Charlie\"); skiplist.insert(9, \"Dave\"); skiplist.insert(12, \"Eve\"); // 查找测试 std::string value; if (skiplist.search(6, value)) { std::cout \u003c \"Key 6 found: \" \u003c value \u003c std::endl; // 输出 Bob } // 删除测试 if (skiplist.remove(7)) { std::cout \u003c \"Key 7 removed.\" \u003c std::endl; } // 显示跳表结构 skiplist.display(); return 0; } ",
-  "wordCount" : "2031",
-  "inLanguage": "en",
-  "image": "https://mobilephone724.github.io/images/papermod-cover.png","datePublished": "2025-03-03T22:46:11+08:00",
-  "dateModified": "2025-03-04T23:35:01+08:00",
-  "author":{
-    "@type": "Person",
-    "name": "Theme PaperMod"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://mobilephone724.github.io/post/implementation-of-skipping-tables-299fl1.html"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "PaperMod",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://mobilephone724.github.io/favicon.ico"
-    }
-  }
-}
-</script>
-</head>
-
-<body class="" id="top">
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
-
-</script>
-
-<header class="header">
-    <nav class="nav">
-        <div class="logo">
-            <a href="https://mobilephone724.github.io/" accesskey="h" title="PaperMod (Alt + H)">PaperMod</a>
-            <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <ul id="menu">
-            <li>
-                <a href="https://mobilephone724.github.io/article" title="长文">
-                    <span>长文</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://mobilephone724.github.io/archives" title="归档">
-                    <span>归档</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://mobilephone724.github.io/search/" title="搜索">
-                    <span>搜索</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://mobilephone724.github.io/tags/" title="标签">
-                    <span>标签</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-<main class="main">
-
-<article class="post-single">
-  <header class="post-header">
-    <div class="breadcrumbs"><a href="https://mobilephone724.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://mobilephone724.github.io/posts/">Posts</a></div>
-    <h1 class="post-title entry-hint-parent">
       跳表的实现
-    </h1>
-    <div class="post-meta"><span title='2025-03-03 22:46:11 +0800 CST'>March 3, 2025</span>&nbsp;·&nbsp;5 min&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/mobilephone724/hugoBlog/tree/content/posts/archive_posts/implementation-of-skipping-tables-299fl1.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+    
+  </title>
 
-</div>
-  </header> <div class="toc">
-    <details >
-        <summary accesskey="c" title="(Alt + C)">
-            <span class="details">Table of Contents</span>
-        </summary>
 
-        <div class="inner"><ul>
-                <li>
-                    <a href="#%e8%b7%b3%e8%a1%a8%e7%9a%84%e5%ae%9e%e7%8e%b0" aria-label="跳表的实现">跳表的实现</a><ul>
-                        <ul>
-                        
-                <li>
-                    <a href="#%e8%b7%b3%e8%a1%a8skip-list%e5%8e%9f%e7%90%86%e8%af%a6%e8%a7%a3" aria-label="跳表（Skip List）原理详解">跳表（Skip List）原理详解</a><ul>
-                        
-                <li>
-                    <a href="#1-%e8%b7%b3%e8%a1%a8%e7%bb%93%e6%9e%84" aria-label="1. 跳表结构">1. 跳表结构</a></li>
-                <li>
-                    <a href="#2-%e5%85%b3%e9%94%ae%e6%93%8d%e4%bd%9c%e5%8e%9f%e7%90%86" aria-label="2. 关键操作原理">2. 关键操作原理</a></li>
-                <li>
-                    <a href="#3-%e6%97%b6%e9%97%b4%e5%a4%8d%e6%9d%82%e5%ba%a6" aria-label="3. 时间复杂度">3. 时间复杂度</a></li></ul>
-                </li></ul>
-                    
-                <li>
-                    <a href="#%e8%87%aa%e5%b7%b1%e7%9a%84%e5%ae%9e%e7%8e%b0" aria-label="自己的实现">自己的实现</a></li>
-                <li>
-                    <a href="#deepseek%e7%9a%84%e5%ae%9e%e7%8e%b0" aria-label="deepseek的实现">deepseek的实现</a>
-                </li>
-            </ul>
-            </li>
-            </ul>
-        </div>
-    </details>
-</div>
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.51652302d3a998bf7887aed5c2cf89141bbebdf45a2c8f87b0717a3cf4f51c4e53c694c328fb1de78c3a625a1c01f80745bf1f2f42c040647a245cbbb6c2d1d7.css" integrity="sha512-UWUjAtOpmL94h67Vws&#43;JFBu&#43;vfRaLI&#43;HsHF6PPT1HE5TxpTDKPsd54w6YlocAfgHRb8fL0LAQGR6JFy7tsLR1w==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
 
-  <div class="post-content"><h1 id="跳表的实现">跳表的实现<a hidden class="anchor" aria-hidden="true" href="#跳表的实现">#</a></h1>
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-03-03 22:46:11 &#43;0800 CST">
+            2025-03-03
+        </time>
+    </p>
+
+    <h1>跳表的实现</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#跳表skip-list原理详解">跳表（Skip List）原理详解</a></li>
+      </ul>
+    </li>
+    <li><a href="#自己的实现">自己的实现</a></li>
+    <li><a href="#deepseek的实现">deepseek的实现</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <h1 id="跳表的实现">跳表的实现</h1>
 <p>之前还没有写过跳表，补一下实现，</p>
-<p>​<img alt="skip_table" loading="lazy" src="https://raw.githubusercontent.com/mobilephone724/hugoBlog/siyuan-pub/images/skip_table-20250304233140-hzl983v.png">​</p>
+<p>​<img src="https://raw.githubusercontent.com/mobilephone724/hugoBlog/siyuan-pub/images/skip_table-20250304233140-hzl983v.png" alt="skip_table">​</p>
 <p>FROM deepseek</p>
-<h3 id="跳表skip-list原理详解">跳表（Skip List）原理详解<a hidden class="anchor" aria-hidden="true" href="#跳表skip-list原理详解">#</a></h3>
+<h3 id="跳表skip-list原理详解">跳表（Skip List）原理详解</h3>
 <p>跳表是一种基于有序链表的高效数据结构，通过引入多层索引实现快速查找，其平均时间复杂度为O(log n)，与平衡树相当，但实现更简单。以下是其核心原理：</p>
-<h4 id="1-跳表结构"><strong>1. 跳表结构</strong><a hidden class="anchor" aria-hidden="true" href="#1-跳表结构">#</a></h4>
+<h4 id="1-跳表结构"><strong>1. 跳表结构</strong></h4>
 <ul>
 <li><strong>多层链表</strong>：每个节点包含多个前向指针（层），层数由概率决定（通常为1/2的概率升级到更高层）。</li>
 <li><strong>头节点（Header）</strong> ：作为起始点，不存储实际数据，最高层指向链表的首个元素。</li>
 <li><strong>尾节点（Tail）</strong> ：所有层的指针指向NULL，表示链表结束。</li>
 </ul>
-<h4 id="2-关键操作原理"><strong>2. 关键操作原理</strong><a hidden class="anchor" aria-hidden="true" href="#2-关键操作原理">#</a></h4>
+<h4 id="2-关键操作原理"><strong>2. 关键操作原理</strong></h4>
 <ul>
 <li>
 <p><strong>插入</strong>：</p>
@@ -276,687 +94,491 @@
 </ol>
 </li>
 </ul>
-<h4 id="3-时间复杂度"><strong>3. 时间复杂度</strong><a hidden class="anchor" aria-hidden="true" href="#3-时间复杂度">#</a></h4>
+<h4 id="3-时间复杂度"><strong>3. 时间复杂度</strong></h4>
 <ul>
 <li><strong>平均情况</strong>：O(log n)（基于概率平衡的层数分布）。</li>
 <li><strong>最坏情况</strong>：O(n)（所有节点仅1层，退化为普通链表）。</li>
 </ul>
 <p>‍</p>
-<h2 id="自己的实现">自己的实现<a hidden class="anchor" aria-hidden="true" href="#自己的实现">#</a></h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">skip_table</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="nc">jump_node</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">vector</span><span class="o">&lt;</span><span class="n">jump_node</span> <span class="o">*&gt;</span> <span class="n">next</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">const</span> <span class="kt">int</span> <span class="n">_level</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">jump_node</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span><span class="p">,</span> <span class="kt">int</span> <span class="n">v</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">)</span> <span class="o">:</span> <span class="n">_level</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">key</span> <span class="o">=</span> <span class="n">k</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="n">value</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="n">next</span> <span class="o">=</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">jump_node</span> <span class="o">*&gt;</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="nf">level</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">_level</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">skip_table</span><span class="p">(</span><span class="kt">int</span> <span class="n">level</span><span class="p">)</span> <span class="o">:</span> <span class="n">_level</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">_head</span> <span class="o">=</span> <span class="k">new</span> <span class="n">jump_node</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">level</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="kt">bool</span> <span class="nf">insert</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span><span class="p">,</span> <span class="kt">int</span> <span class="n">v</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">replace</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">vector</span><span class="o">&lt;</span><span class="n">jump_node</span> <span class="o">*&gt;</span> <span class="n">prev_node</span><span class="p">(</span><span class="n">_level</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">p</span> <span class="o">=</span> <span class="n">_head</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="n">_level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">l</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">l</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">l</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="n">prev_node</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">==</span> <span class="n">k</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span> <span class="c1">// if found
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">replace</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="n">v</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">// not found, insert new one
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">int</span> <span class="n">new_node_level</span> <span class="o">=</span> <span class="n">random_level</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">new_node</span> <span class="o">=</span> <span class="k">new</span> <span class="n">jump_node</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">_level</span><span class="p">,</span> <span class="n">new_node_level</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">new_node_level</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">prev_node</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="n">prev_node</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_node</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="kt">bool</span> <span class="nf">remove</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">vector</span><span class="o">&lt;</span><span class="n">jump_node</span> <span class="o">*&gt;</span> <span class="n">prev_node</span><span class="p">(</span><span class="n">_level</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">p</span> <span class="o">=</span> <span class="n">_head</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="n">_level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">l</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">l</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">l</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="n">prev_node</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">==</span> <span class="n">k</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">auto</span> <span class="n">pending_delete</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_level</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">prev_node</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">pending_delete</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="k">delete</span> <span class="n">pending_delete</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="nf">get</span><span class="p">(</span><span class="kt">int</span> <span class="n">k</span><span class="p">,</span> <span class="kt">bool</span> <span class="o">&amp;</span><span class="n">found</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">p</span> <span class="o">=</span> <span class="n">_head</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="n">_level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">l</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">l</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">l</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">==</span> <span class="n">k</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">found</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">else</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">found</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">_level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">auto</span> <span class="n">p</span> <span class="o">=</span> <span class="n">_head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;LEVEL: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;</span><span class="se">\t</span><span class="s">&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span> <span class="p">(</span><span class="n">p</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; : &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; ---&gt; &#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="n">jump_node</span> <span class="o">*</span><span class="n">_head</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">const</span> <span class="kt">int</span> <span class="n">_level</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="nf">random_level</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">level</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_level</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">random_bool</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">level</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">level</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="kt">bool</span> <span class="nf">random_bool</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">random_device</span> <span class="n">rd</span><span class="p">;</span>  <span class="c1">// Seed for the random number generator
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">mt19937</span> <span class="n">gen</span><span class="p">(</span><span class="n">rd</span><span class="p">());</span> <span class="c1">// Mersenne Twister engine
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">        <span class="c1">// Define a distribution for generating 0 or 1
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">uniform_int_distribution</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">dist</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">// Generate a random value (0 or 1)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="n">dist</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">gen_random_val</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">random_device</span> <span class="n">rd</span><span class="p">;</span>  <span class="c1">// Seed for the random number generator
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">mt19937</span> <span class="n">gen</span><span class="p">(</span><span class="n">rd</span><span class="p">());</span> <span class="c1">// Mersenne Twister engine
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">int</span> <span class="n">lower_bound</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="kt">int</span> <span class="n">upper_bound</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">static</span> <span class="n">std</span><span class="o">::</span><span class="n">uniform_int_distribution</span><span class="o">&lt;&gt;</span> <span class="n">dist</span><span class="p">(</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// Generate a random number
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">return</span> <span class="n">dist</span><span class="p">(</span><span class="n">gen</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="o">*</span><span class="n">st</span> <span class="o">=</span> <span class="k">new</span> <span class="n">skip_table</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">mp</span> <span class="o">=</span> <span class="n">map</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">compare_jp_with_mp</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">st</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mp</span><span class="p">](</span><span class="kt">int</span> <span class="n">key</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">bool</span> <span class="n">error</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">bool</span> <span class="n">found_jp</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">val_jp</span> <span class="o">=</span> <span class="n">st</span><span class="o">-&gt;</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">found_jp</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">iter_mp</span> <span class="o">=</span> <span class="n">mp</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">bool</span> <span class="n">found_mp</span> <span class="o">=</span> <span class="n">iter_mp</span> <span class="o">!=</span> <span class="n">mp</span><span class="p">.</span><span class="n">end</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">found_jp</span> <span class="o">!=</span> <span class="n">found_mp</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">found_mp</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;map found but st not found &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="k">else</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;st found but map not found &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">key</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;:&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="n">error</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">found_jp</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">val_jp</span> <span class="o">!=</span> <span class="n">iter_mp</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;both found but st = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">val_jp</span> <span class="o">&lt;&lt;</span> <span class="s">&#34; while mp = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">iter_mp</span><span class="o">-&gt;</span><span class="n">second</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="n">error</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">st</span><span class="o">-&gt;</span><span class="n">print</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// {
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     auto start = std::chrono::high_resolution_clock::now();
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     for (int i = 0; i &lt;= 1000000; ++i)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     {
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//         int key = gen_random_val();
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//         int val = gen_random_val();
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">    <span class="c1">//         st-&gt;insert(key, val);
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//         // st-&gt;print();
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     }
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     auto end = std::chrono::high_resolution_clock::now();
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     auto duration = std::chrono::duration_cast&lt;std::chrono::microseconds&gt;(end - start);
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     std::cout &lt;&lt; &#34;JP INSERT Time taken: &#34; &lt;&lt; duration.count() &lt;&lt; &#34; microseconds&#34; &lt;&lt; std::endl;
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// }
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// {
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     auto start = std::chrono::high_resolution_clock::now();
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     for (int i = 0; i &lt;= 1000000; ++i)
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     {
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//         int key = gen_random_val();
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//         int val = gen_random_val();
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">    <span class="c1">//         mp[key] = val;
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//         // st-&gt;print();
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     }
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     auto end = std::chrono::high_resolution_clock::now();
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     auto duration = std::chrono::duration_cast&lt;std::chrono::microseconds&gt;(end - start);
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//     std::cout &lt;&lt; &#34;MP INSERT Time taken: &#34; &lt;&lt; duration.count() &lt;&lt; &#34; microseconds&#34; &lt;&lt; std::endl;
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// }
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">gen_random_val</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">gen_random_val</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">mp</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">st</span><span class="o">-&gt;</span><span class="n">insert</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;insert &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">key</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;:&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">val</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">// st-&gt;print();
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">5000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">gen_random_val</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">mp</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">st</span><span class="o">-&gt;</span><span class="n">remove</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">10000</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">key</span> <span class="o">=</span> <span class="n">gen_random_val</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">compare_jp_with_mp</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<h2 id="自己的实现">自己的实现</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;bits/stdc++.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">using</span> <span style="color:#f00">namespace</span> std;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">class</span> skip_table
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">struct</span> jump_node
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ee82ee">int</span> key, value;
+</span></span><span style="display:flex;"><span>        vector&lt;jump_node *&gt; next;
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">const</span> <span style="color:#ee82ee">int</span> _level;
+</span></span><span style="display:flex;"><span>        jump_node(<span style="color:#ee82ee">int</span> k, <span style="color:#ee82ee">int</span> v, <span style="color:#ee82ee">int</span> size, <span style="color:#ee82ee">int</span> level) : _level(level)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            key = k;
+</span></span><span style="display:flex;"><span>            value = v;
+</span></span><span style="display:flex;"><span>            next = vector&lt;jump_node *&gt;(size, <span style="color:#f00">nullptr</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ee82ee">int</span> <span style="color:#ff0">level</span>()
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">return</span> _level;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">public</span>:
+</span></span><span style="display:flex;"><span>    skip_table(<span style="color:#ee82ee">int</span> level) : _level(level)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        _head = <span style="color:#f00">new</span> jump_node(<span style="color:#f60">0</span>, <span style="color:#f60">0</span>, level, level);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">bool</span> <span style="color:#ff0">insert</span>(<span style="color:#ee82ee">int</span> k, <span style="color:#ee82ee">int</span> v, <span style="color:#ee82ee">bool</span> replace = true)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        vector&lt;jump_node *&gt; prev_node(_level, <span style="color:#f00">nullptr</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">auto</span> p = _head;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> l = _level - <span style="color:#f60">1</span>; l &gt;= <span style="color:#f60">0</span>; --l)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">while</span> (p-&gt;next[l] &amp;&amp; p-&gt;next[l]-&gt;key &lt; k)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                p = p-&gt;next[l];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            prev_node[l] = p;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> (p-&gt;next[<span style="color:#f60">0</span>] &amp;&amp; p-&gt;next[<span style="color:#f60">0</span>]-&gt;key == k)
+</span></span><span style="display:flex;"><span>        { <span style="color:#0f0">// if found
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>            <span style="color:#f00">if</span> (!replace)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">return</span> false;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            p-&gt;next[<span style="color:#f60">0</span>]-&gt;value = v;
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">return</span> true;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// not found, insert new one
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        <span style="color:#ee82ee">int</span> new_node_level = random_level();
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">auto</span> new_node = <span style="color:#f00">new</span> jump_node(k, v, _level, new_node_level);
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = <span style="color:#f60">0</span>; i &lt; new_node_level; ++i)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            new_node-&gt;next[i] = prev_node[i]-&gt;next[i];
+</span></span><span style="display:flex;"><span>            prev_node[i]-&gt;next[i] = new_node;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> true;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">bool</span> <span style="color:#ff0">remove</span>(<span style="color:#ee82ee">int</span> k)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        vector&lt;jump_node *&gt; prev_node(_level, <span style="color:#f00">nullptr</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">auto</span> p = _head;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> l = _level - <span style="color:#f60">1</span>; l &gt;= <span style="color:#f60">0</span>; --l)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">while</span> (p-&gt;next[l] &amp;&amp; p-&gt;next[l]-&gt;key &lt; k)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                p = p-&gt;next[l];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            prev_node[l] = p;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> (p-&gt;next[<span style="color:#f60">0</span>] &amp;&amp; p-&gt;next[<span style="color:#f60">0</span>]-&gt;key == k)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">auto</span> pending_delete = p-&gt;next[<span style="color:#f60">0</span>];
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = <span style="color:#f60">0</span>; i &lt; _level; ++i)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                prev_node[i]-&gt;next[i] = pending_delete-&gt;next[i];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">delete</span> pending_delete;
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">return</span> true;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> false;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span> <span style="color:#ff0">get</span>(<span style="color:#ee82ee">int</span> k, <span style="color:#ee82ee">bool</span> &amp;found)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">auto</span> p = _head;
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> l = _level - <span style="color:#f60">1</span>; l &gt;= <span style="color:#f60">0</span>; --l)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">while</span> (p-&gt;next[l] &amp;&amp; p-&gt;next[l]-&gt;key &lt; k)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                p = p-&gt;next[l];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> (p-&gt;next[<span style="color:#f60">0</span>] &amp;&amp; p-&gt;next[<span style="color:#f60">0</span>]-&gt;key == k)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            found = true;
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">return</span> p-&gt;next[<span style="color:#f60">0</span>]-&gt;value;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">else</span>
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            found = false;
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">return</span> -<span style="color:#f60">1</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">void</span> <span style="color:#ff0">print</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = _level - <span style="color:#f60">1</span>; i &gt;= <span style="color:#f60">0</span>; --i)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">auto</span> p = _head-&gt;next[i];
+</span></span><span style="display:flex;"><span>            cout &lt;&lt; <span style="color:#87ceeb">&#34;LEVEL: &#34;</span> &lt;&lt; i &lt;&lt; <span style="color:#87ceeb">&#34;</span><span style="color:#87ceeb">\t</span><span style="color:#87ceeb">&#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">while</span> (p != <span style="color:#f00">nullptr</span>)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                cout &lt;&lt; p-&gt;key &lt;&lt; <span style="color:#87ceeb">&#34; : &#34;</span> &lt;&lt; p-&gt;value &lt;&lt; <span style="color:#87ceeb">&#34; ---&gt; &#34;</span>;
+</span></span><span style="display:flex;"><span>                p = p-&gt;next[i];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            cout &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">private</span>:
+</span></span><span style="display:flex;"><span>    jump_node *_head;
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">const</span> <span style="color:#ee82ee">int</span> _level;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span> <span style="color:#ff0">random_level</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ee82ee">int</span> level = <span style="color:#f60">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = <span style="color:#f60">1</span>; i &lt; _level; ++i)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">if</span> (random_bool())
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                level++;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> level;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">bool</span> <span style="color:#ff0">random_bool</span>()
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">static</span> std::random_device rd;  <span style="color:#0f0">// Seed for the random number generator
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        <span style="color:#f00">static</span> std::mt19937 gen(rd()); <span style="color:#0f0">// Mersenne Twister engine
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// Define a distribution for generating 0 or 1
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        <span style="color:#f00">static</span> std::uniform_int_distribution&lt;<span style="color:#ee82ee">int</span>&gt; dist(<span style="color:#f60">0</span>, <span style="color:#f60">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// Generate a random value (0 or 1)
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        <span style="color:#f00">return</span> dist(gen) == <span style="color:#f60">1</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">gen_random_val</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">static</span> std::random_device rd;  <span style="color:#0f0">// Seed for the random number generator
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#f00">static</span> std::mt19937 gen(rd()); <span style="color:#0f0">// Mersenne Twister engine
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">static</span> <span style="color:#ee82ee">int</span> lower_bound = <span style="color:#f60">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">static</span> <span style="color:#ee82ee">int</span> upper_bound = <span style="color:#f60">10000</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">static</span> std::uniform_int_distribution&lt;&gt; dist(lower_bound, upper_bound);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// Generate a random number
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#f00">return</span> dist(gen);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">auto</span> *st = <span style="color:#f00">new</span> skip_table(<span style="color:#f60">100</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">auto</span> mp = map&lt;<span style="color:#ee82ee">int</span>, <span style="color:#ee82ee">int</span>&gt;();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">auto</span> compare_jp_with_mp = [&amp;st, &amp;mp](<span style="color:#ee82ee">int</span> key)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ee82ee">bool</span> error = false;
+</span></span><span style="display:flex;"><span>        <span style="color:#ee82ee">bool</span> found_jp = false;
+</span></span><span style="display:flex;"><span>        <span style="color:#ee82ee">int</span> val_jp = st-&gt;get(key, found_jp);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">auto</span> iter_mp = mp.find(key);
+</span></span><span style="display:flex;"><span>        <span style="color:#ee82ee">bool</span> found_mp = iter_mp != mp.end();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> (found_jp != found_mp)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">if</span> (found_mp)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                cout &lt;&lt; <span style="color:#87ceeb">&#34;map found but st not found &#34;</span> &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">else</span>
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                cout &lt;&lt; <span style="color:#87ceeb">&#34;st found but map not found &#34;</span> &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>            cout &lt;&lt; key &lt;&lt; <span style="color:#87ceeb">&#34;:&#34;</span> &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>            error = true;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">else</span> <span style="color:#f00">if</span> (found_jp)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">if</span> (val_jp != iter_mp-&gt;second)
+</span></span><span style="display:flex;"><span>            {
+</span></span><span style="display:flex;"><span>                cout &lt;&lt; <span style="color:#87ceeb">&#34;both found but st = &#34;</span> &lt;&lt; val_jp &lt;&lt; <span style="color:#87ceeb">&#34; while mp = &#34;</span> &lt;&lt; iter_mp-&gt;second;
+</span></span><span style="display:flex;"><span>                error = true;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> (error)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            st-&gt;print();
+</span></span><span style="display:flex;"><span>            exit(<span style="color:#f60">1</span>);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> true;
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// {
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     auto start = std::chrono::high_resolution_clock::now();
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     for (int i = 0; i &lt;= 1000000; ++i)
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     {
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//         int key = gen_random_val();
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//         int val = gen_random_val();
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">//         st-&gt;insert(key, val);
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//         // st-&gt;print();
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     }
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     auto end = std::chrono::high_resolution_clock::now();
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     auto duration = std::chrono::duration_cast&lt;std::chrono::microseconds&gt;(end - start);
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     std::cout &lt;&lt; &#34;JP INSERT Time taken: &#34; &lt;&lt; duration.count() &lt;&lt; &#34; microseconds&#34; &lt;&lt; std::endl;
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">// }
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// {
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     auto start = std::chrono::high_resolution_clock::now();
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     for (int i = 0; i &lt;= 1000000; ++i)
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     {
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//         int key = gen_random_val();
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//         int val = gen_random_val();
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">//         mp[key] = val;
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//         // st-&gt;print();
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     }
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     auto end = std::chrono::high_resolution_clock::now();
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     auto duration = std::chrono::duration_cast&lt;std::chrono::microseconds&gt;(end - start);
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">//     std::cout &lt;&lt; &#34;MP INSERT Time taken: &#34; &lt;&lt; duration.count() &lt;&lt; &#34; microseconds&#34; &lt;&lt; std::endl;
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#0f0">// }
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = <span style="color:#f60">0</span>; i &lt;= <span style="color:#f60">10000</span>; ++i)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ee82ee">int</span> key = gen_random_val();
+</span></span><span style="display:flex;"><span>        <span style="color:#ee82ee">int</span> val = gen_random_val();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        mp[key] = val;
+</span></span><span style="display:flex;"><span>        st-&gt;insert(key, val);
+</span></span><span style="display:flex;"><span>        cout &lt;&lt; <span style="color:#87ceeb">&#34;insert &#34;</span> &lt;&lt; key &lt;&lt; <span style="color:#87ceeb">&#34;:&#34;</span> &lt;&lt; val &lt;&lt; endl;
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// st-&gt;print();
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = <span style="color:#f60">0</span>; i &lt;= <span style="color:#f60">5000</span>; ++i)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ee82ee">int</span> key = gen_random_val();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        mp.erase(key);
+</span></span><span style="display:flex;"><span>        st-&gt;remove(key);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = <span style="color:#f60">0</span>; i &lt;= <span style="color:#f60">10000</span>; ++i)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ee82ee">int</span> key = gen_random_val();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        compare_jp_with_mp(key);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>‍</p>
 <p>‍</p>
-<h2 id="deepseek的实现">deepseek的实现<a hidden class="anchor" aria-hidden="true" href="#deepseek的实现">#</a></h2>
+<h2 id="deepseek的实现">deepseek的实现</h2>
 <p>未验证该代码。（deepseek 日常漏掉 &ldquo;&lt;&rdquo;)</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="cp">#include iostream&gt;
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include vector&gt;
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include cstdlib&gt;
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include ctime&gt;
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include climits&gt;
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="k">template</span> <span class="k">typename</span> <span class="n">K</span><span class="p">,</span> <span class="k">typename</span> <span class="n">V</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">SkipList</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="k">struct</span> <span class="nc">Node</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">K</span> <span class="n">key</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">V</span> <span class="n">value</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="n">forward</span><span class="p">;</span> <span class="c1">// 各层的前向指针
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">        <span class="n">Node</span><span class="p">(</span><span class="n">K</span> <span class="n">k</span><span class="p">,</span> <span class="n">V</span> <span class="n">v</span><span class="p">,</span> <span class="kt">int</span> <span class="n">level</span><span class="p">)</span> <span class="o">:</span> <span class="n">key</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">value</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">forward</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">Node</span><span class="o">*</span> <span class="n">header</span><span class="p">;</span>    <span class="c1">// 头节点（哨兵）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">max_level</span><span class="p">;</span>   <span class="c1">// 最大层数限制
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">current_level</span><span class="p">;</span> <span class="c1">// 当前最大层数
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">float</span> <span class="n">probability</span><span class="p">;</span> <span class="c1">// 层数增长概率
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="n">size</span><span class="p">;</span>          <span class="c1">// 节点数量
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// 生成随机层数
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">int</span> <span class="nf">random_level</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">level</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="p">((</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">rand</span><span class="p">())</span> <span class="o">/</span> <span class="n">RAND_MAX</span><span class="p">)</span>  <span class="n">probability</span> <span class="o">&amp;&amp;</span> <span class="n">level</span>  <span class="n">max_level</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">level</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">level</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// 构造函数
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">SkipList</span><span class="p">(</span><span class="kt">int</span> <span class="n">max_level</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span> <span class="kt">float</span> <span class="n">prob</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">)</span> 
-</span></span><span class="line"><span class="cl">        <span class="o">:</span> <span class="n">max_level</span><span class="p">(</span><span class="n">max_level</span><span class="p">),</span> <span class="n">probability</span><span class="p">(</span><span class="n">prob</span><span class="p">),</span> <span class="n">current_level</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">header</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="p">(</span><span class="n">K</span><span class="p">(),</span> <span class="n">V</span><span class="p">(),</span> <span class="n">max_level</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">srand</span><span class="p">(</span><span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 析构函数
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="o">~</span><span class="n">SkipList</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Node</span><span class="o">*</span> <span class="n">current</span> <span class="o">=</span> <span class="n">header</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="p">(</span><span class="n">current</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">Node</span><span class="o">*</span> <span class="n">next</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="k">delete</span> <span class="n">current</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="n">current</span> <span class="o">=</span> <span class="n">next</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">delete</span> <span class="n">header</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 插入键值对
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="nf">insert</span><span class="p">(</span><span class="k">const</span> <span class="n">K</span><span class="o">&amp;</span> <span class="n">key</span><span class="p">,</span> <span class="k">const</span> <span class="n">V</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="n">update</span><span class="p">(</span><span class="n">max_level</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Node</span><span class="o">*</span> <span class="n">current</span> <span class="o">=</span> <span class="n">header</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">// 查找各层的前驱节点
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">current_level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span> <span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">key</span>  <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">// 检查是否已存在相同键
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">current</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">current</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">;</span> <span class="c1">// 更新值
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">return</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">// 生成新节点的层数
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kt">int</span> <span class="n">new_level</span> <span class="o">=</span> <span class="n">random_level</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">new_level</span> <span class="o">&gt;</span> <span class="n">current_level</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">current_level</span><span class="p">;</span> <span class="n">i</span>  <span class="n">new_level</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">header</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="n">current_level</span> <span class="o">=</span> <span class="n">new_level</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">// 创建新节点并更新指针
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="n">Node</span><span class="o">*</span> <span class="n">new_node</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">new_level</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span>  <span class="n">new_level</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">new_node</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_node</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="n">size</span><span class="o">++</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 查找键对应的值
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">bool</span> <span class="nf">search</span><span class="p">(</span><span class="k">const</span> <span class="n">K</span><span class="o">&amp;</span> <span class="n">key</span><span class="p">,</span> <span class="n">V</span><span class="o">&amp;</span> <span class="n">value</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Node</span><span class="o">*</span> <span class="n">current</span> <span class="o">=</span> <span class="n">header</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">current_level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span> <span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">key</span>  <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">current</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">==</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">value</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">value</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 删除键
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">bool</span> <span class="nf">remove</span><span class="p">(</span><span class="k">const</span> <span class="n">K</span><span class="o">&amp;</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Node</span><span class="o">*&gt;</span> <span class="n">update</span><span class="p">(</span><span class="n">max_level</span><span class="p">,</span> <span class="k">nullptr</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Node</span><span class="o">*</span> <span class="n">current</span> <span class="o">=</span> <span class="n">header</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">// 查找各层的前驱节点
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">current_level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span> <span class="p">(</span><span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">key</span>  <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="n">current</span> <span class="o">==</span> <span class="k">nullptr</span> <span class="o">||</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">!=</span> <span class="n">key</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span> <span class="c1">// 未找到
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">// 更新各层指针
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span>  <span class="n">current_level</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">current</span><span class="p">)</span> <span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="n">update</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">delete</span> <span class="n">current</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">size</span><span class="o">--</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">// 降低当前层数（若高层为空）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">while</span> <span class="p">(</span><span class="n">current_level</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">header</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">current_level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">current_level</span><span class="o">--</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 打印跳表结构（调试用）
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kt">void</span> <span class="nf">display</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;</span> <span class="s">&#34;Skip List (Level=&#34;</span> <span class="o">&lt;</span> <span class="n">current_level</span> <span class="o">&lt;</span> <span class="s">&#34;, Size=&#34;</span> <span class="o">&lt;</span> <span class="n">size</span> <span class="o">&lt;</span> <span class="s">&#34;):&#34;</span> <span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">current_level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">Node</span><span class="o">*</span> <span class="n">node</span> <span class="o">=</span> <span class="n">header</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;</span> <span class="s">&#34;Level &#34;</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="s">&#34;: &#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">while</span> <span class="p">(</span><span class="n">node</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">key</span> <span class="o">&lt;</span> <span class="s">&#34;(&#34;</span> <span class="o">&lt;</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">value</span> <span class="o">&lt;</span> <span class="s">&#34;) &#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="n">node</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">forward</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// 示例测试
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">SkipList</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">skiplist</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 插入数据
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">skiplist</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s">&#34;Alice&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">skiplist</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="s">&#34;Bob&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">skiplist</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="s">&#34;Charlie&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">skiplist</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="s">&#34;Dave&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">skiplist</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="s">&#34;Eve&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 查找测试
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">value</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">skiplist</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;</span> <span class="s">&#34;Key 6 found: &#34;</span> <span class="o">&lt;</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span> <span class="c1">// 输出 Bob
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 删除测试
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">if</span> <span class="p">(</span><span class="n">skiplist</span><span class="p">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">7</span><span class="p">))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;</span> <span class="s">&#34;Key 7 removed.&#34;</span> <span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// 显示跳表结构
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">skiplist</span><span class="p">.</span><span class="n">display</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#e5e5e5">#include iostream&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include vector&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include cstdlib&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include ctime&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include climits&gt;
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">template</span> <span style="color:#f00">typename</span> K, <span style="color:#f00">typename</span> V&gt;
+</span></span><span style="display:flex;"><span><span style="color:#f00">class</span> SkipList {
+</span></span><span style="display:flex;"><span><span style="color:#f00">private</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">struct</span> Node {
+</span></span><span style="display:flex;"><span>        K key;
+</span></span><span style="display:flex;"><span>        V value;
+</span></span><span style="display:flex;"><span>        std::vector&lt;Node*&gt; forward; <span style="color:#0f0">// 各层的前向指针
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>
+</span></span><span style="display:flex;"><span>        Node(K k, V v, <span style="color:#ee82ee">int</span> level) : key(k), value(v), forward(level, <span style="color:#f00">nullptr</span>) {}
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Node* header;    <span style="color:#0f0">// 头节点（哨兵）
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ee82ee">int</span> max_level;   <span style="color:#0f0">// 最大层数限制
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ee82ee">int</span> current_level; <span style="color:#0f0">// 当前最大层数
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ee82ee">float</span> probability; <span style="color:#0f0">// 层数增长概率
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ee82ee">int</span> size;          <span style="color:#0f0">// 节点数量
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// 生成随机层数
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ee82ee">int</span> <span style="color:#ff0">random_level</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#ee82ee">int</span> level = <span style="color:#f60">1</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">while</span> ((<span style="color:#f00">static_cast</span>&lt;<span style="color:#ee82ee">float</span>&gt;(rand()) / RAND_MAX)  probability &amp;&amp; level  max_level) {
+</span></span><span style="display:flex;"><span>            level++;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> level;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">public</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// 构造函数
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    SkipList(<span style="color:#ee82ee">int</span> max_level = <span style="color:#f60">16</span>, <span style="color:#ee82ee">float</span> prob = <span style="color:#f60">0.5</span>) 
+</span></span><span style="display:flex;"><span>        : max_level(max_level), probability(prob), current_level(<span style="color:#f60">1</span>), size(<span style="color:#f60">0</span>) {
+</span></span><span style="display:flex;"><span>        header = <span style="color:#f00">new</span> Node(K(), V(), max_level);
+</span></span><span style="display:flex;"><span>        srand(time(<span style="color:#f60">0</span>));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// 析构函数
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    ~SkipList() {
+</span></span><span style="display:flex;"><span>        Node* current = header-&gt;forward[<span style="color:#f60">0</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">while</span> (current != <span style="color:#f00">nullptr</span>) {
+</span></span><span style="display:flex;"><span>            Node* next = current-&gt;forward[<span style="color:#f60">0</span>];
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">delete</span> current;
+</span></span><span style="display:flex;"><span>            current = next;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">delete</span> header;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// 插入键值对
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ee82ee">void</span> <span style="color:#ff0">insert</span>(<span style="color:#f00">const</span> K&amp; key, <span style="color:#f00">const</span> V&amp; value) {
+</span></span><span style="display:flex;"><span>        std::vector&lt;Node*&gt; update(max_level, <span style="color:#f00">nullptr</span>);
+</span></span><span style="display:flex;"><span>        Node* current = header;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// 查找各层的前驱节点
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = current_level - <span style="color:#f60">1</span>; i &gt;= <span style="color:#f60">0</span>; i--) {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">while</span> (current-&gt;forward[i] != <span style="color:#f00">nullptr</span> &amp;&amp; current-&gt;forward[i]-&gt;key  key) {
+</span></span><span style="display:flex;"><span>                current = current-&gt;forward[i];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            update[i] = current;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// 检查是否已存在相同键
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        current = current-&gt;forward[<span style="color:#f60">0</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> (current != <span style="color:#f00">nullptr</span> &amp;&amp; current-&gt;key == key) {
+</span></span><span style="display:flex;"><span>            current-&gt;value = value; <span style="color:#0f0">// 更新值
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>            <span style="color:#f00">return</span>;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// 生成新节点的层数
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        <span style="color:#ee82ee">int</span> new_level = random_level();
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> (new_level &gt; current_level) {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = current_level; i  new_level; i++) {
+</span></span><span style="display:flex;"><span>                update[i] = header;
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            current_level = new_level;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// 创建新节点并更新指针
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        Node* new_node = <span style="color:#f00">new</span> Node(key, value, new_level);
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = <span style="color:#f60">0</span>; i  new_level; i++) {
+</span></span><span style="display:flex;"><span>            new_node-&gt;forward[i] = update[i]-&gt;forward[i];
+</span></span><span style="display:flex;"><span>            update[i]-&gt;forward[i] = new_node;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        size++;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// 查找键对应的值
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ee82ee">bool</span> <span style="color:#ff0">search</span>(<span style="color:#f00">const</span> K&amp; key, V&amp; value) {
+</span></span><span style="display:flex;"><span>        Node* current = header;
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = current_level - <span style="color:#f60">1</span>; i &gt;= <span style="color:#f60">0</span>; i--) {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">while</span> (current-&gt;forward[i] != <span style="color:#f00">nullptr</span> &amp;&amp; current-&gt;forward[i]-&gt;key  key) {
+</span></span><span style="display:flex;"><span>                current = current-&gt;forward[i];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        current = current-&gt;forward[<span style="color:#f60">0</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> (current != <span style="color:#f00">nullptr</span> &amp;&amp; current-&gt;key == key) {
+</span></span><span style="display:flex;"><span>            value = current-&gt;value;
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">return</span> true;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> false;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// 删除键
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ee82ee">bool</span> <span style="color:#ff0">remove</span>(<span style="color:#f00">const</span> K&amp; key) {
+</span></span><span style="display:flex;"><span>        std::vector&lt;Node*&gt; update(max_level, <span style="color:#f00">nullptr</span>);
+</span></span><span style="display:flex;"><span>        Node* current = header;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// 查找各层的前驱节点
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = current_level - <span style="color:#f60">1</span>; i &gt;= <span style="color:#f60">0</span>; i--) {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">while</span> (current-&gt;forward[i] != <span style="color:#f00">nullptr</span> &amp;&amp; current-&gt;forward[i]-&gt;key  key) {
+</span></span><span style="display:flex;"><span>                current = current-&gt;forward[i];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            update[i] = current;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        current = current-&gt;forward[<span style="color:#f60">0</span>];
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> (current == <span style="color:#f00">nullptr</span> || current-&gt;key != key) {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">return</span> false; <span style="color:#0f0">// 未找到
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// 更新各层指针
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = <span style="color:#f60">0</span>; i  current_level; i++) {
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">if</span> (update[i]-&gt;forward[i] != current) <span style="color:#f00">break</span>;
+</span></span><span style="display:flex;"><span>            update[i]-&gt;forward[i] = current-&gt;forward[i];
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">delete</span> current;
+</span></span><span style="display:flex;"><span>        size--;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// 降低当前层数（若高层为空）
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        <span style="color:#f00">while</span> (current_level &gt; <span style="color:#f60">1</span> &amp;&amp; header-&gt;forward[current_level - <span style="color:#f60">1</span>] == <span style="color:#f00">nullptr</span>) {
+</span></span><span style="display:flex;"><span>            current_level--;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> true;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// 打印跳表结构（调试用）
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#ee82ee">void</span> <span style="color:#ff0">display</span>() {
+</span></span><span style="display:flex;"><span>        std::cout &lt; <span style="color:#87ceeb">&#34;Skip List (Level=&#34;</span> &lt; current_level &lt; <span style="color:#87ceeb">&#34;, Size=&#34;</span> &lt; size &lt; <span style="color:#87ceeb">&#34;):&#34;</span> &lt; std::endl;
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span> (<span style="color:#ee82ee">int</span> i = current_level - <span style="color:#f60">1</span>; i &gt;= <span style="color:#f60">0</span>; i--) {
+</span></span><span style="display:flex;"><span>            Node* node = header-&gt;forward[i];
+</span></span><span style="display:flex;"><span>            std::cout &lt; <span style="color:#87ceeb">&#34;Level &#34;</span> &lt; i &lt; <span style="color:#87ceeb">&#34;: &#34;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">while</span> (node != <span style="color:#f00">nullptr</span>) {
+</span></span><span style="display:flex;"><span>                std::cout &lt; node-&gt;key &lt; <span style="color:#87ceeb">&#34;(&#34;</span> &lt; node-&gt;value &lt; <span style="color:#87ceeb">&#34;) &#34;</span>;
+</span></span><span style="display:flex;"><span>                node = node-&gt;forward[i];
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            std::cout &lt; std::endl;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0">// 示例测试
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>() {
+</span></span><span style="display:flex;"><span>    SkipList&lt;<span style="color:#ee82ee">int</span>, std::string&gt; skiplist;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// 插入数据
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    skiplist.insert(<span style="color:#f60">3</span>, <span style="color:#87ceeb">&#34;Alice&#34;</span>);
+</span></span><span style="display:flex;"><span>    skiplist.insert(<span style="color:#f60">6</span>, <span style="color:#87ceeb">&#34;Bob&#34;</span>);
+</span></span><span style="display:flex;"><span>    skiplist.insert(<span style="color:#f60">7</span>, <span style="color:#87ceeb">&#34;Charlie&#34;</span>);
+</span></span><span style="display:flex;"><span>    skiplist.insert(<span style="color:#f60">9</span>, <span style="color:#87ceeb">&#34;Dave&#34;</span>);
+</span></span><span style="display:flex;"><span>    skiplist.insert(<span style="color:#f60">12</span>, <span style="color:#87ceeb">&#34;Eve&#34;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// 查找测试
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    std::string value;
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> (skiplist.search(<span style="color:#f60">6</span>, value)) {
+</span></span><span style="display:flex;"><span>        std::cout &lt; <span style="color:#87ceeb">&#34;Key 6 found: &#34;</span> &lt; value &lt; std::endl; <span style="color:#0f0">// 输出 Bob
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// 删除测试
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    <span style="color:#f00">if</span> (skiplist.remove(<span style="color:#f60">7</span>)) {
+</span></span><span style="display:flex;"><span>        std::cout &lt; <span style="color:#87ceeb">&#34;Key 7 removed.&#34;</span> &lt; std::endl;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// 显示跳表结构
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    skiplist.display();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div>
-
-  </div>
-
-  <footer class="post-footer">
-    <ul class="post-tags">
-    </ul>
-<nav class="paginav">
-  <a class="prev" href="https://mobilephone724.github.io/post/ddiaencoding-and-evolution-1-2dgaes.html">
-    <span class="title">« Prev</span>
-    <br>
-    <span>DDIA--Encoding and Evolution(1)</span>
-  </a>
-  <a class="next" href="https://mobilephone724.github.io/post/lsmtree-2fapmq.html">
-    <span class="title">Next »</span>
-    <br>
-    <span>lsmTree</span>
-  </a>
-</nav>
-
-
-<ul class="share-buttons">
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 跳表的实现 on x"
-            href="https://x.com/intent/tweet/?text=%e8%b7%b3%e8%a1%a8%e7%9a%84%e5%ae%9e%e7%8e%b0&amp;url=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-of-skipping-tables-299fl1.html&amp;hashtags=">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 跳表的实现 on linkedin"
-            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-of-skipping-tables-299fl1.html&amp;title=%e8%b7%b3%e8%a1%a8%e7%9a%84%e5%ae%9e%e7%8e%b0&amp;summary=%e8%b7%b3%e8%a1%a8%e7%9a%84%e5%ae%9e%e7%8e%b0&amp;source=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-of-skipping-tables-299fl1.html">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 跳表的实现 on reddit"
-            href="https://reddit.com/submit?url=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-of-skipping-tables-299fl1.html&title=%e8%b7%b3%e8%a1%a8%e7%9a%84%e5%ae%9e%e7%8e%b0">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 跳表的实现 on facebook"
-            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-of-skipping-tables-299fl1.html">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 跳表的实现 on whatsapp"
-            href="https://api.whatsapp.com/send?text=%e8%b7%b3%e8%a1%a8%e7%9a%84%e5%ae%9e%e7%8e%b0%20-%20https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-of-skipping-tables-299fl1.html">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 跳表的实现 on telegram"
-            href="https://telegram.me/share/url?text=%e8%b7%b3%e8%a1%a8%e7%9a%84%e5%ae%9e%e7%8e%b0&amp;url=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-of-skipping-tables-299fl1.html">
-            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 跳表的实现 on ycombinator"
-            href="https://news.ycombinator.com/submitlink?t=%e8%b7%b3%e8%a1%a8%e7%9a%84%e5%ae%9e%e7%8e%b0&u=https%3a%2f%2fmobilephone724.github.io%2fpost%2fimplementation-of-skipping-tables-299fl1.html">
-            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
-                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
-                <path
-                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
-            </svg>
-        </a>
-    </li>
-</ul>
-
-  </footer>
 </article>
-    </main>
+
+                
     
-<footer class="footer">
-        <span>© <a href="https://github.com/adityatelange/hugo-PaperMod/graphs/contributors">PaperMod Contributors</a></span> · 
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
 
-    <span>
-        Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
-        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
-    </span>
-</footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-        <path d="M12 6H0l6-6z" />
-    </svg>
-</a>
 
-<script>
-    let menu = document.getElementById('menu')
-    if (menu) {
-        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
-        menu.onscroll = function () {
-            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
-        }
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            var id = this.getAttribute("href").substr(1);
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
-                    behavior: "smooth"
-                });
-            } else {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
-            }
-            if (id === "top") {
-                history.replaceState(null, null, " ");
-            } else {
-                history.pushState(null, null, `#${id}`);
-            }
-        });
-    });
-
-</script>
-<script>
-    var mybutton = document.getElementById("top-link");
-    window.onscroll = function () {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
-        } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
-        }
-    };
-
-</script>
-<script>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-        if (document.body.className.includes("dark")) {
-            document.body.classList.remove('dark');
-            localStorage.setItem("pref-theme", 'light');
-        } else {
-            document.body.classList.add('dark');
-            localStorage.setItem("pref-theme", 'dark');
-        }
-    })
-
-</script>
-<script>
-    document.querySelectorAll('pre > code').forEach((codeblock) => {
-        const container = codeblock.parentNode.parentNode;
-
-        const copybutton = document.createElement('button');
-        copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'copy';
-
-        function copyingDone() {
-            copybutton.innerHTML = 'copied!';
-            setTimeout(() => {
-                copybutton.innerHTML = 'copy';
-            }, 2000);
-        }
-
-        copybutton.addEventListener('click', (cb) => {
-            if ('clipboard' in navigator) {
-                navigator.clipboard.writeText(codeblock.textContent);
-                copyingDone();
-                return;
-            }
-
-            const range = document.createRange();
-            range.selectNodeContents(codeblock);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            try {
-                document.execCommand('copy');
-                copyingDone();
-            } catch (e) { };
-            selection.removeRange(range);
-        });
-
-        if (container.classList.contains("highlight")) {
-            container.appendChild(copybutton);
-        } else if (container.parentNode.firstChild == container) {
-            
-        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
-            
-            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
-        } else {
-            
-            codeblock.parentNode.appendChild(copybutton);
-        }
-    });
-</script>
-</body>
-
+            </div>
+        </main>
+    </body>
 </html>

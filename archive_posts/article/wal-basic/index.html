@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=53944&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="
+From access/transam/README
+Write-Ahead Log Coding
+基本思想，日志在数据页前落盘
+
+LSN：刷脏前检查LSN对应的日志已经落盘
+
+优势：仅在必要的时候等待XLOG的IO。（异步IO）
+LSN的检查模块只用在 buffer manager 中实现
+在WAL回放时，避免相同的日志被重复回放（可重入）。（TODO：full page write是否在另一个层面上保证了可重入）
+
+
+WAL 包含一个（或一小组）页的增量更新的重做信息。
+
+依赖文件系统和硬件的原子写，不可靠！
+checkpoint，checkpointer后的第一次写全页。通过 checkpoint 留下的 LSN  来判断是否为第一次写
+
+
+写下WAL日志的逻辑为
+
+pin and exclusive-lock the shared buffer
+START_CRIT_SECTION，发生错误时确保整个数据库能立即重启
+在shared buffer上，进行对应的修改
+标记为脏页，
+
+必须在WAL日志写入前完成（TODO，为什么？SyncOneBuffer）
+只有在要写WAL时，才能标记脏页（TODO，为什么？）
+
+
+使用XLogBeginInsert 和 XLogRegister* 函数构建WAL，使用返回的LSN来更新page
+END_CRIT_SECTION，退出
+解锁和unpin （注意顺序）
+
+
+
+一些复杂的操作，需要原子地写下一串WAL记录，但中间状态必须自洽(self-consistent)。这样在回放wal日志时，如果中断，系统还能够正常运行。注意：此时相当于事务回滚，但是其部分更改已经落盘。举例：
+
+在btree索引中，页的分裂分为两步（1）分配一个新页（2）在上一层的页(parent page)中新插入一条数据。
+但是因为锁，这会形成两个独立的WAL日志。在回放WAL日志时
+
+回放第（1）个日志：
+
+分配一个新页，将元组移动进去
+设置标记位，表示上一层的页没有更新
+
+
+回放第（2）个日志：
+
+在上一层的页中新插入一条数据
+清除第（1）个日志中的标记位
+
+
+
+
+标志位通常情况下不可见，因为对 child page 的修改时持有的锁，在两个操作完成后才会释放。
+仅在写下第（2）个日志前，数据库恰好崩溃，标志位才会被感知。（该标志位应该没有MVCC，否则会在事务层屏蔽）
+
+搜索时，不管这个中间状态
+插入时，如果发现这个中间状态，先在上一层的页插入对应key，以修复这个“崩溃”状态，再继续插入
+
+
+">  
+
+  <title>
+    
+      WAL基础
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:53944/css/main.900100e9dbee2d56c58fac8bb717037cae7e26a9c36c29d2ff587bdd65f0cbbe510b41d81a3bb234919cdfdc7550d786b2fab70c8fc507772d732fe097106d12.css" integrity="sha512-kAEA6dvuLVbFj6yLtxcDfK5&#43;JqnDbCnS/1h73WXwy75RC0HYGjuyNJGc39x1UNeGsvq3DI/FB3ctcy/glxBtEg==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="0001-01-01 00:00:00 &#43;0000 UTC">
+            0001-01-01
+        </time>
+    </p>
+
+    <h1>WAL基础</h1>
+
+    
+
+    <blockquote>
+<p>From <code>access/transam/README</code></p></blockquote>
+<h2 id="write-ahead-log-coding">Write-Ahead Log Coding</h2>
+<p>基本思想，日志在数据页前落盘</p>
+<ol>
+<li><code>LSN</code>：刷脏前检查<code>LSN</code>对应的日志已经落盘
+<ol>
+<li>优势：仅在必要的时候等待<code>XLOG</code>的<code>IO</code>。（异步<code>IO</code>）</li>
+<li><code>LSN</code>的检查模块只用在 buffer manager 中实现</li>
+<li>在WAL回放时，避免相同的日志被重复回放（可重入）。（TODO：full page write是否在另一个层面上保证了可重入）</li>
+</ol>
+</li>
+<li>WAL 包含一个（或一小组）页的<strong>增量更新</strong>的重做信息。
+<ol>
+<li>依赖文件系统和硬件的原子写，不可靠！</li>
+<li>checkpoint，checkpointer后的第一次写全页。通过 checkpoint 留下的 <code>LSN </code> 来判断是否为第一次写</li>
+</ol>
+</li>
+<li>写下WAL日志的逻辑为
+<ol>
+<li>pin and exclusive-lock the shared buffer</li>
+<li>START_CRIT_SECTION，发生错误时确保整个数据库能立即重启</li>
+<li>在shared buffer上，进行对应的修改</li>
+<li>标记为脏页，
+<ol>
+<li>必须在WAL日志写入前完成（TODO，为什么？<code>SyncOneBuffer</code>）</li>
+<li>只有在要写WAL时，才能标记脏页（TODO，为什么？）</li>
+</ol>
+</li>
+<li>使用<code>XLogBeginInsert</code> 和 <code>XLogRegister*</code> 函数构建WAL，使用返回的<code>LSN</code>来更新<code>page</code></li>
+<li>END_CRIT_SECTION，退出</li>
+<li>解锁和unpin （注意顺序）</li>
+</ol>
+</li>
+</ol>
+<p>一些复杂的操作，需要原子地写下一串WAL记录，但中间状态必须自洽(self-consistent)。这样在回放wal日志时，如果中断，系统还能够正常运行。注意：此时相当于事务回滚，但是其部分更改已经落盘。举例：</p>
+<ul>
+<li>在btree索引中，页的分裂分为两步（1）分配一个新页（2）在上一层的页(parent page)中新插入一条数据。</li>
+<li>但是因为锁，这会形成两个独立的WAL日志。在回放WAL日志时
+<ul>
+<li>回放第（1）个日志：
+<ul>
+<li>分配一个新页，将元组移动进去</li>
+<li>设置标记位，表示上一层的页没有更新</li>
+</ul>
+</li>
+<li>回放第（2）个日志：
+<ul>
+<li>在上一层的页中新插入一条数据</li>
+<li>清除第（1）个日志中的标记位</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>标志位通常情况下不可见，因为对 child page 的修改时持有的锁，在两个操作完成后才会释放。</li>
+<li>仅在写下第（2）个日志前，数据库恰好崩溃，标志位才会被感知。（该标志位应该没有MVCC，否则会在事务层屏蔽）
+<ul>
+<li>搜索时，不管这个中间状态</li>
+<li>插入时，如果发现这个中间状态，先在上一层的页插入对应key，以修复这个“崩溃”状态，再继续插入</li>
+</ul>
+</li>
+</ul>
+
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

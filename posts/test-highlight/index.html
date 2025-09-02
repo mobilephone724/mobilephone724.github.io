@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=55117&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="Test for C
+#define UNICODE
+#include &lt;windows.h&gt;
+ 
+int main(int argc, char **argv) {
+  int speed = 0, speed1 = 0, speed2 = 0; // 1-20
+  printf(&#34;Set Mouse Speed by Maverick\n&#34;);
+ 
+  SystemParametersInfo(SPI_GETMOUSESPEED, 0, &amp;speed, 0);
+  printf(&#34;Current speed: %2d\n&#34;, speed);
+ 
+  if (argc == 1) return 0;
+  if (argc &gt;= 2) sscanf(argv[1], &#34;%d&#34;, &amp;speed1);
+  if (argc &gt;= 3) sscanf(argv[2], &#34;%d&#34;, &amp;speed2);
+ 
+  if (argc == 2) // set speed to first value
+    speed = speed1;
+  else if (speed == speed1 || speed == speed2) // alternate
+    speed = speed1 &#43; speed2 - speed;
+  else
+    speed = speed1;  // start with first value
+ 
+  SystemParametersInfo(SPI_SETMOUSESPEED, 0,  speed, 0);
+  SystemParametersInfo(SPI_GETMOUSESPEED, 0, &amp;speed, 0);
+  printf(&#34;New speed:     %2d\n&#34;, speed);
+  return 0;
+}
+Test for Java
+import java.util.Map;
+import java.util.TreeSet;
+ 
+public class GetEnv {
+  /**
+   * let&#39;s test generics
+   * @param args the command line arguments
+   */
+  public static void main(String[] args) {
+    // get a map of environment variables
+    Map&lt;String, String&gt; env = System.getenv();
+    // build a sorted set out of the keys and iterate
+    for(String k: new TreeSet&lt;String&gt;(env.keySet())) {
+      System.out.printf(&#34;%s = %s\n&#34;, k, env.get(k));
+    }
+  }    
+}
+Test for Perl
+#!perl -w
+ 
+# Time-stamp: &lt;2002/04/06, 13:12:13 (EST), maverick, csvformat.pl&gt;
+# Two pass CSV file to table formatter
+ 
+$delim = $#ARGV &gt;= 1 ? $ARGV[1] : &#39;,&#39;;
+print STDERR &#34;Split pattern: $delim\n&#34;;
+ 
+# first pass
+open F, &#34;&lt;$ARGV[0]&#34; or die;
+while(&lt;F&gt;)
+{
+  chomp;
+  $i = 0;
+  map { $max[$_-&gt;[1]] = $_-&gt;[0] if $_-&gt;[0] &gt; ($max[$_-&gt;[1]] || 0) }
+    (map {[length $_, $i&#43;&#43;]} split($delim));
+}
+close F;
+ 
+print STDERR &#39;Field width:   &#39;, join(&#39;, &#39;, @max), &#34;\n&#34;;
+print STDERR join(&#39; &#39;, map {&#39;-&#39; x $_} @max);
+ 
+# second pass
+open F, &#34;&lt;$ARGV[0]&#34; or die;
+while(&lt;F&gt;)
+  {
+  chomp;
+  $i = 0;
+  map { printf(&#34;%-$max[$_-&gt;[1]]s &#34;, $_-&gt;[0]) }
+    (map {[$_, $i&#43;&#43;]} split($delim));
+  print &#34;\n&#34;;
+}
+close F;
+Test for Python
+# test python (sample from offlineimap)
+ 
+class ExitNotifyThread(Thread):
+    &#34;&#34;&#34;This class is designed to alert a &#34;monitor&#34; to the fact that a thread has
+    exited and to provide for the ability for it to find out why.&#34;&#34;&#34;
+    def run(self):
+        global exitthreads, profiledir
+        self.threadid = thread.get_ident()
+        try:
+            if not profiledir:          # normal case
+                Thread.run(self)
+            else:
+                try:
+                    import cProfile as profile
+                except ImportError:
+                    import profile
+                prof = profile.Profile()
+                try:
+                    prof = prof.runctx(&#34;Thread.run(self)&#34;, globals(), locals())
+                except SystemExit:
+                    pass
+                prof.dump_stats( \
+                            profiledir &#43; &#34;/&#34; &#43; str(self.threadid) &#43; &#34;_&#34; &#43; \
+                            self.getName() &#43; &#34;.prof&#34;)
+        except:
+            self.setExitCause(&#39;EXCEPTION&#39;)
+            if sys:
+                self.setExitException(sys.exc_info()[1])
+                tb = traceback.format_exc()
+                self.setExitStackTrace(tb)
+        else:
+            self.setExitCause(&#39;NORMAL&#39;)
+        if not hasattr(self, &#39;exitmessage&#39;):
+            self.setExitMessage(None)
+ 
+        if exitthreads:
+            exitthreads.put(self, True)
+ 
+    def setExitCause(self, cause):
+        self.exitcause = cause
+    def getExitCause(self):
+        &#34;&#34;&#34;Returns the cause of the exit, one of:
+        &#39;EXCEPTION&#39; -- the thread aborted because of an exception
+        &#39;NORMAL&#39; -- normal termination.&#34;&#34;&#34;
+        return self.exitcause
+    def setExitException(self, exc):
+        self.exitexception = exc
+    def getExitException(self):
+        &#34;&#34;&#34;If getExitCause() is &#39;EXCEPTION&#39;, holds the value from
+        sys.exc_info()[1] for this exception.&#34;&#34;&#34;
+        return self.exitexception
+    def setExitStackTrace(self, st):
+        self.exitstacktrace = st
+    def getExitStackTrace(self):
+        &#34;&#34;&#34;If getExitCause() is &#39;EXCEPTION&#39;, returns a string representing
+        the stack trace for this exception.&#34;&#34;&#34;
+        return self.exitstacktrace
+    def setExitMessage(self, msg):
+        &#34;&#34;&#34;Sets the exit message to be fetched by a subsequent call to
+        getExitMessage.  This message may be any object or type except
+        None.&#34;&#34;&#34;
+        self.exitmessage = msg
+    def getExitMessage(self):
+        &#34;&#34;&#34;For any exit cause, returns the message previously set by
+        a call to setExitMessage(), or None if there was no such message
+        set.&#34;&#34;&#34;
+        return self.exitmessage
+Test for Bash
+#!/bin/bash
+cd $ROOT_DIR
+DOT_FILES=&#34;lastpass weechat ssh Xauthority&#34;
+for dotfile in $DOT_FILES; do conform_link &#34;$DATA_DIR/$dotfile&#34; &#34;.$dotfile&#34;; done
+ 
+# TODO: refactor with suffix variables (or common cron values)
+ 
+case &#34;$PLATFORM&#34; in
+    linux)
+        #conform_link &#34;$CONF_DIR/shell/zshenv&#34; &#34;.zshenv&#34;
+        crontab -l &gt; $ROOT_DIR/tmp/crontab-conflict-arch
+        cd $ROOT_DIR/$CONF_DIR/cron
+        if [[ &#34;$(diff ~/tmp/crontab-conflict-arch crontab-current-arch)&#34; == &#34;&#34;
+            ]];
+            then # no difference with current backup
+                logger &#34;$LOG_PREFIX: crontab live settings match stored &#34;\
+                    &#34;settings; no restore required&#34;
+                rm ~/tmp/crontab-conflict-arch
+            else # current crontab settings in file do not match live settings
+                crontab $ROOT_DIR/$CONF_DIR/cron/crontab-current-arch
+                logger &#34;$LOG_PREFIX: crontab stored settings conflict with &#34;\
+                    &#34;live settings; stored settings restored. &#34;\
+                    &#34;Previous settings recorded in ~/tmp/crontab-conflict-arch.&#34;
+        fi
+    ;;
+Test for Haskell
+{-# LANGUAGE OverloadedStrings #-}
+module Main where
+ 
+--import Prelude hiding (id)
+--import Control.Category (id)
+import Control.Arrow ((&gt;&gt;&gt;), (***), arr)
+import Control.Monad (forM_)
+-- import Data.Monoid (mempty, mconcat)
+ 
+-- import System.FilePath
+ 
+import Hakyll
+ 
+ 
+main :: IO ()
+main = hakyll $ do
+ 
+    route   &#34;css/*&#34; $ setExtension &#34;css&#34;
+    compile &#34;css/*&#34; $ byExtension (error &#34;Not a (S)CSS file&#34;)
+        [ (&#34;.css&#34;,  compressCssCompiler)
+        , (&#34;.scss&#34;, sass)
+        ]
+ 
+    route   &#34;js/**&#34; idRoute
+    compile &#34;js/**&#34; copyFileCompiler
+ 
+    route   &#34;img/*&#34; idRoute
+    compile &#34;img/*&#34; copyFileCompiler
+ 
+    compile &#34;templates/*&#34; templateCompiler
+ 
+    forM_ [&#34;test.md&#34;, &#34;index.md&#34;] $ \page -&gt; do
+        route   page $ setExtension &#34;html&#34;
+        compile page $ pageCompiler
+            &gt;&gt;&gt; applyTemplateCompiler &#34;templates/default.html&#34;
+            &gt;&gt;&gt; relativizeUrlsCompiler
+ 
+sass :: Compiler Resource String
+sass = getResourceString &gt;&gt;&gt; unixFilter &#34;sass&#34; [&#34;-s&#34;, &#34;--scss&#34;]
+                         &gt;&gt;&gt; arr compressCss
+Test for PHP
+&lt;?php
+require_once($GLOBALS[&#39;g_campsiteDir&#39;]. &#34;/$ADMIN_DIR/country/common.php&#34;);
+require_once($GLOBALS[&#39;g_campsiteDir&#39;]. &#34;/classes/SimplePager.php&#34;);
+camp_load_translation_strings(&#34;api&#34;);
+ 
+$f_country_language_selected = camp_session_get(&#39;f_language_selected&#39;, &#39;&#39;);
+$f_country_offset = camp_session_get(&#39;f_country_offset&#39;, 0);
+if (empty($f_country_language_selected)) {
+    $f_country_language_selected = null;
+}
+$ItemsPerPage = 20;
+$languages = Language::GetLanguages(null, null, null, array(), array(), true);
+$numCountries = Country::GetNumCountries($f_country_language_selected);
+ 
+$pager = new SimplePager($numCountries, $ItemsPerPage, &#34;index.php?&#34;);
+ 
+$crumbs = array();
+$crumbs[] = array(getGS(&#34;Configure&#34;), &#34;&#34;);
+$crumbs[] = array(getGS(&#34;Countries&#34;), &#34;&#34;);
+echo camp_html_breadcrumbs($crumbs);
+ 
+?&gt;
+ 
+&lt;?php  if ($g_user-&gt;hasPermission(&#34;ManageCountries&#34;)) { ?&gt;
+&lt;table BORDER=&#34;0&#34; CELLSPACING=&#34;0&#34; CELLPADDING=&#34;1&#34;&gt;
+    &lt;tr&gt;
+        &lt;td&gt;&lt;a href=&#34;add.php&#34;&gt;&lt;?php putGS(&#34;Add new&#34;); ?&gt;&lt;/a&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+Test for Javascript
+import isTypedArray from &#39;lodash/isTypedArray&#39;;
+import reverse from &#39;lodash/reverse&#39;;
+import sortBy from &#39;lodash/sortBy&#39;;
+import take from &#39;lodash/take&#39;;
+import { food101Classes } from &#39;./food101&#39;;
+export function food101topK(classProbabilities, k = 5) {
+  const probs = isTypedArray(classProbabilities)
+    ? Array.prototype.slice.call(classProbabilities)
+    : classProbabilities;
+  const sorted = reverse(
+    sortBy(
+      probs.map((prob, index) =&gt; [ prob, index ]),
+      probIndex =&gt; probIndex[0]
+    )
+  );
+  const topK = take(sorted, k).map(probIndex =&gt; {
+    const iClass = food101Classes[probIndex[1]];
+    return {
+      id: probIndex[1],
+      name: iClass.replace(/_/, &#39; &#39;),
+      probability: probIndex[0]
+    };
+  });
+  return topK;
+};
+Test for HTML
+&lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD HTML 4.01 Transitional//EN&#34;&gt;
+&lt;html&gt;&lt;head&gt;
+&lt;title&gt;A Tiny Page&lt;/title&gt;
+&lt;style type=&#34;text/css&#34;&gt;
+&lt;!--
+      p { font-size:15pt; color:#000 }
+    --&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;!-- real comment --&gt;
+&lt;body bgcolor=&#34;#FFFFFF&#34; text=&#34;#000000&#34; link=&#34;#0000CC&#34;&gt;
+&lt;script language=&#34;javascript&#34; type=&#34;text/javascript&#34;&gt;
+      function changeHeight(h) {
+        var tds = document.getElementsByTagName(&#34;td&#34;);
+        for(var i = 0; i &lt; tds.length; i&#43;&#43;) {
+          tds[i].setAttribute(&#34;height&#34;, h &#43; &#34;px&#34;);
+      }}
+&lt;/script&gt;
+&lt;h1&gt;abc&lt;/h1&gt;
+&lt;h2&gt;def&lt;/h2&gt;
+&lt;p&gt;Testing page&lt;/p&gt;
+&lt;/body&gt;&lt;/html&gt;
+Test for CSS
+/*
+Monokai style - ported by Luigi Maselli - http://grigio.org
+*/
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #272822; color: #ddd;
+}
+.hljs-tag,
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-strong,
+.hljs-name {
+  color: #f92672;
+}
+.hljs-code {
+  color: #66d9ef;
+}
+.hljs-class .hljs-title {
+  color: white;
+}
+">  
+
+  <title>
+    
+      Test Highlight
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:55117/css/main.900100e9dbee2d56c58fac8bb717037cae7e26a9c36c29d2ff587bdd65f0cbbe510b41d81a3bb234919cdfdc7550d786b2fab70c8fc507772d732fe097106d12.css" integrity="sha512-kAEA6dvuLVbFj6yLtxcDfK5&#43;JqnDbCnS/1h73WXwy75RC0HYGjuyNJGc39x1UNeGsvq3DI/FB3ctcy/glxBtEg==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+                <div class="post-meta">
+                    <a href="/">..</a>
+
+                    <p>
+                        <time datetime="2022-08-26 22:29:10 &#43;0800 CST">
+                            2022-08-26
+                        </time>
+                    </p>
+                </div>
+
+<article>
+    <h1>Test Highlight</h1>
+
+    
+
+    <h2 id="test-for-c">Test for C</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#define UNICODE
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;windows.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span> 
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>(<span style="color:#ee82ee">int</span> argc, <span style="color:#ee82ee">char</span> **argv) {
+</span></span><span style="display:flex;"><span>  <span style="color:#ee82ee">int</span> speed = <span style="color:#f60">0</span>, speed1 = <span style="color:#f60">0</span>, speed2 = <span style="color:#f60">0</span>; <span style="color:#0f0">// 1-20
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>  <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Set Mouse Speed by Maverick</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ff0">SystemParametersInfo</span>(SPI_GETMOUSESPEED, <span style="color:#f60">0</span>, &amp;speed, <span style="color:#f60">0</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;Current speed: %2d</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>, speed);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">if</span> (argc == <span style="color:#f60">1</span>) <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">if</span> (argc &gt;= <span style="color:#f60">2</span>) <span style="color:#ff0">sscanf</span>(argv[<span style="color:#f60">1</span>], <span style="color:#87ceeb">&#34;%d&#34;</span>, &amp;speed1);
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">if</span> (argc &gt;= <span style="color:#f60">3</span>) <span style="color:#ff0">sscanf</span>(argv[<span style="color:#f60">2</span>], <span style="color:#87ceeb">&#34;%d&#34;</span>, &amp;speed2);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">if</span> (argc == <span style="color:#f60">2</span>) <span style="color:#0f0">// set speed to first value
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    speed = speed1;
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">else</span> <span style="color:#f00">if</span> (speed == speed1 || speed == speed2) <span style="color:#0f0">// alternate
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>    speed = speed1 + speed2 - speed;
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">else</span>
+</span></span><span style="display:flex;"><span>    speed = speed1;  <span style="color:#0f0">// start with first value
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ff0">SystemParametersInfo</span>(SPI_SETMOUSESPEED, <span style="color:#f60">0</span>,  speed, <span style="color:#f60">0</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff0">SystemParametersInfo</span>(SPI_GETMOUSESPEED, <span style="color:#f60">0</span>, &amp;speed, <span style="color:#f60">0</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#ff0">printf</span>(<span style="color:#87ceeb">&#34;New speed:     %2d</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>, speed);
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">return</span> <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="test-for-java">Test for Java</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f00">import</span> java.util.Map;
+</span></span><span style="display:flex;"><span><span style="color:#f00">import</span> java.util.TreeSet;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f00">public</span> <span style="color:#f00">class</span> GetEnv {
+</span></span><span style="display:flex;"><span>  <span style="color:#0f0">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">   * let&#39;s test generics
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">   * @param args the command line arguments
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">   */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">public</span> <span style="color:#f00">static</span> <span style="color:#ee82ee">void</span> <span style="color:#ff0">main</span>(String[] args) {
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// get a map of environment variables</span>
+</span></span><span style="display:flex;"><span>    Map&lt;String, String&gt; env = System.getenv();
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">// build a sorted set out of the keys and iterate</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">for</span>(String k: <span style="color:#f00">new</span> TreeSet&lt;String&gt;(env.keySet())) {
+</span></span><span style="display:flex;"><span>      System.out.printf(<span style="color:#87ceeb">&#34;%s = %s\n&#34;</span>, k, env.get(k));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }    
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="test-for-perl">Test for Perl</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-perl" data-lang="perl"><span style="display:flex;"><span><span style="color:#0f0">#!perl -w</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Time-stamp: &lt;2002/04/06, 13:12:13 (EST), maverick, csvformat.pl&gt;</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># Two pass CSV file to table formatter</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$delim</span> = <span style="color:#eedd82">$#ARGV</span> &gt;= <span style="color:#f60">1</span> ? <span style="color:#eedd82">$ARGV</span>[<span style="color:#f60">1</span>] : <span style="color:#87ceeb">&#39;,&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f00">print</span> STDERR <span style="color:#87ceeb">&#34;Split pattern: $delim\n&#34;</span>;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># first pass</span>
+</span></span><span style="display:flex;"><span>open F, <span style="color:#87ceeb">&#34;&lt;$ARGV[0]&#34;</span> or die;
+</span></span><span style="display:flex;"><span><span style="color:#f00">while</span>(<span style="color:#87ceeb">&lt;F&gt;</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  chomp;
+</span></span><span style="display:flex;"><span>  <span style="color:#eedd82">$i</span> = <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>  map { <span style="color:#eedd82">$max</span>[<span style="color:#eedd82">$_</span>-&gt;[<span style="color:#f60">1</span>]] = <span style="color:#eedd82">$_</span>-&gt;[<span style="color:#f60">0</span>] <span style="color:#f00">if</span> <span style="color:#eedd82">$_</span>-&gt;[<span style="color:#f60">0</span>] &gt; (<span style="color:#eedd82">$max</span>[<span style="color:#eedd82">$_</span>-&gt;[<span style="color:#f60">1</span>]] || <span style="color:#f60">0</span>) }
+</span></span><span style="display:flex;"><span>    (map {[length <span style="color:#eedd82">$_</span>, <span style="color:#eedd82">$i</span>++]} split(<span style="color:#eedd82">$delim</span>));
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>close F;
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f00">print</span> STDERR <span style="color:#87ceeb">&#39;Field width:   &#39;</span>, join(<span style="color:#87ceeb">&#39;, &#39;</span>, <span style="color:#eedd82">@max</span>), <span style="color:#87ceeb">&#34;\n&#34;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f00">print</span> STDERR join(<span style="color:#87ceeb">&#39; &#39;</span>, map {<span style="color:#87ceeb">&#39;-&#39;</span> x <span style="color:#eedd82">$_</span>} <span style="color:#eedd82">@max</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># second pass</span>
+</span></span><span style="display:flex;"><span>open F, <span style="color:#87ceeb">&#34;&lt;$ARGV[0]&#34;</span> or die;
+</span></span><span style="display:flex;"><span><span style="color:#f00">while</span>(<span style="color:#87ceeb">&lt;F&gt;</span>)
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>  chomp;
+</span></span><span style="display:flex;"><span>  <span style="color:#eedd82">$i</span> = <span style="color:#f60">0</span>;
+</span></span><span style="display:flex;"><span>  map { printf(<span style="color:#87ceeb">&#34;%-$max[$_-&gt;[1]]s &#34;</span>, <span style="color:#eedd82">$_</span>-&gt;[<span style="color:#f60">0</span>]) }
+</span></span><span style="display:flex;"><span>    (map {[<span style="color:#eedd82">$_</span>, <span style="color:#eedd82">$i</span>++]} split(<span style="color:#eedd82">$delim</span>));
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">print</span> <span style="color:#87ceeb">&#34;\n&#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>close F;
+</span></span></code></pre></div><h2 id="test-for-python">Test for Python</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#0f0"># test python (sample from offlineimap)</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f00">class</span> ExitNotifyThread(Thread):
+</span></span><span style="display:flex;"><span>    <span style="color:#87ceeb">&#34;&#34;&#34;This class is designed to alert a &#34;monitor&#34; to the fact that a thread has
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb">    exited and to provide for the ability for it to find out why.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">def</span> <span style="color:#ff0">run</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">global</span> exitthreads, profiledir
+</span></span><span style="display:flex;"><span>        self.threadid = thread.get_ident()
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">try</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">if</span> not profiledir:          <span style="color:#0f0"># normal case</span>
+</span></span><span style="display:flex;"><span>                Thread.run(self)
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">else</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">try</span>:
+</span></span><span style="display:flex;"><span>                    <span style="color:#f00">import</span> cProfile <span style="color:#f00">as</span> profile
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">except</span> ImportError:
+</span></span><span style="display:flex;"><span>                    <span style="color:#f00">import</span> profile
+</span></span><span style="display:flex;"><span>                prof = profile.Profile()
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">try</span>:
+</span></span><span style="display:flex;"><span>                    prof = prof.runctx(<span style="color:#87ceeb">&#34;Thread.run(self)&#34;</span>, globals(), locals())
+</span></span><span style="display:flex;"><span>                <span style="color:#f00">except</span> SystemExit:
+</span></span><span style="display:flex;"><span>                    <span style="color:#f00">pass</span>
+</span></span><span style="display:flex;"><span>                prof.dump_stats( \
+</span></span><span style="display:flex;"><span>                            profiledir + <span style="color:#87ceeb">&#34;/&#34;</span> + str(self.threadid) + <span style="color:#87ceeb">&#34;_&#34;</span> + \
+</span></span><span style="display:flex;"><span>                            self.getName() + <span style="color:#87ceeb">&#34;.prof&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">except</span>:
+</span></span><span style="display:flex;"><span>            self.setExitCause(<span style="color:#87ceeb">&#39;EXCEPTION&#39;</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">if</span> sys:
+</span></span><span style="display:flex;"><span>                self.setExitException(sys.exc_info()[<span style="color:#f60">1</span>])
+</span></span><span style="display:flex;"><span>                tb = traceback.format_exc()
+</span></span><span style="display:flex;"><span>                self.setExitStackTrace(tb)
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">else</span>:
+</span></span><span style="display:flex;"><span>            self.setExitCause(<span style="color:#87ceeb">&#39;NORMAL&#39;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> not hasattr(self, <span style="color:#87ceeb">&#39;exitmessage&#39;</span>):
+</span></span><span style="display:flex;"><span>            self.setExitMessage(<span style="color:#f00">None</span>)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> exitthreads:
+</span></span><span style="display:flex;"><span>            exitthreads.put(self, <span style="color:#f00">True</span>)
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">def</span> <span style="color:#ff0">setExitCause</span>(self, cause):
+</span></span><span style="display:flex;"><span>        self.exitcause = cause
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">def</span> <span style="color:#ff0">getExitCause</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#87ceeb">&#34;&#34;&#34;Returns the cause of the exit, one of:
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb">        &#39;EXCEPTION&#39; -- the thread aborted because of an exception
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb">        &#39;NORMAL&#39; -- normal termination.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> self.exitcause
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">def</span> <span style="color:#ff0">setExitException</span>(self, exc):
+</span></span><span style="display:flex;"><span>        self.exitexception = exc
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">def</span> <span style="color:#ff0">getExitException</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#87ceeb">&#34;&#34;&#34;If getExitCause() is &#39;EXCEPTION&#39;, holds the value from
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb">        sys.exc_info()[1] for this exception.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> self.exitexception
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">def</span> <span style="color:#ff0">setExitStackTrace</span>(self, st):
+</span></span><span style="display:flex;"><span>        self.exitstacktrace = st
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">def</span> <span style="color:#ff0">getExitStackTrace</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#87ceeb">&#34;&#34;&#34;If getExitCause() is &#39;EXCEPTION&#39;, returns a string representing
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb">        the stack trace for this exception.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> self.exitstacktrace
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">def</span> <span style="color:#ff0">setExitMessage</span>(self, msg):
+</span></span><span style="display:flex;"><span>        <span style="color:#87ceeb">&#34;&#34;&#34;Sets the exit message to be fetched by a subsequent call to
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb">        getExitMessage.  This message may be any object or type except
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb">        None.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        self.exitmessage = msg
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">def</span> <span style="color:#ff0">getExitMessage</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#87ceeb">&#34;&#34;&#34;For any exit cause, returns the message previously set by
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb">        a call to setExitMessage(), or None if there was no such message
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb">        set.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> self.exitmessage
+</span></span></code></pre></div><h2 id="test-for-bash">Test for Bash</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#e5e5e5">#!/bin/bash
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>cd <span style="color:#eedd82">$ROOT_DIR</span>
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">DOT_FILES</span>=<span style="color:#87ceeb">&#34;lastpass weechat ssh Xauthority&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">for</span> dotfile in <span style="color:#eedd82">$DOT_FILES</span>; <span style="color:#f00">do</span> conform_link <span style="color:#87ceeb">&#34;</span><span style="color:#eedd82">$DATA_DIR</span><span style="color:#87ceeb">/</span><span style="color:#eedd82">$dotfile</span><span style="color:#87ceeb">&#34;</span> <span style="color:#87ceeb">&#34;.</span><span style="color:#eedd82">$dotfile</span><span style="color:#87ceeb">&#34;</span>; <span style="color:#f00">done</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># TODO: refactor with suffix variables (or common cron values)</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f00">case</span> <span style="color:#87ceeb">&#34;</span><span style="color:#eedd82">$PLATFORM</span><span style="color:#87ceeb">&#34;</span> in
+</span></span><span style="display:flex;"><span>    linux)
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">#conform_link &#34;$CONF_DIR/shell/zshenv&#34; &#34;.zshenv&#34;</span>
+</span></span><span style="display:flex;"><span>        crontab -l &gt; <span style="color:#eedd82">$ROOT_DIR</span>/tmp/crontab-conflict-arch
+</span></span><span style="display:flex;"><span>        cd <span style="color:#eedd82">$ROOT_DIR</span>/<span style="color:#eedd82">$CONF_DIR</span>/cron
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> [[ <span style="color:#87ceeb">&#34;</span><span style="color:#f00">$(</span>diff ~/tmp/crontab-conflict-arch crontab-current-arch<span style="color:#f00">)</span><span style="color:#87ceeb">&#34;</span> == <span style="color:#87ceeb">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>            ]];
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">then</span> <span style="color:#0f0"># no difference with current backup</span>
+</span></span><span style="display:flex;"><span>                logger <span style="color:#87ceeb">&#34;</span><span style="color:#eedd82">$LOG_PREFIX</span><span style="color:#87ceeb">: crontab live settings match stored &#34;</span><span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>                    <span style="color:#87ceeb">&#34;settings; no restore required&#34;</span>
+</span></span><span style="display:flex;"><span>                rm ~/tmp/crontab-conflict-arch
+</span></span><span style="display:flex;"><span>            <span style="color:#f00">else</span> <span style="color:#0f0"># current crontab settings in file do not match live settings</span>
+</span></span><span style="display:flex;"><span>                crontab <span style="color:#eedd82">$ROOT_DIR</span>/<span style="color:#eedd82">$CONF_DIR</span>/cron/crontab-current-arch
+</span></span><span style="display:flex;"><span>                logger <span style="color:#87ceeb">&#34;</span><span style="color:#eedd82">$LOG_PREFIX</span><span style="color:#87ceeb">: crontab stored settings conflict with &#34;</span><span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>                    <span style="color:#87ceeb">&#34;live settings; stored settings restored. &#34;</span><span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>                    <span style="color:#87ceeb">&#34;Previous settings recorded in ~/tmp/crontab-conflict-arch.&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">fi</span>
+</span></span><span style="display:flex;"><span>    ;;
+</span></span></code></pre></div><h2 id="test-for-haskell">Test for Haskell</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-haskell" data-lang="haskell"><span style="display:flex;"><span><span style="color:#0f0">{-# LANGUAGE OverloadedStrings #-}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">module</span> Main <span style="color:#f00">where</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#0f0">--import Prelude hiding (id)</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0">--import Control.Category (id)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">import</span> Control.Arrow ((&gt;&gt;&gt;), (***), <span style="color:#ff0">arr</span>)
+</span></span><span style="display:flex;"><span><span style="color:#f00">import</span> Control.Monad (<span style="color:#ff0">forM_</span>)
+</span></span><span style="display:flex;"><span><span style="color:#0f0">-- import Data.Monoid (mempty, mconcat)</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#0f0">-- import System.FilePath</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#f00">import</span> Hakyll
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#ff0">main</span> :: <span style="color:#ee82ee">IO</span> ()
+</span></span><span style="display:flex;"><span><span style="color:#ff0">main</span> = hakyll $ <span style="color:#f00">do</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    route   <span style="color:#87ceeb">&#34;css/*&#34;</span> $ setExtension <span style="color:#87ceeb">&#34;css&#34;</span>
+</span></span><span style="display:flex;"><span>    compile <span style="color:#87ceeb">&#34;css/*&#34;</span> $ byExtension (error <span style="color:#87ceeb">&#34;Not a (S)CSS file&#34;</span>)
+</span></span><span style="display:flex;"><span>        [ (<span style="color:#87ceeb">&#34;.css&#34;</span>,  compressCssCompiler)
+</span></span><span style="display:flex;"><span>        , (<span style="color:#87ceeb">&#34;.scss&#34;</span>, sass)
+</span></span><span style="display:flex;"><span>        ]
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    route   <span style="color:#87ceeb">&#34;js/**&#34;</span> idRoute
+</span></span><span style="display:flex;"><span>    compile <span style="color:#87ceeb">&#34;js/**&#34;</span> copyFileCompiler
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    route   <span style="color:#87ceeb">&#34;img/*&#34;</span> idRoute
+</span></span><span style="display:flex;"><span>    compile <span style="color:#87ceeb">&#34;img/*&#34;</span> copyFileCompiler
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    compile <span style="color:#87ceeb">&#34;templates/*&#34;</span> templateCompiler
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>    forM_ [<span style="color:#87ceeb">&#34;test.md&#34;</span>, <span style="color:#87ceeb">&#34;index.md&#34;</span>] $ <span style="color:#ff0">\</span>page -&gt; <span style="color:#f00">do</span>
+</span></span><span style="display:flex;"><span>        route   page $ setExtension <span style="color:#87ceeb">&#34;html&#34;</span>
+</span></span><span style="display:flex;"><span>        compile page $ pageCompiler
+</span></span><span style="display:flex;"><span>            &gt;&gt;&gt; applyTemplateCompiler <span style="color:#87ceeb">&#34;templates/default.html&#34;</span>
+</span></span><span style="display:flex;"><span>            &gt;&gt;&gt; relativizeUrlsCompiler
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#ff0">sass</span> :: <span style="color:#ee82ee">Compiler</span> <span style="color:#ee82ee">Resource</span> <span style="color:#ee82ee">String</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff0">sass</span> = getResourceString &gt;&gt;&gt; unixFilter <span style="color:#87ceeb">&#34;sass&#34;</span> [<span style="color:#87ceeb">&#34;-s&#34;</span>, <span style="color:#87ceeb">&#34;--scss&#34;</span>]
+</span></span><span style="display:flex;"><span>                         &gt;&gt;&gt; arr compressCss
+</span></span></code></pre></div><h2 id="test-for-php">Test for PHP</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>&lt;?php
+</span></span><span style="display:flex;"><span><span style="color:#f00">require_once</span>(<span style="color:#eedd82">$GLOBALS</span>[<span style="color:#87ceeb">&#39;g_campsiteDir&#39;</span>]. <span style="color:#87ceeb">&#34;/</span><span style="color:#87ceeb">$ADMIN_DIR</span><span style="color:#87ceeb">/country/common.php&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#f00">require_once</span>(<span style="color:#eedd82">$GLOBALS</span>[<span style="color:#87ceeb">&#39;g_campsiteDir&#39;</span>]. <span style="color:#87ceeb">&#34;/classes/SimplePager.php&#34;</span>);
+</span></span><span style="display:flex;"><span>camp_load_translation_strings(<span style="color:#87ceeb">&#34;api&#34;</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$f_country_language_selected</span> = camp_session_get(<span style="color:#87ceeb">&#39;f_language_selected&#39;</span>, <span style="color:#87ceeb">&#39;&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$f_country_offset</span> = camp_session_get(<span style="color:#87ceeb">&#39;f_country_offset&#39;</span>, <span style="color:#f60">0</span>);
+</span></span><span style="display:flex;"><span><span style="color:#f00">if</span> (<span style="color:#f00">empty</span>(<span style="color:#eedd82">$f_country_language_selected</span>)) {
+</span></span><span style="display:flex;"><span>    <span style="color:#eedd82">$f_country_language_selected</span> = <span style="color:#f00">null</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$ItemsPerPage</span> = <span style="color:#f60">20</span>;
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$languages</span> = Language::GetLanguages(<span style="color:#f00">null</span>, <span style="color:#f00">null</span>, <span style="color:#f00">null</span>, <span style="color:#f00">array</span>(), <span style="color:#f00">array</span>(), <span style="color:#f00">true</span>);
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$numCountries</span> = Country::GetNumCountries(<span style="color:#eedd82">$f_country_language_selected</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$pager</span> = <span style="color:#f00">new</span> SimplePager(<span style="color:#eedd82">$numCountries</span>, <span style="color:#eedd82">$ItemsPerPage</span>, <span style="color:#87ceeb">&#34;index.php?&#34;</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$crumbs</span> = <span style="color:#f00">array</span>();
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$crumbs</span>[] = <span style="color:#f00">array</span>(getGS(<span style="color:#87ceeb">&#34;Configure&#34;</span>), <span style="color:#87ceeb">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">$crumbs</span>[] = <span style="color:#f00">array</span>(getGS(<span style="color:#87ceeb">&#34;Countries&#34;</span>), <span style="color:#87ceeb">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#f00">echo</span> camp_html_breadcrumbs(<span style="color:#eedd82">$crumbs</span>);
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#e5e5e5">?&gt;</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span>&lt;?php  if ($g_user-&gt;hasPermission(&#34;ManageCountries&#34;)) { ?&gt;
+</span></span><span style="display:flex;"><span>&lt;table BORDER=&#34;0&#34; CELLSPACING=&#34;0&#34; CELLPADDING=&#34;1&#34;&gt;
+</span></span><span style="display:flex;"><span>    &lt;tr&gt;
+</span></span><span style="display:flex;"><span>        &lt;td&gt;&lt;a href=&#34;add.php&#34;&gt;&lt;?php putGS(&#34;Add new&#34;); ?&gt;&lt;/a&gt;&lt;/td&gt;
+</span></span><span style="display:flex;"><span>    &lt;/tr&gt;
+</span></span><span style="display:flex;"><span>&lt;/table&gt;
+</span></span></code></pre></div><h2 id="test-for-javascript">Test for Javascript</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#f00">import</span> isTypedArray from <span style="color:#87ceeb">&#39;lodash/isTypedArray&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f00">import</span> reverse from <span style="color:#87ceeb">&#39;lodash/reverse&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f00">import</span> sortBy from <span style="color:#87ceeb">&#39;lodash/sortBy&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f00">import</span> take from <span style="color:#87ceeb">&#39;lodash/take&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f00">import</span> { food101Classes } from <span style="color:#87ceeb">&#39;./food101&#39;</span>;
+</span></span><span style="display:flex;"><span><span style="color:#f00">export</span> <span style="color:#f00">function</span> food101topK(classProbabilities, k = <span style="color:#f60">5</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">const</span> probs = isTypedArray(classProbabilities)
+</span></span><span style="display:flex;"><span>    ? Array.prototype.slice.call(classProbabilities)
+</span></span><span style="display:flex;"><span>    : classProbabilities;
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">const</span> sorted = reverse(
+</span></span><span style="display:flex;"><span>    sortBy(
+</span></span><span style="display:flex;"><span>      probs.map((prob, index) =&gt; [ prob, index ]),
+</span></span><span style="display:flex;"><span>      probIndex =&gt; probIndex[<span style="color:#f60">0</span>]
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>  );
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">const</span> topK = take(sorted, k).map(probIndex =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">const</span> iClass = food101Classes[probIndex[<span style="color:#f60">1</span>]];
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> {
+</span></span><span style="display:flex;"><span>      id: probIndex[<span style="color:#f60">1</span>],
+</span></span><span style="display:flex;"><span>      name: iClass.replace(<span style="color:#87ceeb">/_/</span>, <span style="color:#87ceeb">&#39; &#39;</span>),
+</span></span><span style="display:flex;"><span>      probability: probIndex[<span style="color:#f60">0</span>]
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>  });
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">return</span> topK;
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><h2 id="test-for-html">Test for HTML</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#e5e5e5">&lt;!DOCTYPE html PUBLIC &#34;-//W3C//DTD HTML 4.01 Transitional//EN&#34;&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;html&gt;&lt;head&gt;
+</span></span><span style="display:flex;"><span>&lt;title&gt;A Tiny Page&lt;/title&gt;
+</span></span><span style="display:flex;"><span>&lt;style type=<span style="color:#87ceeb">&#34;text/css&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;!--
+</span></span><span style="display:flex;"><span>      p { <span style="color:#f00">font-size</span>:<span style="color:#f60">15</span><span style="color:#ee82ee">pt</span>; <span style="color:#f00">color</span>:<span style="color:#f60">#000</span> }
+</span></span><span style="display:flex;"><span>    --&gt;
+</span></span><span style="display:flex;"><span>&lt;/style&gt;&lt;/head&gt;<span style="color:#0f0">&lt;!-- real comment --&gt;</span>
+</span></span><span style="display:flex;"><span>&lt;body bgcolor=<span style="color:#87ceeb">&#34;#FFFFFF&#34;</span> text=<span style="color:#87ceeb">&#34;#000000&#34;</span> link=<span style="color:#87ceeb">&#34;#0000CC&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>&lt;script language=<span style="color:#87ceeb">&#34;javascript&#34;</span> type=<span style="color:#87ceeb">&#34;text/javascript&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      <span style="color:#f00">function</span> changeHeight(h) {
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">var</span> tds = document.getElementsByTagName(<span style="color:#87ceeb">&#34;td&#34;</span>);
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">for</span>(<span style="color:#f00">var</span> i = <span style="color:#f60">0</span>; i &lt; tds.length; i++) {
+</span></span><span style="display:flex;"><span>          tds[i].setAttribute(<span style="color:#87ceeb">&#34;height&#34;</span>, h + <span style="color:#87ceeb">&#34;px&#34;</span>);
+</span></span><span style="display:flex;"><span>      }}
+</span></span><span style="display:flex;"><span>&lt;/script&gt;
+</span></span><span style="display:flex;"><span>&lt;h1&gt;abc&lt;/h1&gt;
+</span></span><span style="display:flex;"><span>&lt;h2&gt;def&lt;/h2&gt;
+</span></span><span style="display:flex;"><span>&lt;p&gt;Testing page&lt;/p&gt;
+</span></span><span style="display:flex;"><span>&lt;/body&gt;&lt;/html&gt;
+</span></span></code></pre></div><h2 id="test-for-css">Test for CSS</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#0f0">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">Monokai style - ported by Luigi Maselli - http://grigio.org
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">*/</span>
+</span></span><span style="display:flex;"><span>.hljs {
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">display</span>: <span style="color:#f00">block</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">overflow-x</span>: <span style="color:#f00">auto</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">padding</span>: <span style="color:#f60">0.5</span><span style="color:#ee82ee">em</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">background</span>: <span style="color:#f60">#272822</span>; <span style="color:#f00">color</span>: <span style="color:#f60">#ddd</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>.hljs-tag,
+</span></span><span style="display:flex;"><span>.hljs-keyword,
+</span></span><span style="display:flex;"><span>.hljs-selector-tag,
+</span></span><span style="display:flex;"><span>.hljs-literal,
+</span></span><span style="display:flex;"><span>.hljs-strong,
+</span></span><span style="display:flex;"><span>.hljs-name {
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">color</span>: <span style="color:#f60">#f92672</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>.hljs-code {
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">color</span>: <span style="color:#f60">#66d9ef</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>.hljs-class .hljs-title {
+</span></span><span style="display:flex;"><span>  <span style="color:#f00">color</span>: <span style="color:#f00">white</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</article>
+
+            </div>
+        </main>
+    </body></html>

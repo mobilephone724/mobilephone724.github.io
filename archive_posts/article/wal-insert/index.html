@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=53944&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="接口函数
+一个WAL记录包含
+
+WAL记录类型。（TODO不同的修改有不同的记录方式？）
+这个页的修改方式
+被修改的页的信息。被修改的页通过一个唯一ID标识，也可以有更多的关联数据（&ldquo;record-specific data associated with the block&rdquo;）。如果要写full page，就没有关联数据
+
+构建一个WAL记录包含5个核心函数
+
+void XLogBeginInsert(void)
+
+初始化相关状态
+如果当前无法构建WAL日志（例如在recovery模式），则报错
+
+
+void XLogRegisterBuffer(uint8 block_id, Buffer buf, uint8 flags);
+
+增加了数据块的信息；注册一个buffer的引用，相当于上述WAL日志的第三部分
+
+
+block_id is an arbitrary number used to identify this page reference in the redo routine
+
+在redo阶段，可以根据这些信息找到需要redo的page
+
+
+
+    regbuf = &amp;registered_buffers[block_id];
+    /*
+     * Returns the relfilenode, fork number and block number associated with
+     * a buffer
+     */
+    BufferGetTag(buffer, &amp;regbuf-&gt;rnode, &amp;regbuf-&gt;forkno, &amp;regbuf-&gt;block);
+    regbuf-&gt;page = BufferGetPage(buffer);
+    regbuf-&gt;flags = flags;
+    regbuf-&gt;rdata_tail = (XLogRecData *) &amp;regbuf-&gt;rdata_head;
+    regbuf-&gt;rdata_len = 0;
+registered_buffer的结构">  
+
+  <title>
+    
+      WAL日志的插入
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:53944/css/main.900100e9dbee2d56c58fac8bb717037cae7e26a9c36c29d2ff587bdd65f0cbbe510b41d81a3bb234919cdfdc7550d786b2fab70c8fc507772d732fe097106d12.css" integrity="sha512-kAEA6dvuLVbFj6yLtxcDfK5&#43;JqnDbCnS/1h73WXwy75RC0HYGjuyNJGc39x1UNeGsvq3DI/FB3ctcy/glxBtEg==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="0001-01-01 00:00:00 &#43;0000 UTC">
+            0001-01-01
+        </time>
+    </p>
+
+    <h1>WAL日志的插入</h1>
+
+    
+
+    <h2 id="接口函数">接口函数</h2>
+<p>一个WAL记录包含</p>
+<ol>
+<li>WAL记录类型。（TODO不同的修改有不同的记录方式？）</li>
+<li>这个页的修改方式</li>
+<li>被修改的页的信息。被修改的页通过一个唯一ID标识，也可以有更多的关联数据（&ldquo;record-specific data associated with the block&rdquo;）。如果要写full page，就没有关联数据</li>
+</ol>
+<h3 id="构建一个wal记录包含5个核心函数">构建一个WAL记录包含5个核心函数</h3>
+<ul>
+<li><code>void XLogBeginInsert(void)</code>
+<ul>
+<li>初始化相关状态</li>
+<li>如果当前无法构建WAL日志（例如在recovery模式），则报错</li>
+</ul>
+</li>
+<li><code>void XLogRegisterBuffer(uint8 block_id, Buffer buf, uint8 flags);</code>
+<ul>
+<li>增加了数据块的信息；注册一个buffer的引用，相当于上述WAL日志的第三部分</li>
+<li>
+<blockquote>
+<p>block_id is an arbitrary number used to identify this page reference in the redo routine</p></blockquote>
+</li>
+<li>在redo阶段，可以根据这些信息找到需要redo的page</li>
+</ul>
+</li>
+</ul>
+<pre tabindex="0"><code>    regbuf = &amp;registered_buffers[block_id];
+    /*
+     * Returns the relfilenode, fork number and block number associated with
+     * a buffer
+     */
+    BufferGetTag(buffer, &amp;regbuf-&gt;rnode, &amp;regbuf-&gt;forkno, &amp;regbuf-&gt;block);
+    regbuf-&gt;page = BufferGetPage(buffer);
+    regbuf-&gt;flags = flags;
+    regbuf-&gt;rdata_tail = (XLogRecData *) &amp;regbuf-&gt;rdata_head;
+    regbuf-&gt;rdata_len = 0;
+</code></pre><p>registered_buffer的结构</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#f00">typedef</span> <span style="color:#f00">struct</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">/* xxx */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">/* info to re-find the page */</span>
+</span></span><span style="display:flex;"><span>	ForkNumber	forkno;
+</span></span><span style="display:flex;"><span>	BlockNumber block;
+</span></span><span style="display:flex;"><span>	Page		page;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">/* a loop-linked structure to store the data change of each buffer */</span>
+</span></span><span style="display:flex;"><span>    uint32       rdata_len;      <span style="color:#0f0">/* total length of data in rdata chain */</span>
+</span></span><span style="display:flex;"><span>    XLogRecData *rdata_head;    <span style="color:#0f0">/* head of the chain of data registered with
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">                                * this block */</span>
+</span></span><span style="display:flex;"><span>    XLogRecData *rdata_tail;	<span style="color:#0f0">/* last entry in the chain, or &amp;rdata_head if
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">                                 * empty */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">/* xxx */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>} registered_buffer;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">typedef</span> <span style="color:#f00">struct</span> XLogRecData
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">struct</span> XLogRecData *next;   <span style="color:#0f0">/* next struct in chain, or NULL */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">char</span>       *data;           <span style="color:#0f0">/* start of rmgr data to include */</span>
+</span></span><span style="display:flex;"><span>    uint32      len;            <span style="color:#0f0">/* length of rmgr data to include */</span>
+</span></span><span style="display:flex;"><span>} XLogRecData;
+</span></span></code></pre></div><ul>
+<li><code>void XLogRegisterData(char *data, int len);</code>
+<ul>
+<li>向WAL日志中写入任意数据</li>
+<li>可多次调用，保证连续。这样在rodo时，就可以得到连续的数据</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span>    rdata = &amp;rdatas[num_rdatas++];
+</span></span><span style="display:flex;"><span>    rdata-&gt;data = data;
+</span></span><span style="display:flex;"><span>    rdata-&gt;len = len;
+</span></span></code></pre></div><ul>
+<li><code>void XLogRegisterBufData(uint8 block_id, char *data, int len);</code></li>
+</ul>
+<pre tabindex="0"><code>    rdata = &amp;rdatas[num_rdatas++];
+    rdata-&gt;data = data;
+    rdata-&gt;len = len;
+
+    regbuf = &amp;registered_buffers[block_id];
+    regbuf-&gt;rdata_tail-&gt;next = rdata;
+    regbuf-&gt;rdata_tail = rdata;
+    regbuf-&gt;rdata_len += len;
+</code></pre><p>可见，<code>XLogRegisterBufData</code> 和 <code>XLogRegisterData</code> 的核心区别在，前者写入的数据会关联到具体的buffer，而后者没有</p>
+<ul>
+<li><code>XLogInsert</code>
+<ul>
+<li>Insert the record.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span>    <span style="color:#f00">do</span>
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff0">GetFullPageWriteInfo</span>(&amp;RedoRecPtr, &amp;doPageWrites);
+</span></span><span style="display:flex;"><span>        rdt = <span style="color:#ff0">XLogRecordAssemble</span>(rmid, info, RedoRecPtr, doPageWrites,
+</span></span><span style="display:flex;"><span>                                 &amp;fpw_lsn, &amp;num_fpi);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        EndPos = <span style="color:#ff0">XLogInsertRecord</span>(rdt, fpw_lsn, curinsert_flags, num_fpi);
+</span></span><span style="display:flex;"><span>	} <span style="color:#f00">while</span> (EndPos == InvalidXLogRecPtr);
+</span></span></code></pre></div><h2 id="数据结构汇总">数据结构汇总</h2>
+<h3 id="registered_buffers">registered_buffers</h3>
+<p>每一个buffer对应registered_buffers中的一个元素（一个<code>registered buffer</code>）</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#ee82ee">void</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff0">XLogEnsureRecordSpace</span>(<span style="color:#ee82ee">int</span> max_block_id, <span style="color:#ee82ee">int</span> ndatas)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> (nbuffers &gt; max_registered_buffers)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        registered_buffers = (registered_buffer *)
+</span></span><span style="display:flex;"><span>            <span style="color:#ff0">repalloc</span>(registered_buffers, <span style="color:#f00">sizeof</span>(registered_buffer) * nbuffers);
+</span></span><span style="display:flex;"><span>        max_registered_buffers = nbuffers;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="具体的插入方式">具体的插入方式</h2>
+<p>上述代码中的<code>XLogRecordAssemble</code>和<code>XLogInsertRecord</code>已经概括了具体的插入步骤</p>
+<h3 id="xlogrecordassemble">XLogRecordAssemble</h3>
+<blockquote>
+<p>Assemble a WAL record from the registered data and buffers into an XLogRecData chain</p></blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#f00">static</span> XLogRecData *
+</span></span><span style="display:flex;"><span><span style="color:#ff0">XLogRecordAssemble</span>(RmgrId rmid, uint8 info,
+</span></span><span style="display:flex;"><span>				   XLogRecPtr RedoRecPtr, <span style="color:#ee82ee">bool</span> doPageWrites,
+</span></span><span style="display:flex;"><span>				   XLogRecPtr *fpw_lsn, <span style="color:#ee82ee">int</span> *num_fpi)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">for</span> (block_id = <span style="color:#f60">0</span>; block_id &lt; max_registered_block_id; block_id++)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> (needs_data)
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            rdt_datas_last-&gt;next = regbuf-&gt;rdata_head;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

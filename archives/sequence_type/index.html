@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="sequence type
+background
+From official documents:
+9.17. Sequence Manipulation Functions
+CREATE SEQUENCE
+
+Sequence objects are special single-row tables created with CREATE SEQUENCE.
+Sequence objects are commonly used to generate unique identifiers for rows of a table. The sequence functions, provide simple, multiuser-safe methods for obtaining successive sequence values from sequence objects.
+
+Main function
+There is no much concerns about these functions
+
+
+nextval
+
+Advances the sequence object to its next value and returns that value
+
+
+
+setval">  
+
+  <title>
+    
+      pg_squeence_type
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:1313/css/main.900100e9dbee2d56c58fac8bb717037cae7e26a9c36c29d2ff587bdd65f0cbbe510b41d81a3bb234919cdfdc7550d786b2fab70c8fc507772d732fe097106d12.css" integrity="sha512-kAEA6dvuLVbFj6yLtxcDfK5&#43;JqnDbCnS/1h73WXwy75RC0HYGjuyNJGc39x1UNeGsvq3DI/FB3ctcy/glxBtEg==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-02-12 19:51:45 &#43;0800 CST">
+            2024-02-12
+        </time>
+    </p>
+
+    <h1>pg_squeence_type</h1>
+
+    
+
+    <h1 id="sequence-type">sequence type</h1>
+<h1 id="background">background</h1>
+<p>From official documents:</p>
+<p><a href="https://www.postgresql.org/docs/16/functions-sequence.html">9.17. Sequence Manipulation Functions</a></p>
+<p><a href="https://www.postgresql.org/docs/current/sql-createsequence.html">CREATE SEQUENCE</a></p>
+<ul>
+<li>Sequence objects <strong>are special single-row tables</strong> created with <strong><a href="https://www.postgresql.org/docs/16/sql-createsequence.html">CREATE SEQUENCE</a></strong>.</li>
+<li>Sequence objects are commonly used to generate unique identifiers for rows of a table. The sequence functions, provide simple, multiuser-safe methods for obtaining successive sequence values from sequence objects.</li>
+</ul>
+<h1 id="main-function">Main function</h1>
+<p>There is no much concerns about these functions</p>
+<ul>
+<li>
+<p><code>nextval</code></p>
+<ul>
+<li>Advances the sequence object to its next value and returns that value</li>
+</ul>
+</li>
+<li>
+<p><code>setval</code></p>
+<ul>
+<li>Some examples
+<table>
+  <thead>
+      <tr>
+          <th>SELECT setval(&lsquo;myseq&rsquo;, 42);</th>
+          <th>Next nextval will return 43</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>SELECT setval(&lsquo;myseq&rsquo;, 42, true);</td>
+          <td>Same as above</td>
+      </tr>
+      <tr>
+          <td>SELECT setval(&lsquo;myseq&rsquo;, 42, false);</td>
+          <td>Next nextval will return 42</td>
+      </tr>
+  </tbody>
+</table>
+</li>
+</ul>
+</li>
+<li>
+<p><code>currval</code></p>
+<ul>
+<li>Returns the value most recently obtained by <code>nextval</code> for this sequence <strong>in the current session</strong></li>
+</ul>
+</li>
+<li>
+<p><code>lastval</code></p>
+<ul>
+<li>Returns the value most recently returned by <code>nextval</code> in the current session. This function is identical to <code>currval</code>, except that instead of taking the sequence name as an argument it refers to whichever sequence <code>nextval</code> was most recently applied to in the current session.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>** There is a caution: **</p>
+<p>There is no rollback of the <code>sequence</code> type. Official document is post below:</p>
+<p>To avoid blocking concurrent transactions that obtain numbers from the same sequence, the value obtained by <code>nextval</code> is not reclaimed for re-use if the calling transaction later aborts. This means that transaction aborts or database crashes can result in gaps in the sequence of assigned values. That can happen without a transaction abort, too. For example an <code>INSERT</code> with an <code>ON CONFLICT</code> clause will compute the to-be-inserted tuple, including doing any required <code>nextval</code> calls, before detecting any conflict that would cause it to follow the <code>ON CONFLICT</code> rule instead. Thus, PostgreSQL sequence objects <em>cannot be used to obtain “gapless”（无缝的） sequences</em>.</p>
+<h1 id="most-important">Most important</h1>
+<p>All things above doesn’t worth a post, but the replication hack of this type does. Considering a master-standby example, the <code>currval</code> in standby is always bigger than the master&rsquo;s. And once the value in master advances and the new value doesn&rsquo;t precede the standby&rsquo;s one, the <code>currval</code> in standby would&rsquo;t advanced immediately. This is a greate skill to reduce the wal records.</p>
+
+</article>
+
+                
+    
+    
+        Thanks for <a href="https://github.com/hanwenguo/hugo-theme-nostyleplease">https://github.com/hanwenguo/hugo-theme-nostyleplease</a>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

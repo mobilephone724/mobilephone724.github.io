@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="concept
+cublasDgemm is a convenient function in cublas to compute the product of two matrix, while letter &lsquo;D&rsquo; in cublasDgemm means double.
+Before reading this post, basic cuda functions like cudaMalloc are what you are supposed to know.
+basic use
+Definition of this function
+cublasStatus_t cublasDgemm(cublasHandle_t handle,
+                           cublasOperation_t transa, cublasOperation_t transb,
+                           int m, int n, int k,
+                           const double *alpha,
+                           const double *A, int lda,
+                           const double *B, int ldb,
+                           const double *beta,
+                           double *C, int ldc)
+Basic information of parameters is show in this page. Simply put, $C = \alpha A \times B &#43; \beta C $ .But it may remains confused for fresher. Below is an simple example.">  
+
+  <title>
+    
+      cublasDgemm
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.51652302d3a998bf7887aed5c2cf89141bbebdf45a2c8f87b0717a3cf4f51c4e53c694c328fb1de78c3a625a1c01f80745bf1f2f42c040647a245cbbb6c2d1d7.css" integrity="sha512-UWUjAtOpmL94h67Vws&#43;JFBu&#43;vfRaLI&#43;HsHF6PPT1HE5TxpTDKPsd54w6YlocAfgHRb8fL0LAQGR6JFy7tsLR1w==" />
+   <script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$','$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+    }
+  };
+
+  window.addEventListener('load', (event) => {
+      document.querySelectorAll("mjx-container").forEach(function(x){
+        x.parentElement.classList += 'has-jax'})
+    });
+
+</script>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+ 
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="0001-01-01 00:00:00 &#43;0000 UTC">
+            0001-01-01
+        </time>
+    </p>
+
+    <h1>cublasDgemm</h1>
+
+    
+
+    <h2 id="concept">concept</h2>
+<p><code>cublasDgemm</code> is a convenient function in cublas to compute the product of two matrix, while letter &lsquo;D&rsquo; in <code>cublasDgemm</code> means <code>double</code>.</p>
+<p>Before reading this post, basic cuda functions like <code>cudaMalloc</code> are what you are supposed to know.</p>
+<h2 id="basic-use">basic use</h2>
+<p>Definition of this function</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>cublasStatus_t cublasDgemm(cublasHandle_t handle,
+</span></span><span style="display:flex;"><span>                           cublasOperation_t transa, cublasOperation_t transb,
+</span></span><span style="display:flex;"><span>                           <span style="color:#ee82ee">int</span> m, <span style="color:#ee82ee">int</span> n, <span style="color:#ee82ee">int</span> k,
+</span></span><span style="display:flex;"><span>                           <span style="color:#f00">const</span> <span style="color:#ee82ee">double</span> *alpha,
+</span></span><span style="display:flex;"><span>                           <span style="color:#f00">const</span> <span style="color:#ee82ee">double</span> *A, <span style="color:#ee82ee">int</span> lda,
+</span></span><span style="display:flex;"><span>                           <span style="color:#f00">const</span> <span style="color:#ee82ee">double</span> *B, <span style="color:#ee82ee">int</span> ldb,
+</span></span><span style="display:flex;"><span>                           <span style="color:#f00">const</span> <span style="color:#ee82ee">double</span> *beta,
+</span></span><span style="display:flex;"><span>                           <span style="color:#ee82ee">double</span> *C, <span style="color:#ee82ee">int</span> ldc)
+</span></span></code></pre></div><p><a href="https://docs.nvidia.com/cuda/cublas/index.html">Basic information of parameters is show in this page</a>. Simply put, $C = \alpha A \times B + \beta C $ .But it may remains confused for fresher. Below is an simple example.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#0f0">/* A is matrix in gpu memory looks like
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * 1 2 3
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * 4 5 6
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * 7 8 9
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * and ptr_A is a pointer to A
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * B is matrix in gpu memory looks like
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * 1 2
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * 3 4
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * 5 6
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * and ptr_A is a pointer to A
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> *
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * While memory is one-dimensional while matrix is two-dimensional, I 
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * suggeset that all matrix in gpu memory are stored in column major for 
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * convevient use of cublas. In this case, A in memory is like 
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * [1, 4, 7, 2, 5, 8, 3, 6, 9].
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * C is a matrix to store the product of A * B
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0">//get handle and stat of this function
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>cublasHandle_t handle;
+</span></span><span style="display:flex;"><span>cublasStatus_t stat = cublasCreate(&amp;handle);
+</span></span><span style="display:flex;"><span><span style="color:#f00">if</span> (stat != CUBLAS_STATUS_SUCCESS)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	printf(<span style="color:#87ceeb">&#34;CUBLAS initialization failed</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>);
+</span></span><span style="display:flex;"><span>	<span style="color:#f00">return</span> EXIT_FAILURE;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#0f0">//setting alpha and cuda
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ee82ee">double</span> alpha = <span style="color:#f60">1.0</span>, beta = <span style="color:#f60">0.0</span>;
+</span></span><span style="display:flex;"><span>stat = cublasDgemm(	handle, 
+</span></span><span style="display:flex;"><span>					CUBLAS_OP_N,	<span style="color:#0f0">// we use matrix A instead of A^T
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					CUBLAS_OP_N,	<span style="color:#0f0">// we use matrix B instead of B^T
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					<span style="color:#f60">3</span>,				<span style="color:#0f0">// the row of A 
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					<span style="color:#f60">2</span>,				<span style="color:#0f0">// the col of B
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					<span style="color:#f60">3</span>,				<span style="color:#0f0">// the row of B(ro col of A)
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					&amp;alpha,
+</span></span><span style="display:flex;"><span>					devPtrA,
+</span></span><span style="display:flex;"><span>					<span style="color:#f60">3</span>,				<span style="color:#0f0">// the leading dimension of A
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					devPtrB,
+</span></span><span style="display:flex;"><span>					<span style="color:#f60">3</span>,				<span style="color:#0f0">// the leading dimension of B
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					&amp;beta,
+</span></span><span style="display:flex;"><span>					devPtrC,
+</span></span><span style="display:flex;"><span>					<span style="color:#f60">3</span>);				<span style="color:#0f0">// the leading dimension of C
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#0f0">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * if we want to compute C = A^T * B
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> */</span>
+</span></span><span style="display:flex;"><span>stat = cublasDgemm(	handle, 
+</span></span><span style="display:flex;"><span>					CUBLAS_OP_T,	<span style="color:#0f0">// we use matrix A^T instead of A
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					CUBLAS_OP_N,	<span style="color:#0f0">// we use matrix A instead of B^T
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					<span style="color:#f60">3</span>,				<span style="color:#0f0">// the row of A^T
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					<span style="color:#f60">2</span>,				<span style="color:#0f0">// the col of B
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					<span style="color:#f60">3</span>,				<span style="color:#0f0">// the row of B(or col of A^T)
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					&amp;alpha,
+</span></span><span style="display:flex;"><span>					devPtrA,
+</span></span><span style="display:flex;"><span>					<span style="color:#f60">3</span>,				<span style="color:#0f0">// the leading dimension of A^T. 
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>									<span style="color:#0f0">// So whether or not A or A^T, the leading dimension 
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>									<span style="color:#0f0">// of A or A^T is the row of A, decided when A is 
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>									<span style="color:#0f0">// initialized in memory
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					devPtrB,
+</span></span><span style="display:flex;"><span>					<span style="color:#f60">3</span>,				<span style="color:#0f0">// the leading dimension of B
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					&amp;beta,
+</span></span><span style="display:flex;"><span>					devPtrC,
+</span></span><span style="display:flex;"><span>					<span style="color:#f60">3</span>);				<span style="color:#0f0">// the leading dimension of C
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#f00">if</span> (stat != CUBLAS_STATUS_SUCCESS)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	printf(<span style="color:#87ceeb">&#34;cublasSgemm failed</span><span style="color:#87ceeb">\n</span><span style="color:#87ceeb">&#34;</span>);
+</span></span><span style="display:flex;"><span>	<span style="color:#f00">return</span> EXIT_FAILURE;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>An obvious question is what is <code>leading dimension</code> for we have know the column and row of A and B, no more information is need to finish this computation.</p>
+<p>My understanding of leading dimension is the <code>offest</code> to get the element in next column at the same row. An implement to compute the product of submatrix. below is an example. <code>A</code> and <code>B</code> are the same matrix in the previous example.</p>
+<p>And what we want to compute is $A[0:1][0:1] \times B[1:2][0:1]$.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>stat = cublasDgemm(	handle, 
+</span></span><span style="display:flex;"><span>					CUBLAS_OP_N,	<span style="color:#0f0">// we use matrix A[0:1][0:1] instead of A[0:1][0:1]^T
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					CUBLAS_OP_N,	<span style="color:#0f0">// we use matrix B[1:2][0:1] instead of B[1:2][0:1]^T
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					<span style="color:#f60">2</span>,				<span style="color:#0f0">// the row of A[0:1][0:1]
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					<span style="color:#f60">2</span>,				<span style="color:#0f0">// the col of B[1:2][0:1]
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					<span style="color:#f60">2</span>,				<span style="color:#0f0">// the row of A[0:1][0:1](or col of B[1:2][0:1])
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					&amp;alpha,
+</span></span><span style="display:flex;"><span>					devPtrA,		<span style="color:#0f0">// pointer to A[0][0]
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					<span style="color:#f60">3</span>,				<span style="color:#0f0">// the offset of A[0][0] to A[0][1] is 3 of double size
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					devPtrB + <span style="color:#f60">1</span>,	<span style="color:#0f0">// pointer to B[1][0]
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					<span style="color:#f60">3</span>,				<span style="color:#0f0">// the offset of B[1][0] to B[1][1] is 3 of double size
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>					&amp;beta,
+</span></span><span style="display:flex;"><span>					devPtrC,
+</span></span><span style="display:flex;"><span>					<span style="color:#f60">2</span>);				<span style="color:#0f0">// the leading dimension of C
+</span></span></span></code></pre></div><p>So it&rsquo;s the use of leading dimension which makes matrix production more flexible</p>
+
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

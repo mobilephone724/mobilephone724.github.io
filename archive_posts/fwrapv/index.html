@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="c - What does -fwrapv do? - Stack Overflow
+-fwrapv tells the compiler that overflow of signed integer arithmetic must be treated as well-defined behavior, even though it is undefined in the C standard.
+It has two meaning full results:
+
+INT_MAX &#43; 1 is overflowed to INT_MIN correctly. This is almost the default behavior in gcc.
+Don’t let the compiler assume x &#43; 1 &gt; x.
+
+See the program below">  
+
+  <title>
+    
+      &#34;-fwrapv&#34; option in gcc
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.51652302d3a998bf7887aed5c2cf89141bbebdf45a2c8f87b0717a3cf4f51c4e53c694c328fb1de78c3a625a1c01f80745bf1f2f42c040647a245cbbb6c2d1d7.css" integrity="sha512-UWUjAtOpmL94h67Vws&#43;JFBu&#43;vfRaLI&#43;HsHF6PPT1HE5TxpTDKPsd54w6YlocAfgHRb8fL0LAQGR6JFy7tsLR1w==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-08-05 21:30:13 &#43;0800 CST">
+            2024-08-05
+        </time>
+    </p>
+
+    <h1>&#34;-fwrapv&#34; option in gcc</h1>
+
+    
+
+    <p><a href="https://stackoverflow.com/questions/47232954/what-does-fwrapv-do">c - What does -fwrapv do? - Stack Overflow</a></p>
+<p><code>-fwrapv</code> tells the compiler that overflow of signed integer arithmetic must be treated as well-defined behavior, even though it is undefined in the C standard.</p>
+<p>It has two meaning full results:</p>
+<ol>
+<li>INT_MAX + 1 is overflowed to INT_MIN correctly. This is almost the default behavior in gcc.</li>
+<li>Don’t let the compiler assume <code>x + 1 &gt; x</code>.</li>
+</ol>
+<p>See the program below</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>╭─ycz at 9f38a58b120d in /home/dev 24-08-05 - 13:28:02
+</span></span><span style="display:flex;"><span>╰─○ cat test.c
+</span></span><span style="display:flex;"><span><span style="color:#0f0">#include &lt;stdio.h&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0">#define INT_MAX 0x7FFFFFFF</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>static int compare(int x) {<span style="color:#f00">return</span> x + <span style="color:#f60">1</span> &gt; x;}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>int main()
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    int <span style="color:#eedd82">x</span> = 0;
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#87ceeb">&#34;%d is bigger than %d?\n%d\n&#34;</span>, x + 1, x, compare(x));
+</span></span><span style="display:flex;"><span>    <span style="color:#eedd82">x</span> = INT_MAX;
+</span></span><span style="display:flex;"><span>    printf(<span style="color:#87ceeb">&#34;%d is bigger than %d?\n%d\n&#34;</span>, x + 1, x, compare(x));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> 0;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>╭─ycz at 9f38a58b120d in /home/dev 24-08-05 - 13:28:06
+</span></span><span style="display:flex;"><span>╰─○ gcc test.c &amp;&amp; ./a.out 
+</span></span><span style="display:flex;"><span><span style="color:#f60">1</span> is bigger than 0?
+</span></span><span style="display:flex;"><span><span style="color:#f60">1</span>
+</span></span><span style="display:flex;"><span>-2147483648 is bigger than 2147483647?
+</span></span><span style="display:flex;"><span><span style="color:#f60">1</span>
+</span></span><span style="display:flex;"><span>╭─ycz at 9f38a58b120d in /home/dev 24-08-05 - 13:28:13
+</span></span><span style="display:flex;"><span>╰─○ gcc test.c -fwrapv &amp;&amp; ./a.out 
+</span></span><span style="display:flex;"><span><span style="color:#f60">1</span> is bigger than 0?
+</span></span><span style="display:flex;"><span><span style="color:#f60">1</span>
+</span></span><span style="display:flex;"><span>-2147483648 is bigger than 2147483647?
+</span></span><span style="display:flex;"><span><span style="color:#f60">0</span>
+</span></span></code></pre></div>
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

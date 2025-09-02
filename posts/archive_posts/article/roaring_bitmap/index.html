@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=53944&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="0x0 Introduction
+A bitmap, also known as a bit array or bitset, is a data structure that represents a fixed-size sequence of bits.  That is the value of the ith bit representing the existence of the the ith object.
+Bare bitmap can cost much memory according to the total substantial data size, even if we have stored little infomation. Roaring bitmap provide a new method to compress the bitmap structure.">  
+
+  <title>
+    
+      roaring bitmap
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:53944/css/main.900100e9dbee2d56c58fac8bb717037cae7e26a9c36c29d2ff587bdd65f0cbbe510b41d81a3bb234919cdfdc7550d786b2fab70c8fc507772d732fe097106d12.css" integrity="sha512-kAEA6dvuLVbFj6yLtxcDfK5&#43;JqnDbCnS/1h73WXwy75RC0HYGjuyNJGc39x1UNeGsvq3DI/FB3ctcy/glxBtEg==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-05-07 21:04:38 &#43;0800 CST">
+            2024-05-07
+        </time>
+    </p>
+
+    <h1>roaring bitmap</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#0x0-introduction">0x0 Introduction</a></li>
+    <li><a href="#0x1-related-infomation">0x1 Related Infomation:</a></li>
+    <li><a href="#0x2-introduction-to-roaring-bitmap">0x2 Introduction TO Roaring Bitmap</a>
+      <ul>
+        <li><a href="#0x21-two-types-of-containers">0x21 two types of containers</a></li>
+        <li><a href="#0x22-conversion-between-the-two-types-of-container">0x22 conversion between the two types of container</a></li>
+        <li><a href="#0x23-index-array">0x23 index array</a></li>
+      </ul>
+    </li>
+    <li><a href="#0x3-set-operations">0x3 set operations</a>
+      <ul>
+        <li><a href="#0x31-bitmap-vs-bitmap">0x31 bitmap vs bitmap</a></li>
+        <li><a href="#0x32-bitmap-vs-array">0x32 bitmap vs array</a></li>
+        <li><a href="#0x33-array-vs-array">0x33 Array vs Array</a></li>
+        <li><a href="#0x34-in-place-operations">0x34 in place operations</a></li>
+      </ul>
+    </li>
+    <li><a href="#0x4-the-run-type-container">0x4 The &ldquo;run&rdquo; type container</a>
+      <ul>
+        <li><a href="#0x41--to-introduction-to-run">0x41  To introduction to &ldquo;run&rdquo;</a></li>
+        <li><a href="#0x42-decide-the-best-container">0x42 Decide The Best Container</a></li>
+        <li><a href="#0x43-compute-the-number-of-runs">0x43 Compute The Number Of Runs</a></li>
+        <li><a href="#0x44-logical-operations">0x44 Logical operations</a></li>
+      </ul>
+    </li>
+    <li><a href="#0xf-appendix">0xF appendix</a>
+      <ul>
+        <li><a href="#0xf1-rle-based-compressed-bitmaps">0xF1 RLE-based compressed bitmaps</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <h2 id="0x0-introduction">0x0 Introduction</h2>
+<p>A bitmap, also known as a bit array or bitset, is a data structure that represents a fixed-size sequence of bits.  That is the value of the <em>ith</em> bit representing the existence of the the <em>ith object.</em>
+Bare bitmap can cost much memory according to the total substantial data size, even if we have stored little infomation. Roaring bitmap provide a new method to compress the bitmap structure.</p>
+<h2 id="0x1-related-infomation">0x1 Related Infomation:</h2>
+<ul>
+<li>blogs:
+<ul>
+<li>(Very Important Introduction) <a href="https://www.vikramoberoi.com/a-primer-on-roaring-bitmaps-what-they-are-and-how-they-work/?utm_source=blog.quastor.org&amp;utm_medium=referral&amp;utm_campaign=how-grab-implemented-rate-limiting">[Blog of Vikram Oberoi]:A primer on Roaring bitmaps: what they are and how they work</a></li>
+<li><a href="https://www.cnblogs.com/charlieroro/p/17919505.html">[blog of charlieroro] roaring bitmaps</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1136054">【木东居士】：不深入而浅出 Roaring Bitmaps 的基本原理</a></li>
+</ul>
+</li>
+<li>paper
+<ul>
+<li>Introduction: <a href="https://raw.githubusercontent.com/mobilephone724/hugoBlog/siyuan-pub/images/Better%20bitmap%20performance%20with%20Roaring%20bitmaps.pdf">Better bitmap performance with Roaring bitmaps.pdf</a></li>
+<li>Opitmazition: <a href="https://raw.githubusercontent.com/mobilephone724/hugoBlog/siyuan-pub/images/Consistently%20faster%20and%20smaller%20compressed%20bitmaps%20with%20Roaring.pdf">Consistently faster and smaller compressed bitmaps with Roaring.pdf</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="0x2-introduction-to-roaring-bitmap">0x2 Introduction TO Roaring Bitmap</h2>
+<h3 id="0x21-two-types-of-containers">0x21 two types of containers</h3>
+<p>We partition the range of 32-bit indexes ([0, n)) into chunks of $2^{16}$ integers sharing the same 16 most significant digits. We use specialized containers to store their 16 least significant bits.</p>
+<p>(One chunk&rsquo; size is up to 8KB, that is 4096 integers.)</p>
+<p>When a chunk contains no more than 4096 integers, we use a sorted array of packed 16-bit integers. When there are more than 4096 integers, we use a $2^{16}$​-bit bitmap. Thus, we have two types of containers: an array container for sparse chunks and a bitmap container for dense chunks.</p>
+<p><strong>Since the size of a chunk is up to 8KB, we may save much memoy if the cardinality is small. Don&rsquo;t worry about the memory allocator, it can deal with the small memory with local buffer. And I believe it&rsquo;s the most important meaning of two types of containers.</strong></p>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/1714232020698-852891d5-53e1-4073-bf38-3b9f2fffc95d.2024_05_07_1715087143.png" alt="image.png"></p>
+<h3 id="0x22-conversion-between-the-two-types-of-container">0x22 conversion between the two types of container</h3>
+<p><strong>timing</strong></p>
+<ul>
+<li>When removing an integer, a bitmap container might become an array container if its cardinality reaches 4096.</li>
+<li>When adding an integer, an array container might become a bitmap container when its cardinality exceeds 4096.</li>
+</ul>
+<hr>
+<p><strong>method</strong></p>
+<ul>
+<li>When this happens, a new container is created with the updated data while the old container is discarded.</li>
+<li>Converting an array container to a bitmap container is done by creating a new bitmap container initialized with zeros, and setting the corresponding bits.</li>
+<li>To convert a bitmap container to an array container, we extract the location of the set bits using an optimized algorithm</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/1714140703751-4816ae74-12dc-4eab-b499-ed1f786bf183.2024_05_07_1715087159.png" alt="image.png"></p>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/1714140720883-e0a87750-93f6-4962-b7f1-b1dc46055743.2024_05_07_1715087217.png" alt="image.png"></p>
+<h3 id="0x23-index-array">0x23 index array</h3>
+<p>To check for the presence of a 32-bit integer x, we first seek the container corresponding to $x/2^{16}$ using binary search. If a bitmap container is found, we access the (x mod $2^{16}$)th bit. If an array container is found, we use a binary search again</p>
+<blockquote>
+<p>The containers are stored in a dynamic array with the shared 16 most-significant bits: this serves as a first-level index. The array keeps the containers sorted by the 16 most-significant bits.</p></blockquote>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/1714140793688-826bb436-f90a-4730-b85d-8cee646a7106.2024_05_07_1715087229.png" alt="image.png"></p>
+<h2 id="0x3-set-operations">0x3 set operations</h2>
+<p>There are</p>
+<ul>
+<li>Two basic opertions: union (bitwise OR) and intersection (bitwise AND);</li>
+<li>And three container type combinations: bitmap vs bitmap, array vs array annd bitmap vs array</li>
+</ul>
+<h3 id="0x31-bitmap-vs-bitmap">0x31 bitmap vs bitmap</h3>
+<p><strong>union operation</strong>(<strong>the result must be a bitmap container</strong>) <strong>:</strong></p>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/1714140807012-1c9706c2-b1bb-4aab-b2b9-0aa1bcb2f030.2024_05_07_1715087239.png" alt="image.png">
+It might seem like computing bitwise ORs and computing the cardinality of the result</p>
+<p>would be significantly slower than merely computing the bitwise ORs. However, four factors mitigate this potential problem</p>
+<ol>
+<li><strong>[built in cpu instructions]</strong>: popular processors (Intel, AMD, ARM) have fast instructions to compute the number of ones in a word. Intel and AMD’s <em>popcnt</em> instruction has a throughput as high as one
+operation per CPU cycle.</li>
+<li><strong>[Java Opitimization]</strong>: Recent Java implementations translate a call to Long.bitCount into such fast
+instructions.</li>
+<li><strong>[superscalar]:</strong> Popular processors are superscalar: they can execute several operations at once. Thus, while we retrieve the next data elements, compute their bitwise OR and store it in memory, the processor can apply the popcnt instruction on the last result and increment the cardinality counter accordingly.</li>
+<li><strong>[enough L1 cache]</strong>: For inexpensive data processing operations, the processor may not run at full capacity due to cache misses.</li>
+</ol>
+<hr>
+<p><strong>intersection operation:</strong></p>
+<p>For computing intersections, we use a less direct route. First, we compute the cardinality of the result, using 1024 bitwise AND instructions. If the cardinality is larger than 4096, then we proceed as with the union, writing the result of bitwise ANDs to a new bitmap container. Otherwise, we create a new array container. We extract the set bits from the bitwise ANDs on the fly. See chapter &ldquo;0x22&rdquo; for detail</p>
+<h3 id="0x32-bitmap-vs-array">0x32 bitmap vs array</h3>
+<ul>
+<li>intersection(<strong>the result must be an array container</strong>)：we iterate over the sorted dynamic array, and verify the existence of each 16-bit integer in the bitmap container. The result is written out to an array container</li>
+<li>Unions(<strong>the result must be a bit map container</strong>)：we create a copy of the bitmap and simply iterate over the array, setting the corresponding bits</li>
+</ul>
+<h3 id="0x33-array-vs-array">0x33 Array vs Array</h3>
+<ul>
+<li>For unions:
+<ul>
+<li>if the sum of the cardinalities is no more than 4096(<strong>the result must be an array container</strong>): we use a merge algorithm between the two arrays</li>
+<li>otherwise: Otherwise, we set the bits corresponding to both arrays in a bitmap container. We then compute the cardinality using fast instructions. If the cardinality is no more than 4096, we convert the bitmap container to an array containe.</li>
+</ul>
+</li>
+<li>intersection(<strong>the result must be an array container</strong>):
+<ul>
+<li>if the two arrays have cardinalities that differ by less than a factor of 64: merge</li>
+<li>otherwise: galloping intersection</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>Galloping</strong> is superior to a simple merge when one array ($r$) is much smaller than other one ($f$) because it can skip many comparisons. Starting from the beginning of both arrays, we pick the next available integer $r_i$ from the small array $r$ and seek an integer at least as large $f_j$ in the large array $f$ , looking first at the next value, then looking at a value twice as far, and so on. Then, we use binary search to advance in the second list to the first value larger or equal to $r_i$ .</p>
+<p><a href="https://en.wikipedia.org/wiki/Exponential_search">Galloping(exponential search) Introduction</a></p>
+<p>The initial value of <code>bound</code> can alway advance in each search.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#0f0">// Returns the position of key in the array arr of length size.
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#f00">template</span> &lt;<span style="color:#f00">typename</span> T&gt;
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> exponential_search(T arr[], <span style="color:#ee82ee">int</span> size, T key)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> (size == <span style="color:#f60">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">return</span> NOT_FOUND;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span> bound = <span style="color:#f60">1</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">while</span> (bound &lt; size &amp;&amp; arr[bound] &lt; key) {
+</span></span><span style="display:flex;"><span>        bound *= <span style="color:#f60">2</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">return</span> <span style="color:#ff0">binary_search</span>(arr, key, bound/<span style="color:#f60">2</span>, min(bound + <span style="color:#f60">1</span>, size));
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="0x34-in-place-operations">0x34 in place operations</h3>
+<ul>
+<li>When computing the union between two bitmap containers, we can modify one of the two bitmap containers instead of generating a new bitmap container. Similarly, for the intersection between two bitmap containers, we can modify one of the two containers if the cardinality of the result exceeds 4096</li>
+<li>When computing the union between an array and a bitmap container, we can write the result to the bitmap container, by iterating over the values of the array container and setting the corresponding bits in the bitmap container. We can update the cardinality each time by checking whether the word value has been modified.</li>
+</ul>
+<h2 id="0x4-the-run-type-container">0x4 The &ldquo;run&rdquo; type container</h2>
+<h3 id="0x41--to-introduction-to-run">0x41  To introduction to &ldquo;run&rdquo;</h3>
+<p>The original Roaring has a limitation in some scenarios because it does not compress long runs of values. Indeed, given a bitset made of a few long runs (e.g., all integers in [10, 1000]), Roaring—as presented so far—can only offer suboptimal compression. If we consider the case of a bitmap made of all integers in [10, 1000], Roaring without support for runs would use 8 kB, whereas a few bytes ought to suffice.</p>
+<ol>
+<li>Such unnecessarily large bitmaps can stress memory bandwidth.</li>
+<li>computing the intersection of two bitmaps representing the ranges [10, 1000] and [500, 10000] can be done in a few cycles when using RLE-compressed bitmaps. But the original Roaring would require intersecting two bitmap containers and possibly thousands of cycles. See chapter &ldquo;0xF1&rdquo; for detail.</li>
+</ol>
+<hr>
+<p>To solve this problem, we decided to add a third type of container to Roaring, one that is ideally suited to coding data made of runs of consecutive values. The new container is <em>conceptually</em> simple: **given a run (e.g., [10, 1000]), we store the starting point (10) and its length minus one (990). By packing the starting points and the lengths in pairs, using 16 bits each, **we preserve the ability to support fast random access by binary search through the coded runs</p>
+<p>The run container, <strong>is made of a packed array of pairs of 16-bit integers</strong>. The first value of each pair represents a starting value, whereas the second value is the length of a run. For example, we would store the values 11, 12, 13, 14, 15 as the pair 11, 4 where 4 means that beyond 11 itself, there are 4 contiguous values that follow.</p>
+<p>In addition to this packed array, we need to <strong>maintain the number of runs</strong> stored in the packed array. Like the array container, the run container is stored in a dynamic array. During serialization, we <strong>write out the number of runs</strong>, followed by the corresponding packed array.</p>
+<h3 id="0x42-decide-the-best-container">0x42 Decide The Best Container</h3>
+<p>To decide the best container type, <strong>we are motivated to minimize storage</strong>. In serialized form, a run container uses 2 + 4r bytes(16-bit integer is 2 bytes and we need a pair; plus the number of runs) given r runs, a bitmap container always uses 8192 bytes and an array container uses 2c + 2 bytes, where c is the cardinality. Therefore, we apply the following rules:</p>
+<ul>
+<li>All array containers are such that they use no more space than they would as a bitmap container: they contain no more than 4096 values.</li>
+<li>Bitmap containers use less space than they would as array containers: they contain more than 4096 values.</li>
+<li>A run container is only allowed to exist if it is smaller than either the array container or the bitmap container that could equivalently store the same values.
+<ul>
+<li>If the run container has cardinality greater than 4096 values, then the number of runs must be no more than $\lceil(8192 − 2)/4\rceil = 2047$  runs. (Or it must be converted to a bitmap container)</li>
+<li>If the run container has cardinality no more than 4096, then the number of runs must be less than <strong>half the cardinality</strong>. (Or it must be converted to an array container)</li>
+</ul>
+</li>
+</ul>
+<p>**So, the critical step in deciding whether an array or bitmap container should be converted to a run container is to count the number of runs of consecutive numbers it contains. **</p>
+<h3 id="0x43-compute-the-number-of-runs">0x43 Compute The Number Of Runs</h3>
+<p>For array containers, we count this number by iterating through the 16-bit integers and comparing them two by two in a straightforward manner. Because array containers have at most 4096 integers, this computation is expected to be fast.</p>
+<hr>
+<p>For bitmap containers, the below algorithm shows how to compute the number of runs.</p>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/1714233519262-51a9cc7f-f364-4657-a05f-144704e3e8cf.2024_05_07_1715087279.png" alt="image.png"></p>
+<p>We can illustrate the core operation of the algorithm using a single 32-bit word containing 6 runs of consecutive ones:</p>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/1714234212202-1054aa9f-0e10-4459-a1da-790390a81620.2024_05_07_1715087290.png" alt="image.png"></p>
+<ul>
+<li>We can verify that $\mathrm{bitCount}((C_i \ll 1)\ \mathrm{ANDNOT}\ C_i) = 6$, that is, we have effectively computed the number of runs.  ($a\ \mathrm{ANDNOT}\ b$is true iff a=1 and b=0)</li>
+<li>In the case where a run continues up to the left-most bit, and does not continue in the next word, it does not get counted, but we add another term (($C_i \gg 63$) ANDNOT $C_i+1$ when using 64-bit words) to check for this case.</li>
+</ul>
+<p>Nevertheless, the computation may be expensive—exceeding the cost of computing the union or intersection between two bitmap containers. Thus, instead of always computing the number of runs exactly, we rely on the observation that no bitmap container with more than 2047 runs should be converted. As soon as we can produce a lower bound exceeding 2047 on the number of runs, we can stop. An exact computation of the number of runs is important only when our lower bound is less than 2048. <strong>In short: estimate the lower bound count of runs first, and only do the precise computation if the lower bound is less than 2048.</strong></p>
+<p>There are several method to implement the heuristic algorithm, and see the paper for details.</p>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/1715086504011-260c924d-1b54-4c71-8070-e876236e8d5c.2024_05_07_1715087301.png" alt="image.png"></p>
+<h3 id="0x44-logical-operations">0x44 Logical operations</h3>
+<p>There are many necessary logical operations, but we present primarily the <strong>union</strong> and <strong>intersection</strong>.</p>
+<h4 id="0x441-bitmap-vs-bitmap">0x441 Bitmap vs Bitmap:</h4>
+<h2 id="0xf-appendix">0xF appendix</h2>
+<h3 id="0xf1-rle-based-compressed-bitmaps">0xF1 RLE-based compressed bitmaps</h3>
+<p>There are many RLE-based compression formats.</p>
+<h4 id="0xf11-introduction-to-wah">0xF11 Introduction To WAH</h4>
+<p>For example, <strong>WAH</strong> organizes the data in <em>literal</em> and <em>fill</em> words.</p>
+<ul>
+<li>Literal words contain a mix of W − 1 zeros and ones (e.g., $01011 · · · 01$) where W denotes the word size in bits: typically W = 32 or W = 64.</li>
+<li>Fill words are made of just W − 1 ones or just W − 1 zeros (i.e., $11 · · · 11$ or $00 · · · 00$). WAH compresses sequences of consecutive identical fill words</li>
+</ul>
+<p>The most significant bit of each word distinguishes between fill and literal words</p>
+<ul>
+<li>When it is set to one, the remaining W −1 bits store the W −1 bits of a literal word.</li>
+<li>When it is set to zero, the second most significant bit indicates the bit value whereas the remaining bits are used to store the number of consecutive identical fill words (the run length)</li>
+</ul>
+<h4 id="0xf12-introduction-to-concise">0xF12 Introduction To Concise</h4>
+<p><strong>Concise</strong> is a variation that reduces the memory usage when the bitmap is _moderately sparse. _Instead of storing the run length using $W − 2$ bits, Concise uses only $W − 2 − \lceil log2(W )\rceil$ bits to indicate a run length $r$, reserving $\lceil log2(W )\rceil$ bits to store a value $p$. When $p$ is non-zero, we decode $r$ fill words, plus a single $W − 1$ bit word with its $p^{th}$ bit flipped.</p>
+<p>Below is an example:
+<img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/1714231195835-441ff581-5a2b-49ad-b454-d875cbf5c3ae.2024_05_07_1715087318.png" alt="image.png"></p>
+
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

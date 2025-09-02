@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Cryptology on PaperMod</title>
-    <link>https://mobilephone724.github.io/categories/cryptology/</link>
-    <description>Recent content in Cryptology on PaperMod</description>
-    <image>
-      <title>PaperMod</title>
-      <url>https://mobilephone724.github.io/images/papermod-cover.png</url>
-      <link>https://mobilephone724.github.io/images/papermod-cover.png</link>
-    </image>
-    <generator>Hugo -- 0.127.0</generator>
+    <title>Cryptology on </title>
+    <link>/categories/cryptology/</link>
+    <description>Recent content in Cryptology on </description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <copyright>PaperMod Contributors</copyright>
     <lastBuildDate>Fri, 14 Jan 2022 23:43:08 +0800</lastBuildDate>
-    <atom:link href="https://mobilephone724.github.io/categories/cryptology/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/categories/cryptology/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Alice and Bob how to know whose number is bigger without giving away their own&#39;s</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/howtoknowwhoseisbigger/</link>
+      <link>/archive_posts/howtoknowwhoseisbigger/</link>
       <pubDate>Fri, 14 Jan 2022 23:43:08 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/howtoknowwhoseisbigger/</guid>
-      <description>Definiteness： Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &amp;lt; j$ in the end(aside from their own values)
-Solution: Let $M$ be the set of all $N$-bit nonnegative integers
-Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$
-Alice generates a public key from $Q_N$, called $E_a$, and the inverse function of $E_a$ is $D_a$ Bob picks a random value $x \in M$, compute $k = E_a(x)$, then send $k - j$ to Alice Alice computes $y_u=D_a(k - j + u)$ for $u = 1,2,\dots,9$ Alice generates a random prime $p$ of $N/2$-bit, and computes $z_u=y_u(\mod p)$ for all $u$.</description>
+      <guid>/archive_posts/howtoknowwhoseisbigger/</guid>
+      <description>&lt;h2 id=&#34;definiteness&#34;&gt;Definiteness：&lt;/h2&gt;&#xA;&lt;p&gt;Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &amp;lt; j$ in the end(aside from their own values)&lt;/p&gt;&#xA;&lt;h2 id=&#34;solution&#34;&gt;Solution:&lt;/h2&gt;&#xA;&lt;p&gt;Let $M$ be the set of all $N$-bit nonnegative integers&lt;/p&gt;&#xA;&lt;p&gt;Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Alice generates a public key from $Q_N$, called $E_a$, and the inverse function of $E_a$ is $D_a$&lt;/li&gt;&#xA;&lt;li&gt;Bob picks a random value $x \in M$, compute $k = E_a(x)$, then send $k - j$ to Alice&lt;/li&gt;&#xA;&lt;li&gt;Alice computes $y_u=D_a(k - j + u)$ for $u = 1,2,\dots,9$&lt;/li&gt;&#xA;&lt;li&gt;Alice generates a random prime $p$ of $N/2$-bit, and computes $z_u=y_u(\mod p)$ for all $u$.&lt;/li&gt;&#xA;&lt;li&gt;Alice repeats step 4 until all $z_u$ differ by at least 2 in the $\mod p$ sense&lt;/li&gt;&#xA;&lt;li&gt;Alice sends the $p$ and $z_1,z_2,\dots,z_i,z_{i+1}+1,\dots,z_{9} +1$ (all in $\mod p$ sense)to Bob&lt;/li&gt;&#xA;&lt;li&gt;Bob looks at the $j$-th value(not counting p) sent from Alice, and decides that $i\geq j$ if it is equal to $x \mod p$, or $i&amp;lt;j$ otherwise&lt;/li&gt;&#xA;&lt;/ol&gt;</description>
     </item>
   </channel>
 </rss>

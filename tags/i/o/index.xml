@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>I/O on PaperMod</title>
-    <link>https://mobilephone724.github.io/tags/i/o/</link>
-    <description>Recent content in I/O on PaperMod</description>
-    <image>
-      <title>PaperMod</title>
-      <url>https://mobilephone724.github.io/images/papermod-cover.png</url>
-      <link>https://mobilephone724.github.io/images/papermod-cover.png</link>
-    </image>
-    <generator>Hugo -- 0.127.0</generator>
+    <title>I/O on </title>
+    <link>/tags/i/o/</link>
+    <description>Recent content in I/O on </description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <copyright>PaperMod Contributors</copyright>
     <lastBuildDate>Fri, 14 Jan 2022 12:02:42 +0800</lastBuildDate>
-    <atom:link href="https://mobilephone724.github.io/tags/i/o/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/tags/i/o/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>APUE/Chapter3: file and I/O</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/linux-file/</link>
+      <link>/archive_posts/linux-file/</link>
       <pubDate>Fri, 14 Jan 2022 12:02:42 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/linux-file/</guid>
-      <description>Hugo provides multiple built-in shortcodes for author convenience and to keep your markdown content clean.</description>
+      <guid>/archive_posts/linux-file/</guid>
+      <description>&lt;p&gt;The functions described in this chapter are often referred to as &lt;strong&gt;unbuffered I/O&lt;/strong&gt;(which each read or write invokes a system call in the kernel), in contrast to the standard I/O routines&lt;/p&gt;&#xA;&lt;h2 id=&#34;file-descriptors&#34;&gt;File Descriptors&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;To the kernel, all open files are referred to by &lt;strong&gt;file descriptors&lt;/strong&gt;. A file descriptor is a &lt;strong&gt;non-negative integer.&lt;/strong&gt; When we open an existing file or create a new file, the kernel returns a file descriptor to the process. When we want to read or write a file, we identify the file with the file descriptor that was returned by &lt;code&gt;open&lt;/code&gt; or &lt;code&gt;creat&lt;/code&gt; as an argument to either read or write.&lt;/li&gt;&#xA;&lt;li&gt;By convention, UNIX System shells associate file descriptor &lt;strong&gt;0 with the standard input&lt;/strong&gt; of a process, file descriptor &lt;strong&gt;1 with the standard output&lt;/strong&gt;, and file descriptor &lt;strong&gt;2 with the standard error&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;li&gt;File descriptors range from 0 through OPEN_MAX−1&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;h2 id=&#34;open-and-openat&#34;&gt;&lt;code&gt;open&lt;/code&gt; and &lt;code&gt;openat&lt;/code&gt;&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;code&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e5e5e5&#34;&gt;#include&lt;/span&gt; &lt;span style=&#34;color:#e5e5e5&#34;&gt;&amp;lt;fcntl.h&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#e5e5e5&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#e5e5e5&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#ee82ee&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#ff0&#34;&gt;open&lt;/span&gt;(&lt;span style=&#34;color:#f00&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#ee82ee&#34;&gt;char&lt;/span&gt; *path, &lt;span style=&#34;color:#ee82ee&#34;&gt;int&lt;/span&gt; oflag, ... &lt;span style=&#34;color:#0f0&#34;&gt;/* mode_t mode */&lt;/span&gt; );&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#ee82ee&#34;&gt;int&lt;/span&gt; &lt;span style=&#34;color:#ff0&#34;&gt;openat&lt;/span&gt;(&lt;span style=&#34;color:#ee82ee&#34;&gt;int&lt;/span&gt; fd, &lt;span style=&#34;color:#f00&#34;&gt;const&lt;/span&gt; &lt;span style=&#34;color:#ee82ee&#34;&gt;char&lt;/span&gt; *path, &lt;span style=&#34;color:#ee82ee&#34;&gt;int&lt;/span&gt; oflag, ... &lt;span style=&#34;color:#0f0&#34;&gt;/* mode_t mode */&lt;/span&gt; );&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#0f0&#34;&gt;//Both return: file descriptor if OK, −1 on error&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;This function has a multitude of options, which are specified by the &lt;code&gt;oflag&lt;/code&gt; argument. This argument is formed by &lt;code&gt;ORing&lt;/code&gt; together one or more of the following constants from the&lt;code&gt;&amp;lt;fcntl.h&amp;gt;&lt;/code&gt;&#xA;header&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

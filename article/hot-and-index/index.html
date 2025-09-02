@@ -1,185 +1,33 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
-
-<head><meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
-<title>Hot and Index | PaperMod</title>
-<meta name="keywords" content="">
-<meta name="description" content="概述 本文介绍 PostgreSQL 中 Heap Only Tuple(HOT) 技术以及创建索引相关的知识，主要包含以下内容：
-HOT 的基本原理 普通的创建索引 (Create Index) 流程 同时创建索引 (Create Index Concurrently CIC) 的原理 本文不包括：
-btree 等索引的具体实现方式 PostgreSQL 对索引访问方式 (Access Method) 的抽象 HOT 基础 简单而言, HOT(Heap Only Tuple) 指没有索引指向的元组，用于消除元组更新引起的索引膨胀，原理如下图：
-索引指向 line_ptr_1 ，line_ptr_1 指向 tuple_1 ，tuple_1 被更新后成为 tuple_2，此时 tuple_1 指向 tuple_2 索引指向 line_ptr_3 , line_ptr_3 指向 line_ptr_4 ，line_ptr_4 指向 tuple3 显然，HOT 技术具有如下优点
-对于被更新的元组，无需创建新的索引指针指向新元组 旧元组可以被“普通操作”删除掉，并不一定需要 vacuum HOT 链的构建 （一）：表 tbl(x int, y int) 在 x 上有索引，先插入一行 tuple_1=(x=1, y=1) ，结果如下">
-<meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="https://mobilephone724.github.io/article/hot-and-index/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.45e028aa8ce0961349adf411b013ee39406be2c0bc80d4ea3fc04555f7f4611a.css" integrity="sha256-ReAoqozglhNJrfQRsBPuOUBr4sC8gNTqP8BFVff0YRo=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://mobilephone724.github.io/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://mobilephone724.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://mobilephone724.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://mobilephone724.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://mobilephone724.github.io/safari-pinned-tab.svg">
-<meta name="theme-color" content="#2e2e33">
-<meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="https://mobilephone724.github.io/article/hot-and-index/index.xml">
-<link rel="alternate" hreflang="en" href="https://mobilephone724.github.io/article/hot-and-index/">
-<noscript>
-    <style>
-        #theme-toggle,
-        .top-link {
-            display: none;
-        }
-
-    </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
-</noscript>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   
 
-<meta property="og:url" content="https://mobilephone724.github.io/article/hot-and-index/">
-  <meta property="og:site_name" content="PaperMod">
-  <meta property="og:title" content="Hot and Index">
-  <meta property="og:description" content="概述 本文介绍 PostgreSQL 中 Heap Only Tuple(HOT) 技术以及创建索引相关的知识，主要包含以下内容：
-HOT 的基本原理 普通的创建索引 (Create Index) 流程 同时创建索引 (Create Index Concurrently CIC) 的原理 本文不包括：
-btree 等索引的具体实现方式 PostgreSQL 对索引访问方式 (Access Method) 的抽象 HOT 基础 简单而言, HOT(Heap Only Tuple) 指没有索引指向的元组，用于消除元组更新引起的索引膨胀，原理如下图：
-索引指向 line_ptr_1 ，line_ptr_1 指向 tuple_1 ，tuple_1 被更新后成为 tuple_2，此时 tuple_1 指向 tuple_2 索引指向 line_ptr_3 , line_ptr_3 指向 line_ptr_4 ，line_ptr_4 指向 tuple3 显然，HOT 技术具有如下优点
-对于被更新的元组，无需创建新的索引指针指向新元组 旧元组可以被“普通操作”删除掉，并不一定需要 vacuum HOT 链的构建 （一）：表 tbl(x int, y int) 在 x 上有索引，先插入一行 tuple_1=(x=1, y=1) ，结果如下">
-  <meta property="og:locale" content="en">
-  <meta property="og:type" content="website">
-      <meta property="og:image" content="https://mobilephone724.github.io/images/papermod-cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://mobilephone724.github.io/images/papermod-cover.png">
-<meta name="twitter:title" content="Hot and Index">
-<meta name="twitter:description" content="Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod">
+  <title>
+    
+      Hot and Index
+    
+  </title>
 
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "较长的专题文章",
-      "item": "https://mobilephone724.github.io/article/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "Hot and Index",
-      "item": "https://mobilephone724.github.io/article/hot-and-index/"
-    }
-  ]
-}
-</script>
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:1313/css/main.900100e9dbee2d56c58fac8bb717037cae7e26a9c36c29d2ff587bdd65f0cbbe510b41d81a3bb234919cdfdc7550d786b2fab70c8fc507772d732fe097106d12.css" integrity="sha512-kAEA6dvuLVbFj6yLtxcDfK5&#43;JqnDbCnS/1h73WXwy75RC0HYGjuyNJGc39x1UNeGsvq3DI/FB3ctcy/glxBtEg==" />
+  
 </head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
 
-<body class="list" id="top">
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
 
-</script>
+<h1>Hot and Index</h1>
 
-<header class="header">
-    <nav class="nav">
-        <div class="logo">
-            <a href="https://mobilephone724.github.io/" accesskey="h" title="PaperMod (Alt + H)">PaperMod</a>
-            <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <ul id="menu">
-            <li>
-                <a href="https://mobilephone724.github.io/article" title="长文">
-                    <span>长文</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://mobilephone724.github.io/archives" title="归档">
-                    <span>归档</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://mobilephone724.github.io/search/" title="搜索">
-                    <span>搜索</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://mobilephone724.github.io/tags/" title="标签">
-                    <span>标签</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-<main class="main"> 
-<header class="page-header"><div class="breadcrumbs"><a href="https://mobilephone724.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://mobilephone724.github.io/article/">较长的专题文章</a></div>
-  <h1>
-    Hot and Index
-    <a href="/article/hot-and-index/index.xml" title="RSS" aria-label="RSS">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-        stroke-linecap="round" stroke-linejoin="round" height="23">
-        <path d="M4 11a9 9 0 0 1 9 9" />
-        <path d="M4 4a16 16 0 0 1 16 16" />
-        <circle cx="5" cy="19" r="1" />
-      </svg>
-    </a>
-  </h1>
-</header>
-<div class="post-content"><h2 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h2>
+<h2 id="概述">概述</h2>
 <p>本文介绍 PostgreSQL 中 Heap Only Tuple(HOT) 技术以及创建索引相关的知识，主要包含以下内容：</p>
 <ol>
 <li>HOT 的基本原理</li>
@@ -191,9 +39,9 @@ btree 等索引的具体实现方式 PostgreSQL 对索引访问方式 (Access Me
 <li>btree 等索引的具体实现方式</li>
 <li>PostgreSQL 对索引访问方式 (Access Method) 的抽象</li>
 </ol>
-<h2 id="hot-基础">HOT 基础<a hidden class="anchor" aria-hidden="true" href="#hot-基础">#</a></h2>
+<h2 id="hot-基础">HOT 基础</h2>
 <p>简单而言, HOT(Heap Only Tuple) 指没有索引指向的元组，用于消除元组更新引起的索引膨胀，原理如下图：</p>
-<p><img alt="image-20240913221635357" loading="lazy" src="/article/hot-and-index/hot_page.png"></p>
+<p><img src="./hot_page.png" alt="image-20240913221635357"></p>
 <ol>
 <li>索引指向 line_ptr_1 ，line_ptr_1 指向 tuple_1 ，tuple_1 被更新后成为 tuple_2，此时 tuple_1 指向 tuple_2</li>
 <li>索引指向 line_ptr_3 , line_ptr_3 指向 line_ptr_4 ，line_ptr_4 指向 tuple3</li>
@@ -203,11 +51,11 @@ btree 等索引的具体实现方式 PostgreSQL 对索引访问方式 (Access Me
 <li>对于被更新的元组，无需创建新的索引指针指向新元组</li>
 <li>旧元组可以被“普通操作”删除掉，并不一定需要 vacuum</li>
 </ol>
-<h3 id="hot-链的构建">HOT 链的构建<a hidden class="anchor" aria-hidden="true" href="#hot-链的构建">#</a></h3>
+<h3 id="hot-链的构建">HOT 链的构建</h3>
 <p>（一）：表 tbl(x int, y int) 在 x 上有索引，先插入一行  tuple_1=(x=1, y=1) ，结果如下</p>
-<p><img alt="image-20240912110738151" loading="lazy" src="/article/hot-and-index/index_insert_1.png"></p>
+<p><img src="./index_insert_1.png" alt="image-20240912110738151"></p>
 <p>（二）：当更新 tuple_1 为 (x=1,y=2) 时， 新增 lp_2, 和 tuple_2 ，但是不会新增索引指针，而是由 tuple_1 的 header 会记录 tuple_2 的位置。</p>
-<p><img alt="image-20240912111405552" loading="lazy" src="/article/hot-and-index/index_insert_2.png"></p>
+<p><img src="./index_insert_2.png" alt="image-20240912111405552"></p>
 <p>从可见性的角度思考，对于一个快照而言，一个 HOT 链上最多只有一个 tuple 可见。</p>
 <p>所以使用索引扫描时，会先找到 tuple_1 判断 tuple_ 1 是否符合可见性：</p>
 <ol>
@@ -215,22 +63,22 @@ btree 等索引的具体实现方式 PostgreSQL 对索引访问方式 (Access Me
 <li>如果 tuple_1 不可见，再继续向下搜素。</li>
 </ol>
 <p>（三）：再更新 tuple_1 为 tuple3=(x=1, y=3)，结果如下</p>
-<p><img alt="image-20240912112236010" loading="lazy" src="/article/hot-and-index/index_insert_3.png"></p>
-<h3 id="清理">清理<a hidden class="anchor" aria-hidden="true" href="#清理">#</a></h3>
+<p><img src="./index_insert_3.png" alt="image-20240912112236010"></p>
+<h3 id="清理">清理</h3>
 <p>显然如果一个tuple一直被更新，那么这个链会很长，影响索引搜索的性能，所以需要去清理 HOT 链，清理分为两步，一个是 pruning （修剪），另一个是 defragmentation （碎片整理）</p>
 <p>（四）：pruning （修剪）：等 tuple_1 和 tuple_2 多所有事务都不可见时，则通过修改 line pointers，减少 hot 链的长度。 line pointer 2 可以被其他操作复用，但是 tuple_1 和 tuple_2 占用的空间仍没有被清理。如图：</p>
-<p><img alt="image-20240912151435754" loading="lazy" src="/article/hot-and-index/index_insert_4.png"></p>
+<p><img src="./index_insert_4.png" alt="image-20240912151435754"></p>
 <p>（五）：defragmentation （碎片整理）：将对应的 tuple 彻底删除，如图</p>
-<p><img alt="image-20240912151740670" loading="lazy" src="/article/hot-and-index/index_insert_5.png"></p>
-<h2 id="create-index-的流程">Create Index 的流程<a hidden class="anchor" aria-hidden="true" href="#create-index-的流程">#</a></h2>
+<p><img src="./index_insert_5.png" alt="image-20240912151740670"></p>
+<h2 id="create-index-的流程">Create Index 的流程</h2>
 <p>该章节介绍普通的创建索引的大致过程，尤其是缓存一致性和对 HOT 的特殊处理</p>
-<h3 id="1-准备步骤">1 准备步骤<a hidden class="anchor" aria-hidden="true" href="#1-准备步骤">#</a></h3>
+<h3 id="1-准备步骤">1 准备步骤</h3>
 <ol>
 <li>权限校验：包括</li>
 <li>选择索引名， access method （主要是确认 access method 是否存在）</li>
 <li>加锁：shared lock，阻止写入</li>
 </ol>
-<h3 id="2-创建空索引">2 创建空索引<a hidden class="anchor" aria-hidden="true" href="#2-创建空索引">#</a></h3>
+<h3 id="2-创建空索引">2 创建空索引</h3>
 <ol>
 <li>创建 heap <code>heap_create</code>
 <ol>
@@ -242,7 +90,7 @@ btree 等索引的具体实现方式 PostgreSQL 对索引访问方式 (Access Me
 <li>向 <code>pg_class</code> , <code>pg_index</code> , <code>pg_attribute</code>  中写入对应的记录</li>
 <li>注册对应表的缓存无效信息，会在事务结束时发送 <code>CacheInvalidateRelcache</code></li>
 </ol>
-<h3 id="3-调用对应的-index-access-method-创建索引">3 调用对应的 index access method 创建索引<a hidden class="anchor" aria-hidden="true" href="#3-调用对应的-index-access-method-创建索引">#</a></h3>
+<h3 id="3-调用对应的-index-access-method-创建索引">3 调用对应的 index access method 创建索引</h3>
 <p>这里和 HOT 关系较大，需要简单展开：</p>
 <p>在 index access method 内部，会使用回调函数 <code>heapam_index_build_range_scan</code> 来扫描 heap，以确定有哪些 tuple 需要被创建索引。</p>
 <ol>
@@ -261,11 +109,11 @@ btree 等索引的具体实现方式 PostgreSQL 对索引访问方式 (Access Me
 </li>
 </ol>
 <hr>
-<h3 id="3-1-如何处理-heaptuple_recently_dead">3-1 如何处理 <code>HEAPTUPLE_RECENTLY_DEAD</code><a hidden class="anchor" aria-hidden="true" href="#3-1-如何处理-heaptuple_recently_dead">#</a></h3>
-<h4 id="3-1-1-非-hot">3-1-1 非 HOT<a hidden class="anchor" aria-hidden="true" href="#3-1-1-非-hot">#</a></h4>
+<h3 id="3-1-如何处理-heaptuple_recently_dead">3-1 如何处理 <code>HEAPTUPLE_RECENTLY_DEAD</code></h3>
+<h4 id="3-1-1-非-hot">3-1-1 非 HOT</h4>
 <p>说明该 tuple 被删除了，但是有一些事务仍然对其可见，那么也需要加入到索引中。否则这些事务后续通过当前创建的索引就无法找到该元组。</p>
 <p>注意：在判断一个表有哪些索引时，使用快照是“最新的快照”，而非当前事务的快照。</p>
-<h4 id="3-1-2-hot">3-1-2 HOT<a hidden class="anchor" aria-hidden="true" href="#3-1-2-hot">#</a></h4>
+<h4 id="3-1-2-hot">3-1-2 HOT</h4>
 <p>如果该 tuple 在 HOT 链中，问题就有些棘手。</p>
 <ol>
 <li>此时不方便将 HOT 链破坏掉。（创建索引的时候直接修改 HEAP 中内容确实不算合理）</li>
@@ -281,13 +129,13 @@ btree 等索引的具体实现方式 PostgreSQL 对索引访问方式 (Access Me
 <li><code>TransactionXmin</code> 表示当前事务的所有快照中，最小的的 xmin。（快照中， <code>xmin</code> 前的事务都结束了）</li>
 <li><code>pg_index</code>  中对应 tuple 的 <code>xmin</code> 表示 该索引创建的 xid</li>
 </ol>
-<p><img alt="image-20240908163824450" loading="lazy" src="/article/hot-and-index/indcheckxmin.png"></p>
-<h3 id="3-2-对-hot-链上的元组构建索引">3-2 对 HOT 链上的元组构建索引<a hidden class="anchor" aria-hidden="true" href="#3-2-对-hot-链上的元组构建索引">#</a></h3>
+<p><img src="./indcheckxmin.png" alt="image-20240908163824450"></p>
+<h3 id="3-2-对-hot-链上的元组构建索引">3-2 对 HOT 链上的元组构建索引</h3>
 <p>由于创建新索引会导致已有的 HOT 链无效，这里还需讨论如何将已有 HOT 链中元组如何构建到索引中。考虑如下情形，现在需要对 <code>y</code> 这一列创建索引，只需要将 tuple_3 加入到索引中(y=2)即可。由于一个 line pointer 只能在一个 HOT 链中，所以此时索引应该指向 lp_1（注意 tuple_1 有 y=1)。</p>
-<p><img alt="image-20240912154408429" loading="lazy" src="/article/hot-and-index/build_on_hot.png"></p>
+<p><img src="./build_on_hot.png" alt="image-20240912154408429"></p>
 <p>如果想去“优化“ 新HOT链的长度，让索引指向 lp_2 或者 lp_3，会产生很多问题，例如指向 lp_2，那么此时 tuple_2 还是 heap only tuple 么？</p>
-<p><img alt="image-20240912155430901" loading="lazy" src="/article/hot-and-index/build_on_hot_2.png"></p>
-<h2 id="create-index-concurrently-cic-的原理解析">Create Index Concurrently (CIC) 的原理解析<a hidden class="anchor" aria-hidden="true" href="#create-index-concurrently-cic-的原理解析">#</a></h2>
+<p><img src="./build_on_hot_2.png" alt="image-20240912155430901"></p>
+<h2 id="create-index-concurrently-cic-的原理解析">Create Index Concurrently (CIC) 的原理解析</h2>
 <ul>
 <li>解决的问题：
 <ul>
@@ -312,26 +160,26 @@ btree 等索引的具体实现方式 PostgreSQL 对索引访问方式 (Access Me
 <li>事务二：获取快照 <code>A</code> ，使用对该快照可见的元组创建索引。事务二结束后，其他 SQL 修改表时，也需要修改对应的索引。</li>
 <li>事务三：获取快照 <code>B</code> ，将快照 <code>B</code> 可见但快照 <code>A</code> 不可见的元组插入索引</li>
 </ol>
-<h3 id="阶段一创建空索引">阶段一：创建空索引<a hidden class="anchor" aria-hidden="true" href="#阶段一创建空索引">#</a></h3>
+<h3 id="阶段一创建空索引">阶段一：创建空索引</h3>
 <p>创建空索引的核心原因是：在将存量数据加入的索引中时，确保其他连接的修改不会破坏 HOT（更近一步的原因在阶段 2 描述）。方式为向 pg_index 中记录一个 <code>indisready==false &amp;&amp; indisvalid==false</code> 的索引。所以问题在于：其他连接如何感知到该索引。</p>
 <p>每个连接都会缓存自己 <code>relcache</code> 和 <code>syscache</code> ，如果没有收到失效信息，这些缓存会一直保留。一般而言，事务开始时，会处理所有的缓存失效消息，在事务的执行的过程中，也有埋点来处理失效信息。但是处理结果不会返回给发送端。</p>
-<p><img alt="image-20240909222219633" loading="lazy" src="/article/hot-and-index/empty_index.png"></p>
+<p><img src="./empty_index.png" alt="image-20240909222219633"></p>
 <p>所以为了保证其他连接都会看到新索引，在创建空索引的事务结束后，需要等到当前所有其他事务全部结束，才能开启第二阶段</p>
 <hr>
 <p>代码实现与上述有所差别：</p>
 <p>“等待其他事务” 并不是通过巡检 <code>ProcArray</code> 等方式实现，而是巧妙的使用了 <code>lmgr</code> 层的 <code>WaitForLockers</code> 实现：即等到没有连接持有该表的与 <code>ShareLock</code> 相冲突的锁：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C" data-lang="C"><span class="line"><span class="cl"><span class="cm">/*
-</span></span></span><span class="line"><span class="cl"><span class="cm"> * Now we must wait until no running transaction could have the table open
-</span></span></span><span class="line"><span class="cl"><span class="cm"> * with the old list of indexes.  Use ShareLock to consider running
-</span></span></span><span class="line"><span class="cl"><span class="cm"> * transactions that hold locks that permit writing to the table.  Note we
-</span></span></span><span class="line"><span class="cl"><span class="cm"> * do not need to worry about xacts that open the table for writing after
-</span></span></span><span class="line"><span class="cl"><span class="cm"> * this point; they will see the new index when they open it.
-</span></span></span><span class="line"><span class="cl"><span class="cm"> */</span>
-</span></span><span class="line"><span class="cl"><span class="nf">WaitForLockers</span><span class="p">(</span><span class="n">heaplocktag</span><span class="p">,</span> <span class="n">ShareLock</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#0f0">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * Now we must wait until no running transaction could have the table open
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * with the old list of indexes.  Use ShareLock to consider running
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * transactions that hold locks that permit writing to the table.  Note we
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * do not need to worry about xacts that open the table for writing after
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * this point; they will see the new index when they open it.
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff0">WaitForLockers</span>(heaplocktag, ShareLock, true);
 </span></span></code></pre></div><p>（1）<code>SharedLock</code>  与 <code>select</code> 和 <code>select for update/share</code> 相冲突，持有者两种锁时，都无法破坏 HOT 链。（2）当进程执行修改表的操作时，已经需要打开表获取 <code>relcache</code> ，而在打开表操作时，会处理缓存失效信息。</p>
 <pre tabindex="0"><code>relation_open/try_relation_open -&gt; LockRelationOid -&gt; AcceptInvalidationMessages
-</code></pre><p><img alt="image-20240910080804584" loading="lazy" src="/article/hot-and-index/waitforlockers.png"></p>
-<h3 id="阶段二使用存量数据创建索引">阶段二：使用存量数据创建索引<a hidden class="anchor" aria-hidden="true" href="#阶段二使用存量数据创建索引">#</a></h3>
+</code></pre><p><img src="./waitforlockers.png" alt="image-20240910080804584"></p>
+<h3 id="阶段二使用存量数据创建索引">阶段二：使用存量数据创建索引</h3>
 <p>在确保所有连接都发现了该索引时，可以使用存量数据创建索引</p>
 <p>该过程和普通的创建索引相似，但是进行 <code>heap</code> 扫描时，使用的快照不同。在一般的索引创建中，使用的是 <code>SnapshotAny</code> ，所有行都可见，而 CIC 中使用的是当前事务的快照。</p>
 <p>问题仍然出现在 HOT 链上，虽然对于创建索引的字段，当前不会产生新的 HOT 链，但是仍然会有旧的 HOT 链 ，所以构建索引的方式和普通地创建索引相同。</p>
@@ -343,93 +191,78 @@ btree 等索引的具体实现方式 PostgreSQL 对索引访问方式 (Access Me
 <li>在阶段2中，有其他事务将 tuple_2 进行成了 tuple_3 ，将 c 改为了 2。该更新满足 HOT （a, b 都没有变），所以仍在 HOT 链上。但是 tuple_3 对当前快照（CIC）不可见 (in feature)，所以不处理。</li>
 <li>在阶段2中，有其他事务将 tuple_3 进行成了 tuple_4，将 b 改为了3。该更新不满足 HOT，所以索引 idx_a 需要创建新的指针</li>
 </ul>
-<p><img alt="image-20240912165540880" loading="lazy" src="/article/hot-and-index/phase2_hot.png"></p>
+<p><img src="./phase2_hot.png" alt="image-20240912165540880"></p>
 <p>当索引构建完毕后，将 pg_index 的中对应行的 <code>indisready</code> 设置为 true，这样其他事务后续修改表时，会同步修改该索引。和阶段1相似，当前事务提交后，开启新的事物（xact3），等到其他事务都感知到 <code>indisready=true</code> 时（同样使用 WaitForLockers 方案），开始阶段三。</p>
-<h3 id="阶段三-增量数据的插入">阶段三： 增量数据的插入<a hidden class="anchor" aria-hidden="true" href="#阶段三-增量数据的插入">#</a></h3>
+<h3 id="阶段三-增量数据的插入">阶段三： 增量数据的插入</h3>
 <p>该步骤的主要工作为把阶段二中遗漏的 tuple 加入索引中。方法为：使用当前的事务快照，将该快照可见的但是索引中没有的元组，加入索引中，具体做法为：</p>
 <p>（一）扫描索引，获取索引中所有的 ctid，并进行排序，得到 <code>Tuplesortstate</code></p>
 <p>（二）使用当前快照，进行全表扫描，对于每一行，在 <code>Tuplesortstate</code> 搜索对应的 ctid。注意，如果是 heap only tuple，则使用其根 tuple 的 ctid。如果在 <code>Tuplesortstate</code> 中没有找打，则向索引中插入对应的指针。</p>
 <p>举个例子： tuple_3 虽然是在阶段二中新增的 tuple ，但是其根 tuple，即 tuple_1 已经在索引中了，所以在阶段三中忽略。而 tuple_3 不在 HOT 链中，所以需要插入到元组中。</p>
-<p><img alt="image-20240912181510448" loading="lazy" src="/article/hot-and-index/phase3_hot.png"></p>
+<p><img src="./phase3_hot.png" alt="image-20240912181510448"></p>
 <p>增量数据插入结束后，仍不能设置 <code>indisvalid=true</code> ：考虑一个元组，它在阶段二中被创建，却在阶段三前被删除，所以此时它仍然不在索引中，但是可能有其他事务（事务 T）可以看到该元组；如果此时修改 <code>indisvalid=true</code> 并提交，那么事务 T 使用该索引时，就无法获取到该元组 。故此时需要等事务 T 结束。：</p>
-<p><img alt="image-20240912182449902" loading="lazy" src="/article/hot-and-index/phase3_wait.png"></p>
+<p><img src="./phase3_wait.png" alt="image-20240912182449902"></p>
 <p>所以流程为将增量数据插入元组后，获取当前快照的 xmin，记为 xminlimit，并提交。之后开启新的事物，等待所有含有 <code>snap.xmin&lt;xminlimit</code> 的快照的事务全部提交，再设置 <code>indisvalid=true</code> 并提交。</p>
-<p><img alt="image-20240912184735020" loading="lazy" src="/article/hot-and-index/phase3_wait_2.png"></p>
+<p><img src="./phase3_wait_2.png" alt="image-20240912184735020"></p>
 <p>提交后，所以事务（包括正在运行的）都可以使用新索引了。</p>
 
 
-</div>
-    </main>
+    <ul><li>
+            <span>2024-07-07</span>
+            <a href="//localhost:1313/article/constant_recovery/">constant recovery with undo</a>
+        </li>
+        <li>
+            <span>2024-06-16</span>
+            <a href="//localhost:1313/article/mesi/">MESI AND MEMORY_BARRIER: paper reading</a>
+        </li>
+        <li>
+            <span>2024-05-07</span>
+            <a href="//localhost:1313/article/roaring_bitmap/">roaring bitmap</a>
+        </li>
+        <li>
+            <span>0001-01-01</span>
+            <a href="//localhost:1313/article/clog/">CLOG</a>
+        </li>
+        <li>
+            <span>0001-01-01</span>
+            <a href="//localhost:1313/article/hashjoin/">hash join</a>
+        </li>
+        <li>
+            <span>0001-01-01</span>
+            <a href="//localhost:1313/article/pg_repack/">pg_repack</a>
+        </li>
+        <li>
+            <span>0001-01-01</span>
+            <a href="//localhost:1313/article/pgvector/">PGVECTOR AND VECTOR DATABASE</a>
+        </li>
+        <li>
+            <span>0001-01-01</span>
+            <a href="//localhost:1313/article/slru/">SLRU</a>
+        </li>
+        <li>
+            <span>0001-01-01</span>
+            <a href="//localhost:1313/article/wal-basic/">WAL基础</a>
+        </li>
+        <li>
+            <span>0001-01-01</span>
+            <a href="//localhost:1313/article/wal-insert/">WAL日志的插入</a>
+        </li>
+        <li>
+            <span>0001-01-01</span>
+            <a href="//localhost:1313/article/zero2rsa/">ZERO TO RSA</a>
+        </li>
+        
+    </ul>
+
+
+
+                
     
-<footer class="footer">
-        <span>© <a href="https://github.com/adityatelange/hugo-PaperMod/graphs/contributors">PaperMod Contributors</a></span> · 
+    
+        Thanks for <a href="https://github.com/hanwenguo/hugo-theme-nostyleplease">https://github.com/hanwenguo/hugo-theme-nostyleplease</a>
+    
 
-    <span>
-        Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
-        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
-    </span>
-</footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-        <path d="M12 6H0l6-6z" />
-    </svg>
-</a>
 
-<script>
-    let menu = document.getElementById('menu')
-    if (menu) {
-        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
-        menu.onscroll = function () {
-            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
-        }
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            var id = this.getAttribute("href").substr(1);
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
-                    behavior: "smooth"
-                });
-            } else {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
-            }
-            if (id === "top") {
-                history.replaceState(null, null, " ");
-            } else {
-                history.pushState(null, null, `#${id}`);
-            }
-        });
-    });
-
-</script>
-<script>
-    var mybutton = document.getElementById("top-link");
-    window.onscroll = function () {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
-        } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
-        }
-    };
-
-</script>
-<script>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-        if (document.body.className.includes("dark")) {
-            document.body.classList.remove('dark');
-            localStorage.setItem("pref-theme", 'light');
-        } else {
-            document.body.classList.add('dark');
-            localStorage.setItem("pref-theme", 'dark');
-        }
-    })
-
-</script>
-</body>
-
+            </div>
+        </main>
+    </body>
 </html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=53944&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="Overview
+This chapter explains the content of clog
+clog(commit log), records the commit status of each transaction. The log
+exists both in memory mannaged by slru buffer and disk for durability. The
+commit status can be the four kinds below:
+#define TRANSACTION_STATUS_IN_PROGRESS		0x00
+#define TRANSACTION_STATUS_COMMITTED		0x01
+#define TRANSACTION_STATUS_ABORTED			0x02
+#define TRANSACTION_STATUS_SUB_COMMITTED	0x03
+In-Disk Representation
+Thinking that the commit status of each transaction composites an array clog[]
+and clog[xid] records the status, we can easily store the array to disk by the
+slru.">  
+
+  <title>
+    
+      CLOG
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:53944/css/main.900100e9dbee2d56c58fac8bb717037cae7e26a9c36c29d2ff587bdd65f0cbbe510b41d81a3bb234919cdfdc7550d786b2fab70c8fc507772d732fe097106d12.css" integrity="sha512-kAEA6dvuLVbFj6yLtxcDfK5&#43;JqnDbCnS/1h73WXwy75RC0HYGjuyNJGc39x1UNeGsvq3DI/FB3ctcy/glxBtEg==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="0001-01-01 00:00:00 &#43;0000 UTC">
+            0001-01-01
+        </time>
+    </p>
+
+    <h1>CLOG</h1>
+
+    
+
+    <h2 id="overview">Overview</h2>
+<p>This chapter explains the content of <code>clog</code></p>
+<p><code>clog</code>(commit log), records the commit status of each transaction. The log
+exists both in memory mannaged by <code>slru</code> buffer and disk for durability. The
+commit status can be the four kinds below:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#e5e5e5">#define TRANSACTION_STATUS_IN_PROGRESS		0x00
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#define TRANSACTION_STATUS_COMMITTED		0x01
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#define TRANSACTION_STATUS_ABORTED			0x02
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#define TRANSACTION_STATUS_SUB_COMMITTED	0x03
+</span></span></span></code></pre></div><h2 id="in-disk-representation">In-Disk Representation</h2>
+<p>Thinking that the commit status of each transaction composites an array <code>clog[]</code>
+and <code>clog[xid]</code> records the status, we can easily store the array to disk by the
+<code>slru</code>.</p>
+<p>The status of one transaction needs two bits to represent:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#e5e5e5">#define CLOG_BITS_PER_XACT	2
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#define CLOG_XACTS_PER_BYTE 4
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#define CLOG_XACTS_PER_PAGE (BLCKSZ * CLOG_XACTS_PER_BYTE)
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#define CLOG_XACT_BITMASK	((1 &lt;&lt; CLOG_BITS_PER_XACT) - 1)
+</span></span></span></code></pre></div><p>So we can get the xid&rsquo;s index and offset in page and byte.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#e5e5e5">#define TransactionIdToPage(xid)	((xid) / (TransactionId) CLOG_XACTS_PER_PAGE)
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#define TransactionIdToPgIndex(xid) ((xid) % (TransactionId) CLOG_XACTS_PER_PAGE)
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#define TransactionIdToByte(xid)	(TransactionIdToPgIndex(xid) / CLOG_XACTS_PER_BYTE)
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#define TransactionIdToBIndex(xid)	((xid) % (TransactionId) CLOG_XACTS_PER_BYTE)
+</span></span></span></code></pre></div><p>Thinking of that one slru segment contains 32 pages, so we name the clog file as
+<code>0000</code>(contains xid in [0, 32 * CLOG_XACTS_PER_PAGE - 1]), <code>0001</code>(contains xid
+in [32 * CLOG_XACTS_PER_PAGE, 32 * CLOG_XACTS_PER_PAGE * 2 - 1]) and so on.
+Because four hex numbers can represent $16^4=2^{12}$ files with
+$2^{12} \times 32 \times 8192 \times 4 = 2^{32}$ transactions&rsquo; status(a int32 size)</p>
+<p>Attension, such simple mapping means that the pages in clog file don&rsquo;t have
+page headers. So we can&rsquo;t record <code>LSN</code>, <code>checksum</code> in each page. The lack of
+<code>LSN</code> means the changes of clog page wouldn&rsquo;t be recorded in <code>WAL</code> but clog
+doesn&rsquo;t need it indeed.</p>
+<h2 id="extend-and-truncate">Extend And Truncate</h2>
+<p>During the process of generating a new <code>xid</code>, we make sure that the slru page
+exists.</p>
+<ul>
+<li>If it&rsquo;s the first xid of the page, we allocate a new page in clog buffer.
+<ul>
+<li>Also generate a WAL to record the birth of the page.</li>
+</ul>
+</li>
+<li>If not, the page must exist in memory or flushed into disk. So it&rsquo;s for slru
+layer to manage such situation.</li>
+</ul>
+<p>Keep in mind that the general self-increment xid does&rsquo;t begin at zero:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#e5e5e5">#define FirstNormalTransactionId	((TransactionId) 3)
+</span></span></span></code></pre></div><p>so:</p>
+<ul>
+<li>During bootstrap, initialize the first clog page</li>
+<li>During extend new pages, be careful about the <code>FirstNormalTransactionId</code>,
+since it is not the first xid in page representation but the first general one.</li>
+</ul>
+<p>The above behaviors indicate that although a clog segment at most occupies 256K
+space, it doesn&rsquo;t have such size just after initialization. We extend 8K pages
+one by one during the xid increment.</p>
+<p>Since at most half of <code>uint32</code> xids can be in use, it&rsquo;s natural to clean up out
+of date clog files. Different from extending a page, we always delete a whole
+page. So once we promote the <code>frozenxid</code>, we try to find some clog files to
+delete:</p>
+<ol>
+<li>The judgement whether there is a file can be deleted is completed in slru
+layer(a loop to scan the directory), but clog layer supports a hook to judge
+one file.</li>
+<li>Advance the oldest clog xid in shared memory</li>
+<li>Generate a clog truncate WAL record</li>
+<li>Real truncate. Complemented in slru layer.</li>
+</ol>
+<p>Details of the two kind WAL record will be shown later.</p>
+<h2 id="set-and-get">Set And Get</h2>
+<p>Concerned with subtransactions &hellip;</p>
+<blockquote>
+<p>I can&rsquo;t totally figure out the commit tree without knowing the mechanism of
+subtransaction. Just assuming subxids as a set of xids related to the main xid
+seems not convictive enough for me. So I remain it here now and will finish it
+after reading subtransactions)</p></blockquote>
+<p>For now, it&rsquo;s enough to knowing that</p>
+<ol>
+<li>The pair of operations wouldn&rsquo;t generate any WAL record</li>
+<li>They are done during the commit or abort procedure.</li>
+</ol>
+<h2 id="record-changes-in-wal">Record changes in WAL</h2>
+<p>Recall what mentioned above:</p>
+<ul>
+<li>Extending a new page and delete a segment will generata a WAL record.</li>
+<li>Setting commit status wouldn&rsquo;t</li>
+</ul>
+<p>For the latter one, it&rsquo;s unbelievable but tricky. Since only the transactions
+that changes the content data(some hint flags are exception, such as tuple
+infomask) will have a xid(and then record on clog segment). During the replay of
+such transactions&rsquo; commit(or abort) WAL record, we can redo the clog by the way.</p>
+<p>For the former one, it&rsquo;s a matter of course, since we must guarantee the clog to
+be recovery-safe. But some details deserve a glance;</p>
+<ul>
+<li>For extending a new page, it makes no difference that we flush the WAL record
+now or later. Since once we want to set status in a non-existent page during
+recovery, we can padding a new empty page. This trick doesn&rsquo;t affect the page
+usage.</li>
+<li>For deleting a clog segment, we have no chance to remedy the lost of clogs,
+and the disaster means a lot of tuple can be accessed at all. So regardless of
+the synchronous commit level, we must ensure the WAL record has flushed into
+disk before really delete the segments.</li>
+</ul>
+
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

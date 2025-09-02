@@ -1,261 +1,71 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
-
-<head><meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
-<title>【日拱一卒】2025-03-01 | PaperMod</title>
-<meta name="keywords" content="">
-<meta name="description" content="Column-Oriented Storage Basic idea: Although fact tables are often over 100 columns wide, a typical data warehouse query only accesses 4 or 5 of them at one time (SELECT *​ queries are rarely needed for analytics) The idea behind column-oriented storage is simple: don’t store all the values from one row together, but store all the values from each column together instead. If each column">
-<meta name="author" content="Theme PaperMod">
-<link rel="canonical" href="https://mobilephone724.github.io/post/20250301-1r5xzc.html">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.45e028aa8ce0961349adf411b013ee39406be2c0bc80d4ea3fc04555f7f4611a.css" integrity="sha256-ReAoqozglhNJrfQRsBPuOUBr4sC8gNTqP8BFVff0YRo=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://mobilephone724.github.io/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="https://mobilephone724.github.io/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://mobilephone724.github.io/favicon-32x32.png">
-<link rel="apple-touch-icon" href="https://mobilephone724.github.io/apple-touch-icon.png">
-<link rel="mask-icon" href="https://mobilephone724.github.io/safari-pinned-tab.svg">
-<meta name="theme-color" content="#2e2e33">
-<meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="https://mobilephone724.github.io/post/20250301-1r5xzc.html">
-<noscript>
-    <style>
-        #theme-toggle,
-        .top-link {
-            display: none;
-        }
-
-    </style>
-    <style>
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --theme: rgb(29, 30, 32);
-                --entry: rgb(46, 46, 51);
-                --primary: rgb(218, 218, 219);
-                --secondary: rgb(155, 156, 157);
-                --tertiary: rgb(65, 66, 68);
-                --content: rgb(196, 196, 197);
-                --code-block-bg: rgb(46, 46, 51);
-                --code-bg: rgb(55, 56, 62);
-                --border: rgb(51, 51, 51);
-            }
-
-            .list {
-                background: var(--theme);
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-track {
-                background: 0 0;
-            }
-
-            .list:not(.dark)::-webkit-scrollbar-thumb {
-                border-color: var(--theme);
-            }
-        }
-
-    </style>
-</noscript>
-  
-
-<meta property="og:url" content="https://mobilephone724.github.io/post/20250301-1r5xzc.html">
-  <meta property="og:site_name" content="PaperMod">
-  <meta property="og:title" content="【日拱一卒】2025-03-01">
-  <meta property="og:description" content="Column-Oriented Storage Basic idea: Although fact tables are often over 100 columns wide, a typical data warehouse query only accesses 4 or 5 of them at one time (SELECT *​ queries are rarely needed for analytics) The idea behind column-oriented storage is simple: don’t store all the values from one row together, but store all the values from each column together instead. If each column">
-  <meta property="og:locale" content="en">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2025-03-01T15:14:45+08:00">
-    <meta property="article:modified_time" content="2025-03-01T15:27:33+08:00">
-      <meta property="og:image" content="https://mobilephone724.github.io/images/papermod-cover.png">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://mobilephone724.github.io/images/papermod-cover.png">
-<meta name="twitter:title" content="【日拱一卒】2025-03-01">
-<meta name="twitter:description" content="Column-Oriented Storage Basic idea: Although fact tables are often over 100 columns wide, a typical data warehouse query only accesses 4 or 5 of them at one time (SELECT *​ queries are rarely needed for analytics) The idea behind column-oriented storage is simple: don’t store all the values from one row together, but store all the values from each column together instead. If each column">
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="Column-Oriented Storage
+Basic idea:
 
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://mobilephone724.github.io/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "【日拱一卒】2025-03-01",
-      "item": "https://mobilephone724.github.io/post/20250301-1r5xzc.html"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "【日拱一卒】2025-03-01",
-  "name": "【日拱一卒】2025-03-01",
-  "description": "Column-Oriented Storage Basic idea: Although fact tables are often over 100 columns wide, a typical data warehouse query only accesses 4 or 5 of them at one time (SELECT *​ queries are rarely needed for analytics) The idea behind column-oriented storage is simple: don’t store all the values from one row together, but store all the values from each column together instead. If each column",
-  "keywords": [
+Although fact tables are often over 100 columns wide, a typical data warehouse query only accesses 4 or 5 of them at one time (SELECT *​ queries are rarely needed for analytics)
+
+
+The idea behind column-oriented storage is simple: don’t store all the values from one row together, but store all the values from each column together instead. If each column is stored in a separate file, a query only needs to read and parse those columns that are used in that query, which can save a lot of work">  
+
+  <title>
     
-  ],
-  "articleBody": "Column-Oriented Storage Basic idea: Although fact tables are often over 100 columns wide, a typical data warehouse query only accesses 4 or 5 of them at one time (SELECT *​ queries are rarely needed for analytics)\nThe idea behind column-oriented storage is simple: don’t store all the values from one row together, but store all the values from each column together instead. If each column is stored in a separate file, a query only needs to read and parse those columns that are used in that query, which can save a lot of work\n‍\nColumn Compression ​​\nOften, the number of distinct values in a column is small compared to the number of rows (for example, a retailer may have billions of sales transactions, but only 100,000 distinct products). We can now take a column with n distinct values and turn it into n separate bitmaps: one bitmap for each distinct value, with one bit for each row. The bit is 1 if the row has that value, and 0 if not.\n​WHERE product_sk IN (30, 68, 69):​ Load the three bitmaps for product_sk = 30, product_sk = 68, and product_sk = 69, and calculate the bitwise OR of the three bitmaps, which can be done very efficiently. ​WHERE product_sk = 31 AND store_sk = 3:​ Load the bitmaps for product_sk = 31 and store_sk = 3, and calculate the bitwise AND. This works because the columns contain the rows in the same order, so the kth bit in one column’s bitmap corresponds to the same row as the kth bit in another column’s bitmap. Writing to Column-Oriented Storage Column-oriented storage, compression, and sorting all help to make those read queries faster. However, they have the downside of making writes more difficult.\nFortunately, we have already seen a good solution earlier in this chapter: LSM-trees. All writes first go to an in-memory store, where they are added to a sorted structure and prepared for writing to disk\n‍\nAggregation: Data Cubes and Materialized Views If the same aggregates are used by many different queries, it can be wasteful to crunch through the raw data every time. Why not cache some of the counts or sums that queries use most often?\n​​\n‍\nLSM TREE Short introduction this time. The data structure may worth a deep study!. The following contents are from deepseek:\nLSM-Tree（日志结构合并树）简介 LSM-Tree（Log-Structured Merge-Tree）是一种高效处理高写入吞吐量的存储数据结构，广泛应用于现代数据库（如LevelDB、RocksDB、Cassandra）和存储引擎中。其核心设计目标是通过顺序写入优化写性能，同时通过分层合并（Compaction）平衡读写效率。\n核心设计思想 写入优化：\n内存缓冲（MemTable） ：所有写入操作首先进入内存中的有序结构（MemTable），避免直接随机写磁盘。 顺序写入磁盘（SSTable） ：当MemTable填满后，冻结为不可变的SSTable（Sorted String Table）并顺序写入磁盘，减少磁盘寻址开销。 分层存储与合并（Compaction） ：\n分层结构：磁盘上的SSTable按层级组织，通常分为多个层级（如Level 0到Level N），低层级数据较新，高层级数据较旧且合并后更大。 合并过程：后台定期将低层级的SSTable与高层级合并，消除重复数据（如删除标记），减少读取时的I/O放大问题。 关键组件 MemTable：\n基于内存的有序结构（如跳表或平衡树），支持快速插入和查询。 写入达到阈值后冻结，转为SSTable写入磁盘。 SSTable（Sorted String Table） ：\n不可变的有序键值存储文件，按主键排序。 包含索引（如稀疏索引）和Bloom Filter，加速点查询。 Compaction策略：\nSize-Tiered Compaction（大小分级）：合并同层大小相近的SSTable。 Leveled Compaction（分层合并）：每层仅保留一个SSTable，合并时跨层优化，减少空间放大。 工作流程 写入路径：\n写入MemTable → MemTable写满后转为SSTable → 写入磁盘Level 0。 读取路径：\n先查询MemTable → 未命中则逐层查询SSTable（Level 0到N）。 使用Bloom Filter快速过滤不存在的键，减少磁盘访问。 合并流程：\n后台线程选择层级中的SSTable进行合并，生成新的高层级SSTable，并删除旧文件。 优缺点分析 优点 缺点 ✅ 高写入吞吐量（顺序写优化） ❌ 读取延迟可能较高（需查多层级） ✅ 天然支持数据压缩和去重 ❌ Compaction可能占用CPU/IO资源 ✅ 适合SSD（减少随机写磨损） ❌ 范围查询效率依赖层级合并策略 应用场景 写密集型系统：日志存储、时序数据库（如InfluxDB）、物联网设备数据采集。 分布式数据库：Cassandra、HBase底层存储引擎。 消息队列：Kafka的日志存储（类似LSM思想）。 对比B-Tree 特性 LSM-Tree B-Tree 写入性能 高（顺序写） 低（随机写导致页分裂） 读取性能 点查询依赖Bloom Filter，范围查询较慢 点查询和范围查询均高效 存储开销 可能有写放大（Compaction） 空间利用率高，但需维护页结构 适用场景 写多读少，SSD环境 读多写少，传统硬盘环境 优化技术 Bloom Filter：加速点查询，减少不必要的磁盘访问。 分层索引：为SSTable建立稀疏索引，快速定位数据块。 并行Compaction：多线程合并减少对前台业务的影响。 Tiered vs Leveled Compaction：根据负载选择合并策略（写优化 vs 读优化）。 总结 LSM-Tree通过顺序写入和分层合并机制，在高吞吐写入场景中表现卓越，尤其适合现代SSD存储和分布式系统。尽管读取效率可能低于B-Tree，但通过Bloom Filter和合理的数据分层策略，仍能满足多数实时需求。理解其核心原理和权衡，是设计高性能存储系统的关键。\n‍\n",
-  "wordCount" : "1875",
-  "inLanguage": "en",
-  "image": "https://mobilephone724.github.io/images/papermod-cover.png","datePublished": "2025-03-01T15:14:45+08:00",
-  "dateModified": "2025-03-01T15:27:33+08:00",
-  "author":{
-    "@type": "Person",
-    "name": "Theme PaperMod"
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://mobilephone724.github.io/post/20250301-1r5xzc.html"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "PaperMod",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://mobilephone724.github.io/favicon.ico"
-    }
-  }
-}
-</script>
-</head>
-
-<body class="" id="top">
-<script>
-    if (localStorage.getItem("pref-theme") === "dark") {
-        document.body.classList.add('dark');
-    } else if (localStorage.getItem("pref-theme") === "light") {
-        document.body.classList.remove('dark')
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.body.classList.add('dark');
-    }
-
-</script>
-
-<header class="header">
-    <nav class="nav">
-        <div class="logo">
-            <a href="https://mobilephone724.github.io/" accesskey="h" title="PaperMod (Alt + H)">PaperMod</a>
-            <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
-                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="5"></circle>
-                        <line x1="12" y1="1" x2="12" y2="3"></line>
-                        <line x1="12" y1="21" x2="12" y2="23"></line>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                        <line x1="1" y1="12" x2="3" y2="12"></line>
-                        <line x1="21" y1="12" x2="23" y2="12"></line>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <ul id="menu">
-            <li>
-                <a href="https://mobilephone724.github.io/article" title="长文">
-                    <span>长文</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://mobilephone724.github.io/archives" title="归档">
-                    <span>归档</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://mobilephone724.github.io/search/" title="搜索">
-                    <span>搜索</span>
-                </a>
-            </li>
-            <li>
-                <a href="https://mobilephone724.github.io/tags/" title="标签">
-                    <span>标签</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</header>
-<main class="main">
-
-<article class="post-single">
-  <header class="post-header">
-    <div class="breadcrumbs"><a href="https://mobilephone724.github.io/">Home</a>&nbsp;»&nbsp;<a href="https://mobilephone724.github.io/posts/">Posts</a></div>
-    <h1 class="post-title entry-hint-parent">
       【日拱一卒】2025-03-01
-    </h1>
-    <div class="post-meta"><span title='2025-03-01 15:14:45 +0800 CST'>March 1, 2025</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;Theme PaperMod&nbsp;|&nbsp;<a href="https://github.com/mobilephone724/hugoBlog/tree/content/posts/20250301-1r5xzc.md" rel="noopener noreferrer" target="_blank">Suggest Changes</a>
+    
+  </title>
 
-</div>
-  </header> <div class="toc">
-    <details >
-        <summary accesskey="c" title="(Alt + C)">
-            <span class="details">Table of Contents</span>
-        </summary>
 
-        <div class="inner"><ul>
-                <li>
-                    <a href="#column-oriented-storage" aria-label="Column-Oriented Storage">Column-Oriented Storage</a><ul>
-                        
-                <li>
-                    <a href="#basic-idea" aria-label="Basic idea:">Basic idea:</a></li>
-                <li>
-                    <a href="#column-compression" aria-label="Column Compression">Column Compression</a></li>
-                <li>
-                    <a href="#writing-to-column-oriented-storage" aria-label="Writing to Column-Oriented Storage">Writing to Column-Oriented Storage</a></li>
-                <li>
-                    <a href="#aggregation-data-cubes-and-materialized-views" aria-label="Aggregation: Data Cubes and Materialized Views">Aggregation: Data Cubes and Materialized Views</a></li></ul>
-                </li>
-                <li>
-                    <a href="#lsm-tree" aria-label="LSM TREE">LSM TREE</a><ul>
-                        
-                <li>
-                    <a href="#lsm-tree%e6%97%a5%e5%bf%97%e7%bb%93%e6%9e%84%e5%90%88%e5%b9%b6%e6%a0%91%e7%ae%80%e4%bb%8b" aria-label="LSM-Tree（日志结构合并树）简介">LSM-Tree（日志结构合并树）简介</a><ul>
-                        
-                <li>
-                    <a href="#%e6%a0%b8%e5%bf%83%e8%ae%be%e8%ae%a1%e6%80%9d%e6%83%b3" aria-label="核心设计思想">核心设计思想</a></li>
-                <li>
-                    <a href="#%e5%85%b3%e9%94%ae%e7%bb%84%e4%bb%b6" aria-label="关键组件">关键组件</a></li>
-                <li>
-                    <a href="#%e5%b7%a5%e4%bd%9c%e6%b5%81%e7%a8%8b" aria-label="工作流程">工作流程</a></li>
-                <li>
-                    <a href="#%e4%bc%98%e7%bc%ba%e7%82%b9%e5%88%86%e6%9e%90" aria-label="优缺点分析">优缺点分析</a></li>
-                <li>
-                    <a href="#%e5%ba%94%e7%94%a8%e5%9c%ba%e6%99%af" aria-label="应用场景">应用场景</a></li>
-                <li>
-                    <a href="#%e5%af%b9%e6%af%94b-tree" aria-label="对比B-Tree">对比B-Tree</a></li>
-                <li>
-                    <a href="#%e4%bc%98%e5%8c%96%e6%8a%80%e6%9c%af" aria-label="优化技术">优化技术</a></li>
-                <li>
-                    <a href="#%e6%80%bb%e7%bb%93" aria-label="总结">总结</a>
-                </li>
-            </ul>
-            </li>
-            </ul>
-            </li>
-            </ul>
-        </div>
-    </details>
-</div>
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.51652302d3a998bf7887aed5c2cf89141bbebdf45a2c8f87b0717a3cf4f51c4e53c694c328fb1de78c3a625a1c01f80745bf1f2f42c040647a245cbbb6c2d1d7.css" integrity="sha512-UWUjAtOpmL94h67Vws&#43;JFBu&#43;vfRaLI&#43;HsHF6PPT1HE5TxpTDKPsd54w6YlocAfgHRb8fL0LAQGR6JFy7tsLR1w==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+                <div class="post-meta">
+                    <a href="/">..</a>
 
-  <div class="post-content"><h2 id="column-oriented-storage">Column-Oriented Storage<a hidden class="anchor" aria-hidden="true" href="#column-oriented-storage">#</a></h2>
-<h3 id="basic-idea">Basic idea:<a hidden class="anchor" aria-hidden="true" href="#basic-idea">#</a></h3>
+                    <p>
+                        <time datetime="2025-03-01 15:14:45 &#43;0800 CST">
+                            2025-03-01
+                        </time>
+                    </p>
+                </div>
+
+<article>
+    <h1>【日拱一卒】2025-03-01</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#column-oriented-storage">Column-Oriented Storage</a>
+      <ul>
+        <li><a href="#basic-idea">Basic idea:</a></li>
+        <li><a href="#column-compression">Column Compression</a></li>
+        <li><a href="#writing-to-column-oriented-storage">Writing to Column-Oriented Storage</a></li>
+        <li><a href="#aggregation-data-cubes-and-materialized-views">Aggregation: Data Cubes and Materialized Views</a></li>
+      </ul>
+    </li>
+    <li><a href="#lsm-tree">LSM TREE</a>
+      <ul>
+        <li><a href="#lsm-tree日志结构合并树简介">LSM-Tree（日志结构合并树）简介</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <h2 id="column-oriented-storage">Column-Oriented Storage</h2>
+<h3 id="basic-idea">Basic idea:</h3>
 <ul>
 <li>
 <p>Although fact tables are often over 100 columns wide, <strong>a typical data warehouse query only accesses 4 or 5 of them at one time</strong> (<code>SELECT *</code>​ queries are rarely needed for analytics)</p>
@@ -265,27 +75,27 @@
 </li>
 </ul>
 <p>‍</p>
-<h3 id="column-compression">Column Compression<a hidden class="anchor" aria-hidden="true" href="#column-compression">#</a></h3>
-<p>​<img alt="image" loading="lazy" src="https://raw.githubusercontent.com/mobilephone724/hugoBlog/siyuan-pub/images/image-20250301222707-tl85kx9.png">​</p>
+<h3 id="column-compression">Column Compression</h3>
+<p>​<img src="https://raw.githubusercontent.com/mobilephone724/hugoBlog/siyuan-pub/images/image-20250301222707-tl85kx9.png" alt="image">​</p>
 <p>Often, the number of distinct values in a column is small compared to the number of rows (for example, a retailer may have billions of sales transactions, but only 100,000 distinct products). <strong>We can now take a column with n distinct values and turn it into n separate bitmaps</strong>: one bitmap for each distinct value, with one bit for each row. The bit is 1 if the row has that value, and 0 if not.</p>
 <ul>
 <li>​<code>WHERE product_sk IN (30, 68, 69):</code>​ Load the three bitmaps for product_sk = 30, product_sk = 68, and product_sk = 69, and calculate the bitwise OR of the three bitmaps, which can be done very efficiently.</li>
 <li>​<code>WHERE product_sk = 31 AND store_sk = 3:</code>​  Load the bitmaps for product_sk = 31 and store_sk = 3, and calculate the bitwise AND. This works because the columns contain the rows in the same order, so the kth bit in one column’s bitmap corresponds to the same row as the kth bit in another column’s bitmap.</li>
 </ul>
-<h3 id="writing-to-column-oriented-storage">Writing to Column-Oriented Storage<a hidden class="anchor" aria-hidden="true" href="#writing-to-column-oriented-storage">#</a></h3>
+<h3 id="writing-to-column-oriented-storage">Writing to Column-Oriented Storage</h3>
 <p>Column-oriented storage, compression, and sorting all help to make those read queries faster. However, they have the downside of making writes more difficult.</p>
 <p>Fortunately, we have already seen a good solution earlier in this chapter: <strong>LSM-trees</strong>. All writes first go to an in-memory store, where they are added to a sorted structure and prepared for writing to disk</p>
 <p>‍</p>
-<h3 id="aggregation-data-cubes-and-materialized-views">Aggregation: Data Cubes and Materialized Views<a hidden class="anchor" aria-hidden="true" href="#aggregation-data-cubes-and-materialized-views">#</a></h3>
+<h3 id="aggregation-data-cubes-and-materialized-views">Aggregation: Data Cubes and Materialized Views</h3>
 <p>If the same aggregates are used by many different queries, it can be wasteful to crunch through the raw data every time. <strong>Why not cache some of the counts or sums that queries use most often?</strong></p>
-<p>​<img alt="image" loading="lazy" src="https://raw.githubusercontent.com/mobilephone724/hugoBlog/siyuan-pub/images/image-20250301223112-syh1rh7.png">​</p>
+<p>​<img src="https://raw.githubusercontent.com/mobilephone724/hugoBlog/siyuan-pub/images/image-20250301223112-syh1rh7.png" alt="image">​</p>
 <p>‍</p>
-<h2 id="lsm-tree">LSM TREE<a hidden class="anchor" aria-hidden="true" href="#lsm-tree">#</a></h2>
+<h2 id="lsm-tree">LSM TREE</h2>
 <p>Short introduction this time. The data structure may worth a deep study!. The following contents are from deepseek:</p>
-<h3 id="lsm-tree日志结构合并树简介">LSM-Tree（日志结构合并树）简介<a hidden class="anchor" aria-hidden="true" href="#lsm-tree日志结构合并树简介">#</a></h3>
+<h3 id="lsm-tree日志结构合并树简介">LSM-Tree（日志结构合并树）简介</h3>
 <p><strong>LSM-Tree</strong>（Log-Structured Merge-Tree）是一种高效处理<strong>高写入吞吐量</strong>的存储数据结构，广泛应用于现代数据库（如LevelDB、RocksDB、Cassandra）和存储引擎中。其核心设计目标是通过<strong>顺序写入</strong>优化写性能，同时通过分层合并（Compaction）平衡读写效率。</p>
 <hr>
-<h4 id="核心设计思想">核心设计思想<a hidden class="anchor" aria-hidden="true" href="#核心设计思想">#</a></h4>
+<h4 id="核心设计思想">核心设计思想</h4>
 <ol>
 <li>
 <p><strong>写入优化</strong>：</p>
@@ -303,7 +113,7 @@
 </li>
 </ol>
 <hr>
-<h4 id="关键组件">关键组件<a hidden class="anchor" aria-hidden="true" href="#关键组件">#</a></h4>
+<h4 id="关键组件">关键组件</h4>
 <ol>
 <li>
 <p><strong>MemTable</strong>：</p>
@@ -328,7 +138,7 @@
 </li>
 </ol>
 <hr>
-<h4 id="工作流程">工作流程<a hidden class="anchor" aria-hidden="true" href="#工作流程">#</a></h4>
+<h4 id="工作流程">工作流程</h4>
 <ol>
 <li>
 <p><strong>写入路径</strong>：</p>
@@ -351,71 +161,71 @@
 </li>
 </ol>
 <hr>
-<h4 id="优缺点分析">优缺点分析<a hidden class="anchor" aria-hidden="true" href="#优缺点分析">#</a></h4>
+<h4 id="优缺点分析">优缺点分析</h4>
 <table>
-<thead>
-<tr>
-<th><strong>优点</strong></th>
-<th><strong>缺点</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>✅ 高写入吞吐量（顺序写优化）</td>
-<td>❌ 读取延迟可能较高（需查多层级）</td>
-</tr>
-<tr>
-<td>✅ 天然支持数据压缩和去重</td>
-<td>❌ Compaction可能占用CPU/IO资源</td>
-</tr>
-<tr>
-<td>✅ 适合SSD（减少随机写磨损）</td>
-<td>❌ 范围查询效率依赖层级合并策略</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th><strong>优点</strong></th>
+          <th><strong>缺点</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>✅ 高写入吞吐量（顺序写优化）</td>
+          <td>❌ 读取延迟可能较高（需查多层级）</td>
+      </tr>
+      <tr>
+          <td>✅ 天然支持数据压缩和去重</td>
+          <td>❌ Compaction可能占用CPU/IO资源</td>
+      </tr>
+      <tr>
+          <td>✅ 适合SSD（减少随机写磨损）</td>
+          <td>❌ 范围查询效率依赖层级合并策略</td>
+      </tr>
+  </tbody>
 </table>
 <hr>
-<h4 id="应用场景">应用场景<a hidden class="anchor" aria-hidden="true" href="#应用场景">#</a></h4>
+<h4 id="应用场景">应用场景</h4>
 <ol>
 <li><strong>写密集型系统</strong>：日志存储、时序数据库（如InfluxDB）、物联网设备数据采集。</li>
 <li><strong>分布式数据库</strong>：Cassandra、HBase底层存储引擎。</li>
 <li><strong>消息队列</strong>：Kafka的日志存储（类似LSM思想）。</li>
 </ol>
 <hr>
-<h4 id="对比b-tree">对比B-Tree<a hidden class="anchor" aria-hidden="true" href="#对比b-tree">#</a></h4>
+<h4 id="对比b-tree">对比B-Tree</h4>
 <table>
-<thead>
-<tr>
-<th><strong>特性</strong></th>
-<th><strong>LSM-Tree</strong></th>
-<th><strong>B-Tree</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>写入性能</strong></td>
-<td>高（顺序写）</td>
-<td>低（随机写导致页分裂）</td>
-</tr>
-<tr>
-<td><strong>读取性能</strong></td>
-<td>点查询依赖Bloom Filter，范围查询较慢</td>
-<td>点查询和范围查询均高效</td>
-</tr>
-<tr>
-<td><strong>存储开销</strong></td>
-<td>可能有写放大（Compaction）</td>
-<td>空间利用率高，但需维护页结构</td>
-</tr>
-<tr>
-<td><strong>适用场景</strong></td>
-<td>写多读少，SSD环境</td>
-<td>读多写少，传统硬盘环境</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th><strong>特性</strong></th>
+          <th><strong>LSM-Tree</strong></th>
+          <th><strong>B-Tree</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>写入性能</strong></td>
+          <td>高（顺序写）</td>
+          <td>低（随机写导致页分裂）</td>
+      </tr>
+      <tr>
+          <td><strong>读取性能</strong></td>
+          <td>点查询依赖Bloom Filter，范围查询较慢</td>
+          <td>点查询和范围查询均高效</td>
+      </tr>
+      <tr>
+          <td><strong>存储开销</strong></td>
+          <td>可能有写放大（Compaction）</td>
+          <td>空间利用率高，但需维护页结构</td>
+      </tr>
+      <tr>
+          <td><strong>适用场景</strong></td>
+          <td>写多读少，SSD环境</td>
+          <td>读多写少，传统硬盘环境</td>
+      </tr>
+  </tbody>
 </table>
 <hr>
-<h4 id="优化技术">优化技术<a hidden class="anchor" aria-hidden="true" href="#优化技术">#</a></h4>
+<h4 id="优化技术">优化技术</h4>
 <ol>
 <li><strong>Bloom Filter</strong>：加速点查询，减少不必要的磁盘访问。</li>
 <li><strong>分层索引</strong>：为SSTable建立稀疏索引，快速定位数据块。</li>
@@ -423,217 +233,12 @@
 <li><strong>Tiered vs Leveled Compaction</strong>：根据负载选择合并策略（写优化 vs 读优化）。</li>
 </ol>
 <hr>
-<h4 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h4>
+<h4 id="总结">总结</h4>
 <p>LSM-Tree通过<strong>顺序写入</strong>和<strong>分层合并</strong>机制，在高吞吐写入场景中表现卓越，尤其适合现代SSD存储和分布式系统。尽管读取效率可能低于B-Tree，但通过Bloom Filter和合理的数据分层策略，仍能满足多数实时需求。理解其核心原理和权衡，是设计高性能存储系统的关键。</p>
 <p>‍</p>
 
-
-  </div>
-
-  <footer class="post-footer">
-    <ul class="post-tags">
-    </ul>
-<nav class="paginav">
-  <a class="prev" href="https://mobilephone724.github.io/post/20250302-8ctcr.html">
-    <span class="title">« Prev</span>
-    <br>
-    <span>【日拱一卒】2025-03-02</span>
-  </a>
-  <a class="next" href="https://mobilephone724.github.io/post/airwallex-survey-z1tsrmd.html">
-    <span class="title">Next »</span>
-    <br>
-    <span>Airwallex调研</span>
-  </a>
-</nav>
-
-
-<ul class="share-buttons">
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-01 on x"
-            href="https://x.com/intent/tweet/?text=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-01&amp;url=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250301-1r5xzc.html&amp;hashtags=">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M512 62.554 L 512 449.446 C 512 483.97 483.97 512 449.446 512 L 62.554 512 C 28.03 512 0 483.97 0 449.446 L 0 62.554 C 0 28.03 28.029 0 62.554 0 L 449.446 0 C 483.971 0 512 28.03 512 62.554 Z M 269.951 190.75 L 182.567 75.216 L 56 75.216 L 207.216 272.95 L 63.9 436.783 L 125.266 436.783 L 235.9 310.383 L 332.567 436.783 L 456 436.783 L 298.367 228.367 L 432.367 75.216 L 371.033 75.216 Z M 127.633 110 L 164.101 110 L 383.481 400.065 L 349.5 400.065 Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-01 on linkedin"
-            href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250301-1r5xzc.html&amp;title=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-01&amp;summary=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-01&amp;source=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250301-1r5xzc.html">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-01 on reddit"
-            href="https://reddit.com/submit?url=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250301-1r5xzc.html&title=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-01">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-01 on facebook"
-            href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250301-1r5xzc.html">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-01 on whatsapp"
-            href="https://api.whatsapp.com/send?text=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-01%20-%20https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250301-1r5xzc.html">
-            <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-01 on telegram"
-            href="https://telegram.me/share/url?text=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-01&amp;url=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250301-1r5xzc.html">
-            <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28" height="30px" width="30px" fill="currentColor">
-                <path
-                    d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
-            </svg>
-        </a>
-    </li>
-    <li>
-        <a target="_blank" rel="noopener noreferrer" aria-label="share 【日拱一卒】2025-03-01 on ycombinator"
-            href="https://news.ycombinator.com/submitlink?t=%e3%80%90%e6%97%a5%e6%8b%b1%e4%b8%80%e5%8d%92%e3%80%912025-03-01&u=https%3a%2f%2fmobilephone724.github.io%2fpost%2f20250301-1r5xzc.html">
-            <svg version="1.1" xml:space="preserve" width="30px" height="30px" viewBox="0 0 512 512" fill="currentColor"
-                xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape">
-                <path
-                    d="M449.446 0C483.971 0 512 28.03 512 62.554L512 449.446C512 483.97 483.97 512 449.446 512L62.554 512C28.03 512 0 483.97 0 449.446L0 62.554C0 28.03 28.029 0 62.554 0L449.446 0ZM183.8767 87.9921H121.8427L230.6673 292.4508V424.0079H281.3328V292.4508L390.1575 87.9921H328.1233L256 238.2489z" />
-            </svg>
-        </a>
-    </li>
-</ul>
-
-  </footer>
 </article>
-    </main>
-    
-<footer class="footer">
-        <span>© <a href="https://github.com/adityatelange/hugo-PaperMod/graphs/contributors">PaperMod Contributors</a></span> · 
 
-    <span>
-        Powered by
-        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
-        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
-    </span>
-</footer>
-<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
-        <path d="M12 6H0l6-6z" />
-    </svg>
-</a>
-
-<script>
-    let menu = document.getElementById('menu')
-    if (menu) {
-        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
-        menu.onscroll = function () {
-            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
-        }
-    }
-
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-            e.preventDefault();
-            var id = this.getAttribute("href").substr(1);
-            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
-                    behavior: "smooth"
-                });
-            } else {
-                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
-            }
-            if (id === "top") {
-                history.replaceState(null, null, " ");
-            } else {
-                history.pushState(null, null, `#${id}`);
-            }
-        });
-    });
-
-</script>
-<script>
-    var mybutton = document.getElementById("top-link");
-    window.onscroll = function () {
-        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
-            mybutton.style.visibility = "visible";
-            mybutton.style.opacity = "1";
-        } else {
-            mybutton.style.visibility = "hidden";
-            mybutton.style.opacity = "0";
-        }
-    };
-
-</script>
-<script>
-    document.getElementById("theme-toggle").addEventListener("click", () => {
-        if (document.body.className.includes("dark")) {
-            document.body.classList.remove('dark');
-            localStorage.setItem("pref-theme", 'light');
-        } else {
-            document.body.classList.add('dark');
-            localStorage.setItem("pref-theme", 'dark');
-        }
-    })
-
-</script>
-<script>
-    document.querySelectorAll('pre > code').forEach((codeblock) => {
-        const container = codeblock.parentNode.parentNode;
-
-        const copybutton = document.createElement('button');
-        copybutton.classList.add('copy-code');
-        copybutton.innerHTML = 'copy';
-
-        function copyingDone() {
-            copybutton.innerHTML = 'copied!';
-            setTimeout(() => {
-                copybutton.innerHTML = 'copy';
-            }, 2000);
-        }
-
-        copybutton.addEventListener('click', (cb) => {
-            if ('clipboard' in navigator) {
-                navigator.clipboard.writeText(codeblock.textContent);
-                copyingDone();
-                return;
-            }
-
-            const range = document.createRange();
-            range.selectNodeContents(codeblock);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-            try {
-                document.execCommand('copy');
-                copyingDone();
-            } catch (e) { };
-            selection.removeRange(range);
-        });
-
-        if (container.classList.contains("highlight")) {
-            container.appendChild(copybutton);
-        } else if (container.parentNode.firstChild == container) {
-            
-        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
-            
-            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
-        } else {
-            
-            codeblock.parentNode.appendChild(copybutton);
-        }
-    });
-</script>
-</body>
-
-</html>
+            </div>
+        </main>
+    </body></html>

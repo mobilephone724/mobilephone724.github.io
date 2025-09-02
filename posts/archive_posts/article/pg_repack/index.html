@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=53944&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="principle
+pg_repack 1.5.0 &ndash; Reorganize tables in PostgreSQL databases with minimal locks
+https://github.com/reorg/pg_repack
+
+create a log table to record changes made to the original table
+add a trigger onto the original table, logging INSERTs, UPDATEs and DELETEs into our log table
+create a new table containing all the rows in the old table
+build indexes on this new table
+apply all changes which have accrued in the log table to the new table
+swap the tables, including indexes and toast tables, using the system catalogs
+drop the original table
+
+The basic idea is">  
+
+  <title>
+    
+      pg_repack
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:53944/css/main.900100e9dbee2d56c58fac8bb717037cae7e26a9c36c29d2ff587bdd65f0cbbe510b41d81a3bb234919cdfdc7550d786b2fab70c8fc507772d732fe097106d12.css" integrity="sha512-kAEA6dvuLVbFj6yLtxcDfK5&#43;JqnDbCnS/1h73WXwy75RC0HYGjuyNJGc39x1UNeGsvq3DI/FB3ctcy/glxBtEg==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="0001-01-01 00:00:00 &#43;0000 UTC">
+            0001-01-01
+        </time>
+    </p>
+
+    <h1>pg_repack</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#principle">principle</a></li>
+    <li><a href="#details">details</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <h2 id="principle">principle</h2>
+<p><a href="https://reorg.github.io/pg_repack/">pg_repack 1.5.0 &ndash; Reorganize tables in PostgreSQL databases with minimal locks</a></p>
+<p><a href="https://github.com/reorg/pg_repack">https://github.com/reorg/pg_repack</a></p>
+<ol>
+<li>create a log table to record changes made to the original table</li>
+<li>add a trigger onto the original table, logging INSERTs, UPDATEs and DELETEs into our log table</li>
+<li>create a new table containing all the rows in the old table</li>
+<li>build indexes on this new table</li>
+<li>apply all changes which have accrued in the log table to the new table</li>
+<li>swap the tables, including indexes and toast tables, using the system catalogs</li>
+<li>drop the original table</li>
+</ol>
+<p>The basic idea is</p>
+<ol>
+<li>transport the existent data with a old snapshot</li>
+<li>record the incremental data into a table and replay the record</li>
+</ol>
+<p>And this idea is so general that almost all online-ddl ability in PG(supported in extensions) takes the way.</p>
+<h2 id="details">details</h2>
+<p>Although the idea is so simple, there are many problems to challenge. Such as how to ensure there are no duplicated or lost data in both existent part and incremental part. So code-level details are shown below:</p>
+<p>All the 7 step are manipulated through 2 connections: See function <code>repack_one_table</code> for detail:</p>
+<ol>
+<li>
+<p>create a log table to record changes made to the original table</p>
+</li>
+<li>
+<p>add a trigger onto the original table, logging INSERTs, UPDATEs and DELETEs into our log table</p>
+<ol>
+<li><code>conn1</code> starts a transaction and acquire an <a href="https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS">advisory lock</a> to prevent potential conflict with other repack process</li>
+<li>get the <code>AccessiveExclusive</code> lock to the original table, <code>tbl</code> for example</li>
+<li>create the trigger on <code>tbl</code> and the corresponding  <code>log-table</code> where the incremental changes will be stored.</li>
+<li>(Just comments: If we release the exclusive lock here, we may not able to acquire a shared lock later if another process has gotten a exclusive lock in the interval, which can cause that we have no way to continue or revert what we have done. So we must acquire a lock during the whole process. 👌)</li>
+<li><code>conn2</code> tries to acquire the <code>AccessiveShared</code> lock on <code>tbl</code>. Since the <code>conn1</code> &rsquo;s transaction hasn&rsquo;t finished, this lock acquisition will be blocked.</li>
+<li><code>conn1</code> kill all connections that tries to perform a DDL operation, whose character is waiting for <code>AccessiveLock</code> . Then, <code>conn1</code> commits.</li>
+<li>Now <code>conn2</code> get the <code>AccessiveShared</code> lock on <code>tbl</code> , which can ensure that no other dll operation on <code>tbl</code> ✌️</li>
+</ol>
+</li>
+<li>
+<p>create a new table containing all the rows in the old table</p>
+<ol>
+<li>
+<p><code>conn1</code> begins a serializable transaction( repeatable read, at least)</p>
+</li>
+<li>
+<p><code>conn1</code> get the <code>vxids</code> of current active transactions</p>
+</li>
+<li>
+<p><code>conn1</code> delete all data in <code>tbl</code> with the current snapshot (This means we don&rsquo;t perform a “truncate” operation ). This is a very skillful technique:</p>
+<ol>
+<li>
+<p><strong>The table shows the secret:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>tbl</th>
+          <th>log table</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>visible</td>
+          <td>existent data</td>
+          <td>empty</td>
+      </tr>
+      <tr>
+          <td>invisible</td>
+          <td>incremental data</td>
+          <td>incremental data</td>
+      </tr>
+  </tbody>
+</table>
+</li>
+<li>
+<p>All existent data is visible in <code>tbl</code> through the current snapshot</p>
+</li>
+<li>
+<p>All incremental data is invisible in <code>log table</code> and <code>tbl</code> (The latter one isn&rsquo;t important</p>
+</li>
+<li>
+<p>So there is no lost or duplicated data</p>
+</li>
+</ol>
+</li>
+<li>
+<p><code>conn1</code> copies all data in <code>tbl</code> to a temp table <code>tbl-tmp</code>  for example</p>
+</li>
+<li>
+<p><code>conn1</code> commits</p>
+</li>
+</ol>
+</li>
+<li>
+<p>build indexes on this new table. (I don&rsquo;t care this.)</p>
+</li>
+<li>
+<p>apply all changes which have accrued in the log table to the new table</p>
+<ol>
+<li><code>conn1</code> apply at most 1000 records in <code>log-table</code> , until
+<ol>
+<li>the remaining records are few. AND</li>
+<li>All transactions in <code>vxids</code> finish. This operation is to keep the ISOLATION, but it still has some accidence. #TODO</li>
+</ol>
+</li>
+<li>(Just comments: Now we believe that there is few records in <code>log-table</code> .)</li>
+<li><code>conn2</code> acquire the <code>AccessiveExclusive</code> lock. Note that no other process can do that</li>
+<li><code>conn2</code> apply all data in <code>log-table</code></li>
+</ol>
+</li>
+<li>
+<p>swap the tables, including indexes and toast tables, using the system catalogs</p>
+<ol>
+<li><code>conn2</code> swaps <code>relfilenode</code> between <code>tbl-tmp</code> and <code>tbl</code></li>
+<li><code>conn2</code> commits</li>
+</ol>
+</li>
+<li>
+<p>drop the original table</p>
+<ol>
+<li><code>conn1</code> drop the current <code>tbl-tmp</code></li>
+<li><code>conn1</code> analyze the current <code>tbl</code></li>
+<li><code>conn1</code> release the advisory lock</li>
+</ol>
+</li>
+</ol>
+
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

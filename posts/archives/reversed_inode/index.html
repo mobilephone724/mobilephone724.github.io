@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="0x0 what is inode
+From https://en.wikipedia.org/wiki/Inode
+
+The inode (index node) is a data structure in a Unix-style file system that describes a file-system object such as a file or a directory. Each inode stores the attributes and disk block locations of the object&rsquo;s data
+From https://www.redhat.com/sysadmin/inodes-linux-filesystem
+
+By definition, an inode is an index node. It serves as a unique identifier for a specific piece of metadata on a given filesystem. Each piece of metadata describes what we think of as a file. That&rsquo;s right, inodes operate on each filesystem, independent of the others.">  
+
+  <title>
+    
+      Number of Reversed Inode
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:1313/css/main.900100e9dbee2d56c58fac8bb717037cae7e26a9c36c29d2ff587bdd65f0cbbe510b41d81a3bb234919cdfdc7550d786b2fab70c8fc507772d732fe097106d12.css" integrity="sha512-kAEA6dvuLVbFj6yLtxcDfK5&#43;JqnDbCnS/1h73WXwy75RC0HYGjuyNJGc39x1UNeGsvq3DI/FB3ctcy/glxBtEg==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+                <div class="post-meta">
+                    <a href="/">..</a>
+
+                    <p>
+                        <time datetime="2024-08-03 17:13:10 &#43;0800 CST">
+                            2024-08-03
+                        </time>
+                    </p>
+                </div>
+
+<article>
+    <h1>Number of Reversed Inode</h1>
+
+    
+
+    <h2 id="0x0-what-is-inode">0x0 what is inode</h2>
+<p>From <a href="https://en.wikipedia.org/wiki/Inode">https://en.wikipedia.org/wiki/Inode</a></p>
+<blockquote>
+<p>The <strong>inode</strong> (index node) is a <a href="https://en.wikipedia.org/wiki/Data_structure">data structure</a> in a <a href="https://en.wikipedia.org/wiki/Unix_filesystem">Unix-style file system</a> that describes a <a href="https://en.wikipedia.org/wiki/File_system">file-system</a> object such as a <a href="https://en.wikipedia.org/wiki/Computer_file">file</a> or a <a href="https://en.wikipedia.org/wiki/Directory_(computing)">directory</a>. Each inode stores the attributes and disk block locations of the object&rsquo;s data</p></blockquote>
+<p>From <a href="https://www.redhat.com/sysadmin/inodes-linux-filesystem">https://www.redhat.com/sysadmin/inodes-linux-filesystem</a></p>
+<blockquote>
+<p>By definition, an inode is an index node. It serves as a unique identifier for a specific piece of metadata on a given filesystem. Each piece of metadata describes what we think of as a file. That&rsquo;s right, inodes operate on each filesystem, independent of the others.</p></blockquote>
+<p>Once you create a file, directory and so on, an inode is consumed. So it’s important to remain enough inodes.</p>
+<h2 id="0x1-how-many-inodes-are-there">0x1 <strong>How many inodes are there?</strong></h2>
+<p>The inode upper limit is determined once the filesystem is initialized.</p>
+<p>For ext4, there are two method to appoint the number</p>
+<ol>
+<li><code>bytes-per-inode</code> :
+<ol>
+<li>This is the default method to determine the number of inodes.</li>
+<li>This option approves an method to help estimate the inodes you may need through the average file size. <code>mke2fs</code> creates an inode for every <code>bytes-per-inode</code> bytes of space on the disk. The larger the <em>bytes-per-inode</em> ratio, the fewer inodes will be created.</li>
+<li>The default value is 16k.
+<ol>
+<li>If you create too many 8k files, the inode will run out before the disk space. So the disk space is wasted</li>
+<li>If you create too many 32k files, the disk space will run out before the inode. So the inode is wasted</li>
+</ol>
+</li>
+</ol>
+</li>
+<li><code>number-of-inodes</code> : Overrides the default calculation of the number of inodes that should be reserved for the filesystem.</li>
+</ol>
+<p>See <a href="https://wiki.archlinux.org/title/Ext4">https://wiki.archlinux.org/title/Ext4</a> for detail</p>
+
+</article>
+
+            </div>
+        </main>
+    </body></html>

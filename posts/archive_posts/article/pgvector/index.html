@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=53944&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="序言
+pgvector是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。
+PASE中提到，向量ANN算法包括4类
+
+tree-based algorithms
+
+KD-Tree
+RTree
+
+
+quantization-based algorithms
+
+IVFFlat
+IVFADC
+IMI
+
+
+graph based algorithms
+
+HNSW
+NSG
+SSG
+
+
+hash-base algorithms
+
+LSH
+pgvector 包括两个算法，IVFFlat 和 HNSW，后续内容将以这两个算法的内容及其实现展开。
+
+
+
+IVFFlat
+概览
+IVFFlat 算法主要包括以下几个步骤
+
+索引构建阶段
+
+使用 KMeans 将数据集划分成多个簇(cluster)
+
+
+查询阶段
+
+通过每个簇的中心点（向量是高维的点）获取N个最近的簇
+遍历这N个簇的所有点，从中找到最近的K个点
+
+
+
+算法介绍
+基础算法kmeans
+reference k-means clustering - Wikipedia
+算法目标：选取K个中心点，使得数据集中的所有点到其最近的中心点“距离”之和最近，以平方和距离为例：
+Given a set of observations $(x_1, x_2, \dots, x_n)$, where each observation is a $d$-dimensional real vector, k-means clustering aims to partition the $n$ observations into $k$ ($\leq n$) sets $S = {S_1, S_2, \dot, S_k}$ so as to minimize the within-cluster sum of squares (WCSS). Formally, the objective is to find:
+
+算法过程：
+我们可以很容易的证明目标函数是关于$S$的凸函数
+Given an initial set of $k$ means $m_1^{1}, \dots , m_k^{(1)}$ (see below), the algorithm proceeds by alternating between two steps:">  
+
+  <title>
+    
+      PGVECTOR AND VECTOR DATABASE
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:53944/css/main.900100e9dbee2d56c58fac8bb717037cae7e26a9c36c29d2ff587bdd65f0cbbe510b41d81a3bb234919cdfdc7550d786b2fab70c8fc507772d732fe097106d12.css" integrity="sha512-kAEA6dvuLVbFj6yLtxcDfK5&#43;JqnDbCnS/1h73WXwy75RC0HYGjuyNJGc39x1UNeGsvq3DI/FB3ctcy/glxBtEg==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="0001-01-01 00:00:00 &#43;0000 UTC">
+            0001-01-01
+        </time>
+    </p>
+
+    <h1>PGVECTOR AND VECTOR DATABASE</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#序言">序言</a></li>
+    <li><a href="#ivfflat">IVFFlat</a>
+      <ul>
+        <li><a href="#概览">概览</a></li>
+        <li><a href="#算法介绍">算法介绍</a></li>
+        <li><a href="#实现介绍">实现介绍</a></li>
+      </ul>
+    </li>
+    <li><a href="#hnsw">HNSW</a>
+      <ul>
+        <li><a href="#概览-1">概览</a></li>
+        <li><a href="#算法介绍-1">算法介绍</a></li>
+        <li><a href="#pgvector中的算法实现">PGVECTOR中的算法实现</a></li>
+        <li><a href="#page-representation-1">page representation</a></li>
+      </ul>
+    </li>
+    <li><a href="#vector-database-调研">vector database 调研</a>
+      <ul>
+        <li><a href="#qdrant">qdrant</a></li>
+      </ul>
+    </li>
+    <li><a href="#附录">附录</a>
+      <ul>
+        <li><a href="#trianlge-inequality-kmeans">trianlge-inequality-Kmeans</a></li>
+        <li><a href="#采样算法-knuths-algorithm-s">采样算法 Knuth&rsquo;s algorithm S</a></li>
+      </ul>
+    </li>
+    <li><a href="#后记">后记</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <h2 id="序言">序言</h2>
+<p><code>pgvector</code>是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。
+<code>PASE</code>中提到，向量ANN算法包括4类</p>
+<ol>
+<li>tree-based algorithms
+<ol>
+<li>KD-Tree</li>
+<li>RTree</li>
+</ol>
+</li>
+<li>quantization-based algorithms
+<ol>
+<li>IVFFlat</li>
+<li>IVFADC</li>
+<li>IMI</li>
+</ol>
+</li>
+<li>graph based algorithms
+<ol>
+<li>HNSW</li>
+<li>NSG</li>
+<li>SSG</li>
+</ol>
+</li>
+<li>hash-base algorithms
+<ol>
+<li>LSH
+<code>pgvector</code> 包括两个算法，<code>IVFFlat</code> 和 <code>HNSW</code>，后续内容将以这两个算法的内容及其实现展开。</li>
+</ol>
+</li>
+</ol>
+<h2 id="ivfflat">IVFFlat</h2>
+<h3 id="概览">概览</h3>
+<p>IVFFlat 算法主要包括以下几个步骤</p>
+<ul>
+<li>索引构建阶段
+<ul>
+<li>使用 <code>KMeans</code> 将数据集划分成多个簇(cluster)</li>
+</ul>
+</li>
+<li>查询阶段
+<ul>
+<li>通过每个簇的中心点（向量是高维的点）获取N个最近的簇</li>
+<li>遍历这N个簇的所有点，从中找到最近的K个点</li>
+</ul>
+</li>
+</ul>
+<h3 id="算法介绍">算法介绍</h3>
+<h4 id="基础算法kmeans">基础算法kmeans</h4>
+<p>reference <a href="https://en.wikipedia.org/wiki/K-means_clustering">k-means clustering - Wikipedia</a>
+算法目标：选取K个中心点，使得数据集中的所有点到其最近的中心点“距离”之和最近，以平方和距离为例：</p>
+<p>Given a set of observations $(x_1, x_2, \dots, x_n)$, where each observation is a $d$-dimensional real vector, k-means clustering aims to partition the $n$ observations into $k$ ($\leq n$) sets $S = {S_1, S_2, \dot, S_k}$ so as to minimize the within-cluster sum of squares (WCSS). Formally, the objective is to find:
+<img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/kmeans_target.2024_02_12_1707672348.png" alt="">
+算法过程：
+<strong>我们可以很容易的证明目标函数是关于$S$的凸函数</strong>
+Given an initial set of $k$ means $m_1^{1}, \dots , m_k^{(1)}$ (see below), the algorithm proceeds by alternating between two steps:</p>
+<ol>
+<li>
+<p><strong>Assignment step</strong>: Assign each observation to the cluster with the nearest mean: <img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/kmean_assign_step.2024_02_12_1707672359.png" alt=""></p>
+<p>where each $x_p$is assigned to exactly one $S^{t}$, even if it could be assigned to two or more of them.</p>
+</li>
+<li>
+<p><strong>Update step</strong>: Recalculate means (<a href="https://en.wikipedia.org/wiki/Centroids" title="Centroids">centroids</a>) for observations assigned to each cluster.<img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/kmeans_update_step.2024_02_12_1707672369.png" alt=""></p>
+</li>
+</ol>
+<h4 id="kmeans-优化篇">kmeans 优化篇</h4>
+<p>上述算法虽然简洁，但计算上复杂度高。在pgvector的IVFFlat实现中，使用了一些优化算法，主要是如下两篇论文：</p>
+<ul>
+<li>Using Triangle Inequality: 使用三角不等式减少两点间距离的计算次数</li>
+<li>KMeans++ :使用随机点的选取技巧来提高收敛速度和准确率
+<a href="https://cdn.aaai.org/ICML/2003/ICML03-022.pdf">Using the Triangle Inequality to Accelerate k-Means (aaai.org)</a>
+<a href="https://theory.stanford.edu/~sergei/papers/kMeansPP-soda.pdf">kMeansPP-soda.pdf (stanford.edu)</a></li>
+</ul>
+<h5 id="using-triangle-inequality">Using Triangle Inequality</h5>
+<p>思路：</p>
+<ol>
+<li>在高维向量中，计算一次两点之间的距离的代价较高。</li>
+<li>根据一些朴素的思想，假如使用的距离函数满足三角不等式$d(a,b) \leq d(a,c) + d(b,c)$，那么在一次<code>kmeams</code>迭代中，如果点 <code>x</code> 距其中心点 <code>c(x)</code> 的距离很近，而 <code>c(x)</code> 距另一个中心点 <code>c(y)</code> 的距离很远，那么<code>c(y)</code>必然不是<code>x</code> 的中心点，这样就可以避免一次计算。</li>
+</ol>
+<p>根据三角不等式可以推出</p>
+<ol>
+<li>Let <code>x</code> be a point and let <code>b</code> and <code>c</code> be centers. If $d(b, c) &gt; 2d(x,b)$, then $d(x,c) \geq d(x,b)$</li>
+<li>Let <code>x</code> be a point and let <code>b</code> and <code>c</code> be centers, then $d(x,c) \geq \mathrm{max} {0,d(x,b)-d(b,c)}$</li>
+</ol>
+<p>根据上述定理，在Kmeans迭代期间，维护一些状态，即可减少计算量
+过程如</p>
+<p><a href="#trianlge-inequality-Kmeans">使用三角不等式优化Kmeans</a></p>
+<h5 id="kmeans">KMeans++</h5>
+<p>论文中的数学分析很多，其主要目的为：通过在初始化的时候选取恰当的中心点，减少迭代次数。方法为：
+假设向量的全集为$X={x_1,x_2,\dots,x_n}\subset \mathbb{R}^d$  ,$D(x)$ 表示点 $x$ 到其当前中心点的距离</p>
+<ol>
+<li>从$X$ 中随机选择一个点$c_1$</li>
+<li>以$\frac{D(x&rsquo;)}{\sum_{x\in X}D(x)}$ 的概率选择$x&rsquo;$为$c_i$</li>
+<li>重复上一步直到我们选择了 $k$ 个中心点，</li>
+<li>使用标准的k-means算法进行后续处理</li>
+</ol>
+<h3 id="实现介绍">实现介绍</h3>
+<h5 id="page-representation">page representation</h5>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/IVF-pages-represent.2024_02_12_1707672384.png" alt=""></p>
+<h4 id="key-functions">Key functions</h4>
+<h5 id="index-build">index build</h5>
+<p>索引构建分为以下几个步骤</p>
+<ol>
+<li>计算中心点</li>
+<li>构建元信息页（&lsquo;meta page&rsquo;）</li>
+<li>构建中心点页（&lsquo;centerid pages&rsquo;）</li>
+<li>构建数据页（&lsquo;data pages&rsquo;）</li>
+</ol>
+<pre tabindex="0"><code>ivfflatbuild
+	BuildIndex
+		InitBuildState
+		ComputeCenters
+		CreateMetaPage
+		CreateListPages
+		CreateEntryPages
+		FreeBuildState
+</code></pre><h6 id="计算中心点">计算中心点</h6>
+<ol>
+<li>实现上，没有扫描所有的行以计算中心点，而是“采样”一些<code>block</code>。
+<ol>
+<li>会选择$ncenter \times 50$ 作为采样<code>block</code>的数量</li>
+<li></li>
+</ol>
+</li>
+</ol>
+<pre tabindex="0"><code>ComputeCenters
+	SampleRows
+		/* The number of target samples is the number of centers times 50 */
+		numSamples = buildstate-&gt;lists * 50;
+		buildstate-&gt;samples = VectorArrayInit(numSamples, buildstate-&gt;dimensions);
+		BlockSampler_Init
+			&gt; provides algorithm for block level sampling of a relation as discussed on
+			  pgsql-hackers 2004-04-02 (subject &#34;Large DB&#34;)
+			  Since we know the total number of blocks in advance, we can use the straightforward
+			  Algorithm S from Knuth 3.4.2, rather than Vitter&#39;s algorithm.
+		reservoir_init_selection_state
+		while (BlockSampler_HasMore(&amp;buildstate-&gt;bs))
+		table_index_build_range_scan: callback=SampleCallback
+	IvfflatKmeans # Do as kmeans algrithm
+    	if (samples-&gt;length &lt;= centers-&gt;maxlen)
+            QuickCenters(index, samples, centers);
+        else
+    		ElkanKmeans(index, samples, centers);
+
+SampleCallback
+	AddSample
+		if (samples-&gt;length &lt; targsamples)
+			VectorArraySet
+		else
+			if (buildstate-&gt;rowstoskip &lt; 0)
+				rowstoskip = reservoir_get_next_S #skip some future samples
+			else
+				k = sampler_random_fract
+				VectorArraySet	# replace a old with this one randomly
+</code></pre><h6 id="构建元信息页">构建元信息页</h6>
+<pre tabindex="0"><code>CreateMetaPage # info about meta information
+	IvfflatNewBuffer
+	IvfflatInitRegisterPage
+	IvfflatCommitBuffer
+</code></pre><h6 id="构建中心点页">构建中心点页</h6>
+<p>当一个页的剩余空间不够时，使用字段<code>nextblkno</code>指向下一个页</p>
+<pre tabindex="0"><code>typedef struct IvfflatPageOpaqueData
+{
+	BlockNumber nextblkno;
+	uint16		unused;
+	uint16		page_id;		/* for identification of IVFFlat indexes */
+}			IvfflatPageOpaqueData;
+
+
+CreateListPages # info about center infomation
+	foreach sampled vector
+		if (PageGetFreeSpace &lt; listSize) # we need more free space to store the vector 
+			IvfflatAppendPage
+				newbuf = IvfflatNewBuffer
+				newpage = GenericXLogRegisterBuffer
+				IvfflatPageGetOpaque
+				old_page-&gt;next = this_page
+				IvfflatInitPage
+		PageAddItem # copy this point to the page
+</code></pre><h6 id="构建数据页">构建数据页</h6>
+<pre tabindex="0"><code>CreateEntryPages # omit parallel optimization here
+	AssignTuples # Scan table for tuples to index
+	tuplesort_performsort
+	InsertTuples
+		for (int i = 0; i &lt; buildstate-&gt;centers-&gt;length; i++)
+    		buf = IvfflatNewBuffer(index, forkNum); # add new page for each data page list
+    		startPage = BufferGetBlockNumber(buf);  # the first page number
+    		foreach tuple in this list:
+                if (PageGetFreeSpace(page) &lt; itemsz) # append page
+    				IvfflatAppendPage(index, &amp;buf, &amp;page, &amp;state, forkNum);
+        		PageAddItem()
+        	IvfflatUpdateList(); # update the first page record of the center page
+</code></pre><h5 id="index-scan">index scan</h5>
+<h6 id="begin-scan">begin scan</h6>
+<pre tabindex="0"><code>ivfflatbeginscan
+    IvfflatGetMetaPageInfo(index, &amp;lists, &amp;dimensions);  # Get lists and dimensions from metapage
+    
+</code></pre><h6 id="get-tupele">get tupele</h6>
+<pre tabindex="0"><code>ivfflatgettuple
+    if (first) # try to get the first tuple
+        GetScanLists # find &#39;probe&#39; centers that are closest
+            while (BlockNumberIsValid(nextblkno)) # search all list pages
+                if (distance &lt; maxDistance) # omit probe here for easier understanding
+                    scanlist = (IvfflatScanList *) pairingheap_remove_first(so-&gt;listQueue);
+                    pairingheap_add(so-&gt;listQueue, &amp;scanlist-&gt;ph_node);
+                    maxDistance = ((IvfflatScanList *) pairingheap_first(so-&gt;listQueue))-&gt;distance;
+        GetScanItems # find closest items in the above centers
+            while (!pairingheap_is_empty(so-&gt;listQueue)) # for each center
+                while (BlockNumberIsValid(searchPage)) # for each block in the data list
+                    foreach (tuple)
+                        tuplesort_puttupleslot
+                    
+</code></pre><h2 id="hnsw">HNSW</h2>
+<h3 id="概览-1">概览</h3>
+<p>HNSW 算法主要包括以下几个步骤</p>
+<ul>
+<li>索引构建
+<ul>
+<li>构建层级邻近图
+<ul>
+<li>每一层都是邻近图 —— 每个点都记录它最近的几个点</li>
+<li>高一层的图是低一层图的缩略图 —— 只有低一层图的部分点 ——，最低一层的图有全部点的信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>查询阶段，对于目标点$p$
+<ul>
+<li>对于每一层图：
+<ul>
+<li>维护一个图中距点$p$最近的点集合$S$，依次从候选点集合$C$中选取一个元素$c$：如果$c$的邻居$neighbor(c)$比$S$中距$p$最远的点$s$距$p$更近，即$d(neighbor(c), p) &lt; d(s,c)$ ，则用$neighbor(c)$替换集合$S$中的点$s$，并将$s$加入到候选集合$C$中。重复以上步骤直到$|c| = 0$</li>
+</ul>
+</li>
+<li>从高层图向底层图搜索，使用高层图的结果$S$作为低层图$S$和$C$的初始值。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/illustration-of-HNSW.2024_02_12_1707672400.png" alt=""></p>
+<h3 id="算法介绍-1">算法介绍</h3>
+<p>一下顺序只是为了便于理解，不代表论文发布顺序。更多细节可参考论文。</p>
+<h4 id="nsw--hnsw的起源">NSW —— HNSW的起源?</h4>
+<p>NSW可以视为邻近图，每个点维护至多$K$个距离其最近的点，此时HNSW退化为只有一层的特殊情况。</p>
+<h5 id="nsw的构建">NSW的构建</h5>
+<p>构建NSW的算法如下（此处忽略边角情况以方便理解</p>
+<pre tabindex="0"><code>INPUT: a set of points S
+OUTPUT: graph G
+BUILD_LAYER(S)
+
+G = []
+# Insert each point into the graph
+FOREACH point IN S:           ---------- INSERT_POINT(graph, point)
+    neighbors[] = select_one_random(G)
+    candidate[] = neighbors[]
+    visited_points[] = neighbors[]
+
+    # Code in this WHILE loop is to find the neighbors of the point
+    # in current graph
+    WHILE (!candidate.empty())
+        nearest_candidate = candidate.pop_nearest(point)
+        furthest_neighbor = neighbors.get_furthest(point)
+
+        # no candidate can b closer
+        IF (distant(nearest_candidate, point) &gt;
+            distant(furthest_neighbor, point))
+            break;
+
+        # This candidate is great, but what about its neighbors?
+        FOREACH candidate_neighbor in nearest_candidate.neighbors()
+            IF (visited_points.has(candidate_neighbor))
+                continue
+            visited_points.append(candidate_neighbor)
+
+            # the furthest one can be changed
+            furthest_neighbor = neighbors.get_furthest(point)
+
+            # The neighbor of this candidate is also great, its neighbors
+            # can also be candidates
+            IF (distant(candidate_neighbor, point) &lt;
+                distant(furthest_neighbor, point))
+                candidate.append(candidate_neighbor)
+                neighbors.append(candidate_neighbor)
+                IF (neighbors.size() &gt; MAX_NEIGHBORS)
+                    neighbors.pop_furthest(point)
+
+    # Now we have found the neighbors, add a bidirection connections
+    # between the each neighbor and the point
+    FOREACH this_neighbor in neighbors
+        add_bidirection_direction(this_neighbor, point)
+
+        # Since the neighbor has one more connection, we may need
+        # to shrink. This is a point to optimize. Read paper for detail.
+        IF this_neighbor.neighbors().size() &gt; MAX_NEIGHBORS
+            this_neighbor.drop_longest_connection()
+
+# All points have been added
+RETURN G
+</code></pre><h5 id="nsw的搜索">NSW的搜索</h5>
+<pre tabindex="0"><code>OUTPUT: graph G, point P
+RETURN K nearest neighbors
+SEARCH_LAYER(G, p, K)
+
+candidates = select_one_random(G)
+visited_points = candidates
+
+# LOOP until we have K stable points
+WHILE TRUE
+    candidates_old = candidates
+
+    FOREACH candidate in candidates
+        FOREACH neighbor in candidate.neighbors()
+            if (visited_points.has(neighbor))
+                continue
+            visited_points.add(neighbor)
+
+            furthest_candidate = candidates.get_furthest(point)
+            IF (distant(neighbor, P) &lt; distant(furthest_candidate, P) ||
+                candidates.size() &lt; K)
+                candidates.add(neighbor)
+            IF (candidates.size() &gt; K)
+                candidates.pop_furthest(P)
+
+    IF candidates_old == candidates
+        BREAK
+
+RETURN candidates
+</code></pre><h4 id="hnsw--nsw的进化">HNSW —— NSW的进化</h4>
+<p>显然，上述过程最大的问题之一为：</p>
+<ol>
+<li>对于图的构建：每新加入一个点，都需要从一个随机点开始搜索它的邻居。</li>
+<li>对于图的搜索：需要从一个随机点开始搜索。
+以上两点导致，NSW算法搜索了很多无用的点。
+H(hierarchy)NSW 为解决这个问题，从NSW图（layer=0）中选出部分点，再构建一个缩略的NSW图（layer=1）。在搜索的时候，只需要从layer=1的图中搜索出一个粗略结果，将该结果用于layer=0搜索过程中的初始化，即可大量减少无用的搜索。同理，层数也不一定只有2层，可以有更多。
+（这个思想在科研中似乎经常使用:先得出一个粗略的结果，再进一步精细化）</li>
+</ol>
+<p>为了构建一个这样的图，我们在插入一个点时。</p>
+<pre tabindex="0"><code>INPUT: point P, a series of NSW graph G[]
+
+cur_layer = -ln(unif(0, 1)) * MAX_LAYER
+
+# for layer upper than current layer, just get a candidate
+FOR l from MAX_LAYER to cur_layer + 1
+    closest_points = SEARCH_LAYER(G[l], P, 1, candidates = closest_point)
+
+# insert into each layer from top to bottom of the below layers
+FOR l from cur_layer to 0
+    closest_points = SEARCH_LAYER(G[l], P, 1, candidates = closest_points)
+    INSERT_POINT(graph, P, neighbors = closest_points)
+</code></pre><p>同理在搜索时</p>
+<pre tabindex="0"><code>INPUT: point P, a series of NSW graph G[]
+
+cur_layer = P.layer
+
+# for layer upper than current layer, just get a candidate
+FOR l from MAX_LAYER to cur_layer + 1
+    closest_points = SEARCH_LAYER(G[l], P, 1, candidates = closest_point)
+
+# for layer leq than current layer, just get a candidate
+FOR l from cur_layer to 0
+    closest_points = SEARCH_LAYER(G[l], P, 1, candidates = closest_point)
+
+return closest_points
+</code></pre><h3 id="pgvector中的算法实现">PGVECTOR中的算法实现</h3>
+<h4 id="insert">INSERT</h4>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/HNSW_INSERT_ALGORITH.2024_02_12_1707672412.png" alt=""></p>
+<pre tabindex="0"><code class="language-HnswInsertElement" data-lang="HnswInsertElement">/*
+ * Algorithm 1 from paper: update graph by inserting an element
+ * Parms:
+ * @element: element to insert
+ * @entryPoint: the initial entry point
+ * @index?
+ * @procinfo
+ * @collation
+ * @m: same as &#34;M&#34; in algo(number of established connections)
+ */
+HnswInsertElement(HnswElement element, HnswElement entryPoint,
+    			  Relation index, FmgrInfo *procinfo, Oid collation,
+    			  int m, int efConstruction, bool existing)
+    level = element-&gt;level;
+    q = PointerGetDatum(element-&gt;vec)
+
+    # fill entry point list with the initial one
+    ep = list_make1(HnswEntryCandidate(entryPoint,))
+
+    # for layers upper than the element&#39;s level
+    for (int lc = entryLevel; lc &gt;= level + 1; lc--)
+        # only get the nearest element now
+        w = HnswSearchLayer()
+        ep = w;
+
+    # for the below layers
+    for (int lc = level; lc &gt;= 0; lc)
+        # search for top efConstruction nearest ones
+        w = HnswSearchLayer(efConstruction)
+
+        lw = w
+
+        # get neighbors
+        neighbors = SelectNeighbors(lw, lm, lc, procinfo, collation, NULL);
+
+        # add connection
+        # Is this different from paper?
+        #  bidirectional vs single directional
+        #  shrink directions or not shrink
+        AddConnections()
+            foreach(lc2, neighbors)
+        		a-&gt;items[a-&gt;length++] = *((HnswCandidate *) lfirst(lc2));
+</code></pre><h4 id="search-layer">search layer</h4>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/HNSW_SEARCH_LAYER_ALGORITHM.2024_02_12_1707672421.png" alt=""></p>
+<pre tabindex="0"><code>/*
+ * Algorithm 2 from paper: search this layer with specifiyed enter points to
+ * return &#34;ef&#34; closest neighbors
+ * Parms:
+ *  @q: same as algo
+ *  @ep: enter points
+ *  @ef: count of closest neighbors
+ *  @lc: layer number
+ *  @index:
+ *  @procinfo:
+ *  @collation:
+ *  @inserting:
+ *  @skipElement:
+ */
+List *
+HnswSearchLayer(Datum q, List *ep, int ef, int lc, Relation index,
+                FmgrInfo *procinfo, Oid collation, int m, bool inserting,
+                HnswElement skipElement)
+    v = NULL.                 # visited points
+    C = NULL                  # set of candidates, nearer first
+    W = NULL                  # dynamic found nearest neighbors
+
+    # for each candidate in enter points
+    foreach(lc2, ep)
+        hc = (HnswCandidate *) lfirst(lc2); # HNSW candidates
+        v.add(hc)
+        C.add(hc)
+        W.add(hc)
+
+    # loop until no more candidates
+    while (!C.empty())
+        c = C.pop_nearest()
+
+        # for each neighbor &#34;e&#34; in the nearest candicate &#34;c&#34;
+        neighborhood = &amp;c-&gt;element-&gt;neighbors[lc];
+        for (int i = 0; i &lt; neighborhood-&gt;length; i++)
+            # neighbor e
+            HnswCandidate *e = &amp;neighborhood-&gt;items[i];
+            v.add(e)
+            DO # continue if visited
+
+            # f is the furthest element in dynamic neighbors
+            f = W.furthest()
+
+            # find a good neighbor who is closer to q than the worst one in W
+            if (DISTANT(e, q) &lt; DISTANT(f, q) || wlen &lt; ef)
+                ec = e
+                # neighbor of ec can also be the candidates
+                C.add(ec)
+                # add ec to W to promote the lower bound
+                W.add(ec)
+
+                # clean W if it&#39;s too large
+                if (skipElement == NULL ||
+                    list_length(e-&gt;element-&gt;heaptids) != 0)
+					wlen++;
+					/* No need to decrement wlen */
+					if (wlen &gt; ef)
+						W.pop_furthest
+	return W
+</code></pre><h5 id="pairing-heap">pairing heap</h5>
+<p><a href="https://oi-wiki.org/ds/pairing-heap/">配对堆 - OI Wiki (oi-wiki.org)</a></p>
+<ul>
+<li>insert($\mathrm{log}n$)</li>
+<li>random_select($\mathrm{log} n$) select_min($\mathrm{log} n$)</li>
+<li>delete_min($\mathrm{log} n$)</li>
+</ul>
+<h4 id="select-neighbors">select neighbors</h4>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/HNSW_SELECT_NEIGHBORS_ALGORITHMS.2024_02_12_1707672431.png" alt=""></p>
+<pre tabindex="0"><code class="language-SelectNeighbors" data-lang="SelectNeighbors">/*
+ * Algorithm 4: select neighbors starting with specified candidates
+ * PARAMS:
+ *  @c : candidates
+ *  @m : number of neighbors to return
+ *  @lc: layer number
+ *  @
+ *
+ * NOTES:
+ *  extendCandidates = false
+ *  keepPrunedConnections = true
+ *  pruned
+ */
+static List *
+SelectNeighbors(List *c, int m, int lc, FmgrInfo *procinfo, Oid collation,
+                HnswCandidate * *pruned)
+    r = NULL    # results---returning neighbors 
+    w = c       # working candidates
+    wd = NULL;  # discarded candidates;
+
+    # Since we don&#39;t extend candidates, if the starting candidates isn&#39;t enought
+    # just return.
+    if (list_length(w) &lt;= m)
+        return w
+
+    # loop untils no more working candidate or enought neighbors
+    while (length(w) &gt; 0 &amp;&amp; length(r) &lt; m)
+        *e = llast(w); # get the nearest candidates
+        closer = CheckElementCloser(e, r, lc, procinfo, collation);
+        if(closer)
+            r.append(e)
+        else
+            wd.append(e)
+
+    # loop until discarded candidates are empty or enough neighbors
+    while (!wd.empty() &amp;&amp; length(r) &lt; m)
+        r.append(wd.pop_nearest())
+    
+    prune = wd.nearest()
+    return r
+    
+    
+</code></pre><h4 id="data-structure">data structure</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#f00">typedef</span> <span style="color:#f00">struct</span> HnswElementData
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	List	   *heaptids;
+</span></span><span style="display:flex;"><span>	uint8		level;
+</span></span><span style="display:flex;"><span>	uint8		deleted;
+</span></span><span style="display:flex;"><span>	HnswNeighborArray *neighbors;
+</span></span><span style="display:flex;"><span>	BlockNumber blkno;
+</span></span><span style="display:flex;"><span>	OffsetNumber offno;
+</span></span><span style="display:flex;"><span>	OffsetNumber neighborOffno;
+</span></span><span style="display:flex;"><span>	BlockNumber neighborPage;
+</span></span><span style="display:flex;"><span>	Vector	   *vec;
+</span></span><span style="display:flex;"><span>}			HnswElementData;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">typedef</span> <span style="color:#f00">struct</span> HnswCandidate
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	HnswElement element;
+</span></span><span style="display:flex;"><span>	<span style="color:#ee82ee">float</span>		distance;
+</span></span><span style="display:flex;"><span>}			HnswCandidate;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">typedef</span> <span style="color:#f00">struct</span> HnswNeighborArray
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#ee82ee">int</span>			length;
+</span></span><span style="display:flex;"><span>	HnswCandidate *items;
+</span></span><span style="display:flex;"><span>}			HnswNeighborArray;
+</span></span></code></pre></div><h5 id="底层实现中的问题">底层实现中的问题</h5>
+<ol>
+<li>论文中的图是双向连接，而pgvector实现的是单向连接</li>
+<li>pgvector中插入新向量时，没有更新其邻居的连接。（这么低级的问题有待验证）</li>
+</ol>
+<h3 id="page-representation-1">page representation</h3>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/HNSW_PAGE_REPRESENTATION.2024_02_12_1707672445.png" alt="image-20231007080940352">
+<img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/PGVEC-HNSW-PAGE.2024_02_12_1707672457.png" alt=""></p>
+<h2 id="vector-database-调研">vector database 调研</h2>
+<h3 id="qdrant">qdrant</h3>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/vector-database.2024_02_12_1707672561.png" alt="image-20231007080940352"></p>
+<blockquote>
+<p>Vector databases are optimized for <strong>storing</strong> and <strong>querying</strong> these high-dimensional vectors efficiently, and they often using specialized data structures and indexing techniques such as Hierarchical Navigable Small World (HNSW) – which is used to implement Approximate Nearest Neighbors – and Product Quantization, among others.</p></blockquote>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/image-20231007081700863.2024_02_12_1707672473.png" alt="image-20231007081700863"></p>
+<h4 id="算法与存储">算法与存储</h4>
+<p>qdrant使用 <code>hnsw</code> 算法</p>
+<blockquote>
+<p>A key feature of Qdrant is the effective combination of <strong>vector</strong> and <strong>traditional</strong> indexes. It is essential to have this because for vector search to work effectively with filters, having vector index only is not enough. In simpler terms, a vector index speeds up vector search, and payload indexes speed up filtering.</p></blockquote>
+<p>payload 索引仅用于过滤，我们关注向量索引部分</p>
+<blockquote>
+<p>Qdrant currently only uses HNSW as a vector index.</p></blockquote>
+<blockquote>
+<p>All data within one collection is divided into segments. Each segment has its independent vector and payload storage as well as indexes.</p></blockquote>
+<h2 id="附录">附录</h2>
+<h3 id="trianlge-inequality-kmeans">trianlge-inequality-Kmeans</h3>
+<ul>
+<li>维护的状态：
+<ul>
+<li>lower bound $l(x,c)$ of $d(x,c)$ for each point $x$ and center $c$
+<ul>
+<li>each time $d(x,c)$ is computed, set $l(x,c)=d(x,c)$</li>
+</ul>
+</li>
+<li>$c(x)= \mathrm{argmin}_cd(x,c)$ get its center for each point $x$</li>
+<li>upper bound $u(x)$ of $d(x,c)$ for each point $x$, indicating the upper bound of $x$ to its center</li>
+<li>$r(x)$ is a <code>boolean</code> value indicate whether $u(x, c)$ is out of date</li>
+</ul>
+</li>
+<li>过程：
+<ul>
+<li>initialization
+<ul>
+<li>compute $d(x,c)$ for each point $x$ and each center $c$, which means $l(x,c)$ is computed too</li>
+<li>$u(x)=\mathrm{min}_c(d,c)$ for each point $x$</li>
+</ul>
+</li>
+<li>repeate until convergence:
+<ol>
+<li>For each pair of centers $c$ and $c&rsquo;$ , compute $d(c,c&rsquo;)$, this is to compute $s(c)=1/2\min_{c&rsquo;\neq c}d(c,c&rsquo;)$ . <strong>So we get the distance to the nearest center of each center</strong></li>
+<li>identify all point $x$ such that $u(x) \le s(c(x))$ .<strong>If the point is so near to its center, its center can&rsquo;t be changed in this iteration. See lemma 1</strong></li>
+<li>For each remaining point $x$ and centers $c$ such that
+<ol>
+<li>$c\neq c(x)$  (<strong>not the current center</strong>) and</li>
+<li>$u(x)&gt;l(x,c)$ (<strong>upper bound to current center greater than lower bound of this center</strong>) and</li>
+<li>$u(x)&gt;\frac{1}{2}d(c(x),c)$(<strong>upper bound to current center greater than half of the two centers distant, See lemma 1</strong>) <strong>iterm <code>2</code> and <code>3</code> means $u(x)$ may be too big</strong></li>
+<li>DO:
+<ol>
+<li>If $r(x)$ , compute$d(x, c(x))$ and set $r(x)=false$, else $d(x,c(x))=u(x)$</li>
+<li>if $u(x)&gt;l(x,c)$ and $u(x)&gt;\frac{1}{2}d(c(x),c)$ then (<strong>same as the above</strong>)
+<ol>
+<li>compute $d(x,c)$, if $d(x,c) &lt; d(x,c(x))$ then assign $c(x)=c$ (<strong>update center</strong>)</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>For each center $c$ , let $m(c)$ be the new mean point</li>
+<li>For each point $x$ and center $c$, assign $l(x,c)=\max{l(x,c)-d(c,m(c))}$ (<strong>update lower bound by lemma 2</strong>)</li>
+<li>For each point x, assign $u(x)=u(x) + d(m(c(x)),c(x))$ (<strong>update lower bound by lemma 2</strong> ) and $r(x)=true$</li>
+<li>Replace each center $c$ by $m(c)$</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="采样算法-knuths-algorithm-s">采样算法 Knuth&rsquo;s algorithm S</h3>
+<ul>
+<li>算法描述： Select $n$ items from a set of $M$ iems with equal probility for $M \geq n$</li>
+<li>实现</li>
+</ul>
+<pre tabindex="0"><code>samples = set[0:n-1]
+for i in (n, M)
+	with prob = n/i:
+    	samples[random()%n] = set[i]
+</code></pre><p>参考文档 <a href="https://rosettacode.org/wiki/Knuth's_algorithm_S">Knuth&rsquo;s algorithm S - Rosetta Code</a> 。</p>
+<p>社区讨论 [PostgreSQL: Re: <a href="https://www.postgresql.org/message-id/8ftr60l1ebgcable559ogr2tlb6nuujllq@email.aon.at">GENERAL] Large DB</a></p>
+<h2 id="后记">后记</h2>
+<ul>
+<li>pg官方的新闻：<a href="https://www.postgresql.org/about/news/pgvector-050-released-2700/">PostgreSQL: pgvector 0.5.0 Released!</a> 。pgvector在社区的热度不小</li>
+</ul>
+
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Database on PaperMod</title>
-    <link>https://mobilephone724.github.io/categories/database/</link>
-    <description>Recent content in Database on PaperMod</description>
-    <image>
-      <title>PaperMod</title>
-      <url>https://mobilephone724.github.io/images/papermod-cover.png</url>
-      <link>https://mobilephone724.github.io/images/papermod-cover.png</link>
-    </image>
-    <generator>Hugo -- 0.127.0</generator>
+    <title>Database on </title>
+    <link>/categories/database/</link>
+    <description>Recent content in Database on </description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <copyright>PaperMod Contributors</copyright>
     <lastBuildDate>Mon, 14 Aug 2023 21:46:24 +0800</lastBuildDate>
-    <atom:link href="https://mobilephone724.github.io/categories/database/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/categories/database/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Read Google F1</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/google-f1/</link>
+      <link>/archive_posts/google-f1/</link>
       <pubDate>Mon, 14 Aug 2023 21:46:24 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/google-f1/</guid>
-      <description>Abstract a protocol for schema evolution in a globally distributed database management system with shared data, stateless servers, and no global membership. asynchronous all servers can access and update all data during a schema change INTRODUCTION Schema evolution: the ability to change a database’s definition without the loss of data F1 is built on top of Spanner, a globally distributed KV data store Main feature The main features of F1 that impact schema changes are:</description>
+      <guid>/archive_posts/google-f1/</guid>
+      <description>&lt;h2 id=&#34;abstract&#34;&gt;Abstract&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;a protocol for schema evolution in a globally distributed database management system with &lt;strong&gt;shared data&lt;/strong&gt;, &lt;strong&gt;stateless servers&lt;/strong&gt;, and &lt;strong&gt;no global membership&lt;/strong&gt;.&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;asynchronous&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;li&gt;all servers can &lt;strong&gt;access&lt;/strong&gt; and &lt;strong&gt;update&lt;/strong&gt; all data during a schema change&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;introduction&#34;&gt;INTRODUCTION&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Schema evolution:  the ability to change a database’s definition without the loss of data&lt;/li&gt;&#xA;&lt;li&gt;F1 is built on top of Spanner, a globally distributed &lt;strong&gt;KV&lt;/strong&gt; data store&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;main-feature&#34;&gt;Main feature&lt;/h3&gt;&#xA;&lt;p&gt;The main features of F1 that impact schema changes are:&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

@@ -1,220 +1,40 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on PaperMod</title>
-    <link>https://mobilephone724.github.io/posts/</link>
-    <description>Recent content in Posts on PaperMod</description>
-    <image>
-      <title>PaperMod</title>
-      <url>https://mobilephone724.github.io/images/papermod-cover.png</url>
-      <link>https://mobilephone724.github.io/images/papermod-cover.png</link>
-    </image>
-    <generator>Hugo -- 0.127.0</generator>
+    <title>Posts on </title>
+    <link>/posts/</link>
+    <description>Recent content in Posts on </description>
+    <generator>Hugo</generator>
     <language>en</language>
-    <copyright>PaperMod Contributors</copyright>
     <lastBuildDate>Fri, 29 Aug 2025 21:05:24 +0800</lastBuildDate>
-    <atom:link href="https://mobilephone724.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>volatile in sigsetjmp and siglongjmp</title>
-      <link>https://mobilephone724.github.io/posts/20250829-1-volatile/</link>
+      <link>/posts/20250829-1-volatile/</link>
       <pubDate>Fri, 29 Aug 2025 21:05:24 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/20250829-1-volatile/</guid>
-      <description>conclusion In postgresql, the error handling methods pg_try() + elog() + pg_catch() is implemented through sigsetjmp and siglongjmp. But the variables changed in pg_try() and used in pg_catch() must be declared as volatile. The reasons are below:
-reason The sigsetjmp call must store all the register value and the siglongjmp restore the registers from it. It&amp;rsquo;s very reasonable in the view of asm code. If a variable is not declared as volatile, the assignment operation of it in pg_try() may only changes the variable in the register.</description>
-    </item>
-    <item>
-      <title>MCP学习</title>
-      <link>https://mobilephone724.github.io/post/mcp-learning-z1f8c7l.html</link>
-      <pubDate>Tue, 08 Apr 2025 19:57:51 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/post/mcp-learning-z1f8c7l.html</guid>
-      <description>MCP学习 自己对MCP的理解 MCP server (一个简单的程序) 通过定义实现一系列函数，让 MCP client(例如 claude) 通过这些函数，获取到需要的信息。 MCP server: # in /Users/yby/code/mcp_test/mcp-server-demo/server.py</description>
+      <guid>/posts/20250829-1-volatile/</guid>
+      <description>&lt;h2 id=&#34;conclusion&#34;&gt;conclusion&lt;/h2&gt;&#xA;&lt;p&gt;In postgresql, the error handling methods &lt;code&gt;pg_try() + elog() + pg_catch()&lt;/code&gt; is implemented through &lt;code&gt;sigsetjmp&lt;/code&gt; and &lt;code&gt;siglongjmp&lt;/code&gt;. But the variables changed in &lt;code&gt;pg_try()&lt;/code&gt; and used in &lt;code&gt;pg_catch()&lt;/code&gt; must be declared as &lt;code&gt;volatile&lt;/code&gt;. The reasons are below:&lt;/p&gt;&#xA;&lt;h2 id=&#34;reason&#34;&gt;reason&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;The sigsetjmp call must store all the register value and the siglongjmp restore the registers from it. It&amp;rsquo;s very reasonable in the view of asm code.&lt;/li&gt;&#xA;&lt;li&gt;If a variable is not declared as volatile, the assignment operation of it in &lt;code&gt;pg_try()&lt;/code&gt; may only changes the variable in the register. And after jumping by the &lt;code&gt;siglongjmp&lt;/code&gt; call, the value of variable is changed back to the point of &lt;code&gt;sigsetjmp&lt;/code&gt; , which means the changes in &lt;code&gt;pg_try()&lt;/code&gt; lost&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;example&#34;&gt;example&lt;/h2&gt;&#xA;&lt;p&gt;Let&amp;rsquo;s consider an example:&lt;/p&gt;</description>
     </item>
     <item>
       <title>mesi-summary</title>
-      <link>https://mobilephone724.github.io/post/me-z1ogd4d.html</link>
+      <link>/post/me-z1ogd4d.html</link>
       <pubDate>Sat, 29 Mar 2025 08:56:22 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/post/me-z1ogd4d.html</guid>
-      <description>store buffer why? When a CPU wants to modify data (not in the &amp;ldquo;Modified&amp;rdquo; or &amp;ldquo;Exclusive&amp;rdquo; state), it will always update the data regardless of the responses from other CPUs. Thus, the data is immediately updated in the store buffer. complexity it introduces Multilayer caches (reason for write memory barrier): Example: Consider a CPU storing two values (A and B) sequentially, where A is in the store buffer and B</description>
-    </item>
-    <item>
-      <title>DDIA--Encoding and Evolution(1)</title>
-      <link>https://mobilephone724.github.io/post/ddiaencoding-and-evolution-1-2dgaes.html</link>
-      <pubDate>Tue, 18 Mar 2025 23:03:23 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/post/ddiaencoding-and-evolution-1-2dgaes.html</guid>
-      <description>DDIA&amp;ndash;Encoding and Evolution(1) Compatibility Backward compatibility: Newer code can read data that was written by older code. Forward compatibility: Older code can read data that was written by newer code. ‍ Thrift and Protocol Buffers Apache Thrift and Protocol Buffers (protobuf) are binary encoding libraries that are based on the same principle. ‍ In Thrift, you would describe the schema in the Thrift interface definition language (IDL) like this: struct</description>
-    </item>
-    <item>
-      <title>跳表的实现</title>
-      <link>https://mobilephone724.github.io/post/implementation-of-skipping-tables-299fl1.html</link>
-      <pubDate>Mon, 03 Mar 2025 22:46:11 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/post/implementation-of-skipping-tables-299fl1.html</guid>
-      <description>跳表的实现 之前还没有写过跳表，补一下实现， ​​ FROM deepseek 跳表（Skip List）原理详解 跳表是一种基于有序链表的高效数据结构，通过引入多层索引实现</description>
-    </item>
-    <item>
-      <title>lsmTree</title>
-      <link>https://mobilephone724.github.io/post/lsmtree-2fapmq.html</link>
-      <pubDate>Mon, 03 Mar 2025 22:34:36 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/post/lsmtree-2fapmq.html</guid>
-      <description>lsmTree LSM-Tree 简介 LSM-Tree（Log-Structured Merge-Tree）是一种为高写入吞吐设计的存储结构，广泛应用于 NoSQL 数据库（如 Leve</description>
-    </item>
-    <item>
-      <title>执行引擎概览</title>
-      <link>https://mobilephone724.github.io/post/execution-engine-overview-lmovi.html</link>
-      <pubDate>Mon, 03 Mar 2025 22:25:12 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/post/execution-engine-overview-lmovi.html</guid>
-      <description>执行引擎概览 FROM deepseek 执行引擎对比表 类型 数据处理方式 优势场景 劣势场景 代表系统 Volcano 逐行处理 OLTP 短查询 复杂分析查询 MySQL、PostgreSQL 向量化 按</description>
-    </item>
-    <item>
-      <title>Heap 原理</title>
-      <link>https://mobilephone724.github.io/post/heap-principle-z1iauje.html</link>
-      <pubDate>Mon, 03 Mar 2025 21:19:18 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/post/heap-principle-z1iauje.html</guid>
-      <description>Heap 原理 堆（Heap）是一种基于完全二叉树的数据结构，常用于实现优先队列。它分为两种类型： 最大堆：父节点的值 ≥ 子节点的值 最小堆：父节点的值 ≤ 子</description>
-    </item>
-    <item>
-      <title>可串行化的实现思路</title>
-      <link>https://mobilephone724.github.io/post/implementation-ideas-for-serialization-z2idq9y.html</link>
-      <pubDate>Sun, 02 Mar 2025 22:13:38 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/post/implementation-ideas-for-serialization-z2idq9y.html</guid>
-      <description>可串行化的实现思路 paper: https://drkp.net/papers/ssi-vldb12.pdf 可串行化冲突的例子 wr-dependencies: if T1 writes a version of an object, and T2 reads that version, then T1 appears to have executed before T2 ww-dependencies: if T1 writes a version of some object, and T2 replaces that version with the next version, then T1 appears to have executed before T2 rw-antidependencies: if</description>
+      <guid>/post/me-z1ogd4d.html</guid>
+      <description>&lt;h2 id=&#34;store-buffer&#34;&gt;store buffer&lt;/h2&gt;&#xA;&lt;h3 id=&#34;why&#34;&gt;why?&lt;/h3&gt;&#xA;&lt;p&gt;When a CPU wants to modify data (not in the &amp;ldquo;Modified&amp;rdquo; or &amp;ldquo;Exclusive&amp;rdquo; state), it will always update the data regardless of the responses from other CPUs.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Thus, the data is immediately updated in the store buffer.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h3 id=&#34;complexity-it-introduces&#34;&gt;complexity it introduces&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Multilayer caches (reason for write memory barrier):&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Example: Consider a CPU storing two values (A and B) sequentially, where A is in the store buffer and B is in the cache. It is uncertain whether another CPU will observe the updated A before observing B, as it depends on whether the invalidate message for A is received before the request for B.&lt;/li&gt;&#xA;&lt;li&gt;Reason: Broadcasting later changes (in the cache) before earlier changes (in the store buffer) are visible to others.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;&lt;strong&gt;Write memory barrier&lt;/strong&gt;: CPUs must wait until the store buffer is cleared before applying subsequent changes. Alternatively, later changes can remain in the store buffer until all prior entries in the store buffer have been processed.&lt;/p&gt;</description>
     </item>
     <item>
       <title>【日拱一卒】2025-03-02</title>
-      <link>https://mobilephone724.github.io/post/20250302-8ctcr.html</link>
+      <link>/post/20250302-8ctcr.html</link>
       <pubDate>Sun, 02 Mar 2025 20:00:48 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/post/20250302-8ctcr.html</guid>
-      <description>2025-03-02 符文般的JS 0 = [+[]]+[] 1 = [+!+[]]+[] 10 = [+!+[]]+[+[]] 100 = [+!+[]]+[+[]]+[+[]] 1. 0 = [+[]]+[]​ ​[]​ 是一个空数组。 ​+[]​ 将空数组转换为数字。空数组转换为数字时是 0​，</description>
+      <guid>/post/20250302-8ctcr.html</guid>
+      <description>&lt;h1 id=&#34;2025-03-02&#34;&gt;2025-03-02&lt;/h1&gt;&#xA;&lt;h2 id=&#34;符文般的js&#34;&gt;符文般的JS&lt;/h2&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-source&#34; data-lang=&#34;source&#34;&gt;0 = [+[]]+[]&#xA;1 = [+!+[]]+[]&#xA;10 = [+!+[]]+[+[]]&#xA;100 = [+!+[]]+[+[]]+[+[]]&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;1-0--&#34;&gt;1. &lt;code&gt;0 = [+[]]+[]&lt;/code&gt;​&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;​&lt;code&gt;[]&lt;/code&gt;​ 是一个空数组。&lt;/li&gt;&#xA;&lt;li&gt;​&lt;code&gt;+[]&lt;/code&gt;​ 将空数组转换为数字。空数组转换为数字时是 &lt;code&gt;0&lt;/code&gt;​，所以 &lt;code&gt;+[]&lt;/code&gt;​ 的结果是 &lt;code&gt;0&lt;/code&gt;​。&lt;/li&gt;&#xA;&lt;li&gt;​&lt;code&gt;[+[]]&lt;/code&gt;​ 将 &lt;code&gt;0&lt;/code&gt;​ 放入一个数组中，结果是 &lt;code&gt;[0]&lt;/code&gt;​。&lt;/li&gt;&#xA;&lt;li&gt;​&lt;code&gt;[+[]]+[]&lt;/code&gt;​ 将数组 &lt;code&gt;[0]&lt;/code&gt;​ 转换为字符串，结果是 &lt;code&gt;&amp;quot;0&amp;quot;&lt;/code&gt;​。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;最终结果：&lt;code&gt;&amp;quot;0&amp;quot;&lt;/code&gt;​（字符串形式的 &lt;code&gt;0&lt;/code&gt;​）。&lt;/p&gt;</description>
     </item>
     <item>
       <title>【日拱一卒】2025-03-01</title>
-      <link>https://mobilephone724.github.io/post/20250301-1r5xzc.html</link>
+      <link>/post/20250301-1r5xzc.html</link>
       <pubDate>Sat, 01 Mar 2025 15:14:45 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/post/20250301-1r5xzc.html</guid>
-      <description>Column-Oriented Storage Basic idea: Although fact tables are often over 100 columns wide, a typical data warehouse query only accesses 4 or 5 of them at one time (SELECT *​ queries are rarely needed for analytics) The idea behind column-oriented storage is simple: don’t store all the values from one row together, but store all the values from each column together instead. If each column</description>
-    </item>
-    <item>
-      <title>Airwallex调研</title>
-      <link>https://mobilephone724.github.io/post/airwallex-survey-z1tsrmd.html</link>
-      <pubDate>Mon, 24 Feb 2025 20:20:27 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/post/airwallex-survey-z1tsrmd.html</guid>
-      <description>Airwallex调研 2025-02-24 简介 Airwallex（空中云汇）是一家全球领先的金融科技公司，专注于为企业提供跨境支付、外汇兑换、资金管理等一站式</description>
-    </item>
-    <item>
-      <title>github ssh 失败</title>
-      <link>https://mobilephone724.github.io/post/github-ssh-failed-2k9xdc.html</link>
-      <pubDate>Mon, 03 Feb 2025 08:44:15 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/post/github-ssh-failed-2k9xdc.html</guid>
-      <description>github ssh 失败 ssh 失败 github 可能会屏蔽 22 的 ssh 端口，导致使用 ssh 协议拉取推送代码失败 解决方法为使用 443 端口，同时将 hostname 改为 ssh.github.com​ host github.com Hostname ssh.github.com</description>
-    </item>
-    <item>
-      <title>Everyday PostgreSQL</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/every_data_pg/</link>
-      <pubDate>Fri, 16 Aug 2024 23:45:50 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/every_data_pg/</guid>
-      <description>0x01-8级锁的不对称性 2024-08-17 00:14:26 +0800
-用于创建索引的 SHARE LOCK，虽然和修改时需要的 ROW EXCL 锁冲突，却不和自己冲突。虽然创建索引时不能插入数据，但是可以创建其他索引。 SHARE 这个名字非常贴切。
-注意：create index 可以事务块中执行
-test=# begin transaction; BEGIN test=*# insert into test values (1); INSERT 0 1 test=*# create index on test (a); CREATE INDEX test=*# commit; COMMIT 而为了不阻塞读写，持有 SHARE UPDATE EXCL 锁的行为， 例如 vacuum , create index concurrent ，大都不能在事务块中进行。原因可能是这些操作需要感知其他正在执行的事务的状态(status of running processes)，其行为超出了一般意义上 MVCC 的。</description>
-    </item>
-    <item>
-      <title>&#34;-fwrapv&#34; option in gcc</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/fwrapv/</link>
-      <pubDate>Mon, 05 Aug 2024 21:30:13 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/fwrapv/</guid>
-      <description>c - What does -fwrapv do? - Stack Overflow
--fwrapv tells the compiler that overflow of signed integer arithmetic must be treated as well-defined behavior, even though it is undefined in the C standard.
-It has two meaning full results:
-INT_MAX + 1 is overflowed to INT_MIN correctly. This is almost the default behavior in gcc. Don’t let the compiler assume x + 1 &amp;gt; x. See the program below</description>
-    </item>
-    <item>
-      <title>Number of Reversed Inode</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/reversed_inode/</link>
-      <pubDate>Sat, 03 Aug 2024 17:13:10 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/reversed_inode/</guid>
-      <description>0x0 what is inode From https://en.wikipedia.org/wiki/Inode
-The inode (index node) is a data structure in a Unix-style file system that describes a file-system object such as a file or a directory. Each inode stores the attributes and disk block locations of the object&amp;rsquo;s data
-From https://www.redhat.com/sysadmin/inodes-linux-filesystem
-By definition, an inode is an index node. It serves as a unique identifier for a specific piece of metadata on a given filesystem. Each piece of metadata describes what we think of as a file.</description>
-    </item>
-    <item>
-      <title>Build PostgreSQL From Source</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/build_from_source/</link>
-      <pubDate>Tue, 16 Apr 2024 23:09:39 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/build_from_source/</guid>
-      <description>Download through git See official docs for detail. Below is a simple example:
-export user=dev export src_dir=postgresql export build_dir=/home/${user}/build export data_dir=/home/${user}/data export superuser=postgres export defaultdb=test ${build_dir}/bin/pg_ctl -D ${data_dir} stop rm -rf ${build_dir} rm -rf ${data} cd ~ #start from home/${user} git clone https://git.postgresql.org/git/postgresql.git cd ${src_dir} git clean -xdf # may be too dangerous # delete for add some configures accordingly ./configure \ --prefix=${build_dir} \ --enable-cassert \ --with-tcl \ --with-perl \ --with-python \ --enable-debug \ --without-icu \ --with-openssl \ CC=/usr/bin/gcc \ CFLAGS=&amp;#39;-O0 -pipe -Wall -g3&amp;#39; make -j8 &amp;amp;&amp;amp; make install make -C contrib install ${build_dir}/bin/initdb --username=${superuser} --pgdata=${data_dir} ${build_dir}/bin/pg_ctl -D ${data_dir} -l ${data_dir}/logfile start ${build_dir}/bin/psql -U${superuser} postgres -c &amp;#34;create database ${defaultdb};&amp;#34; echo &amp;#34;----------------- all finished -----------------------&amp;#34; echo &amp;#34;use ************** &amp;#34; echo &amp;#34;[ ${build_dir}/bin/psql -U${superuser} ${defaultdb} ] &amp;#34; echo &amp;#34;to connect postgresql&amp;#34; cd .</description>
-    </item>
-    <item>
-      <title>Column Schema Change</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/column-schema-change/</link>
-      <pubDate>Sun, 07 Apr 2024 22:19:24 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/column-schema-change/</guid>
-      <description>In PostgreSQL, the adding and dropping a column is an instant ddl(This name seems only to be used in mysql, but I like it). In this article, I try to explain the implement of that.
-The reference:
-https://www.postgresql.org/docs/current/sql-altertable.html Basic Concepts instant ddl For a table with $n$ tuples, if a ddl post can be performed in time $O(1)$ ,we call this ddl instant. So to implement an instant ddl, the data organization must remain unchanged.</description>
-    </item>
-    <item>
-      <title>SSL in PG</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/ssl-in-pg/</link>
-      <pubDate>Mon, 12 Feb 2024 20:30:38 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/ssl-in-pg/</guid>
-      <description>Overview In application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.
-With SSL, we can:
-Encrypted data on Internet transmission Allow client to authorize the server(PostgreSQL), which can protect the client from connecting to the attacker’s server Allow server to authorize the client, which can stop the attacker from connecting to the database even if password leak.</description>
-    </item>
-    <item>
-      <title>pg_squeence_type</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/sequence_type/</link>
-      <pubDate>Mon, 12 Feb 2024 19:51:45 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/sequence_type/</guid>
-      <description>sequence type background From official documents:
-9.17. Sequence Manipulation Functions
-CREATE SEQUENCE
-Sequence objects are special single-row tables created with CREATE SEQUENCE. Sequence objects are commonly used to generate unique identifiers for rows of a table. The sequence functions, provide simple, multiuser-safe methods for obtaining successive sequence values from sequence objects. Main function There is no much concerns about these functions
-nextval
-Advances the sequence object to its next value and returns that value setval</description>
-    </item>
-    <item>
-      <title>Read Google F1</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/google-f1/</link>
-      <pubDate>Mon, 14 Aug 2023 21:46:24 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/google-f1/</guid>
-      <description>Abstract a protocol for schema evolution in a globally distributed database management system with shared data, stateless servers, and no global membership. asynchronous all servers can access and update all data during a schema change INTRODUCTION Schema evolution: the ability to change a database’s definition without the loss of data F1 is built on top of Spanner, a globally distributed KV data store Main feature The main features of F1 that impact schema changes are:</description>
-    </item>
-    <item>
-      <title>Basic Knowledge of Database Log</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/database-log/</link>
-      <pubDate>Thu, 31 Mar 2022 11:01:15 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/database-log/</guid>
-      <description>Primitive Operation if Transactions There are three address spaces that transaction interact in important ways:
-The space of disk blocks holding the database elements. The memory address space managed by buffer manager. The local address space of the transaction. To describe a transaction, we need some operation notions:(X below is a database element while t is a local varible, and we suppose a database element is no larger than a single block)</description>
-    </item>
-    <item>
-      <title>Alice and Bob how to know whose number is bigger without giving away their own&#39;s</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/howtoknowwhoseisbigger/</link>
-      <pubDate>Fri, 14 Jan 2022 23:43:08 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/howtoknowwhoseisbigger/</guid>
-      <description>Definiteness： Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &amp;lt; j$ in the end(aside from their own values)
-Solution: Let $M$ be the set of all $N$-bit nonnegative integers
-Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$
-Alice generates a public key from $Q_N$, called $E_a$, and the inverse function of $E_a$ is $D_a$ Bob picks a random value $x \in M$, compute $k = E_a(x)$, then send $k - j$ to Alice Alice computes $y_u=D_a(k - j + u)$ for $u = 1,2,\dots,9$ Alice generates a random prime $p$ of $N/2$-bit, and computes $z_u=y_u(\mod p)$ for all $u$.</description>
-    </item>
-    <item>
-      <title>APUE/Chapter3: file and I/O</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/linux-file/</link>
-      <pubDate>Fri, 14 Jan 2022 12:02:42 +0800</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/linux-file/</guid>
-      <description>Hugo provides multiple built-in shortcodes for author convenience and to keep your markdown content clean.</description>
-    </item>
-    <item>
-      <title>cublasDgemm</title>
-      <link>https://mobilephone724.github.io/posts/archive_posts/cublasdgemmtutor/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://mobilephone724.github.io/posts/archive_posts/cublasdgemmtutor/</guid>
-      <description>concept cublasDgemm is a convenient function in cublas to compute the product of two matrix, while letter &amp;lsquo;D&amp;rsquo; in cublasDgemm means double.
-Before reading this post, basic cuda functions like cudaMalloc are what you are supposed to know.
-basic use Definition of this function
-cublasStatus_t cublasDgemm(cublasHandle_t handle, cublasOperation_t transa, cublasOperation_t transb, int m, int n, int k, const double *alpha, const double *A, int lda, const double *B, int ldb, const double *beta, double *C, int ldc) Basic information of parameters is show in this page.</description>
+      <guid>/post/20250301-1r5xzc.html</guid>
+      <description>&lt;h2 id=&#34;column-oriented-storage&#34;&gt;Column-Oriented Storage&lt;/h2&gt;&#xA;&lt;h3 id=&#34;basic-idea&#34;&gt;Basic idea:&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Although fact tables are often over 100 columns wide, &lt;strong&gt;a typical data warehouse query only accesses 4 or 5 of them at one time&lt;/strong&gt; (&lt;code&gt;SELECT *&lt;/code&gt;​ queries are rarely needed for analytics)&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;The idea behind column-oriented storage is simple: &lt;strong&gt;don’t store all the values from one row together, but store all the values from each column together instead&lt;/strong&gt;. If each column is stored in a separate file, a query only needs to read and parse those columns that are used in that query, which can save a lot of work&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

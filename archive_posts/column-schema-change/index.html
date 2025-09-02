@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="In PostgreSQL, the adding and dropping a column is an instant ddl(This name seems only to be used in mysql, but I like it). In this article, I try to explain the implement of that.
+The reference:
+
+https://www.postgresql.org/docs/current/sql-altertable.html
+
+
+Basic Concepts
+instant ddl
+For a table with $n$ tuples, if a ddl post can be performed in time $O(1)$ ,we call this ddl instant. So to implement an instant ddl, the data organization must remain unchanged. Instead, only the schema information can be changed, along withthe method to used to interpret the table&rsquo;s binary data according to the schema.">  
+
+  <title>
+    
+      Column Schema Change
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.51652302d3a998bf7887aed5c2cf89141bbebdf45a2c8f87b0717a3cf4f51c4e53c694c328fb1de78c3a625a1c01f80745bf1f2f42c040647a245cbbb6c2d1d7.css" integrity="sha512-UWUjAtOpmL94h67Vws&#43;JFBu&#43;vfRaLI&#43;HsHF6PPT1HE5TxpTDKPsd54w6YlocAfgHRb8fL0LAQGR6JFy7tsLR1w==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-04-07 22:19:24 &#43;0800 CST">
+            2024-04-07
+        </time>
+    </p>
+
+    <h1>Column Schema Change</h1>
+
+    
+
+    <p>In PostgreSQL, the adding and dropping a column is an instant ddl(This name seems only to be used in mysql, but I like it). In this article, I try to explain the implement of that.</p>
+<p><strong>The reference:</strong></p>
+<ul>
+<li><a href="https://www.postgresql.org/docs/current/sql-altertable.html">https://www.postgresql.org/docs/current/sql-altertable.html</a></li>
+<li></li>
+</ul>
+<h2 id="basic-concepts">Basic Concepts</h2>
+<h3 id="instant-ddl">instant ddl</h3>
+<p>For a table with $n$ tuples, if a ddl post can be performed in time $O(1)$ ,we call this ddl instant. So to implement an instant ddl, the data organization must remain unchanged. Instead, only the schema information can be changed, along withthe method to used to interpret the table&rsquo;s binary data according to the schema.</p>
+<p>In this scenario, pg only changes the <code>pg_attribute</code> catalog, which records the attributes[#todo is this OK] of each relations.</p>
+<h3 id="heap-page-representation">heap page representation</h3>
+<p>Before illustrate the situation where interpreting the binary data with two different schemas, we figure out the way to organize the heap pages.</p>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/image-20240407223441847.2024_04_07_1712500481.png" alt="image-20240407223441847"></p>
+
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

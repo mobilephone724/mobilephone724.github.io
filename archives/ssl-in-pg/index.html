@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="Overview
+In application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.
+With SSL, we can:
+
+Encrypted data on Internet transmission
+Allow client to authorize the server(PostgreSQL), which can protect the client from connecting to the attacker’s server
+Allow server to authorize the client, which can stop the attacker from connecting to the database even if password leak.
+
+Just encrypt internet transmission
+build binary from source
+just configure with -with-openssl  option.  You may need to install ssl-dev tools first">  
+
+  <title>
+    
+      SSL in PG
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:1313/css/main.900100e9dbee2d56c58fac8bb717037cae7e26a9c36c29d2ff587bdd65f0cbbe510b41d81a3bb234919cdfdc7550d786b2fab70c8fc507772d732fe097106d12.css" integrity="sha512-kAEA6dvuLVbFj6yLtxcDfK5&#43;JqnDbCnS/1h73WXwy75RC0HYGjuyNJGc39x1UNeGsvq3DI/FB3ctcy/glxBtEg==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2024-02-12 20:30:38 &#43;0800 CST">
+            2024-02-12
+        </time>
+    </p>
+
+    <h1>SSL in PG</h1>
+
+    
+
+    <h2 id="overview">Overview</h2>
+<p>In application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.</p>
+<p>With SSL, we can:</p>
+<ol>
+<li>Encrypted data on Internet transmission</li>
+<li>Allow client to authorize the server(PostgreSQL), which can protect the client from connecting to the attacker’s server</li>
+<li>Allow server to authorize the client, which can stop the attacker from connecting to the database even if password leak.</li>
+</ol>
+<h2 id="just-encrypt-internet-transmission">Just encrypt internet transmission</h2>
+<h3 id="build-binary-from-source">build binary from source</h3>
+<p>just configure with <code>-with-openssl</code>  option.  You may need to install <code>ssl-dev</code> tools first</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt-get install libssl-dev
+</span></span></code></pre></div><p>Below is a building example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export <span style="color:#eedd82">build_dir</span>=/home/dev/build
+</span></span><span style="display:flex;"><span>export <span style="color:#eedd82">data_dir</span>=/home/dev/data
+</span></span><span style="display:flex;"><span>export <span style="color:#eedd82">superuser</span>=postgres
+</span></span><span style="display:flex;"><span>export <span style="color:#eedd82">defaultdb</span>=test
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#87ceeb">${</span><span style="color:#eedd82">build_dir</span><span style="color:#87ceeb">}</span>/bin/pg_ctl -D <span style="color:#87ceeb">${</span><span style="color:#eedd82">data_dir</span><span style="color:#87ceeb">}</span> stop
+</span></span><span style="display:flex;"><span>rm -rf build
+</span></span><span style="display:flex;"><span>rm -rf data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cd postgresql
+</span></span><span style="display:flex;"><span>git clean -xdf
+</span></span><span style="display:flex;"><span>./configure <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>    --prefix=<span style="color:#87ceeb">${</span><span style="color:#eedd82">build_dir</span><span style="color:#87ceeb">}</span> <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>    --enable-debug <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>    --enable-cassert <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>    --with-tcl <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>    --with-perl <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>    --with-python <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>    --enable-debug <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>    --without-icu <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>    --with-openssl <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>    <span style="color:#eedd82">CC</span>=/usr/bin/gcc <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>    <span style="color:#eedd82">CFLAGS</span>=<span style="color:#87ceeb">&#39;-O0 -pipe -Wall -g3&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># export CLFAGS=&#34;-O0 -Wall -g3&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># export CPPLFAGS=&#34;-O0 -Wall -g3&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>make -j8 &amp;&amp; make install
+</span></span><span style="display:flex;"><span>make -C contrib install
+</span></span><span style="display:flex;"><span><span style="color:#87ceeb">${</span><span style="color:#eedd82">build_dir</span><span style="color:#87ceeb">}</span>/bin/initdb --username=<span style="color:#87ceeb">${</span><span style="color:#eedd82">superuser</span><span style="color:#87ceeb">}</span> --pgdata=<span style="color:#87ceeb">${</span><span style="color:#eedd82">data_dir</span><span style="color:#87ceeb">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#87ceeb">${</span><span style="color:#eedd82">build_dir</span><span style="color:#87ceeb">}</span>/bin/pg_ctl -D <span style="color:#87ceeb">${</span><span style="color:#eedd82">data_dir</span><span style="color:#87ceeb">}</span> -l <span style="color:#87ceeb">${</span><span style="color:#eedd82">data_dir</span><span style="color:#87ceeb">}</span>/logfile start
+</span></span><span style="display:flex;"><span><span style="color:#87ceeb">${</span><span style="color:#eedd82">build_dir</span><span style="color:#87ceeb">}</span>/bin/psql -U<span style="color:#87ceeb">${</span><span style="color:#eedd82">superuser</span><span style="color:#87ceeb">}</span> postgres -c <span style="color:#87ceeb">&#34;create database </span><span style="color:#87ceeb">${</span><span style="color:#eedd82">defaultdb</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">;&#34;</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#87ceeb">&#34;----------------- all finished -----------------------&#34;</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#87ceeb">&#34;use ************** &#34;</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#87ceeb">&#34;[ </span><span style="color:#87ceeb">${</span><span style="color:#eedd82">build_dir</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb">/bin/psql -U</span><span style="color:#87ceeb">${</span><span style="color:#eedd82">superuser</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb"> </span><span style="color:#87ceeb">${</span><span style="color:#eedd82">defaultdb</span><span style="color:#87ceeb">}</span><span style="color:#87ceeb"> ] &#34;</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#87ceeb">&#34;to connect postgresql&#34;</span>
+</span></span><span style="display:flex;"><span>cd ..
+</span></span></code></pre></div><h3 id="configure-ssl-on-server">Configure ssl on server</h3>
+<h4 id="prepare-a-certification">prepare a certification</h4>
+<p>use <code>openssl</code> command to generate one. The <code>127.0.0.1</code> means that the certification only protects localhost connections</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#0f0"># generate root certification</span>
+</span></span><span style="display:flex;"><span>openssl req -new -x509 -days <span style="color:#f60">3650</span> -nodes <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>  -out ca.crt -keyout ca.key -subj <span style="color:#87ceeb">&#34;/CN=root-server-ca&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># generate csr and key</span>
+</span></span><span style="display:flex;"><span>openssl req -new -nodes -text -out server.csr <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>  -keyout server.key -subj <span style="color:#87ceeb">&#34;/CN=127.0.0.1&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0"># generate certification</span>
+</span></span><span style="display:flex;"><span>openssl x509 -req -in server.csr -text -days <span style="color:#f60">365</span> <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>  -CA ca.crt -CAkey ca.key -CAcreateserial -out server.crt
+</span></span></code></pre></div><h4 id="configure-in-pgdata">configure in <code>$PGDATA</code></h4>
+<p>copy the <code>key</code> and <code>crt</code> to <code>$PGDATA</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export <span style="color:#eedd82">$PGDATA</span>=/home/dev/data
+</span></span><span style="display:flex;"><span>cp server.key <span style="color:#eedd82">$PGDATA</span>/.
+</span></span><span style="display:flex;"><span>cp server.crt <span style="color:#eedd82">$PGDATA</span>/.
+</span></span></code></pre></div><p>configure in <code>postgresql.conf</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#eedd82">ssl</span> = on
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">ssl_cert_file</span> = <span style="color:#87ceeb">&#39;server.crt&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#eedd82">ssl_key_file</span> = <span style="color:#87ceeb">&#39;server.key&#39;</span>
+</span></span></code></pre></div><p>And (re)start the server</p>
+<h4 id="connect-and-test">connect and test</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>psql <span style="color:#87ceeb">&#34;host=127.0.0.1 port=5432 dbname=postgres user=postgres sslmode=require&#34;</span>
+</span></span></code></pre></div><p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/tls-connection.2024_02_12_1707741369.png" alt="Untitled"></p>
+<h2 id="server-sides-authorization">Server sides Authorization</h2>
+<p>Note that the client hasn’t check the certification of the server now. Check in this way:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#eedd82">PGSSLROOTCERT</span>=ca.crt <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>psql <span style="color:#87ceeb">&#34;host=127.0.0.1 port=5432 dbname=postgres user=postgres sslmode=require&#34;</span>
+</span></span></code></pre></div><h2 id="client-sides-authorization">Client sides Authorization</h2>
+<p>Generate certification similarly</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>openssl req -new -x509 -days <span style="color:#f60">3650</span> -nodes <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>  -out ca-client.crt -keyout ca-client.key -subj <span style="color:#87ceeb">&#34;/CN=root-client-ca&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>openssl req -new -nodes -text -out client.csr <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>  -keyout client.key -subj <span style="color:#87ceeb">&#34;/CN=postgres&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>openssl x509 -req -in client.csr -text -days <span style="color:#f60">365</span> <span style="color:#87ceeb">\
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb"></span>  -CA ca-client.crt -CAkey ca-client.key -CAcreateserial -out client.crt
+</span></span></code></pre></div><p>prepare in <code>$PGDATA</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp ca-client.crt <span style="color:#eedd82">$PGDATA</span>/.
+</span></span><span style="display:flex;"><span>echo -e <span style="color:#87ceeb">&#34;\nssl_ca_file = &#39;ca-client.crt&#39;&#34;</span> &gt;&gt; <span style="color:#eedd82">$PGDATA</span>/postgresql.conf
+</span></span></code></pre></div><p>and restart</p>
+<h3 id="test-connection">test connection</h3>
+<p>Before connection, remember to set <code>pg_hba.conf</code> to only authorized with cetification.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>hostssl    all             all             127.0.0.1/32          cert
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>psql <span style="color:#87ceeb">&#34;sslrootcert=ca.crt sslcert=client.crt sslkey=client.key \
+</span></span></span><span style="display:flex;"><span><span style="color:#87ceeb">  host=127.0.0.1 dbname=postgres user=postgres sslmode=verify-full&#34;</span>
+</span></span></code></pre></div>
+</article>
+
+                
+    
+    
+        Thanks for <a href="https://github.com/hanwenguo/hugo-theme-nostyleplease">https://github.com/hanwenguo/hugo-theme-nostyleplease</a>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

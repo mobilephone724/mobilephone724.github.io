@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=53944&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="本文主要为SLRU本身的结构解读。
+简述
+
+slru用来干什么？
+
+slru是一个简单的buffer管理模块，simple slru
+
+
+有了buffer pool manager，为什么还要slru？
+
+bpm管理通用的page，比如heap，vm等
+slru最大的特点就是lru，非常适合处理xid这样，递增的信息。
+
+
+下面的代码分析基于pg15
+
+存储结构
+与bpm不同，通过slru管理的page，其文件大小固定，一个文件有32个page，一个page有8KB，故一个文件最大为256K。
+与WAL不同，WAL文件的大小在创建时就已经确定为16M，与WAL文件重用保持一致，而slru的文件，先在内存中产生相应的page，再会去落盘。
+#define SLRU_PAGES_PER_SEGMENT	32
+内存slru
+全局 buffer 数组
+typedef struct SlruSharedData
+{
+	LWLock	   *ControlLock;
+
+	/* Number of buffers managed by this SLRU structure */
+	int			num_slots;
+
+	/*
+	 * Arrays holding info for each buffer slot.  Page number is undefined
+	 * when status is EMPTY, as is page_lru_count.
+	 */
+	char	  **page_buffer;
+	SlruPageStatus *page_status;
+	bool	   *page_dirty;
+	int		   *page_number;
+	int		   *page_lru_count;
+	LWLockPadded *buffer_locks;
+
+    XLogRecPtr *group_lsn;
+	int			lsn_groups_per_page;
+
+	/*----------
+	 * We mark a page &#34;most recently used&#34; by setting
+	 *		page_lru_count[slotno] = &#43;&#43;cur_lru_count;
+	 * The oldest page is therefore the one with the highest value of
+	 *		cur_lru_count - page_lru_count[slotno]
+	 * The counts will eventually wrap around, but this calculation still
+	 * works as long as no page&#39;s age exceeds INT_MAX counts.
+	 *----------
+	 */
+	int			cur_lru_count;
+} SlruSharedData;
+从内存结构上看，是一个数组，每个元素代表一个page。同时，记录这些page的使用次数。">  
+
+  <title>
+    
+      SLRU
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//localhost:53944/css/main.900100e9dbee2d56c58fac8bb717037cae7e26a9c36c29d2ff587bdd65f0cbbe510b41d81a3bb234919cdfdc7550d786b2fab70c8fc507772d732fe097106d12.css" integrity="sha512-kAEA6dvuLVbFj6yLtxcDfK5&#43;JqnDbCnS/1h73WXwy75RC0HYGjuyNJGc39x1UNeGsvq3DI/FB3ctcy/glxBtEg==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="0001-01-01 00:00:00 &#43;0000 UTC">
+            0001-01-01
+        </time>
+    </p>
+
+    <h1>SLRU</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#简述">简述</a></li>
+        <li><a href="#存储结构">存储结构</a></li>
+        <li><a href="#核心功能">核心功能</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <p>本文主要为<code>SLRU</code>本身的结构解读。</p>
+<h3 id="简述">简述</h3>
+<ul>
+<li>slru用来干什么？
+<ul>
+<li>slru是一个简单的buffer管理模块，simple slru</li>
+</ul>
+</li>
+<li>有了buffer pool manager，为什么还要slru？
+<ul>
+<li>bpm管理通用的page，比如heap，vm等</li>
+<li>slru最大的特点就是lru，非常适合处理xid这样，递增的信息。</li>
+</ul>
+</li>
+<li>下面的代码分析基于pg15</li>
+</ul>
+<h3 id="存储结构">存储结构</h3>
+<p>与bpm不同，通过slru管理的page，其文件大小固定，一个文件有32个page，一个page有8KB，故一个文件最大为256K。</p>
+<p>与WAL不同，WAL文件的大小在创建时就已经确定为16M，与WAL文件重用保持一致，而slru的文件，先在内存中产生相应的page，再会去落盘。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#e5e5e5">#define SLRU_PAGES_PER_SEGMENT	32
+</span></span></span></code></pre></div><h4 id="内存slru">内存slru</h4>
+<h5 id="全局-buffer-数组">全局 buffer 数组</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#f00">typedef</span> <span style="color:#f00">struct</span> SlruSharedData
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	LWLock	   *ControlLock;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0f0">/* Number of buffers managed by this SLRU structure */</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ee82ee">int</span>			num_slots;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0f0">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 * Arrays holding info for each buffer slot.  Page number is undefined
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 * when status is EMPTY, as is page_lru_count.
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 */</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ee82ee">char</span>	  **page_buffer;
+</span></span><span style="display:flex;"><span>	SlruPageStatus *page_status;
+</span></span><span style="display:flex;"><span>	<span style="color:#ee82ee">bool</span>	   *page_dirty;
+</span></span><span style="display:flex;"><span>	<span style="color:#ee82ee">int</span>		   *page_number;
+</span></span><span style="display:flex;"><span>	<span style="color:#ee82ee">int</span>		   *page_lru_count;
+</span></span><span style="display:flex;"><span>	LWLockPadded *buffer_locks;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    XLogRecPtr *group_lsn;
+</span></span><span style="display:flex;"><span>	<span style="color:#ee82ee">int</span>			lsn_groups_per_page;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0f0">/*----------
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 * We mark a page &#34;most recently used&#34; by setting
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 *		page_lru_count[slotno] = ++cur_lru_count;
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 * The oldest page is therefore the one with the highest value of
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 *		cur_lru_count - page_lru_count[slotno]
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 * The counts will eventually wrap around, but this calculation still
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 * works as long as no page&#39;s age exceeds INT_MAX counts.
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 *----------
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 */</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ee82ee">int</span>			cur_lru_count;
+</span></span><span style="display:flex;"><span>} SlruSharedData;
+</span></span></code></pre></div><p>从内存结构上看，是一个数组，每个元素代表一个page。同时，记录这些page的使用次数。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span>page_lru_count[slotno] = ++cur_lru_count;
+</span></span></code></pre></div><p>同时每个page，都有状态标识，以在刷脏时，确定脏页。实际上这里没有脏页这个选项，因为只有 <code>valid</code> 状态的页才有可能是脏页，有包含关系。故在<code>SlruSharedData</code> 中使用 <code>page_dirty</code> 进行单独标识。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#f00">typedef</span> <span style="color:#f00">enum</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	SLRU_PAGE_EMPTY,			<span style="color:#0f0">/* buffer is not in use */</span>
+</span></span><span style="display:flex;"><span>	SLRU_PAGE_READ_IN_PROGRESS, <span style="color:#0f0">/* page is being read in */</span>
+</span></span><span style="display:flex;"><span>	SLRU_PAGE_VALID,			<span style="color:#0f0">/* page is valid and not being written */</span>
+</span></span><span style="display:flex;"><span>	SLRU_PAGE_WRITE_IN_PROGRESS <span style="color:#0f0">/* page is being written out */</span>
+</span></span><span style="display:flex;"><span>} SlruPageStatus;
+</span></span></code></pre></div><p>关于为什么需要记录LSN信息 <code>group_lsn</code>：这与 <code>WAL</code> 设计有关。对于 <code>WAL</code> 而言，无论是同步提交或是异步提交，都需要在对应的 <code>buffer page</code> 落盘前落盘,所以 <code>slru</code> 也需要满足这样的规则。同时，可能是为了节约内存（节约的内存实在有限），或是减少<code>WAL flush</code>的调用次数以增加 <code>IO</code> 效率，<code>slru</code>的实现中并不记录每个<code>buffer page</code>的 <code>LSN</code>，而是记录一组 <code>page</code> 的 <code>LSN</code>，在刷下一个 <code>page</code> 前，需要把一组 <code>page</code> 中最大的 <code>LSN</code> 前的 <code>WAL</code> 落盘。而这样的“一组”的长度，就为<code>lsn_groups_per_page</code></p>
+<h5 id="各个进程私有的pointer">各个进程私有的pointer</h5>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * SlruCtlData is an unshared structure that points to the active information
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> * in shared memory.
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">typedef</span> <span style="color:#f00">struct</span> SlruCtlData
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	SlruShared	shared;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0f0">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 * Decide whether a page is &#34;older&#34; for truncation and as a hint for
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 * evicting pages in LRU order.  
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 */</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ee82ee">bool</span>		(*PagePrecedes) (<span style="color:#ee82ee">int</span>, <span style="color:#ee82ee">int</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#0f0">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 * Dir is set during SimpleLruInit and does not change thereafter. Since
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 * it&#39;s always the same, it doesn&#39;t need to be in shared memory.
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">	 */</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ee82ee">char</span>		Dir[<span style="color:#f60">64</span>];
+</span></span><span style="display:flex;"><span>} SlruCtlData;
+</span></span></code></pre></div><p>初始化时，即返回一个<code>SlruCtlData</code>。<code>Dir</code> 是初始化时的标记，不同模块会填充对应的名称。</p>
+<h3 id="核心功能">核心功能</h3>
+<ol>
+<li><code>SimpleLruZeroPage</code>：新增一个page</li>
+<li><code>SimpleLruReadPage</code> ：读一个page</li>
+<li><code>SimpleLruWritePage</code> ：写一个page</li>
+</ol>
+<h4 id="基础函数">基础函数</h4>
+<ul>
+<li>选择一个空slot</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#0f0">/* Select the slot to re-use when we need a free slot. */</span>
+</span></span><span style="display:flex;"><span><span style="color:#0f0">/* Control lock must be held at entry, and will be held at exit. */</span>
+</span></span><span style="display:flex;"><span><span style="color:#f00">static</span> <span style="color:#ee82ee">int</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff0">SlruSelectLRUPage</span>(SlruCtl ctl, <span style="color:#ee82ee">int</span> pageno)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#f00">for</span> (;;)
+</span></span><span style="display:flex;"><span>		<span style="color:#e5e5e5"># return if we have such a slot
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>		<span style="color:#e5e5e5"># return if we have an empty slot &#34;SLRU_PAGE_EMPTY&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>		<span style="color:#e5e5e5"># select a lru slot
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>			<span style="color:#e5e5e5"># return it if it&#39;s clean. Or
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>			<span style="color:#e5e5e5"># victim it if dirty
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>	<span style="color:#e5e5e5"># loop end -- It&#39;s a very clever design to dealing with corner cases
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>	<span style="color:#e5e5e5">#             such as the victim page being re-dirtied while we wrote it.
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>}
+</span></span></code></pre></div><ul>
+<li>记录一个&quot;most recently used&quot;的page，<code>cur_lru_count++</code> 并用其赋值</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#e5e5e5">#define SlruRecentlyUsed(shared, slotno)	\
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">	do { \
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">		int		new_lru_count = (shared)-&gt;cur_lru_count; \
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">		if (new_lru_count != (shared)-&gt;page_lru_count[slotno]) { \
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">			(shared)-&gt;cur_lru_count = ++new_lru_count; \
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">			(shared)-&gt;page_lru_count[slotno] = new_lru_count; \
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">		} \
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">	} while (0)
+</span></span></span></code></pre></div><ul>
+<li>从磁盘中读取一个 <code>page</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span>SlruPhysicalReadPage
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span>	segno = pageno / SLRU_PAGES_PER_SEGMENT;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">SlruFileName</span>(ctl, path, segno);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">     * In a crash-and-restart situation, it&#39;s possible for us to receive
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">     * commands to set the commit status of transactions whose bits are in
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">     * already-truncated segments of the commit log
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0">     */</span>
+</span></span><span style="display:flex;"><span>    fd = <span style="color:#ff0">OpenTransientFile</span>(path, O_RDONLY | PG_BINARY);
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> (fd &lt; <span style="color:#f60">0</span> &amp;&amp; !InRecovery) <span style="color:#ff0">ereport</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">pg_pread</span>(fd, shared-&gt;page_buffer[slotno], BLCKSZ, offset)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>向磁盘中写入一个 <code>page</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span>SlruPhysicalWritePage
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">/* We must flush WAL before flush slru pages */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> (shared-&gt;group_lsn != NULL)
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        max_lsn = shared-&gt;group_lsn[lsnindex++];
+</span></span><span style="display:flex;"><span>        <span style="color:#ff0">XLogFlush</span>(max_lsn);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">SlruFileName</span>(ctl, path, segno);
+</span></span><span style="display:flex;"><span>    fd = <span style="color:#ff0">OpenTransientFile</span>(path, O_RDWR | O_CREAT | PG_BINARY);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">pg_pwrite</span>(fd, shared-&gt;page_buffer[slotno], BLCKSZ, offset)
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">/* Queue up a sync request for the checkpointer. */</span>
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="interface">interface</h4>
+<ul>
+<li>新增一个 <code>page</code> 到buffer。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#0f0">/* Initialize (or reinitialize) a page to zeroes. */</span>
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff0">SimpleLruZeroPage</span>(SlruCtl ctl, <span style="color:#ee82ee">int</span> pageno)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	slotno = <span style="color:#ff0">SlruSelectLRUPage</span>(ctl, pageno);
+</span></span><span style="display:flex;"><span>	<span style="color:#ff0">SlruRecentlyUsed</span>(shared, slotno);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e5e5e5"># SlruSelectLRUPage may return a in-use page, we must clear it
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>	<span style="color:#ff0">MemSet</span>(shared-&gt;page_buffer[slotno], <span style="color:#f60">0</span>, BLCKSZ);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff0">SimpleLruZeroLSNs</span>(ctl, slotno);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><ul>
+<li>从 <code>disk</code> 中读取一个 <code>page</code></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#0f0">/* Control lock must be held at entry, and will be held at exit. */</span>
+</span></span><span style="display:flex;"><span>SimpleLruReadPage
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#e5e5e5">#infinite loop
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>        slotno = <span style="color:#ff0">SlruSelectLRUPage</span>(ctl, pageno);
+</span></span><span style="display:flex;"><span>        <span style="color:#e5e5e5"># for in IO slots, just wait
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>        <span style="color:#0f0">/* update in-memory status */</span>
+</span></span><span style="display:flex;"><span>        shared-&gt;page_number[slotno] = pageno;
+</span></span><span style="display:flex;"><span>        shared-&gt;page_status[slotno] = SLRU_PAGE_READ_IN_PROGRESS;
+</span></span><span style="display:flex;"><span>        shared-&gt;page_dirty[slotno] = false;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">/* Acquire per-buffer lock and release control lock */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff0">LWLockAcquire</span>(&amp;shared-&gt;buffer_locks[slotno].lock, LW_EXCLUSIVE);
+</span></span><span style="display:flex;"><span>        <span style="color:#ff0">LWLockRelease</span>(shared-&gt;ControlLock);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        ok = <span style="color:#ff0">SlruPhysicalReadPage</span>(ctl, pageno, slotno);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">/* re-acquire control lock */</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff0">LWLockAcquire</span>(shared-&gt;ControlLock, LW_EXCLUSIVE);
+</span></span><span style="display:flex;"><span>        <span style="color:#e5e5e5"># others
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span>}
+</span></span></code></pre></div><p>这里的锁设计很特别：</p>
+<ol>
+<li>在 <code>SlruSelectLRUPage</code> 需要获取全局锁</li>
+<li>在 <code>SimpleLruReadPage</code> 中，先初始化内存，再获取 <code>per-buffer</code> 锁，同时释放 <code>ControlLock</code></li>
+</ol>
+<p>在看函数 <code>SimpleLruZeroPage</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#0f0">/* Control lock must be held at entry, and will be held at exit. */</span>
+</span></span><span style="display:flex;"><span>SimpleLruZeroPage
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    slotno = <span style="color:#ff0">SlruSelectLRUPage</span>(ctl, pageno);
+</span></span><span style="display:flex;"><span>    shared-&gt;page_number[slotno] = pageno;
+</span></span><span style="display:flex;"><span>    shared-&gt;page_status[slotno] = SLRU_PAGE_VALID;
+</span></span><span style="display:flex;"><span>    shared-&gt;page_dirty[slotno] = true;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>难道，一旦获取 <code>ControlLock</code>，即可对任意 <code>slot</code> 进行修改？</p>
+<p>实际上，<code>SimpleLruReadPage</code> 读取的 <code>page</code>，必须已存在于磁盘（或者经由 <code>WAL</code> 来保证）。
+而 <code>SimpleLruZeroPage</code> 所初始化的 <code>page</code> 必须不存在。从使用逻辑上保证二者不产生冲突。</p>
+<ul>
+<li>SimpleLruWritePage(SlruInternalWritePage)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#0f0">/* Control lock must be held at entry, and will be held at exit. */</span>
+</span></span><span style="display:flex;"><span>SlruInternalWritePage
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">/* If a write is in progress, wait for it to finish */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">/* Do nothing if page is not dirty */</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">/* update in-memory status */</span>
+</span></span><span style="display:flex;"><span>    shared-&gt;page_status[slotno] = SLRU_PAGE_WRITE_IN_PROGRESS;
+</span></span><span style="display:flex;"><span>    shared-&gt;page_dirty[slotno] = false;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">/* Acquire per-buffer lock and release control lock */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">LWLockAcquire</span>(&amp;shared-&gt;buffer_locks[slotno].lock, LW_EXCLUSIVE);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">LWLockRelease</span>(shared-&gt;ControlLock);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">SlruPhysicalWritePage</span>(ctl, pageno, slotno, fdata);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">/* re-acquire control lock */</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">LWLockAcquire</span>(shared-&gt;ControlLock, LW_EXCLUSIVE);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    shared-&gt;page_status[slotno] = SLRU_PAGE_VALID;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>
