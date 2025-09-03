@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="postmaster 的代码路径
+-&gt;ServerLoop
+  -&gt;WaitEventSetWait
+  -&gt;process_pm_child_exit
+    -&gt;waitpid(-1, )
+    -&gt;CleanupBackgroundWorker()
+CleanupBackgroundWorker 的细节：
+
+
+如果bgworker以 0 退出，则正常退出，不参与重启逻辑。
+
+
+如果以 1 退出，进入后续的正常重启逻辑
+
+
+否则，视为系统级 crash， 重启整个实例。
+
+
+关键变量：
+
+RegisteredBgWorker.rw_crashed_at 非 0 视为崩溃
+HaveCrashedWorker  postmaster 在本轮循环是是否检测到了 bgworker 崩溃
+StartWorkerNeeded 此刻是否需要重启 bgworker 。bgworker 支持设置重启间隔，所以 postmaster 在每次循环中，不总会重启所有崩溃的的 bgworker
+
+appendix
+waitpid
+(Generated from AI, haven&rsquo;t been confirmed by myself)
+while ((pid = waitpid(-1, &amp;exitstatus, WNOHANG)) &gt; 0)
+If multiple child processes have already terminated before this loop runs:
+
+The loop will collect them one by one, in the order determined by the operating system&rsquo;s process table
+Each iteration of the loop will retrieve one zombie process
+The loop will continue until all terminated child processes have been collected
+
+When a child process terminates in a Unix/Linux system, it doesn&rsquo;t immediately disappear from the system. Instead, it enters a &ldquo;zombie&rdquo; state (sometimes called a &ldquo;defunct&rdquo; state). In this state:">  
+
+  <title>
+    
+      PG: How to restart bgworker
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.51652302d3a998bf7887aed5c2cf89141bbebdf45a2c8f87b0717a3cf4f51c4e53c694c328fb1de78c3a625a1c01f80745bf1f2f42c040647a245cbbb6c2d1d7.css" integrity="sha512-UWUjAtOpmL94h67Vws&#43;JFBu&#43;vfRaLI&#43;HsHF6PPT1HE5TxpTDKPsd54w6YlocAfgHRb8fL0LAQGR6JFy7tsLR1w==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+                <div class="post-meta">
+                    <a href="/">..</a>
+
+                    <p>
+                        <time datetime="2025-09-03 21:01:17 &#43;0800 CST">
+                            2025-09-03
+                        </time>
+                    </p>
+                </div>
+
+<article>
+    <h1>PG: How to restart bgworker</h1>
+
+    
+
+    <h2 id="postmaster-的代码路径">postmaster 的代码路径</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span>-&gt;ServerLoop
+</span></span><span style="display:flex;"><span>  -&gt;WaitEventSetWait
+</span></span><span style="display:flex;"><span>  -&gt;process_pm_child_exit
+</span></span><span style="display:flex;"><span>    -&gt;waitpid(-1, )
+</span></span><span style="display:flex;"><span>    -&gt;CleanupBackgroundWorker()
+</span></span></code></pre></div><p><code>CleanupBackgroundWorker</code> 的细节：</p>
+<ul>
+<li>
+<p>如果bgworker以 0 退出，则正常退出，不参与重启逻辑。</p>
+</li>
+<li>
+<p>如果以 1 退出，进入后续的正常重启逻辑</p>
+</li>
+<li>
+<p>否则，视为系统级 crash， 重启整个实例。</p>
+</li>
+</ul>
+<p>关键变量：</p>
+<ul>
+<li><code>RegisteredBgWorker.rw_crashed_at</code> 非 0 视为崩溃</li>
+<li><code>HaveCrashedWorker</code>  postmaster 在本轮循环是是否检测到了 bgworker 崩溃</li>
+<li><code>StartWorkerNeeded</code> 此刻是否需要重启 bgworker 。bgworker 支持设置重启间隔，所以 postmaster 在每次循环中，不总会重启所有崩溃的的 bgworker</li>
+</ul>
+<h2 id="appendix">appendix</h2>
+<h3 id="waitpid">waitpid</h3>
+<p>(Generated from AI, haven&rsquo;t been confirmed by myself)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#f00">while</span> ((pid = <span style="color:#ff0">waitpid</span>(-<span style="color:#f60">1</span>, &amp;exitstatus, WNOHANG)) &gt; <span style="color:#f60">0</span>)
+</span></span></code></pre></div><p>If multiple child processes have already terminated before this loop runs:</p>
+<ol>
+<li>The loop will collect them one by one, in the order determined by the operating system&rsquo;s process table</li>
+<li>Each iteration of the loop will retrieve one zombie process</li>
+<li>The loop will continue until all terminated child processes have been collected</li>
+</ol>
+<p>When a child process terminates in a Unix/Linux system, it doesn&rsquo;t immediately disappear from the system. Instead, it enters a &ldquo;zombie&rdquo; state (sometimes called a &ldquo;defunct&rdquo; state). In this state:</p>
+<ol>
+<li>The process has finished execution</li>
+<li>Most resources have been freed</li>
+<li>But an entry in the process table is kept to allow the parent to retrieve the child&rsquo;s exit status</li>
+</ol>
+<p>This zombie state persists until the parent process &ldquo;reaps&rdquo; the child by calling <code>wait()</code> or <code>waitpid()</code> to collect its exit status.</p>
+
+</article>
+
+            </div>
+        </main>
+    </body></html>
