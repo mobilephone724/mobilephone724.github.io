@@ -40,7 +40,7 @@ Write memory barrier: CPUs must wait until the store buffer is cleared before ap
                     <a href="/">..</a>
 
                     <p>
-                        <time datetime="2025-03-29 08:56:22 &#43;0800 CST">
+                        <time datetime="2025-03-29 21:05:24 &#43;0800 CST">
                             2025-03-29
                         </time>
                     </p>
@@ -49,27 +49,6 @@ Write memory barrier: CPUs must wait until the store buffer is cleared before ap
 <article>
     <h1>mesi-summary</h1>
 
-    
-        <aside >
-            <nav id="TableOfContents">
-  <ul>
-    <li><a href="#store-buffer">store buffer</a>
-      <ul>
-        <li><a href="#why">why?</a></li>
-        <li><a href="#complexity-it-introduces">complexity it introduces</a></li>
-      </ul>
-    </li>
-    <li><a href="#invalidate-queue">invalidate queue</a>
-      <ul>
-        <li><a href="#why-1">why?</a></li>
-        <li><a href="#complexity-it-introduces-1">complexity it introduces</a></li>
-      </ul>
-    </li>
-    <li><a href="#summary">summary</a></li>
-    <li><a href="#summary-chart">Summary Chart</a></li>
-  </ul>
-</nav>
-        </aside>
     
 
     <h2 id="store-buffer">store buffer</h2>
@@ -89,7 +68,7 @@ Write memory barrier: CPUs must wait until the store buffer is cleared before ap
 <p><strong>Write memory barrier</strong>: CPUs must wait until the store buffer is cleared before applying subsequent changes. Alternatively, later changes can remain in the store buffer until all prior entries in the store buffer have been processed.</p>
 </li>
 </ul>
-<p><img src="image-20250329093456-j3puqdh-20250905232440403.png" alt="image"></p>
+<p><img src="assets/image-20250329093456-j3puqdh-20250905232440403.png" alt="image"></p>
 <p>‍</p>
 <p>‍</p>
 <h2 id="invalidate-queue">invalidate queue</h2>
@@ -98,7 +77,7 @@ Write memory barrier: CPUs must wait until the store buffer is cleared before ap
 <p><strong>To address this, the invalidate message is stored in the invalidate queue and processed later.</strong></p>
 <h3 id="complexity-it-introduces-1">complexity it introduces</h3>
 <p><strong>Read memory barrier</strong>: All invalidate messages must be processed before reading subsequent values.</p>
-<p><img src="image-20250329093503-406qo5f-20250905232445666.png" alt="image"></p>
+<p><img src="assets/image-20250329093503-406qo5f-20250905232445666.png" alt="image"></p>
 <h2 id="summary">summary</h2>
 <h2 id="summary-chart">Summary Chart</h2>
 <table>

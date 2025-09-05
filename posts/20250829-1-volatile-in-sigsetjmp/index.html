@@ -70,16 +70,16 @@ Let&rsquo;s consider an example:">
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>    <span style="color:#ff0">PG_END_TRY</span>();
 </span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Without <code>volatile</code>, the compiler might:</p>
+</span></span></code></pre></div><p>Without <code>volatile</code>, the compiler might:</p>
 <ol>
-<li>Keep <code>counter</code> in a register</li>
+<li>Keep <code>counter</code> in a register</li>
 <li>Never actually write the value 42 back to memory</li>
-<li>When the error occurs and <code>PG_CATCH</code> executes after <code>siglongjmp</code>, the value of <code>counter</code> might not be 42 as expected</li>
+<li>When the error occurs and <code>PG_CATCH</code> executes after <code>siglongjmp</code>, the value of <code>counter</code> might not be 42 as expected</li>
 </ol>
-<p>With <code>volatile</code>, the compiler is forced to:</p>
+<p>With <code>volatile</code>, the compiler is forced to:</p>
 <ol>
-<li>Actually write to memory whenever <code>counter</code> is modified</li>
-<li>Read from memory whenever <code>counter</code> is accessed</li>
+<li>Actually write to memory whenever <code>counter</code> is modified</li>
+<li>Read from memory whenever <code>counter</code> is accessed</li>
 <li>Not reorder or optimize away these memory operations</li>
 </ol>
 <p>This ensures that after the non-local jump, the variable has the expected value.</p>
@@ -87,7 +87,7 @@ Let&rsquo;s consider an example:">
 <p>FROM <a href="https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html">https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html</a></p>
 <pre tabindex="0"><code>`-Wclobbered`[](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wclobbered)
 
-Warn for variables that might be changed by `longjmp` or `vfork`. This warning is also enabled by -Wextra.
+Warn for variables that might be changed by `longjmp` or `vfork`. This warning is also enabled by -Wextra.
 </code></pre><p>FROM pg source</p>
 <pre tabindex="0"><code> * Note: if a local variable of the function containing PG_TRY is modified
  * in the PG_TRY section and used in the PG_CATCH section, that variable
