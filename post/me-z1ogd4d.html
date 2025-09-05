@@ -89,7 +89,7 @@ Write memory barrier: CPUs must wait until the store buffer is cleared before ap
 <p><strong>Write memory barrier</strong>: CPUs must wait until the store buffer is cleared before applying subsequent changes. Alternatively, later changes can remain in the store buffer until all prior entries in the store buffer have been processed.</p>
 </li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/mobilephone724/hugoBlog/siyuan-pub/images/image-20250329093456-j3puqdh.png" alt="image"></p>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/2025/09/05/imaga_1757087379139179.png" alt="image"></p>
 <p>‍</p>
 <p>‍</p>
 <h2 id="invalidate-queue">invalidate queue</h2>
@@ -98,7 +98,7 @@ Write memory barrier: CPUs must wait until the store buffer is cleared before ap
 <p><strong>To address this, the invalidate message is stored in the invalidate queue and processed later.</strong></p>
 <h3 id="complexity-it-introduces-1">complexity it introduces</h3>
 <p><strong>Read memory barrier</strong>: All invalidate messages must be processed before reading subsequent values.</p>
-<p><img src="https://raw.githubusercontent.com/mobilephone724/hugoBlog/siyuan-pub/images/image-20250329093503-406qo5f.png" alt="image"></p>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/2025/09/05/imaga_1757087399877130.png" alt="image"></p>
 <h2 id="summary">summary</h2>
 <h2 id="summary-chart">Summary Chart</h2>
 <table>
