@@ -58,6 +58,20 @@
       <description>&lt;h1 id=&#34;可串行化的实现思路&#34;&gt;可串行化的实现思路&lt;/h1&gt;&#xA;&lt;p&gt;paper: &lt;a href=&#34;https://drkp.net/papers/ssi-vldb12.pdf&#34;&gt;https://drkp.net/papers/ssi-vldb12.pdf&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;可串行化冲突的例子&#34;&gt;可串行化冲突的例子&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;wr-dependencies&lt;/strong&gt;: if T1 writes a version of an object, and T2 reads that version, then T1 appears to have executed before T2&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;ww-dependencies&lt;/strong&gt;: if T1 writes a version of some object, and T2 replaces that version with the next version, then T1 appears to have executed before T2&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;rw-antidependencies&lt;/strong&gt;: &lt;em&gt;if T1 writes a version of some object, and T2 reads the previous version of that object, then T1 appears to have executed after T2, because T2 did not see its update&lt;/em&gt;. As we will see, these dependencies are central to SSI; we sometimes also refer to them as rw-conflicts.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;​&lt;img src=&#34;https://raw.githubusercontent.com/mobilephone724/hugoBlog/siyuan-pub/images/image-20250302223239-pdjy6rq.png&#34; alt=&#34;image&#34;&gt;​&lt;/p&gt;</description>
     </item>
     <item>
+      <title>【日拱一卒】2025-03-02</title>
+      <link>/post/20250302-8ctcr.html</link>
+      <pubDate>Sun, 02 Mar 2025 20:00:48 +0800</pubDate>
+      <guid>/post/20250302-8ctcr.html</guid>
+      <description>&lt;h1 id=&#34;2025-03-02&#34;&gt;2025-03-02&lt;/h1&gt;&#xA;&lt;h2 id=&#34;符文般的js&#34;&gt;符文般的JS&lt;/h2&gt;&#xA;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-source&#34; data-lang=&#34;source&#34;&gt;0 = [+[]]+[]&#xA;1 = [+!+[]]+[]&#xA;10 = [+!+[]]+[+[]]&#xA;100 = [+!+[]]+[+[]]+[+[]]&#xA;&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;1-0--&#34;&gt;1. &lt;code&gt;0 = [+[]]+[]&lt;/code&gt;​&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;​&lt;code&gt;[]&lt;/code&gt;​ 是一个空数组。&lt;/li&gt;&#xA;&lt;li&gt;​&lt;code&gt;+[]&lt;/code&gt;​ 将空数组转换为数字。空数组转换为数字时是 &lt;code&gt;0&lt;/code&gt;​，所以 &lt;code&gt;+[]&lt;/code&gt;​ 的结果是 &lt;code&gt;0&lt;/code&gt;​。&lt;/li&gt;&#xA;&lt;li&gt;​&lt;code&gt;[+[]]&lt;/code&gt;​ 将 &lt;code&gt;0&lt;/code&gt;​ 放入一个数组中，结果是 &lt;code&gt;[0]&lt;/code&gt;​。&lt;/li&gt;&#xA;&lt;li&gt;​&lt;code&gt;[+[]]+[]&lt;/code&gt;​ 将数组 &lt;code&gt;[0]&lt;/code&gt;​ 转换为字符串，结果是 &lt;code&gt;&amp;quot;0&amp;quot;&lt;/code&gt;​。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;最终结果：&lt;code&gt;&amp;quot;0&amp;quot;&lt;/code&gt;​（字符串形式的 &lt;code&gt;0&lt;/code&gt;​）。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>【日拱一卒】2025-03-01</title>
+      <link>/post/20250301-1r5xzc.html</link>
+      <pubDate>Sat, 01 Mar 2025 15:14:45 +0800</pubDate>
+      <guid>/post/20250301-1r5xzc.html</guid>
+      <description>&lt;h2 id=&#34;column-oriented-storage&#34;&gt;Column-Oriented Storage&lt;/h2&gt;&#xA;&lt;h3 id=&#34;basic-idea&#34;&gt;Basic idea:&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;Although fact tables are often over 100 columns wide, &lt;strong&gt;a typical data warehouse query only accesses 4 or 5 of them at one time&lt;/strong&gt; (&lt;code&gt;SELECT *&lt;/code&gt;​ queries are rarely needed for analytics)&lt;/p&gt;&#xA;&lt;/li&gt;&#xA;&lt;li&gt;&#xA;&lt;p&gt;The idea behind column-oriented storage is simple: &lt;strong&gt;don’t store all the values from one row together, but store all the values from each column together instead&lt;/strong&gt;. If each column is stored in a separate file, a query only needs to read and parse those columns that are used in that query, which can save a lot of work&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Airwallex调研</title>
       <link>/post/airwallex-survey-z1tsrmd.html</link>
       <pubDate>Mon, 24 Feb 2025 20:20:27 +0800</pubDate>
