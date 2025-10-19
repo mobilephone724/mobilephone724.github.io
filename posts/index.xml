@@ -6,8 +6,15 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 03 Sep 2025 21:01:17 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 19 Oct 2025 23:13:22 +0800</lastBuildDate>
     <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Html Blog</title>
+      <link>/posts/20251019-1-html-blog/</link>
+      <pubDate>Sun, 19 Oct 2025 23:13:22 +0800</pubDate>
+      <guid>/posts/20251019-1-html-blog/</guid>
+      <description>&lt;p&gt;I have try to write new blogs in pure html files. The origin of this idea is&#xA;that I can totally control everything and simply the process of writing markdown&#xA;files and converting them to html files.&lt;/p&gt;&#xA;&lt;p&gt;However, I found that writing html files directly is not a good idea. The main&#xA;reason is&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;The source format is not friendly. For example, when I paste code snippets,&#xA;I have to manually escape special characters like &lt;code&gt;&amp;lt;&lt;/code&gt;, &lt;code&gt;&amp;gt;&lt;/code&gt;, etc, and the&#xA;first line of code snippets must not start from a new line, otherwise an&#xA;empty line will be added before the code snippets.&lt;/li&gt;&#xA;&lt;li&gt;The math equation is not supported well. I have to manually add &lt;code&gt;\( ... \)&lt;/code&gt; or&#xA;&lt;code&gt;\[ ... \]&lt;/code&gt; for inline and block math equations respectively.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;So, it is still a good idea to write markdown files and convert them to html&#xA;files in the existent workflow.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>PG: How to restart bgworker</title>
       <link>/posts/20250903-2/</link>
