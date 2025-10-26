@@ -6,8 +6,15 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 19 Oct 2025 23:13:22 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 26 Oct 2025 21:26:45 +0800</lastBuildDate>
     <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>C Structure Align And Hash Key</title>
+      <link>/posts/20251026-1-structure-and-hash/</link>
+      <pubDate>Sun, 26 Oct 2025 21:26:45 +0800</pubDate>
+      <guid>/posts/20251026-1-structure-and-hash/</guid>
+      <description>&lt;h2 id=&#34;structure-alignment&#34;&gt;Structure Alignment&lt;/h2&gt;&#xA;&lt;p&gt;In C language, structure size, besides the types it contains, is decided by&#xA;the two alignment rules.&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Each member&amp;rsquo;s offset must be a multiple of its alignment requirement.&lt;/li&gt;&#xA;&lt;li&gt;The overall structure size must be a multiple of its largest member&amp;rsquo;s&#xA;alignment requirement.&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;For expample, consider the following structure:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f00&#34;&gt;struct&lt;/span&gt; A {&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    int32 a;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    int64 b;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;};&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;The actural memory layout of this structure is:&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;0 -- 3  bytes --&amp;gt; | int32 a  |&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;4 -- 7  bytes --&amp;gt; | padding  |&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;8 -- 15 bytes --&amp;gt; | int64 b  |&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;If we reorder the members of the structure as follows:&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Html Blog</title>
       <link>/posts/20251019-1-html-blog/</link>

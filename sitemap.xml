@@ -2,10 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/posts/20251019-1-html-blog/</loc>
-    <lastmod>2025-10-19T23:13:22+08:00</lastmod>
+    <loc>/posts/20251026-1-structure-and-hash/</loc>
+    <lastmod>2025-10-26T21:26:45+08:00</lastmod>
   </url><url>
     <loc>/posts/</loc>
+    <lastmod>2025-10-26T21:26:45+08:00</lastmod>
+  </url><url>
+    <loc>/posts/20251019-1-html-blog/</loc>
     <lastmod>2025-10-19T23:13:22+08:00</lastmod>
   </url><url>
     <loc>/posts/20250903-2/</loc>
