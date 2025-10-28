@@ -2,10 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>/posts/20251026-2-cstringgettextdatum-and-cstringgetdatum/</loc>
-    <lastmod>2025-10-27T23:35:17+08:00</lastmod>
-  </url><url>
     <loc>/posts/</loc>
+    <lastmod>2025-10-28T23:31:52+08:00</lastmod>
+  </url><url>
+    <loc>/posts/20251028-syscache-in-walsender/</loc>
+    <lastmod>2025-10-28T23:31:52+08:00</lastmod>
+  </url><url>
+    <loc>/posts/20251027-cstringgettextdatum-and-cstringgetdatum/</loc>
     <lastmod>2025-10-27T23:35:17+08:00</lastmod>
   </url><url>
     <loc>/posts/20251026-1-structure-and-hash/</loc>
