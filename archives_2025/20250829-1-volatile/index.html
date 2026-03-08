@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="conclusion
+In postgresql, the error handling methods pg_try() &#43; elog() &#43; pg_catch() is implemented through sigsetjmp and siglongjmp. But the variables changed in pg_try() and used in pg_catch() must be declared as volatile. The reasons are below:
+reason
+
+The sigsetjmp call must store all the register value and the siglongjmp restore the registers from it. It&rsquo;s very reasonable in the view of asm code.
+If a variable is not declared as volatile, the assignment operation of it in pg_try() may only changes the variable in the register. And after jumping by the siglongjmp call, the value of variable is changed back to the point of sigsetjmp , which means the changes in pg_try() lost
+
+example
+Let&rsquo;s consider an example:">  
+
+  <title>
+    
+      volatile in sigsetjmp and siglongjmp
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.51652302d3a998bf7887aed5c2cf89141bbebdf45a2c8f87b0717a3cf4f51c4e53c694c328fb1de78c3a625a1c01f80745bf1f2f42c040647a245cbbb6c2d1d7.css" integrity="sha512-UWUjAtOpmL94h67Vws&#43;JFBu&#43;vfRaLI&#43;HsHF6PPT1HE5TxpTDKPsd54w6YlocAfgHRb8fL0LAQGR6JFy7tsLR1w==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2025-08-29 21:05:24 &#43;0800 CST">
+            2025-08-29
+        </time>
+    </p>
+
+    <h1>volatile in sigsetjmp and siglongjmp</h1>
+
+    
+
+    <h2 id="conclusion">conclusion</h2>
+<p>In postgresql, the error handling methods <code>pg_try() + elog() + pg_catch()</code> is implemented through <code>sigsetjmp</code> and <code>siglongjmp</code>. But the variables changed in <code>pg_try()</code> and used in <code>pg_catch()</code> must be declared as <code>volatile</code>. The reasons are below:</p>
+<h2 id="reason">reason</h2>
+<ul>
+<li>The sigsetjmp call must store all the register value and the siglongjmp restore the registers from it. It&rsquo;s very reasonable in the view of asm code.</li>
+<li>If a variable is not declared as volatile, the assignment operation of it in <code>pg_try()</code> may only changes the variable in the register. And after jumping by the <code>siglongjmp</code> call, the value of variable is changed back to the point of <code>sigsetjmp</code> , which means the changes in <code>pg_try()</code> lost</li>
+</ul>
+<h2 id="example">example</h2>
+<p>Let&rsquo;s consider an example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-C" data-lang="C"><span style="display:flex;"><span><span style="color:#ee82ee">void</span> <span style="color:#ff0">example_function</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span> counter = <span style="color:#f60">0</span>;  <span style="color:#0f0">// Should be &#34;volatile int counter = 0;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">PG_TRY</span>();
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        counter = <span style="color:#f60">42</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// Some operation that might throw an error
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        <span style="color:#ff0">perform_risky_operation</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">PG_CATCH</span>();
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#0f0">// We expect counter to be 42 here
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span>        <span style="color:#ff0">elog</span>(WARNING, <span style="color:#87ceeb">&#34;Operation failed, counter value: %d&#34;</span>, counter);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">PG_END_TRY</span>();
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Without <code>volatile</code>, the compiler might:</p>
+<ol>
+<li>Keep <code>counter</code> in a register</li>
+<li>Never actually write the value 42 back to memory</li>
+<li>When the error occurs and <code>PG_CATCH</code> executes after <code>siglongjmp</code>, the value of <code>counter</code> might not be 42 as expected</li>
+</ol>
+<p>With <code>volatile</code>, the compiler is forced to:</p>
+<ol>
+<li>Actually write to memory whenever <code>counter</code> is modified</li>
+<li>Read from memory whenever <code>counter</code> is accessed</li>
+<li>Not reorder or optimize away these memory operations</li>
+</ol>
+<p>This ensures that after the non-local jump, the variable has the expected value.</p>
+<h2 id="-wclobbered-is-useless"><code>-Wclobbered</code> is useless</h2>
+<p>FROM <a href="https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html">https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html</a></p>
+<pre tabindex="0"><code>`-Wclobbered`[](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wclobbered)
+
+Warn for variables that might be changed by `longjmp` or `vfork`. This warning is also enabled by -Wextra.
+</code></pre><p>FROM pg source</p>
+<pre tabindex="0"><code> * Note: if a local variable of the function containing PG_TRY is modified
+ * in the PG_TRY section and used in the PG_CATCH section, that variable
+ * must be declared &#34;volatile&#34; for POSIX compliance.  This is not mere
+ * pedantry; we have seen bugs from compilers improperly optimizing code
+ * away when such a variable was not marked.  Beware that gcc&#39;s -Wclobbered
+ * warnings are just about entirely useless for catching such oversights.
+</code></pre>
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="The functions described in this chapter are often referred to as unbuffered I/O(which each read or write invokes a system call in the kernel), in contrast to the standard I/O routines
+File Descriptors
+
+To the kernel, all open files are referred to by file descriptors. A file descriptor is a non-negative integer. When we open an existing file or create a new file, the kernel returns a file descriptor to the process. When we want to read or write a file, we identify the file with the file descriptor that was returned by open or creat as an argument to either read or write.
+By convention, UNIX System shells associate file descriptor 0 with the standard input of a process, file descriptor 1 with the standard output, and file descriptor 2 with the standard error
+File descriptors range from 0 through OPEN_MAX−1
+
+open and openat
+
+code
+
+#include &lt;fcntl.h&gt;
+int open(const char *path, int oflag, ... /* mode_t mode */ );
+int openat(int fd, const char *path, int oflag, ... /* mode_t mode */ );
+//Both return: file descriptor if OK, −1 on error
+
+
+This function has a multitude of options, which are specified by the oflag argument. This argument is formed by ORing together one or more of the following constants from the&lt;fcntl.h&gt;
+header">  
+
+  <title>
+    
+      APUE/Chapter3: file and I/O
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.51652302d3a998bf7887aed5c2cf89141bbebdf45a2c8f87b0717a3cf4f51c4e53c694c328fb1de78c3a625a1c01f80745bf1f2f42c040647a245cbbb6c2d1d7.css" integrity="sha512-UWUjAtOpmL94h67Vws&#43;JFBu&#43;vfRaLI&#43;HsHF6PPT1HE5TxpTDKPsd54w6YlocAfgHRb8fL0LAQGR6JFy7tsLR1w==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2022-01-14 12:02:42 &#43;0800 CST">
+            2022-01-14
+        </time>
+    </p>
+
+    <h1>APUE/Chapter3: file and I/O</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#file-descriptors">File Descriptors</a></li>
+    <li><a href="#open-and-openat"><code>open</code> and <code>openat</code></a></li>
+    <li><a href="#creat-function"><code>creat</code> function</a></li>
+    <li><a href="#close-function"><code>close</code> function</a></li>
+    <li><a href="#lseek-function"><code>lseek</code> function</a></li>
+    <li><a href="#read-function"><code>read</code> function</a></li>
+    <li><a href="#write-function"><code>write</code> function</a></li>
+    <li><a href="#io-efficiency">I/O efficiency</a></li>
+    <li><a href="#file-sharing">file sharing</a></li>
+    <li><a href="#atomic-operations">Atomic Operations</a></li>
+    <li><a href="#dup-and-dup2-functions">dup and dup2 Functions</a></li>
+    <li><a href="#syncfsync--and-fdatasync-function"><code>sync</code>,<code>fsync</code> , and <code>fdatasync</code> function</a></li>
+    <li><a href="#fcntl-function"><code>fcntl</code> function</a></li>
+    <li><a href="#ioctl-function"><code>ioctl</code> function</a></li>
+    <li><a href="#devfd"><code>/dev/fd</code></a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <p>The functions described in this chapter are often referred to as <strong>unbuffered I/O</strong>(which each read or write invokes a system call in the kernel), in contrast to the standard I/O routines</p>
+<h2 id="file-descriptors">File Descriptors</h2>
+<ol>
+<li>To the kernel, all open files are referred to by <strong>file descriptors</strong>. A file descriptor is a <strong>non-negative integer.</strong> When we open an existing file or create a new file, the kernel returns a file descriptor to the process. When we want to read or write a file, we identify the file with the file descriptor that was returned by <code>open</code> or <code>creat</code> as an argument to either read or write.</li>
+<li>By convention, UNIX System shells associate file descriptor <strong>0 with the standard input</strong> of a process, file descriptor <strong>1 with the standard output</strong>, and file descriptor <strong>2 with the standard error</strong></li>
+<li>File descriptors range from 0 through OPEN_MAX−1</li>
+</ol>
+<h2 id="open-and-openat"><code>open</code> and <code>openat</code></h2>
+<ol>
+<li>code</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;fcntl.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">int</span> <span style="color:#ff0">open</span>(<span style="color:#f00">const</span> <span style="color:#ee82ee">char</span> *path, <span style="color:#ee82ee">int</span> oflag, ... <span style="color:#0f0">/* mode_t mode */</span> );
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">openat</span>(<span style="color:#ee82ee">int</span> fd, <span style="color:#f00">const</span> <span style="color:#ee82ee">char</span> *path, <span style="color:#ee82ee">int</span> oflag, ... <span style="color:#0f0">/* mode_t mode */</span> );
+</span></span><span style="display:flex;"><span><span style="color:#0f0">//Both return: file descriptor if OK, −1 on error
+</span></span></span></code></pre></div><ol start="2">
+<li>
+<p>This function has a multitude of options, which are specified by the <code>oflag</code> argument. This argument is formed by <code>ORing</code> together one or more of the following constants from the<code>&lt;fcntl.h&gt;</code>
+header</p>
+</li>
+<li>
+<p><code>O_SYNC</code> Have each write wait for physical I/O to complete, including I/O necessary to update file attributes modified as a result of the write. <code>O_DSYNC</code> Have each write wait for physical I/O to complete, but don’t wait for file attributes to be updated if they don’t affect the ability to read the data just written. <strong>The O_DSYNC flag affects a file’s attributes only when they need to be updated to reflect a change in the
+file’s data (for example, update the file’s size to reflect more data)</strong></p>
+</li>
+<li>
+<p>O_RSYNC Have each read operation on the file descriptor wait until any pending writes for the same portion of the file are complete</p>
+</li>
+<li>
+<p>The fd parameter distinguishes the openat function from the open function. There are three possibilities</p>
+<ol>
+<li>The path parameter specifies an <strong>absolute pathname</strong>. In this case, the fd parameter is <strong>ignored</strong> and the openat function behaves like the open function.</li>
+<li>The path parameter specifies a <strong>relative pathname</strong> and the fd parameter is a <strong>file descriptor</strong> that specifies the starting location in the file system where the relative pathname is to be evaluated. The fd parameter is obtained by opening the directory where the relative pathname is to be evaluated.</li>
+<li>The path parameter specifies a relative pathname and the fd parameter has the <strong>special value AT_FDCWD</strong>. In this case, the pathname is evaluated starting in the current working directory and the openat function behaves like the open function.</li>
+</ol>
+</li>
+<li>
+<p><code>openat</code> solved two problems</p>
+<ol>
+<li>It gives threads a way to <strong>use relative pathnames to open files</strong> in directories other than the current working directory while all threads in the same process share the same current working directory, so this makes it difficult for multiple threads in the same process to work in different directories at the same time</li>
+<li>it provides a way to avoid <strong>time-of-check-to-time-of-use</strong> (TOCTTOU) errors whose baisc idea is that <strong>a program is vulnerable if it makes two file-based function calls where the second call depends on the results of the first call</strong>. Because the two calls are not atomic, the file can change between the two calls, thereby invalidating the results of the first call, leading to a program error.</li>
+</ol>
+</li>
+</ol>
+<h2 id="creat-function"><code>creat</code> function</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;fcntl.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">int</span> <span style="color:#ff0">creat</span>(<span style="color:#f00">const</span> <span style="color:#ee82ee">char</span> *path, <span style="color:#ee82ee">mode_t</span> mode);
+</span></span></code></pre></div><p>This is equivalent to</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ff0">open</span>(path, O_WRONLY | O_CREAT | O_TRUNC, mode);
+</span></span></code></pre></div><h2 id="close-function"><code>close</code> function</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">int</span> <span style="color:#ff0">close</span>(<span style="color:#ee82ee">int</span> fd);
+</span></span></code></pre></div><p>When a process terminates, all of its open files are closed automatically by the kernel</p>
+<h2 id="lseek-function"><code>lseek</code> function</h2>
+<ol>
+<li>Every open file has an associated &lsquo;&rsquo;<strong>current file offset</strong>,’’ normally a non-negative integer that measures the number of bytes from the beginning of the file.Read and write operations normally start at the current file offset and cause the offset to be incremented by the number of bytes read or written An open file’s offset can be set explicitly by calling lseek
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">off_t</span> <span style="color:#ff0">lseek</span>(<span style="color:#ee82ee">int</span> fd, <span style="color:#ee82ee">off_t</span> offset, <span style="color:#ee82ee">int</span> whence);
+</span></span></code></pre></div><ol>
+<li>If <code>whence</code> is <code>SEEK_SET</code>, the file’s offset is set to offset bytes <strong>from the beginning</strong> of the file</li>
+<li>If <code>whence</code> is <code>SEEK_CUR</code>, the file’s offset is set to <strong>its current value plus the offset</strong>. The offset can be positive or negative</li>
+<li>If <code>whence</code> is <code>SEEK_END</code>, the file’s offset is set to the <strong>size of the file plus the offset</strong>. The offset can be positive or negative</li>
+</ol>
+</li>
+<li>Because a successful call to lseek returns the new file offset, we can <strong>seek zero bytes from the current position to determine the current offset</strong>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ee82ee">off_t</span> currpos;
+</span></span><span style="display:flex;"><span>currpos = <span style="color:#ff0">lseek</span>(fd, <span style="color:#f60">0</span>, SEEK_CUR);
+</span></span></code></pre></div>This technique can also be used to determine <strong>if a file is capable of seeking</strong>. If the file descriptor refers to a pipe, FIFO, or socket, lseek sets errno to ESPIPE and returns −1</li>
+<li>Normally,a file’s current offset must be a non-negative integer . Because negative offsets are possible, <strong>we should be careful to compare the return value from lseek as being equal to or not equal to −1</strong>, rather than testing whether it is less than 0.</li>
+<li>The file’s offset can be greater than the file’s current size, in which case the next  write to the file will extend the file. This is referred to as creating a hole in a file and is  allowed. Any bytes in a file that have not been written are read back as 0.</li>
+<li><strong>A hole in a file isn’t required to have storage backing it on disk</strong></li>
+</ol>
+<h2 id="read-function"><code>read</code> function</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">ssize_t</span> <span style="color:#ff0">read</span>(<span style="color:#ee82ee">int</span> fd, <span style="color:#ee82ee">void</span> *buf, <span style="color:#ee82ee">size_t</span> nbytes);
+</span></span></code></pre></div><p>If the read is successful, the number of bytes read is returned. If the end of file is encountered, 0 is returned.
+There are several cases in which the number of bytes actually read is less than the
+amount requested:</p>
+<ol>
+<li>When reading from a regular file, if the end of file is reached before the requested number of bytes has been read.</li>
+<li>When reading from a terminal device.</li>
+<li>When reading from a network</li>
+<li>When reading from a pipe or FIFO.</li>
+<li>When reading from a record-oriented device</li>
+<li>When interrupted by a signal and a partial amount of data has already been read.
+classic definition</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">read</span>(<span style="color:#ee82ee">int</span> fd, <span style="color:#ee82ee">char</span> *buf, <span style="color:#ee82ee">unsigned</span> nbytes);
+</span></span></code></pre></div><p>difference</p>
+<ol>
+<li><code>void *</code> to <code>char *</code></li>
+<li><code>0</code> for end-of-file and <code>-1</code> for an error</li>
+</ol>
+<h2 id="write-function"><code>write</code> function</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">ssize_t</span> <span style="color:#ff0">write</span>(<span style="color:#ee82ee">int</span> fd, <span style="color:#f00">const</span> <span style="color:#ee82ee">void</span> *buf, <span style="color:#ee82ee">size_t</span> nbytes)
+</span></span></code></pre></div><p>The return value is usually equal to the <code>nbytes</code> argument; otherwise, an error has occurred. A common cause for a write error is either <strong>filling up a disk or exceeding the file size limit for a given process</strong></p>
+<h2 id="io-efficiency">I/O efficiency</h2>
+<p>an example</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&#34;apue.h&#34;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#define BUFFSIZE 4096
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">int</span> <span style="color:#ff0">main</span>(<span style="color:#ee82ee">void</span>)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">int</span> n;
+</span></span><span style="display:flex;"><span>    <span style="color:#ee82ee">char</span> buf[BUFFSIZE];
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">while</span> ((n = <span style="color:#ff0">read</span>(STDIN_FILENO, buf, BUFFSIZE)) &gt; <span style="color:#f60">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#f00">if</span> (<span style="color:#ff0">write</span>(STDOUT_FILENO, buf, n) != n)
+</span></span><span style="display:flex;"><span>            <span style="color:#ff0">err_sys</span>(<span style="color:#87ceeb">&#34;write error&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#f00">if</span> (n &lt; <span style="color:#f60">0</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff0">err_sys</span>(<span style="color:#87ceeb">&#34;read error&#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff0">exit</span>(<span style="color:#f60">0</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>some caveats</p>
+<ol>
+<li>It reads from standard input and writes to standard output, assuming that these have been set up by the shell before this program is executed</li>
+<li>The program doesn’t close the input file or output file.</li>
+<li>This example works for both text files and binary file</li>
+</ol>
+<p>how we chose the BUFFSIZE value?</p>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/Screenshot-2021-05-04-19-58-12.2024_02_12_1707675786.png" alt="image-20210517160118314"></p>
+<h2 id="file-sharing">file sharing</h2>
+<p>The UNIX System supports the sharing of open files among different processes.</p>
+<p>The kernel uses three data structures to represent an open file, and the relationships among them determine the effect one process has on another with regard to file sharing</p>
+<ol>
+<li>Every process has an entry in the <strong>process table</strong>. Within each process table entry is a table of open file descriptors, which we can think of as a vector, with one entry per descriptor. Associated with each file descriptor are
+<ol>
+<li>The file descriptor flags</li>
+<li>A pointer to a file table entry</li>
+</ol>
+</li>
+<li>The kernel <strong>maintains a file table</strong> for all open files. Each file table entry contains
+<ol>
+<li>The file status flags for the file, such as read, write, append, sync, and nonblocking; more on these in Section 3.14</li>
+<li>The current file offset</li>
+<li>A pointer to the v-node table entry for the file</li>
+</ol>
+</li>
+<li>Each open file (or device) has a <strong>v-node structure that contains information about the type of file and pointers to functions that operate on the file</strong>. For most files, the v-node also contains the <strong><code>i-node</code> for the file</strong>. This information is read from disk when the file is opened, so that all the <strong>pertinent information</strong> about the file is readily available. For example, the <code>i-node</code> contains the owner of the file, the size of the file, pointers to where the actual data blocks for the file are located on disk, and so on
+<img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/file.2024_02_12_1707675802.png" alt="file"></li>
+</ol>
+<p>If two independent processes have the same file open, we could have the arrangement</p>
+<p>Each process that opens the file gets its own file table entry, but only a single v-node table entry is required for a given file. One reason each process gets its own file table entry is so that each process has its own current offset for the file.</p>
+<ol>
+<li>After each write is complete, the current file offset in the file table entry is incremented by the number of bytes written. If this causes the current file offset to exceed the current file size, the current file size in the i-node table entry is set to the current file offset (for example, the file is extended).</li>
+<li>If a file is opened with the <code>O_APPEND</code> flag, a corresponding flag is set in the file status flags of the file table entry. Each time a write is performed for a file with this append flag set, the current file offset in the file table entry is first set to the current file size from the i-node table entry. This forces every write to be appended to the current end of file.</li>
+<li>If a file is positioned to its current end of file using lseek, all that happens is the current file offset in the file table entry is set to the current file size from the i-node table entry (Note that this is not the same as if the file was opened with the O_APPEND flag)</li>
+<li>The lseek function modifies only the current file offset in the file table entry. No I/O takes place</li>
+</ol>
+<p>It is possible for more than one file descriptor entry to point to the same file table entry. This also happens after a fork when the parent and the child share the same file table entry for each open descriptor</p>
+<p>Note the difference in scope between the file descriptor flags and the file status flags. The former apply only to a single descriptor in a single process, whereas the latter apply to all descriptors in any process that point to the given file table entry</p>
+<h2 id="atomic-operations">Atomic Operations</h2>
+<p>Any operation that requires more than one function call cannot be atomic, as there is always the possibility that the kernel might temporarily suspend the process between the two function calls</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">ssize_t</span> <span style="color:#ff0">pread</span>(<span style="color:#ee82ee">int</span> fd, <span style="color:#ee82ee">void</span> *buf, <span style="color:#ee82ee">size_t</span> nbytes, <span style="color:#ee82ee">off_t</span> offset);
+</span></span><span style="display:flex;"><span><span style="color:#0f0">//Returns: number of bytes read, 0 if end of file, −1 on error
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ee82ee">ssize_t</span> <span style="color:#ff0">pwrite</span>(<span style="color:#ee82ee">int</span> fd, <span style="color:#f00">const</span> <span style="color:#ee82ee">void</span> *buf, <span style="color:#ee82ee">size_t</span> nbytes, <span style="color:#ee82ee">off_t</span> offset);
+</span></span><span style="display:flex;"><span><span style="color:#0f0">//Returns: number of bytes written if OK, −1 on error
+</span></span></span></code></pre></div><p>If the operation is performed atomically, either all the steps are performed (on success) or none are performed (on failure).</p>
+<h2 id="dup-and-dup2-functions">dup and dup2 Functions</h2>
+<p>An existing file descriptor is duplicated by either of the following functions</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">int</span> <span style="color:#ff0">dup</span>(<span style="color:#ee82ee">int</span> fd);
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">dup2</span>(<span style="color:#ee82ee">int</span> fd, <span style="color:#ee82ee">int</span> fd2);
+</span></span><span style="display:flex;"><span><span style="color:#0f0">//Both return: new file descriptor if OK, −1 on error
+</span></span></span></code></pre></div><p>With dup2, we specify the value of the new descriptor with the fd2 argument. If fd2 is already open, it is first closed. If fd equals fd2, then dup2 returns fd2 without closing it. Otherwise, the FD_CLOEXEC file descriptor flag is cleared for fd2, so that fd2 is left open if the process calls exec</p>
+<p><img src="https://raw.githubusercontent.com/mobilephone724/blog_pictures/master/Screenshot-2021-05-05-09-34-21.2024_02_12_1707675820.png" alt="image-20210517160118314"></p>
+<h2 id="syncfsync--and-fdatasync-function"><code>sync</code>,<code>fsync</code> , and <code>fdatasync</code> function</h2>
+<p>Traditional implementations of the UNIX System have a buffer cache or page cache in the kernel through which most disk I/O passes. When we write data to a file, the data is normally copied by the kernel into one of its buffers and queued for writing to disk at some later time. This is called delayed write</p>
+<p>To ensure consistency of the file system on disk with the contents of the buffer cache, the sync, fsync, and fdatasync functions are provided.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">int</span> <span style="color:#ff0">fsync</span>(<span style="color:#ee82ee">int</span> fd);
+</span></span><span style="display:flex;"><span><span style="color:#ee82ee">int</span> <span style="color:#ff0">fdatasync</span>(<span style="color:#ee82ee">int</span> fd);
+</span></span><span style="display:flex;"><span>    <span style="color:#0f0">//Returns: 0 if OK, −1 on error
+</span></span></span><span style="display:flex;"><span><span style="color:#0f0"></span><span style="color:#ee82ee">void</span> <span style="color:#ff0">sync</span>(<span style="color:#ee82ee">void</span>);
+</span></span></code></pre></div><p>The <code>sync</code> function simply <strong>queues all the modified block buffers for writing and returns</strong>; it does not wait for the disk writes to take place.The function sync is normally <strong>called periodically</strong> (usually every 30 seconds) from a system daemon, often called update.</p>
+<p>The function <code>fsync</code> refers only to a single file, specified by the file descriptor fd, and waits for the disk writes to complete before returning.(database)</p>
+<p>The fdatasync function is similar to fsync, but it affects only the data portions of a file. With fsync, the file’s attributes are also updated synchronously</p>
+<h2 id="fcntl-function"><code>fcntl</code> function</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;fcntl.h&gt;</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">int</span> <span style="color:#ff0">fcntl</span>(<span style="color:#ee82ee">int</span> fd, <span style="color:#ee82ee">int</span> cmd, ... <span style="color:#0f0">/* int arg */</span> );
+</span></span><span style="display:flex;"><span><span style="color:#0f0">//Returns: depends on cmd if OK (see following), −1 on error
+</span></span></span></code></pre></div><p>The fcntl function is used for five different purposes</p>
+<ol>
+<li>Duplicate an existing descriptor (cmd = F_DUPFD or F_DUPFD_CLOEXEC)</li>
+<li>Get/set file descriptor flags (cmd = F_GETFD or F_SETFD)</li>
+<li>Get/set file status flags (cmd = F_GETFL or F_SETFL)</li>
+<li>Get/set asynchronous I/O ownership (cmd = F_GETOWN or F_SETOWN)</li>
+<li>Get/set record locks (cmd = F_GETLK, F_SETLK, or F_SETLKW)</li>
+</ol>
+<h2 id="ioctl-function"><code>ioctl</code> function</h2>
+<p>The <code>ioctl</code> function has always been the catchall for I/O operations. Terminal I/O was the biggest user of this function</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;unistd.h&gt; /* System V */</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5">#include</span> <span style="color:#e5e5e5">&lt;sys/ioctl.h&gt; /* BSD and Linux */</span><span style="color:#e5e5e5">
+</span></span></span><span style="display:flex;"><span><span style="color:#e5e5e5"></span><span style="color:#ee82ee">int</span> <span style="color:#ff0">ioctl</span>(<span style="color:#ee82ee">int</span> fd, <span style="color:#ee82ee">int</span> request, ...);
+</span></span><span style="display:flex;"><span><span style="color:#0f0">//Returns: −1 on error, something else if OK
+</span></span></span></code></pre></div><p>Normally, additional device-specific headers are required. For example, the <code>ioctl</code> commands for terminal I/O, beyond the basic operations specified by POSIX.1, all require the  header.</p>
+<p>Each device driver can define its own set of <code>ioctl</code> commands. The system, however, provides generic <code>ioctl</code> commands for different classes of devices</p>
+<h2 id="devfd"><code>/dev/fd</code></h2>
+<p>Newer systems provide a directory named <code>/dev/fd</code> whose entries are files named 0, 1, 2, and so on</p>
+<p>In the function call</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>fd = <span style="color:#ff0">open</span>(<span style="color:#87ceeb">&#34;/dev/fd/0&#34;</span>, mode); 
+</span></span></code></pre></div><p>most systems ignore the specified mode, whereas others require that it be a <strong>subset</strong> of the mode used when the <strong>referenced file</strong> (standard input, in this case) was originally opened. Because the previous open is equivalent to</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#000;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>fd = <span style="color:#ff0">dup</span>(<span style="color:#f60">0</span>); 
+</span></span></code></pre></div><p>the descriptors 0 and <code>fd</code> share the same file table entry</p>
+<p>For example, if descriptor 0 was opened read-only, we can only read on <code>fd</code>. Even if the system ignores the open mode and the call succeeds, we still can’t write to <code>fd</code>.</p>
+<p>The <strong>main use</strong> of the <code>/dev/fd</code> files is from the shell. It allows programs that use pathname arguments to <strong>handle standard input and standard output in the same manner as other pathnames</strong>, like <code>cat -</code> to <code>cat /dev/fd/0</code></p>
+<p>The special meaning of <code>-</code> as a command-line argument to refer to the standard input or the standard output is a kludge that has crept into many programs. There are also problems if we specify - as the first file, as it looks like the start of another command-line option. Using <code>/dev/fd</code> is a step toward uniformity and cleanliness.</p>
+
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

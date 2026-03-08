@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Archive_posts | </title>
+<meta name="keywords" content="">
+<meta name="description" content="Archive_posts - ">
+<meta name="author" content="">
+<link rel="canonical" href="//localhost:1313/archive_posts/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.29a3b25a9664d60b8db5aa62e9689f988389786c5afa84be55b684468490de4f.css" integrity="sha256-KaOyWpZk1guNtapi6WifmIOJeGxa&#43;oS&#43;VbaERoSQ3k8=" rel="preload stylesheet" as="style">
+<link rel="icon" href="//localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="//localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="//localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="//localhost:1313/archive_posts/index.xml">
+<link rel="alternate" hreflang="en" href="//localhost:1313/archive_posts/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header">
+  <h1>
+    Archive_posts
+  </h1>
+</header>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">PGVECTOR AND VECTOR DATABASE
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>序言 pgvector是一个向量搜索（根据近似度）的插件，用来加速AKNN（approximate nearest neighbor）。 PASE中提到，向量ANN算法包括4类
+tree-based algorithms KD-Tree RTree quantization-based algorithms IVFFlat IVFADC IMI graph based algorithms HNSW NSG SSG hash-base algorithms LSH pgvector 包括两个算法，IVFFlat 和 HNSW，后续内容将以这两个算法的内容及其实现展开。 IVFFlat 概览 IVFFlat 算法主要包括以下几个步骤
+索引构建阶段 使用 KMeans 将数据集划分成多个簇(cluster) 查询阶段 通过每个簇的中心点（向量是高维的点）获取N个最近的簇 遍历这N个簇的所有点，从中找到最近的K个点 算法介绍 基础算法kmeans reference k-means clustering - Wikipedia 算法目标：选取K个中心点，使得数据集中的所有点到其最近的中心点“距离”之和最近，以平方和距离为例：
+Given a set of observations $(x_1, x_2, \dots, x_n)$, where each observation is a $d$-dimensional real vector, k-means clustering aims to partition the $n$ observations into $k$ ($\leq n$) sets $S = {S_1, S_2, \dot, S_k}$ so as to minimize the within-cluster sum of squares (WCSS). Formally, the objective is to find: 算法过程： 我们可以很容易的证明目标函数是关于$S$的凸函数 Given an initial set of $k$ means $m_1^{1}, \dots , m_k^{(1)}$ (see below), the algorithm proceeds by alternating between two steps:
+...</p>
+  </div>
+  <footer class="entry-footer">mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to PGVECTOR AND VECTOR DATABASE" href="//localhost:1313/archive_posts/pgvector/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">SLRU
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>本文主要为SLRU本身的结构解读。
+简述 slru用来干什么？ slru是一个简单的buffer管理模块，simple slru 有了buffer pool manager，为什么还要slru？ bpm管理通用的page，比如heap，vm等 slru最大的特点就是lru，非常适合处理xid这样，递增的信息。 下面的代码分析基于pg15 存储结构 与bpm不同，通过slru管理的page，其文件大小固定，一个文件有32个page，一个page有8KB，故一个文件最大为256K。
+与WAL不同，WAL文件的大小在创建时就已经确定为16M，与WAL文件重用保持一致，而slru的文件，先在内存中产生相应的page，再会去落盘。
+#define SLRU_PAGES_PER_SEGMENT	32 内存slru 全局 buffer 数组 typedef struct SlruSharedData { LWLock	*ControlLock; /* Number of buffers managed by this SLRU structure */ int	num_slots; /* * Arrays holding info for each buffer slot. Page number is undefined * when status is EMPTY, as is page_lru_count. */ char	**page_buffer; SlruPageStatus *page_status; bool	*page_dirty; int	*page_number; int	*page_lru_count; LWLockPadded *buffer_locks; XLogRecPtr *group_lsn; int	lsn_groups_per_page; /*---------- * We mark a page &#34;most recently used&#34; by setting *	page_lru_count[slotno] = &#43;&#43;cur_lru_count; * The oldest page is therefore the one with the highest value of *	cur_lru_count - page_lru_count[slotno] * The counts will eventually wrap around, but this calculation still * works as long as no page&#39;s age exceeds INT_MAX counts. *---------- */ int	cur_lru_count; } SlruSharedData; 从内存结构上看，是一个数组，每个元素代表一个page。同时，记录这些page的使用次数。
+...</p>
+  </div>
+  <footer class="entry-footer">mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to SLRU" href="//localhost:1313/archive_posts/slru/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">WAL基础
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p> From access/transam/README
+Write-Ahead Log Coding 基本思想，日志在数据页前落盘
+LSN：刷脏前检查LSN对应的日志已经落盘 优势：仅在必要的时候等待XLOG的IO。（异步IO） LSN的检查模块只用在 buffer manager 中实现 在WAL回放时，避免相同的日志被重复回放（可重入）。（TODO：full page write是否在另一个层面上保证了可重入） WAL 包含一个（或一小组）页的增量更新的重做信息。 依赖文件系统和硬件的原子写，不可靠！ checkpoint，checkpointer后的第一次写全页。通过 checkpoint 留下的 LSN 来判断是否为第一次写 写下WAL日志的逻辑为 pin and exclusive-lock the shared buffer START_CRIT_SECTION，发生错误时确保整个数据库能立即重启 在shared buffer上，进行对应的修改 标记为脏页， 必须在WAL日志写入前完成（TODO，为什么？SyncOneBuffer） 只有在要写WAL时，才能标记脏页（TODO，为什么？） 使用XLogBeginInsert 和 XLogRegister* 函数构建WAL，使用返回的LSN来更新page END_CRIT_SECTION，退出 解锁和unpin （注意顺序） 一些复杂的操作，需要原子地写下一串WAL记录，但中间状态必须自洽(self-consistent)。这样在回放wal日志时，如果中断，系统还能够正常运行。注意：此时相当于事务回滚，但是其部分更改已经落盘。举例：
+在btree索引中，页的分裂分为两步（1）分配一个新页（2）在上一层的页(parent page)中新插入一条数据。 但是因为锁，这会形成两个独立的WAL日志。在回放WAL日志时 回放第（1）个日志： 分配一个新页，将元组移动进去 设置标记位，表示上一层的页没有更新 回放第（2）个日志： 在上一层的页中新插入一条数据 清除第（1）个日志中的标记位 标志位通常情况下不可见，因为对 child page 的修改时持有的锁，在两个操作完成后才会释放。 仅在写下第（2）个日志前，数据库恰好崩溃，标志位才会被感知。（该标志位应该没有MVCC，否则会在事务层屏蔽） 搜索时，不管这个中间状态 插入时，如果发现这个中间状态，先在上一层的页插入对应key，以修复这个“崩溃”状态，再继续插入 </p>
+  </div>
+  <footer class="entry-footer">mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to WAL基础" href="//localhost:1313/archive_posts/wal-basic/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">WAL日志的插入
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>接口函数 一个WAL记录包含
+WAL记录类型。（TODO不同的修改有不同的记录方式？） 这个页的修改方式 被修改的页的信息。被修改的页通过一个唯一ID标识，也可以有更多的关联数据（“record-specific data associated with the block”）。如果要写full page，就没有关联数据 构建一个WAL记录包含5个核心函数 void XLogBeginInsert(void) 初始化相关状态 如果当前无法构建WAL日志（例如在recovery模式），则报错 void XLogRegisterBuffer(uint8 block_id, Buffer buf, uint8 flags); 增加了数据块的信息；注册一个buffer的引用，相当于上述WAL日志的第三部分 block_id is an arbitrary number used to identify this page reference in the redo routine
+在redo阶段，可以根据这些信息找到需要redo的page regbuf = &amp;registered_buffers[block_id]; /* * Returns the relfilenode, fork number and block number associated with * a buffer */ BufferGetTag(buffer, &amp;regbuf-&gt;rnode, &amp;regbuf-&gt;forkno, &amp;regbuf-&gt;block); regbuf-&gt;page = BufferGetPage(buffer); regbuf-&gt;flags = flags; regbuf-&gt;rdata_tail = (XLogRecData *) &amp;regbuf-&gt;rdata_head; regbuf-&gt;rdata_len = 0; registered_buffer的结构
+...</p>
+  </div>
+  <footer class="entry-footer">mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to WAL日志的插入" href="//localhost:1313/archive_posts/wal-insert/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">ZERO TO RSA
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>从0证明RSA RSA 算法（即一个非对称加密算法）除了应用非常广泛外，其特性也非常吸引人（起码非常吸引我）。我在网上找了很多关于RSA的证明，要么不够详细（例如缺失对前置定理的证明），要么需要引出较多复杂的数论概念。作者本身水平不高，试图绕过这些复杂的概念，从初等数学的开始，完备地证明RSA。
+关于RSA的背景知识可能很多，可以慢慢阅读，我在此尝试从初等数学开始证明。这些背景知识的证明有一定的顺序，如果读者发现某个证明看不懂，可以向前翻阅。
+参考的文章如下：（因为参考的文章太多，大概率不全）
+费马小定理 中国剩余定理 阮一峰的博客——RSA算法原理（一） 阮一峰的博客——RSA算法原理（二） 初等数论笔记Part 1： 欧拉定理 算法学习笔记(9)：逆元 费马小定理 简介 如果 $p$ 是质数且 $\mathrm{gcd}(a,p)=1$ , 那么 $a^{p-1}\equiv 1\ (\mathrm{mod}\ p)$
+在证明该定理前，先证明一个简单的引理
+引理1 如果 $p$ 是质数，且 $\mathrm{gcd}(a,p)=1$ , 那么
+$$ \lbrace ka \ \mathrm{mod}\ p | k = \lbrace 1,2,…,p -1 \rbrace \rbrace= \lbrace 1,2,3,…,p-1 \rbrace $$
+即二者存在一对一的关系。由于这两个集合的元素个数相同，所以只要证明左侧集合没有重复元素即可
+证明：假设存在 $k_1$ 和 $k_2$ 满足 $1 \leq k_1 &lt; k_2 \leq p-1$ ，且 $k_1a\ \mathrm{mod}\ p = k_2a\ \mathrm{mod}\ p$ . 那么可知
+...</p>
+  </div>
+  <footer class="entry-footer">mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to ZERO TO RSA" href="//localhost:1313/archive_posts/zero2rsa/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="//localhost:1313/archive_posts/page/3/">
+      «&nbsp;Prev&nbsp;
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="//localhost:1313/"></a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Archive_posts | </title>
+<meta name="keywords" content="">
+<meta name="description" content="Archive_posts - ">
+<meta name="author" content="">
+<link rel="canonical" href="//localhost:1313/archive_posts/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.29a3b25a9664d60b8db5aa62e9689f988389786c5afa84be55b684468490de4f.css" integrity="sha256-KaOyWpZk1guNtapi6WifmIOJeGxa&#43;oS&#43;VbaERoSQ3k8=" rel="preload stylesheet" as="style">
+<link rel="icon" href="//localhost:1313/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="//localhost:1313/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="//localhost:1313/favicon-32x32.png">
+<link rel="apple-touch-icon" href="//localhost:1313/apple-touch-icon.png">
+<link rel="mask-icon" href="//localhost:1313/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="//localhost:1313/archive_posts/index.xml">
+<link rel="alternate" hreflang="en" href="//localhost:1313/archive_posts/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header">
+  <h1>
+    Archive_posts
+  </h1>
+</header>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">SSL in PG
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Overview In application level, ”PostgreSQL“ has native supports for using SSL connections. This requires that OpenSSL is installed on both client and server systems and that support in PostgreSQL is enabled at build time.
+With SSL, we can:
+Encrypted data on Internet transmission Allow client to authorize the server(PostgreSQL), which can protect the client from connecting to the attacker’s server Allow server to authorize the client, which can stop the attacker from connecting to the database even if password leak. Just encrypt internet transmission build binary from source just configure with -with-openssl option. You may need to install ssl-dev tools first
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-02-12 20:30:38 +0800 CST'>February 12, 2024</span></footer>
+  <a class="entry-link" aria-label="post link to SSL in PG" href="//localhost:1313/archive_posts/ssl-in-pg/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">pg_squeence_type
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>sequence type background From official documents:
+9.17. Sequence Manipulation Functions
+CREATE SEQUENCE
+Sequence objects are special single-row tables created with CREATE SEQUENCE. Sequence objects are commonly used to generate unique identifiers for rows of a table. The sequence functions, provide simple, multiuser-safe methods for obtaining successive sequence values from sequence objects. Main function There is no much concerns about these functions
+nextval
+Advances the sequence object to its next value and returns that value setval
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-02-12 19:51:45 +0800 CST'>February 12, 2024</span></footer>
+  <a class="entry-link" aria-label="post link to pg_squeence_type" href="//localhost:1313/archive_posts/sequence_type/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Read Google F1
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Abstract a protocol for schema evolution in a globally distributed database management system with shared data, stateless servers, and no global membership. asynchronous all servers can access and update all data during a schema change INTRODUCTION Schema evolution: the ability to change a database’s definition without the loss of data F1 is built on top of Spanner, a globally distributed KV data store Main feature The main features of F1 that impact schema changes are:
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2023-08-14 21:46:24 +0800 CST'>August 14, 2023</span>&nbsp;·&nbsp;mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to Read Google F1" href="//localhost:1313/archive_posts/google-f1/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Basic Knowledge of Database Log
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Primitive Operation if Transactions There are three address spaces that transaction interact in important ways:
+The space of disk blocks holding the database elements. The memory address space managed by buffer manager. The local address space of the transaction. To describe a transaction, we need some operation notions:(X below is a database element while t is a local varible, and we suppose a database element is no larger than a single block)
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-03-31 11:01:15 +0800 CST'>March 31, 2022</span>&nbsp;·&nbsp;mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to Basic Knowledge of Database Log" href="//localhost:1313/archive_posts/database-log/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Alice and Bob how to know whose number is bigger without giving away their own&#39;s
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Definiteness： Suppose Alice has number $i$ and Bob has number $j$ and $1\leq i,j \leq 9$. We need a protocol for them to decide whether $i &lt; j$ in the end(aside from their own values)
+Solution: Let $M$ be the set of all $N$-bit nonnegative integers
+Let $Q_N$ be the set of all one-one and onto function from $M$ to $M$
+Alice generates a public key from $Q_N$, called $E_a$, and the inverse function of $E_a$ is $D_a$ Bob picks a random value $x \in M$, compute $k = E_a(x)$, then send $k - j$ to Alice Alice computes $y_u=D_a(k - j &#43; u)$ for $u = 1,2,\dots,9$ Alice generates a random prime $p$ of $N/2$-bit, and computes $z_u=y_u(\mod p)$ for all $u$. Alice repeats step 4 until all $z_u$ differ by at least 2 in the $\mod p$ sense Alice sends the $p$ and $z_1,z_2,\dots,z_i,z_{i&#43;1}&#43;1,\dots,z_{9} &#43;1$ (all in $\mod p$ sense)to Bob Bob looks at the $j$-th value(not counting p) sent from Alice, and decides that $i\geq j$ if it is equal to $x \mod p$, or $i&lt;j$ otherwise </p>
+  </div>
+  <footer class="entry-footer"><span title='2022-01-14 23:43:08 +0800 CST'>January 14, 2022</span>&nbsp;·&nbsp;mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to Alice and Bob how to know whose number is bigger without giving away their own&#39;s" href="//localhost:1313/archive_posts/howtoknowwhoseisbigger/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">APUE/Chapter3: file and I/O
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>The functions described in this chapter are often referred to as unbuffered I/O(which each read or write invokes a system call in the kernel), in contrast to the standard I/O routines
+File Descriptors To the kernel, all open files are referred to by file descriptors. A file descriptor is a non-negative integer. When we open an existing file or create a new file, the kernel returns a file descriptor to the process. When we want to read or write a file, we identify the file with the file descriptor that was returned by open or creat as an argument to either read or write. By convention, UNIX System shells associate file descriptor 0 with the standard input of a process, file descriptor 1 with the standard output, and file descriptor 2 with the standard error File descriptors range from 0 through OPEN_MAX−1 open and openat code #include &lt;fcntl.h&gt; int open(const char *path, int oflag, ... /* mode_t mode */ ); int openat(int fd, const char *path, int oflag, ... /* mode_t mode */ ); //Both return: file descriptor if OK, −1 on error This function has a multitude of options, which are specified by the oflag argument. This argument is formed by ORing together one or more of the following constants from the&lt;fcntl.h&gt; header
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-01-14 12:02:42 +0800 CST'>January 14, 2022</span>&nbsp;·&nbsp;mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to APUE/Chapter3: file and I/O" href="//localhost:1313/archive_posts/linux-file/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">CLOG
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>Overview This chapter explains the content of clog
+clog(commit log), records the commit status of each transaction. The log exists both in memory mannaged by slru buffer and disk for durability. The commit status can be the four kinds below:
+#define TRANSACTION_STATUS_IN_PROGRESS	0x00 #define TRANSACTION_STATUS_COMMITTED	0x01 #define TRANSACTION_STATUS_ABORTED	0x02 #define TRANSACTION_STATUS_SUB_COMMITTED	0x03 In-Disk Representation Thinking that the commit status of each transaction composites an array clog[] and clog[xid] records the status, we can easily store the array to disk by the slru.
+...</p>
+  </div>
+  <footer class="entry-footer">mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to CLOG" href="//localhost:1313/archive_posts/clog/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">cublasDgemm
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>concept cublasDgemm is a convenient function in cublas to compute the product of two matrix, while letter ‘D’ in cublasDgemm means double.
+Before reading this post, basic cuda functions like cudaMalloc are what you are supposed to know.
+basic use Definition of this function
+cublasStatus_t cublasDgemm(cublasHandle_t handle, cublasOperation_t transa, cublasOperation_t transb, int m, int n, int k, const double *alpha, const double *A, int lda, const double *B, int ldb, const double *beta, double *C, int ldc) Basic information of parameters is show in this page. Simply put, $C = \alpha A \times B &#43; \beta C $ .But it may remains confused for fresher. Below is an simple example.
+...</p>
+  </div>
+  <footer class="entry-footer">mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to cublasDgemm" href="//localhost:1313/archive_posts/cublasdgemmtutor/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">hash join
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>high level view See Queries in PostgreSQL: 6. Hashing
+One-pass hash join Note that join in PostgreSql, we scan the right relation first, which means that the right relation is the “inner relation” and the left relation is the outer one. Two-pass hash join Since we can’t allocate as much memory as we want, instead of building a hash table of the entire table, PG split the tables to several batches where all tuples have the same hash value flag.
+...</p>
+  </div>
+  <footer class="entry-footer">mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to hash join" href="//localhost:1313/archive_posts/hashjoin/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">pg_repack
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>principle pg_repack 1.5.0 – Reorganize tables in PostgreSQL databases with minimal locks
+https://github.com/reorg/pg_repack
+create a log table to record changes made to the original table add a trigger onto the original table, logging INSERTs, UPDATEs and DELETEs into our log table create a new table containing all the rows in the old table build indexes on this new table apply all changes which have accrued in the log table to the new table swap the tables, including indexes and toast tables, using the system catalogs drop the original table The basic idea is
+...</p>
+  </div>
+  <footer class="entry-footer">mobilephone724</footer>
+  <a class="entry-link" aria-label="post link to pg_repack" href="//localhost:1313/archive_posts/pg_repack/"></a>
+</article>
+<footer class="page-footer">
+  <nav class="pagination">
+    <a class="prev" href="//localhost:1313/archive_posts/page/2/">
+      «&nbsp;Prev&nbsp;
+    </a>
+    <a class="next" href="//localhost:1313/archive_posts/page/4/">Next&nbsp;&nbsp;»
+    </a>
+  </nav>
+</footer>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2026 <a href="//localhost:1313/"></a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

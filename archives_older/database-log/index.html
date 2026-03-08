@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="Primitive Operation if Transactions
+There are three address spaces that transaction interact in important ways:
+
+The space of disk blocks holding the database elements.
+The memory address space managed by buffer manager.
+The local address space of the transaction.
+
+To describe a transaction, we need some operation notions:(X below is a database element while t is a local varible, and we suppose a database element is no larger than a single block)">  
+
+  <title>
+    
+      Basic Knowledge of Database Log
+    
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.51652302d3a998bf7887aed5c2cf89141bbebdf45a2c8f87b0717a3cf4f51c4e53c694c328fb1de78c3a625a1c01f80745bf1f2f42c040647a245cbbb6c2d1d7.css" integrity="sha512-UWUjAtOpmL94h67Vws&#43;JFBu&#43;vfRaLI&#43;HsHF6PPT1HE5TxpTDKPsd54w6YlocAfgHRb8fL0LAQGR6JFy7tsLR1w==" />
+  
+</head>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+
+<article>
+    <p class="post-meta">
+        <time datetime="2022-03-31 11:01:15 &#43;0800 CST">
+            2022-03-31
+        </time>
+    </p>
+
+    <h1>Basic Knowledge of Database Log</h1>
+
+    
+        <aside >
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#primitive-operation-if-transactions">Primitive Operation if Transactions</a></li>
+    <li><a href="#undo-logging">undo logging</a></li>
+  </ul>
+</nav>
+        </aside>
+    
+
+    <h2 id="primitive-operation-if-transactions">Primitive Operation if Transactions</h2>
+<p>There are <code>three address spaces</code> that transaction interact in important ways:</p>
+<ol>
+<li>The space of <strong>disk blocks</strong> holding the database elements.</li>
+<li>The <strong>memory address space</strong> managed by buffer manager.</li>
+<li>The <strong>local address space</strong> of the transaction.</li>
+</ol>
+<p>To describe a transaction, we need some <code>operation notions</code>:(X below is a database element while t is a local varible, and we suppose a database element is no larger than a single block)</p>
+<ol>
+<li>INPUT(X): copy disk block containing X to memroy buffer</li>
+<li>READ(X, t): Copy X to transaction&rsquo;s local varible t no matter where X is, which means INPUT(X) may be executed first before READ(X,t).</li>
+<li>WRITE(X, t): Copy the value of t to X no matter where X is.</li>
+<li>OUTPUT(X): Copy the block containing X from its buffer to disk</li>
+</ol>
+<h2 id="undo-logging">undo logging</h2>
+<p>Undo log makes repairs to the database state by undoing the effects of transactions that may not completed before the crash.</p>
+<p>An Undo log has the form [T,X,v] which means transaction T has changed the database elememnt X, and its before value was v. The log record is a response to a WRITE action into memory, not an OUTPUT action.</p>
+<p>An undo log is suffcient to allow recovery from system failure, provided transactions and buffer manager obey two rules:</p>
+<ol>
+<li>If transaction T modifies database element X, then the log record of form &lt;T,X,v&gt; must be written to disk before the new value of X is written to disk</li>
+<li>If a transaction commits, the its commit log record must be written to disk only after all database elements changed by the transaction have been written to disk, but as soon there after is possible</li>
+<li>If a transaction aborts, recovery manager is need to repair the values.</li>
+</ol>
+<p>When recovering, the recovery manager scan the log from the end. As it travels, it remembers all thos transactions T for which it has seen a [COMMIT T] record or [ABORT T] record, the:</p>
+<ol>
+<li>If T&rsquo;s COMMIT record is found, do nothing.</li>
+<li>Otherwise, T is an incomplete transaction, or aborted transaction. The recovery manager must change the value of X in the database to v,in case X had been altered just before the crash. After this, the recovery manager must write a log record [ABORT T] for each incomplete transaction T that was not previously aborted, and then flush the log</li>
+</ol>
+
+</article>
+
+                
+    
+    
+        <hr>
+<p>written by mobilephone724</p>
+    
+
+
+            </div>
+        </main>
+    </body>
+</html>

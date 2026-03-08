@@ -3,28 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>/posts/</loc>
+    <lastmod>2026-03-08T10:49:46+08:00</lastmod>
+  </url><url>
+    <loc>/archives_2025/</loc>
     <lastmod>2025-10-28T23:31:52+08:00</lastmod>
   </url><url>
-    <loc>/posts/20251028-syscache-in-walsender/</loc>
+    <loc>/archives_2025/20251028-syscache-in-walsender/</loc>
     <lastmod>2025-10-28T23:31:52+08:00</lastmod>
   </url><url>
-    <loc>/posts/20251027-cstringgettextdatum-and-cstringgetdatum/</loc>
+    <loc>/archives_2025/20251027-cstringgettextdatum-and-cstringgetdatum/</loc>
     <lastmod>2025-10-27T23:35:17+08:00</lastmod>
   </url><url>
-    <loc>/posts/20251026-1-structure-and-hash/</loc>
+    <loc>/archives_2025/20251026-1-structure-and-hash/</loc>
     <lastmod>2025-10-26T21:26:45+08:00</lastmod>
   </url><url>
-    <loc>/posts/20251019-1-html-blog/</loc>
+    <loc>/archives_2025/20251019-1-html-blog/</loc>
     <lastmod>2025-10-19T23:13:22+08:00</lastmod>
   </url><url>
-    <loc>/posts/20250903-2/</loc>
+    <loc>/archives_2025/20250903-2/</loc>
     <lastmod>2025-09-03T21:01:17+08:00</lastmod>
   </url><url>
-    <loc>/posts/20250829-1-volatile/</loc>
+    <loc>/archives_2025/20250829-1-volatile/</loc>
     <lastmod>2025-08-29T21:05:24+08:00</lastmod>
-  </url><url>
-    <loc>/archive_posts/</loc>
-    <lastmod>2025-04-12T14:02:15+08:00</lastmod>
   </url><url>
     <loc>/post/mcp-learning-z1f8c7l.html</loc>
     <lastmod>2025-04-12T14:02:15+08:00</lastmod>
@@ -56,43 +56,43 @@
     <loc>/post/20250301-1r5xzc.html</loc>
     <lastmod>2025-03-01T15:27:33+08:00</lastmod>
   </url><url>
-    <loc>/post/airwallex-survey-z1tsrmd.html</loc>
-    <lastmod>2025-03-03T22:37:19+08:00</lastmod>
-  </url><url>
     <loc>/post/github-ssh-failed-2k9xdc.html</loc>
     <lastmod>2025-03-02T19:57:33+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/2024-09-13/</loc>
+    <loc>/archives_older/</loc>
     <lastmod>2024-09-13T22:09:20+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/every_data_pg/</loc>
+    <loc>/archives_older/2024-09-13/</loc>
+    <lastmod>2024-09-13T22:09:20+08:00</lastmod>
+  </url><url>
+    <loc>/archives_older/every_data_pg/</loc>
     <lastmod>2024-08-16T23:45:50+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/fwrapv/</loc>
+    <loc>/archives_older/fwrapv/</loc>
     <lastmod>2024-08-05T21:30:13+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/reversed_inode/</loc>
+    <loc>/archives_older/reversed_inode/</loc>
     <lastmod>2024-08-03T17:13:10+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/constant_recovery/</loc>
+    <loc>/archives_older/constant_recovery/</loc>
     <lastmod>2024-07-07T15:53:54+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/mesi/</loc>
+    <loc>/archives_older/mesi/</loc>
     <lastmod>2024-06-16T01:12:36+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/roaring_bitmap/</loc>
+    <loc>/archives_older/roaring_bitmap/</loc>
     <lastmod>2024-05-07T21:04:38+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/build_from_source/</loc>
+    <loc>/archives_older/build_from_source/</loc>
     <lastmod>2024-04-16T23:09:39+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/column-schema-change/</loc>
+    <loc>/archives_older/column-schema-change/</loc>
     <lastmod>2024-04-07T22:19:24+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/ssl-in-pg/</loc>
+    <loc>/archives_older/ssl-in-pg/</loc>
     <lastmod>2024-02-12T20:30:38+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/sequence_type/</loc>
+    <loc>/archives_older/sequence_type/</loc>
     <lastmod>2024-02-12T19:51:45+08:00</lastmod>
   </url><url>
     <loc>/categories/</loc>
@@ -101,7 +101,7 @@
     <loc>/categories/database/</loc>
     <lastmod>2023-08-14T21:46:24+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/google-f1/</loc>
+    <loc>/archives_older/google-f1/</loc>
     <lastmod>2023-08-14T21:46:24+08:00</lastmod>
   </url><url>
     <loc>/tags/schema/</loc>
@@ -113,10 +113,10 @@
     <loc>/</loc>
     <lastmod>2022-08-25T21:30:04+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/database-log/</loc>
+    <loc>/archives_older/database-log/</loc>
     <lastmod>2022-03-31T11:01:15+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/howtoknowwhoseisbigger/</loc>
+    <loc>/archives_older/howtoknowwhoseisbigger/</loc>
     <lastmod>2022-01-14T23:43:08+08:00</lastmod>
   </url><url>
     <loc>/categories/cryptology/</loc>
@@ -128,7 +128,7 @@
     <loc>/categories/apue/</loc>
     <lastmod>2022-01-14T12:02:42+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/linux-file/</loc>
+    <loc>/archives_older/linux-file/</loc>
     <lastmod>2022-01-14T12:02:42+08:00</lastmod>
   </url><url>
     <loc>/tags/file/</loc>
@@ -143,22 +143,22 @@
     <loc>/tags/os/</loc>
     <lastmod>2022-01-14T12:02:42+08:00</lastmod>
   </url><url>
-    <loc>/archive_posts/clog/</loc>
+    <loc>/archives_older/clog/</loc>
   </url><url>
-    <loc>/archive_posts/cublasdgemmtutor/</loc>
+    <loc>/archives_older/cublasdgemmtutor/</loc>
   </url><url>
-    <loc>/archive_posts/hashjoin/</loc>
+    <loc>/archives_older/hashjoin/</loc>
   </url><url>
-    <loc>/archive_posts/pg_repack/</loc>
+    <loc>/archives_older/pg_repack/</loc>
   </url><url>
-    <loc>/archive_posts/pgvector/</loc>
+    <loc>/archives_older/pgvector/</loc>
   </url><url>
-    <loc>/archive_posts/slru/</loc>
+    <loc>/archives_older/slru/</loc>
   </url><url>
-    <loc>/archive_posts/wal-basic/</loc>
+    <loc>/archives_older/wal-basic/</loc>
   </url><url>
-    <loc>/archive_posts/wal-insert/</loc>
+    <loc>/archives_older/wal-insert/</loc>
   </url><url>
-    <loc>/archive_posts/zero2rsa/</loc>
+    <loc>/archives_older/zero2rsa/</loc>
   </url>
 </urlset>
